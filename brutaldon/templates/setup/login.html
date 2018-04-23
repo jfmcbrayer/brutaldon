@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <h1 class="title">Log in to your instance</h1>
+
+    <form method="post" action="{% url "login" %}">
+        {% csrf_token %}
+        <div class="field">
+            <label class="label">{{ form.instance.label  }}</label>
+            <div class="control has-icons-left">
+                {% render_field form.instance class+="input" %}
+                <span class="icon is-small is-left">
+                    <i class="fa fa-mastodon"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">{{ form.username.label }}</label>
+            <div class="control has-icons-left">
+                {% render_field form.username class+="input" %}
+                <span class="icon is-small is-left">
+                    <i class="fa fa-user"></i>
+                </span>
+            </div>
+        </div>
+        <div class="field" >
+            <label class="label" >{{ form.password.label }}</label>
+            <div class="control has-icons-left" >
+                {% render_field form.password class+="input" type="password" %}
+                <span class="icon is-small is-left">
+                    <i class="fa fa-lock" ></i>
+                </span>
+            </div>
+        </div>
+        <div class="field">
+            <input type="submit" name="log_in"
+                   value="Log in" class="button is-primary" >
+        </div>
+    </form>
+
+    <div class="notification">
+        <button class="delete"></button>
+        <p>
+            This information is only used to log you in to your instance for the
+            first time. Brutaldon never stores your username and password; it
+            only uses it to acquire a token which you can disable from the
+            settings page of your Mastodon instance.
+        </p>
+    </div>
+
+{% endblock %}
