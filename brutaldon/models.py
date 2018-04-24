@@ -11,7 +11,7 @@ class Client(models.Model):
         return self.name + ": " + self.api_base_id
 
 class Account(models.Model):
-    username = models.CharField(max_length=80)
+    username = models.EmailField()
     django_user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True)
     access_token = models.TextField(null=True, blank=True)
     client= models.ForeignKey(Client, models.SET_NULL, null=True)
