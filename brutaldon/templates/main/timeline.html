@@ -8,78 +8,11 @@
 {% block content %}
     <h1 class="title">Your {{ timeline }} timeline</h1>
     {% for toot in toots %}
-        <div class="box">
-            <article class="media">
-                <figure class="media-left">
-                    <p class="image is-64x64">
-                        <img src="{{ toot.account.avatar }}"
-                             alt="">
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="content">
-                        <p>
-                            <strong>{{ toot.account.display_name }}</strong>
-                            <small>@{{ toot.account.username }}</small>
-                            <small>{{ toot.created_at |naturaltime  }}</small>
-                        </p>
-                        {% if toot.spoiler_text %}
-                            <p>
-                                <strong>{{ toot.spoiler_text }} </strong>
-                            </p>
-                        {% endif %}
-                        <div>
-                            {{ toot.content | safe }}
-                        </div>
-
-                        {% if toot.media_attachments %}
-                            <div class="level">
-                                <div class="level-left">
-                                    {% for media in toot.media_attachments %}
-                                        <a class="level-item" href="{{ media.url }}">
-                                            <img src="{{ media.preview_url }}" alt="
-                                                      {% if media.text_url  %}
-                                                      {{ media.text_url }}
-                                                      {% else %}
-                                                      {{ media.url  }}
-                                                      {% endif %}"
-                                                 class="image is-128x128">
-                                        </a>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endif %}
-                        <p><br></p>
-                    </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <a class="level-item">
-                                <span class="icon is-small"><i class="fa fa-reply">
-                                    <span class="is-invisible">Reply</span>
-                                </i></span>
-                            </a>
-                            <a class="level-item">
-                                <span class="icon is-small"><i class="fa fa-retweet">
-                                    <span class="is-invisible" >Boost</span>
-                                </i></span>
-                            </a>
-                            <a class="level-item">
-                                <span class="icon is-small"><i class="fa fa-heart">
-                                    <span class="is-invisible" >Favorite</span>
-                                </i></span>
-                            </a>
-                        </div>
-                        <div class="level-right">
-                            <a class="level-item">
-                                {{ toot.visibility }}
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-                <div class="media-right">
-                </div>
-            </article>
-        </div>
+        {% if toot.reblog %}
+            {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.username reblog_icon=toot.account.avatar %}
+        {% else %}
+            {% include "main/toot_partial.html" with toot=toot reblog=False %}
+        {% endif %}
         <hr class="is-hidden">
     {% endfor %}
 {% endblock %}
