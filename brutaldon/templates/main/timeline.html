@@ -22,9 +22,16 @@
                             <strong>{{ toot.account.display_name }}</strong>
                             <small>@{{ toot.account.username }}</small>
                             <small>{{ toot.created_at |naturaltime  }}</small>
-                            <br>
-                            {{ toot.content | safe }}
                         </p>
+                        {% if toot.spoiler_text %}
+                            <p>
+                                <strong>{{ toot.spoiler_text }} </strong>
+                            </p>
+                        {% endif %}
+                        <div>
+                            {{ toot.content | safe }}
+                        </div>
+
                         {% if toot.media_attachments %}
                             <div class="level">
                                 <div class="level-left">
@@ -42,6 +49,7 @@
                                 </div>
                             </div>
                         {% endif %}
+                        <p><br></p>
                     </div>
                     <nav class="level is-mobile">
                         <div class="level-left">
