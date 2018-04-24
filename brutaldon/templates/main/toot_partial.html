@@ -18,7 +18,9 @@
                 <p>
                     <strong>{{ toot.account.display_name }}</strong>
                     <small>@{{ toot.account.acct }}</small>
-                    <small>{{ toot.created_at |naturaltime  }}</small>
+                    <a href="{{ toot.url }}">
+                        <small>{{ toot.created_at |naturaltime  }}</small>
+                    </a>
                     {% if reblog %}
                         <br>
                         Boosted by @{{ reblog_by }}
@@ -77,8 +79,11 @@
                     </a>
                 </div>
                 <div class="level-right">
-                    <a class="level-item">
+                    <span class="level-item">
                         {{ toot.visibility }}
+                    </span>
+                    <a class="level-item" >
+                        thread
                     </a>
                 </div>
             </nav>
