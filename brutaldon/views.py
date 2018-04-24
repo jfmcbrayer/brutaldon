@@ -83,5 +83,18 @@ def login(request):
         else:
             return render(request, 'setup/login.html', {'form': form})
 
+def logout(request):
+    return redirect(error)
+
 def error(request):
-    return render('error.html', { 'error': "Not logged in yet."})
+    return render(request, 'error.html', { 'error': "Not logged in yet."})
+
+def note(request):
+    return render(request, 'main/timeline.html', {'timeline': 'Notifications'})
+
+def local(request):
+    return render(request, 'main/timeline.html', {'timeline': 'Local'})
+
+def fed(request):
+    return render(request, 'main/timeline.html', {'timeline': 'Federated'})
+

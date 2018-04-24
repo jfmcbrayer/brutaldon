@@ -11,6 +11,29 @@
     <link rel="stylesheet" href="/static/css/brutaldon.css">
   </head>
   <body>
+      {% block navbar %}
+      <nav class="navbar" role="navigation" aria-label="main navigation is-active">
+          <div class="navbar-brand">
+              <a class="navbar-item">
+                  <img src="https://bulma.io/images/bulma-logo.png"
+                       width="32" height="32" alt="Brutaldon">
+              </a>
+              <!-- navbar items, navbar burger... -->
+          </div>
+          <div class="navbar-menu">
+              <!-- navbar start, navbar end -->
+              <div class="navbar-start">
+                  <a href="{% url "home" %}" class="navbar-item">Home</a>
+                  <a class="navbar-item" href="{% url "note" %}">Notifications</a>
+                  <a class="navbar-item" href="{% url "local" %}">Local</a>
+                  <a class="navbar-item" href="{% url "fed" %}">Federated</a>
+              </div>
+              <div class="navbar-end" >
+                  <a class="navbar-item" href="{% url "logout" %}">Log out</a>
+              </div>
+          </div>
+      </nav>
+      {% endblock %}
   <section class="section">
     <div class="container">
       {% block content %} 
