@@ -9,7 +9,7 @@ Brutaldon is a [brutalist][0], [Web 1.0][0.5] web interface for [Mastodon][1]. I
 [3]: https://w3m.sourceforge.net/
 [4]: http://elinks.or.cz/
 
-Brutaldon is not ready for use yet. I literally haven't written it yet.
+Brutaldon is not ready for use yet.
 
 ## Roadmap
 
