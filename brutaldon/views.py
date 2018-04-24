@@ -20,7 +20,8 @@ def home(request):
         api_base_url = client.api_base_id,
         ratelimit_method="pace")
     data = mastodon.timeline()
-    return render(request, 'main/timeline.html', {'toots': data })
+    return render(request, 'main/timeline.html',
+                  {'toots': data, 'timeline': 'Home' })
 
 
 def login(request):
