@@ -17,7 +17,7 @@
             <div class="content">
                 <p>
                     <strong>{{ toot.account.display_name }}</strong>
-                    <small>@{{ toot.account.username }}</small>
+                    <small>@{{ toot.account.acct }}</small>
                     <small>{{ toot.created_at |naturaltime  }}</small>
                     {% if reblog %}
                         <br>

@@ -9,7 +9,7 @@
     <h1 class="title">Your {{ timeline }} timeline</h1>
     {% for toot in toots %}
         {% if toot.reblog %}
-            {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.username reblog_icon=toot.account.avatar %}
+            {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar %}
         {% else %}
             {% include "main/toot_partial.html" with toot=toot reblog=False %}
         {% endif %}
