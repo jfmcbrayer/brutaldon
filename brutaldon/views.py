@@ -72,18 +72,17 @@ def login(request):
                 client_id = client.client_id,
                 client_secret = client.client_secret,
                 api_base_url = api_base_url)
-            access_token = mastodon.log_in(username,
-                                           password)
 
             try:
                 account = Account.objects.get(username=username, client_id=client.id)
-                account.access_token = access_token
             except (Account.DoesNotExist, Account.MultipleObjectsReturned):
                 account = Account(
                     username = username,
                     access_token = access_token,
                     client = client)
-            account.save()
+                access_token = mastodon.log_in(username,
+                                               password)
+                account.save()
             request.session['username'] = username
 
             return redirect(home)
@@ -91,7 +90,8 @@ def login(request):
             return render(request, 'setup/login.html', {'form': form})
 
 def logout(request):
-    return redirect(error)
+    request.session.flush()
+    return redirect(home)
 
 def error(request):
     return render(request, 'error.html', { 'error': "Not logged in yet."})
