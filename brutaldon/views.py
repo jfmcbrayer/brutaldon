@@ -26,8 +26,15 @@ def home(request):
         api_base_url = client.api_base_id,
         ratelimit_method="pace")
     data = mastodon.timeline()
+
+    if request.session.has_key('fullbrutalism'):
+        fullbrutalism = request.session['fullbrutalism']
+    else:
+        fullbrutalism = False
+
     return render(request, 'main/timeline.html',
-                  {'toots': data, 'timeline': 'Home' })
+                  {'toots': data, 'timeline': 'Home',
+                   'fullbrutalism': fullbrutalism})
 
 
 def login(request):

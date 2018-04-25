@@ -4,23 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}brutaldon{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.0.11/css/fork-awesome.min.css"
-          integrity="sha256-MGU/JUq/40CFrfxjXb5pZjpoZmxiP2KuICN5ElLFNd8="
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/brutaldon.css">
+    {% if not fullbrutalism %}
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/fork-awesome@1.0.11/css/fork-awesome.min.css"
+              integrity="sha256-MGU/JUq/40CFrfxjXb5pZjpoZmxiP2KuICN5ElLFNd8="
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/css/brutaldon.css">
+    {% else %}
+        <link rel="stylesheet" href="/static/css/fullbrutalism.css" >
+    {% endif %}
+    <link rel="icon" href="/static/images/brutaldon.png" type="image/png">
   </head>
   <body>
       {% block navbar %}
-      <nav class="navbar" role="navigation" aria-label="main navigation is-active">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
           <div class="navbar-brand">
               <a class="navbar-item">
-                  <img src="https://bulma.io/images/bulma-logo.png"
+                  <img src="/static/images/brutaldon.png" 
                        width="32" height="32" alt="Brutaldon">
               </a>
               <!-- navbar items, navbar burger... -->
           </div>
-          <div class="navbar-menu">
+          <div class="navbar-menu is-active">
               <!-- navbar start, navbar end -->
               <div class="navbar-start">
                   <a href="{% url "home" %}" class="navbar-item">Home</a>
