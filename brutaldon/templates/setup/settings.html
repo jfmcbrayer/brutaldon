@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <h1 class="title">Settings</h1>
+    <form method="post" action="{% url "settings" %}" >
+        {% csrf_token %}
+        <div class="field">
+            <label class="label checkbox">
+                {% render_field form.fullbrutalism %}
+                {{ form.fullbrutalism.label  }}
+            </label>
+        </div>
+        <div class="field">
+            <input type="submit" name="submit"
+                   value="Save" class="button is-primary" >
+        </div>
+    </form>
+{% endblock %}

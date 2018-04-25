@@ -26,5 +26,6 @@ urlpatterns = [
     path('note', views.note, name='note'),
     path('local', views.local, name='local'),
     path('fed', views.fed, name='fed'),
+    path('settings', views.settings, name='settings'),
     path('', views.home),
 ]

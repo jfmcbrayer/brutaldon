@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from brutaldon.forms import LoginForm
+from brutaldon.forms import LoginForm, SettingsForm
 from brutaldon.models import Client, Account
 from mastodon import Mastodon
 import datetime
@@ -105,3 +105,15 @@ def local(request):
 def fed(request):
     return render(request, 'main/timeline.html', {'timeline': 'Federated'})
 
+
+def settings(request):
+    if request.method == 'POST':
+        form = SettingsForm(request.POST)
+        if form.is_valid():
+            request.session['fullbrutalism'] = form.cleaned_data['fullbrutalism']
+            return redirect(home)
+        else:
+            return render(request, 'setup/settings.html', {'form' : form })
+    else:
+        form = SettingsForm(request.session)
+        return render(request, 'setup/settings.html', { 'form': form })
