@@ -20,14 +20,17 @@ mastodon.status_context(<numerical id>)
         <div class="box">
             {% include "main/toot_partial.html" with toot=ancestor %}
         </div>
+        <hr class="is-hidden">
     {% endfor %}
     <div class="box active_context">
         {% include "main/toot_partial.html" with toot=toot %}
     </div>
+    <hr class="is-hidden">
     {% for descendant in context.descendants %}
         <div class="box">
             {% include "main/toot_partial.html" with toot=descendant %}
         </div>
+        <hr class="is-hidden">
     {% endfor %}
 
 

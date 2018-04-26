@@ -32,6 +32,7 @@
                 <br>
                 {% include "main/toot_partial.html" with toot=note.status reblog=False %}
             </div>
+            <hr class="is-hidden">
         {% elif note.type == 'reblog' %}
             <div class="box">
                 <p>
@@ -39,11 +40,12 @@
                     (<a href="{{ note.account.url }}">{{ note.account.acct }}</a>)
                     boosted your toot.
                     (<a href="{{ note.url }}">
-                        <small>{{ note.created_at |naturaltime  }}</small>
+                    <small>{{ note.created_at |naturaltime  }}</small>
                     </a>)
                 </p>
                 {% include "main/toot_partial.html" with toot=note.status reblog=True reblog_by=note.account.acct reblog_icon=note.account.avatar %}
             </div>
+            <hr class="is-hidden">
         {% elif note.type == 'favourite' %}
             <div class="box" >
                 <div class="level">
@@ -56,13 +58,14 @@
                             (<a href="{{ note.account.url }}">{{ note.account.acct }}</a>)
                             favorited your toot.
                             (<a href="{{ note.url }}">
-                                <small>{{ note.created_at |naturaltime  }}</small>
+                            <small>{{ note.created_at |naturaltime  }}</small>
                             </a>)
                         </div>
                     </div>
                 </div>
                 {% include "main/toot_partial.html" with toot=note.status reblog=False %}
             </div>
+            <hr class="is-hidden">
         {% elif note.type == 'follow' %}
             <div class="box" >
                 <article class="media">
@@ -83,6 +86,7 @@
                     </div>
                 </article>
             </div>
+            <hr class="is-hidden">
         {% endif %}
     {% endfor %}
 
