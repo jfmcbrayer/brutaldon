@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}
+Brutaldon - thread 
+{% endblock %}
+
+{% comment %}
+mastodon.status_context(<numerical id>)
+    # Returns the following dictionary:
+    {
+    'ancestors': # A list of toot dicts
+    'descendants': # A list of toot dicts
+    }
+{% endcomment %}
+
+{% block content %}
+    <h1 class="title">Thread</h1>
+    {% for ancestor in context.ancestors %}
+        <div class="box">
+            {% include "main/toot_partial.html" with toot=ancestor %}
+        </div>
+    {% endfor %}
+    <div class="box active_context">
+        {% include "main/toot_partial.html" with toot=toot %}
+    </div>
+    {% for descendant in context.descendants %}
+        <div class="box">
+            {% include "main/toot_partial.html" with toot=descendant %}
+        </div>
+    {% endfor %}
+
+
+{% endblock %}

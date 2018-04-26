@@ -120,6 +120,14 @@ def note(request):
                   {'notes': notes,'timeline': 'Notifications',
                    'fullbrutalism': fullbrutalism_p(request)})
 
+def thread(request, id):
+    mastodon = get_mastodon(request)
+    context = mastodon.status_context(id)
+    toot = mastodon.status(id)
+    return render(request, 'main/thread.html',
+                  {'context': context, 'toot': toot,
+                   'fullbrutalism': fullbrutalism_p(request)})
+
 
 def settings(request):
     if request.method == 'POST':

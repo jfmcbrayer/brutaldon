@@ -192,3 +192,6 @@ img {
     height: 64px;
 }
 
+.box.active_context {
+    background-color: #DDD;
+}

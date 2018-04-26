@@ -27,5 +27,6 @@ urlpatterns = [
     path('local', views.local, name='local'),
     path('fed', views.fed, name='fed'),
     path('settings', views.settings, name='settings'),
+    path('thread/<int:id>', views.thread, name='thread'),
     path('', views.home),
 ]

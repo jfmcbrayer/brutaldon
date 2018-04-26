@@ -8,3 +8,7 @@ img.fav-avatar {
     display: inline;
 
 }
+
+.box.active_context {
+    background-color: #FFF8DC;
+}
