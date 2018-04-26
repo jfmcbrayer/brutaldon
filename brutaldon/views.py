@@ -113,7 +113,10 @@ def error(request):
     return render(request, 'error.html', { 'error': "Not logged in yet."})
 
 def note(request):
-    return render(request, 'main/timeline.html', {'timeline': 'Notifications'})
+    mastodon = get_mastodon(request)
+    notes = mastodon.notifications()
+    return render(request, 'main/notifications.html',
+                  {'notes': notes,'timeline': 'Notifications'})
 
 
 def settings(request):
