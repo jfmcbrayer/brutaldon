@@ -3,3 +3,8 @@
     top: -24px;
     left: 40px;
 }
+
+img.fav-avatar {
+    display: inline;
+
+}

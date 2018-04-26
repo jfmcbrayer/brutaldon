@@ -155,15 +155,6 @@ img {
     margin: 4px;
 }
 
-.is-32x32 img {
-    max-width: 32px;
-    max-height: 32px;
-}
-
-.is-64x64 img {
-    max-width: 64px;
-    max-height: 64px;
-}
 
 .level {
     clear: both;
@@ -190,3 +181,14 @@ img {
     margin: 4px;
     border: 8px ridge #CCC;
 }
+
+.image.is-32x32, .is-32x32 img {
+    width: 32px;
+    height: 32px;
+}
+
+.image.is-64x64, .is-64x64 img {
+    width: 64px;
+    height: 64px;
+}
+

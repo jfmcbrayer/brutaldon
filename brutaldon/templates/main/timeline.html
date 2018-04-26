@@ -8,11 +8,13 @@
 {% block content %}
     <h1 class="title">Your {{ timeline }} timeline</h1>
     {% for toot in toots %}
+    <div class="box">
         {% if toot.reblog %}
             {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar %}
         {% else %}
             {% include "main/toot_partial.html" with toot=toot reblog=False %}
         {% endif %}
+    </div>
         <hr class="is-hidden">
     {% endfor %}
 
