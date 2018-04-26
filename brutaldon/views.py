@@ -3,11 +3,9 @@ from django.shortcuts import render, redirect
 from brutaldon.forms import LoginForm, SettingsForm
 from brutaldon.models import Client, Account
 from mastodon import Mastodon
-import datetime
 from urllib import parse
 
-def home(request):
-    now = datetime.datetime.now()
+def timeline(request, timeline='home', timeline_name='Home'):
     if not (request.session.has_key('instance') and
             request.session.has_key('username')):
         return redirect(login)
@@ -25,7 +23,7 @@ def home(request):
         access_token = user.access_token,
         api_base_url = client.api_base_id,
         ratelimit_method="pace")
-    data = mastodon.timeline()
+    data = mastodon.timeline(timeline)
 
     if request.session.has_key('fullbrutalism'):
         fullbrutalism = request.session['fullbrutalism']
@@ -33,9 +31,17 @@ def home(request):
         fullbrutalism = False
 
     return render(request, 'main/timeline.html',
-                  {'toots': data, 'timeline': 'Home',
+                  {'toots': data, 'timeline': timeline_name,
                    'fullbrutalism': fullbrutalism})
 
+def home(request):
+    return timeline(request, 'home', 'Home')
+
+def local(request):
+    return timeline(request, 'local', 'Local')
+
+def fed(request):
+    return timeline(request, 'public', 'Federated')
 
 def login(request):
     if request.method == "GET":
@@ -98,12 +104,6 @@ def error(request):
 
 def note(request):
     return render(request, 'main/timeline.html', {'timeline': 'Notifications'})
-
-def local(request):
-    return render(request, 'main/timeline.html', {'timeline': 'Local'})
-
-def fed(request):
-    return render(request, 'main/timeline.html', {'timeline': 'Federated'})
 
 
 def settings(request):
