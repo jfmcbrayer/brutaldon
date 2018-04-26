@@ -28,21 +28,22 @@ def get_mastodon(request):
         ratelimit_method="pace")
     return mastodon
 
+def fullbrutalism_p(request):
+    if request.session.has_key('fullbrutalism'):
+        fullbrutalism = request.session['fullbrutalism']
+    else:
+        fullbrutalism = False
+    return fullbrutalism
+
 def timeline(request, timeline='home', timeline_name='Home'):
     try:
         mastodon = get_mastodon(request)
     except NotLoggedInException:
         return redirect(login)
     data = mastodon.timeline(timeline)
-
-    if request.session.has_key('fullbrutalism'):
-        fullbrutalism = request.session['fullbrutalism']
-    else:
-        fullbrutalism = False
-
     return render(request, 'main/timeline.html',
                   {'toots': data, 'timeline': timeline_name,
-                   'fullbrutalism': fullbrutalism})
+                   'fullbrutalism': fullbrutalism_p(request)})
 
 def home(request):
     return timeline(request, 'home', 'Home')
@@ -116,7 +117,8 @@ def note(request):
     mastodon = get_mastodon(request)
     notes = mastodon.notifications()
     return render(request, 'main/notifications.html',
-                  {'notes': notes,'timeline': 'Notifications'})
+                  {'notes': notes,'timeline': 'Notifications',
+                   'fullbrutalism': fullbrutalism_p(request)})
 
 
 def settings(request):
@@ -126,7 +128,10 @@ def settings(request):
             request.session['fullbrutalism'] = form.cleaned_data['fullbrutalism']
             return redirect(home)
         else:
-            return render(request, 'setup/settings.html', {'form' : form })
+            return render(request, 'setup/settings.html',
+                          {'form' : form, 'fullbrutalism': fullbrutalism_p(request)})
     else:
         form = SettingsForm(request.session)
-        return render(request, 'setup/settings.html', { 'form': form })
+        return render(request, 'setup/settings.html',
+                      { 'form': form, 'fullbrutalism': fullbrutalism_p(request)})
+
