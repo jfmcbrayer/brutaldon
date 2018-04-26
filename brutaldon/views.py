@@ -5,17 +5,20 @@ from brutaldon.models import Client, Account
 from mastodon import Mastodon
 from urllib import parse
 
-def timeline(request, timeline='home', timeline_name='Home'):
+class NotLoggedInException(Exception):
+    pass
+
+def get_mastodon(request):
     if not (request.session.has_key('instance') and
             request.session.has_key('username')):
-        return redirect(login)
+        raise NotLoggedInException()
 
     try:
         client = Client.objects.get(api_base_id=request.session['instance'])
         user = Account.objects.get(username=request.session['username'])
     except (Client.DoesNotExist, Client.MultipleObjectsReturned,
             Account.DoesNotExist, Account.MultipleObjectsReturned):
-        return redirect(login)
+        raise NotLoggedInException()
 
     mastodon = Mastodon(
         client_id = client.client_id,
@@ -23,6 +26,13 @@ def timeline(request, timeline='home', timeline_name='Home'):
         access_token = user.access_token,
         api_base_url = client.api_base_id,
         ratelimit_method="pace")
+    return mastodon
+
+def timeline(request, timeline='home', timeline_name='Home'):
+    try:
+        mastodon = get_mastodon(request)
+    except NotLoggedInException:
+        return redirect(login)
     data = mastodon.timeline(timeline)
 
     if request.session.has_key('fullbrutalism'):
