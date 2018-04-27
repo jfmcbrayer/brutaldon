@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from brutaldon.forms import LoginForm, SettingsForm
+from brutaldon.forms import LoginForm, SettingsForm, PostForm
 from brutaldon.models import Client, Account
 from mastodon import Mastodon
 from urllib import parse
@@ -143,3 +143,24 @@ def settings(request):
         return render(request, 'setup/settings.html',
                       { 'form': form, 'fullbrutalism': fullbrutalism_p(request)})
 
+def toot(request):
+    if request.method == 'GET':
+        form = PostForm()
+        return render(request, 'main/toot.html',
+                      {'form': form,
+                       'fullbrutalism': fullbrutalism_p(request)})
+    elif request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            # create media objects
+            mastodon = get_mastodon(request)
+            mastodon.status_post(status=form.cleaned_data['status'],
+                                 visibility=form.cleaned_data['visibility'],
+                                 spoiler_text=form.cleaned_data['spoiler_text'])
+            return redirect(home)
+        else:
+            return render(request, 'main/toot.html',
+                          {'form': form,
+                           'fullbrutalism': fullbrutalism_p(request)})
+    else:
+        return redirect(toot)
