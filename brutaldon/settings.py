@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'sanitizer',
     'django.contrib.humanize',
     'brutaldon',
 ]
@@ -122,3 +123,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Sanitizer settings
+SANITIZER_ALLOWED_TAGS = ['a', 'p', 'img', 'br', 'i', 'strong']
+SANITIZER_ALLOWED_ATTRIBUTES = ['href', 'src']
