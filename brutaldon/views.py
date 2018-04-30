@@ -165,3 +165,32 @@ def toot(request):
                            'fullbrutalism': fullbrutalism_p(request)})
     else:
         return redirect(toot)
+
+def reply(request, id):
+    if request.method == 'GET':
+        mastodon = get_mastodon(request)
+        toot = mastodon.status(id)
+        context = mastodon.status_context(id)
+        initial_text = '@' + toot.account.acct + " "
+        for mention in toot.mentions:
+            initial_text.append('@' + mention.acct + " ")
+        form = PostForm({'status': initial_text})
+        return render(request, 'main/reply.html',
+                      {'context': context, 'toot': toot, 'form': form, 'reply':True,
+                       'fullbrutalism': fullbrutalism_p(request)})
+    elif request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            # create media objects
+            mastodon = get_mastodon(request)
+            mastodon.status_post(status=form.cleaned_data['status'],
+                                 visibility=form.cleaned_data['visibility'],
+                                 spoiler_text=form.cleaned_data['spoiler_text'],
+                                 in_reply_to_id=id)
+            return redirect(thread, id)
+        else:
+            return render(request, 'main/reply.html',
+                          {'context': context, 'toot': toot, 'form': form, 'reply': True,
+                           'fullbrutalism': fullbrutalism_p(request)})
+    else:
+        return redirect(reply, id)

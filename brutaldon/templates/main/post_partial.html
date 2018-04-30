@@ -1,6 +1,10 @@
 {% load widget_tweaks %}
 
+{% if reply %}
+<form method="post" action="{% url "reply" toot.id %}">
+{% else %}
 <form method="post" action="{% url "toot" %}">
+{% endif %}
     {% csrf_token %}
 
     <div class="field" >
@@ -21,10 +25,6 @@
             </div>
         </div>
     </div>
-    {% if form.errors %}
-        <div> {{ form.errors }} </div>
-        {% endif %}
-
 
 
     <input type="submit" class="button is-primary"

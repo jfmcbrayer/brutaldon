@@ -29,5 +29,6 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
     path('thread/<int:id>', views.thread, name='thread'),
     path('toot', views.toot, name="toot"),
+    path('reply/<int:id>', views.reply, name='reply'),
     path('', views.home),
 ]
