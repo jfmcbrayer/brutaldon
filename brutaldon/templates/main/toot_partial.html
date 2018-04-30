@@ -73,10 +73,16 @@
                         <span class="is-invisible" >Boost</span>
                     </i></span>
                 </a>
-                <a class="level-item">
-                    <span class="icon is-small"><i class="fa fa-heart">
-                        <span class="is-invisible" >Favorite</span>
-                    </i></span>
+                <a class="level-item" href="{% url "fav" toot.id %}">
+                    <span class="icon is-small">
+                        {% if toot.favourited %}
+                            <i class="fa fa-heart has-text-warning">
+                        {% else %}
+                            <i class="fa fa-heart">
+                        {% endif %}
+                            <span class="is-invisible" >Favorite</span>
+                        </i>
+                    </span>
                 </a>
             </div>
             <div class="level-right">
