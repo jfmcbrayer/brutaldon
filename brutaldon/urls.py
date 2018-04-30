@@ -31,5 +31,6 @@ urlpatterns = [
     path('toot', views.toot, name="toot"),
     path('reply/<int:id>', views.reply, name='reply'),
     path('fav/<int:id>', views.fav, name='fav'),
+    path('boost/<int:id>', views.boost, name='boost'),
     path('', views.home),
 ]

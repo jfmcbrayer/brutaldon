@@ -206,3 +206,15 @@ def fav(request, id):
         return redirect(thread, id)
     else:
         return render(request, 'main/fav.html', {"toot": toot})
+
+def boost(request, id):
+    mastodon = get_mastodon(request)
+    toot = mastodon.status(id)
+    if request.method == 'POST':
+        if toot.reblogged:
+            mastodon.status_unreblog(id)
+        else:
+            mastodon.status_reblog(id)
+        return redirect(thread, id)
+    else:
+        return render(request, 'main/boost.html', {"toot": toot})

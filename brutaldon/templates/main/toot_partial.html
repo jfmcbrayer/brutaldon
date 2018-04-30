@@ -68,10 +68,16 @@
                         <span class="is-invisible">Reply</span>
                     </i></span>
                 </a>
-                <a class="level-item">
-                    <span class="icon is-small"><i class="fa fa-retweet">
+                <a class="level-item" href="{% url "boost" toot.id %}">
+                    <span class="icon is-small">
+                    {% if toot.reblogged %}
+                        <i class="fa fa-retweet has-text-warning">
+                    {% else %}
+                        <i class="fa fa-retweet" >
+                    {% endif %}
                         <span class="is-invisible" >Boost</span>
-                    </i></span>
+                    </i>
+                    </span>
                 </a>
                 <a class="level-item" href="{% url "fav" toot.id %}">
                     <span class="icon is-small">
