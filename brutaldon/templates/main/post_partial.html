@@ -7,6 +7,13 @@
 {% endif %}
     {% csrf_token %}
 
+    <div class="field">
+        <label class="label"> {{ form.spoiler_text.label }}</label>
+        <div class="control">
+            {% render_field form.spoiler_text class+="input" placeholder="Optional" %}
+        </div>
+    </div>
+
     <div class="field" >
         <label class="label" >{{ form.status.label }}</label>
         <div class="control">
@@ -16,7 +23,7 @@
 
     <div class="field">
         <label class="label" > {{ form.visibility.label }}</label>
-        <div class="control">
+        <div class="control has-icons-left">
             <div class="select">
                 {% render_field form.visibility class+="select"%}
                 <span class="icon is-small is-left" >
@@ -25,8 +32,10 @@
             </div>
         </div>
     </div>
-
-
-    <input type="submit" class="button is-primary"
-           name="toot" value="Toot">
+    <div class="field">
+        <div class="control">
+            <input type="submit" class="button is-primary"
+                   name="toot" value="Toot">
+        </div>
+    </div>
 </form>
