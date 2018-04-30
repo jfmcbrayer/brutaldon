@@ -1,0 +1,32 @@
+{% load widget_tweaks %}
+
+<form method="post" action="{% url "toot" %}">
+    {% csrf_token %}
+
+    <div class="field" >
+        <label class="label" >{{ form.status.label }}</label>
+        <div class="control">
+            {% render_field form.status class+="textarea is-primary" rows="4" %}
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" > {{ form.visibility.label }}</label>
+        <div class="control">
+            <div class="select">
+                {% render_field form.visibility class+="select"%}
+                <span class="icon is-small is-left" >
+                    <i class="fa address-card"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    {% if form.errors %}
+        <div> {{ form.errors }} </div>
+        {% endif %}
+
+
+
+    <input type="submit" class="button is-primary"
+           name="toot" value="Toot">
+</form>

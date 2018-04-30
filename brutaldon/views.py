@@ -41,8 +41,9 @@ def timeline(request, timeline='home', timeline_name='Home'):
     except NotLoggedInException:
         return redirect(login)
     data = mastodon.timeline(timeline)
+    form = PostForm()
     return render(request, 'main/timeline.html',
-                  {'toots': data, 'timeline': timeline_name,
+                  {'toots': data, 'form': form, 'timeline': timeline_name,
                    'fullbrutalism': fullbrutalism_p(request)})
 
 def home(request):
@@ -146,7 +147,7 @@ def settings(request):
 def toot(request):
     if request.method == 'GET':
         form = PostForm()
-        return render(request, 'main/toot.html',
+        return render(request, 'main/post.html',
                       {'form': form,
                        'fullbrutalism': fullbrutalism_p(request)})
     elif request.method == 'POST':
@@ -159,7 +160,7 @@ def toot(request):
                                  spoiler_text=form.cleaned_data['spoiler_text'])
             return redirect(home)
         else:
-            return render(request, 'main/toot.html',
+            return render(request, 'main/post.html',
                           {'form': form,
                            'fullbrutalism': fullbrutalism_p(request)})
     else:
