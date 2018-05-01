@@ -96,14 +96,19 @@ def login(request):
             except (Account.DoesNotExist, Account.MultipleObjectsReturned):
                 account = Account(
                     username = username,
-                    access_token = access_token,
+                    access_token = "",
                     client = client)
+            try:
                 access_token = mastodon.log_in(username,
                                                password)
+                account.access_token = access_token
                 account.save()
-            request.session['username'] = username
+                request.session['username'] = username
 
-            return redirect(home)
+                return redirect(home)
+            except:
+                # FIXME: add the errors
+                return render(request, 'setup/login.html', {'form': form})
         else:
             return render(request, 'setup/login.html', {'form': form})
 
