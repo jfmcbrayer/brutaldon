@@ -186,8 +186,10 @@ def reply(request, id):
         context = mastodon.status_context(id)
         initial_text = '@' + toot.account.acct + " "
         for mention in toot.mentions:
-            initial_text.append('@' + mention.acct + " ")
-        form = PostForm({'status': initial_text})
+            initial_text +=('@' + mention.acct + " ")
+        form = PostForm({'status': initial_text,
+                         'visibility': toot.visibility,
+                         'spoiler_text': toot.spoiler_text})
         return render(request, 'main/reply.html',
                       {'context': context, 'toot': toot, 'form': form, 'reply':True,
                        'fullbrutalism': fullbrutalism_p(request)})
