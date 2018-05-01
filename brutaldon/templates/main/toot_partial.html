@@ -63,33 +63,39 @@
         <p class="is-hidden"></p>
         <nav class="level is-mobile">
             <div class="level-left">
-                <a class="level-item" href="{% url "reply" toot.id %}">
-                    <span class="icon is-small"><i class="fa fa-reply">
-                        <span class="is-invisible">Reply</span>
-                    </i></span>
-                </a>
-                <a class="level-item" href="{% url "boost" toot.id %}">
-                    <span class="icon is-small">
-                    {% if toot.reblogged %}
-                        <i class="fa fa-retweet has-text-warning">
-                    {% else %}
-                        <i class="fa fa-retweet" >
-                    {% endif %}
-                        <span class="is-invisible" >Boost</span>
-                    </i>
-                    </span>
-                </a>
-                <a class="level-item" href="{% url "fav" toot.id %}">
-                    <span class="icon is-small">
-                        {% if toot.favourited %}
-                            <i class="fa fa-heart has-text-warning">
-                        {% else %}
-                            <i class="fa fa-heart">
-                        {% endif %}
+                <div class="level-item">
+                    <a href="{% url "reply" toot.id %}">
+                        <span class="icon is-small"><i class="fa fa-reply">
+                            <span class="is-invisible">Reply</span>
+                        </i></span>
+                    </a>
+                </div>
+                <div class="level-item">
+                    <a href="{% url "boost" toot.id %}">
+                        <span class="icon is-small">
+                            {% if toot.reblogged %}
+                                <i class="fa fa-retweet has-text-warning">
+                            {% else %}
+                                    <i class="fa fa-retweet" >
+                            {% endif %}
+                            <span class="is-invisible" >Boost</span>
+                                    </i>
+                        </span>
+                    </a>
+                </div>
+                <div class="level-item">
+                    <a href="{% url "fav" toot.id %}">
+                        <span class="icon is-small">
+                            {% if toot.favourited %}
+                                <i class="fa fa-heart has-text-warning">
+                            {% else %}
+                                    <i class="fa fa-heart">
+                            {% endif %}
                             <span class="is-invisible" >Favorite</span>
-                        </i>
-                    </span>
-                </a>
+                                    </i>
+                        </span>
+                    </a>
+                </div>
             </div>
             <div class="level-right">
                 <span class="level-item">
