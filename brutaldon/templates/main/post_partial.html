@@ -1,9 +1,9 @@
 {% load widget_tweaks %}
 
 {% if reply %}
-<form method="post" action="{% url "reply" toot.id %}">
+    <form method="post" action="{% url "reply" toot.id %}" enctype="multipart/form-data">
 {% else %}
-<form method="post" action="{% url "toot" %}">
+        <form method="post" action="{% url "toot" %}" enctype="multipart/form-data">
 {% endif %}
     {% csrf_token %}
 
@@ -32,6 +32,21 @@
             </div>
         </div>
     </div>
+
+    <div class="field">
+        <label class="label"> {{ form.media_file_1.label }}</label>
+        <div class="content">
+            {% render_field form.media_file_1 %}
+        </div>
+        <div class="control">
+            {% render_field form.media_text_1 class+="input" placeholder="Describe attachment" %}
+        </div>
+    </div>
+
+    <div>
+        {{ form.errors }}
+    </div>
+
     <div class="field">
         <div class="control">
             <input type="submit" class="button is-primary"

@@ -5,6 +5,7 @@ from brutaldon.forms import LoginForm, SettingsForm, PostForm
 from brutaldon.models import Client, Account
 from mastodon import Mastodon
 from urllib import parse
+from  django.core.files.uploadhandler import TemporaryFileUploadHandler
 
 class NotLoggedInException(Exception):
     pass
@@ -165,11 +166,22 @@ def toot(request):
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            # create media objects
             mastodon = get_mastodon(request)
+
+            # create media objects
+            media_objects = []
+            for index in range(1,5):
+                if 'media_file_'+str(index) in request.FILES:
+                    media_objects.append(
+                        mastodon.media_post(request.FILES['media_file_'+str(index)]
+                                            .temporary_file_path(),
+                                            description=request.POST.get('media_text_'
+                                                                         +str(index),
+                                                                         None)))
             mastodon.status_post(status=form.cleaned_data['status'],
                                  visibility=form.cleaned_data['visibility'],
-                                 spoiler_text=form.cleaned_data['spoiler_text'])
+                                 spoiler_text=form.cleaned_data['spoiler_text'],
+                                 media_ids=media_objects)
             return redirect(home)
         else:
             return render(request, 'main/post.html',
@@ -198,6 +210,16 @@ def reply(request, id):
         if form.is_valid():
             # create media objects
             mastodon = get_mastodon(request)
+            # create media objects
+            media_objects = []
+            for index in range(1,5):
+                if 'media_file_'+str(index) in request.FILES:
+                    media_objects.append(
+                        mastodon.media_post(request.FILES['media_file_'+str(index)]
+                                            .temporary_file_path(),
+                                            description=request.POST.get('media_text_'
+                                                                         +str(index),
+                                                                         None)))
             mastodon.status_post(status=form.cleaned_data['status'],
                                  visibility=form.cleaned_data['visibility'],
                                  spoiler_text=form.cleaned_data['spoiler_text'],
