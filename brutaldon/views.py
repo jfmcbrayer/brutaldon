@@ -204,7 +204,7 @@ def fav(request, id):
     mastodon = get_mastodon(request)
     toot = mastodon.status(id)
     if request.method == 'POST':
-        if not request.POST['cancel']:
+        if not request.POST.get('cancel', None):
             if toot.favourited:
                 mastodon.status_unfavourite(id)
             else:
@@ -217,7 +217,7 @@ def boost(request, id):
     mastodon = get_mastodon(request)
     toot = mastodon.status(id)
     if request.method == 'POST':
-        if not request.POST['cancel']:
+        if not request.POST.get('cancel', None):
             if toot.reblogged:
                 mastodon.status_unreblog(id)
             else:
