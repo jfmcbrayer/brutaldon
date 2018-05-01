@@ -22,8 +22,13 @@
             </div>
             <div class="level-right">
                 <div class="level-item">
-                    <input class="button is-primary" type="submit" name="fav"
-                           value="Favorite">
+                    {% if toot.favorited %}
+                        <input class="button is-primary" type="submit" name="fav"
+                               value="Unfavorite">
+                    {% else %}
+                        <input class="button is-primary" type="submit" name="fav"
+                               value="Favorite">
+                    {% endif %}
                 </div>
             </div>
         </div>

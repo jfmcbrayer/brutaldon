@@ -22,8 +22,13 @@
             </div>
             <div class="level-right">
                 <div class="level-item">
-                    <input class="button is-primary" type="submit" name="boost"
-                           value="Boost">
+                    {% if toot.reblogged %}
+                        <input class="button is-primary" type="submit" name="boost"
+                               value="Unboost">
+                    {% else %}
+                        <input class="button is-primary" type="submit" name="boost"
+                               value="Boost">
+                    {% endif %}
                 </div>
             </div>
         </div>
