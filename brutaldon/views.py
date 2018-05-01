@@ -224,6 +224,7 @@ def fav(request, id):
     else:
         return render(request, 'main/fav.html', {"toot": toot})
 
+@never_cache
 def boost(request, id):
     mastodon = get_mastodon(request)
     toot = mastodon.status(id)
