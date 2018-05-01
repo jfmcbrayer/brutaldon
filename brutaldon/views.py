@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import never_cache
 from brutaldon.forms import LoginForm, SettingsForm, PostForm
 from brutaldon.models import Client, Account
 from mastodon import Mastodon
@@ -46,12 +47,15 @@ def timeline(request, timeline='home', timeline_name='Home'):
                   {'toots': data, 'form': form, 'timeline': timeline_name,
                    'fullbrutalism': fullbrutalism_p(request)})
 
+@never_cache
 def home(request):
     return timeline(request, 'home', 'Home')
 
+@never_cache
 def local(request):
     return timeline(request, 'local', 'Local')
 
+@never_cache
 def fed(request):
     return timeline(request, 'public', 'Federated')
 
@@ -119,6 +123,7 @@ def logout(request):
 def error(request):
     return render(request, 'error.html', { 'error': "Not logged in yet."})
 
+@never_cache
 def note(request):
     mastodon = get_mastodon(request)
     notes = mastodon.notifications()
@@ -126,6 +131,7 @@ def note(request):
                   {'notes': notes,'timeline': 'Notifications',
                    'fullbrutalism': fullbrutalism_p(request)})
 
+@never_cache
 def thread(request, id):
     mastodon = get_mastodon(request)
     context = mastodon.status_context(id)
@@ -134,7 +140,7 @@ def thread(request, id):
                   {'context': context, 'toot': toot,
                    'fullbrutalism': fullbrutalism_p(request)})
 
-
+@never_cache
 def settings(request):
     if request.method == 'POST':
         form = SettingsForm(request.POST)
@@ -149,6 +155,7 @@ def settings(request):
         return render(request, 'setup/settings.html',
                       { 'form': form, 'fullbrutalism': fullbrutalism_p(request)})
 
+@never_cache
 def toot(request):
     if request.method == 'GET':
         form = PostForm()
@@ -171,6 +178,7 @@ def toot(request):
     else:
         return redirect(toot)
 
+@never_cache
 def reply(request, id):
     if request.method == 'GET':
         mastodon = get_mastodon(request)
@@ -200,6 +208,7 @@ def reply(request, id):
     else:
         return redirect(reply, id)
 
+@never_cache
 def fav(request, id):
     mastodon = get_mastodon(request)
     toot = mastodon.status(id)
