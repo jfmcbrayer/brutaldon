@@ -244,7 +244,9 @@ def fav(request, id):
                 mastodon.status_favourite(id)
         return redirect(thread, id)
     else:
-        return render(request, 'main/fav.html', {"toot": toot})
+        return render(request, 'main/fav.html',
+                      {"toot": toot,
+                       'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
 def boost(request, id):
@@ -258,4 +260,6 @@ def boost(request, id):
                 mastodon.status_reblog(id)
         return redirect(thread, id)
     else:
-        return render(request, 'main/boost.html', {"toot": toot})
+        return render(request, 'main/boost.html',
+                      {"toot": toot,
+                       "fullbrutalism": fullbrutalism_p(request)})
