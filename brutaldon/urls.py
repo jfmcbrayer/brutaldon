@@ -28,6 +28,7 @@ urlpatterns = [
     path('fed', views.fed, name='fed'),
     path('settings', views.settings, name='settings'),
     path('thread/<int:id>', views.thread, name='thread'),
+    path('tags/<tag>', views.tag, name='tag'),
     path('toot', views.toot, name="toot"),
     path('reply/<int:id>', views.reply, name='reply'),
     path('fav/<int:id>', views.fav, name='fav'),

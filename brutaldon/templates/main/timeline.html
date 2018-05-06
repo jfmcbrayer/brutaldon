@@ -6,12 +6,13 @@
 {% endblock %}
 
 {% block content %}
+{% if form %}
     <h1 class="title">Post</h1>
     <div class="box">
         {% include "main/post_partial.html" %}
     </div>
     <hr class="is-hidden">
-
+{% endif %}
     <h1 class="title">Your {{ timeline }} timeline</h1>
     {% for toot in toots %}
     <div class="box">

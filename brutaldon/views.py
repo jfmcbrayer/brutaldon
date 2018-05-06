@@ -60,6 +60,18 @@ def local(request):
 def fed(request):
     return timeline(request, 'public', 'Federated')
 
+@never_cache
+def tag(request, tag):
+    try:
+        mastodon = get_mastodon(request)
+    except NotLoggedInException:
+        return redirect(login)
+    data = mastodon.timeline_hashtag(tag)
+    return render(request, 'main/timeline.html',
+                  {'toots': data, 'timeline': '#'+tag,
+                   'fullbrutalism': fullbrutalism_p(request)})
+
+
 def login(request):
     if request.method == "GET":
         form = LoginForm()
