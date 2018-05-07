@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load sanitizer %}
+{% load taglinks %}
 
 <article class="media">
     <figure class="media-left">
@@ -32,7 +33,7 @@
                 </p>
             {% endif %}
             <div class="toot">
-                {{ toot.content | strip_html | safe }}
+                {{ toot.content |relink_toot | strip_html | safe }}
             </div>
 
             {% if toot.media_attachments %}
