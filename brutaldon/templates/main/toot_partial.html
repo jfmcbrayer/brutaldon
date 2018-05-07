@@ -33,7 +33,7 @@
                 </p>
             {% endif %}
             <div class="toot">
-                {{ toot.content | strip_html |relink_toot | safe }}
+                {{ toot.content | relink_toot | strip_html | safe }}
             </div>
 
             {% if toot.media_attachments %}

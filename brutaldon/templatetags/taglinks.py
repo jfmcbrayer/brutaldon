@@ -18,7 +18,7 @@ def relink_tags(value):
     soup = BeautifulSoup(value, 'html.parser')
     for link in soup.find_all('a', class_='hashtag'):
         link['href'] = reverse('tag', args=[link.span.string])
-    return soup.prettify(formatter=None)
+    return soup.decode(formatter=None)
 
 @register.filter
 def relink_toot(value):
