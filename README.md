@@ -16,12 +16,12 @@ Brutaldon is not ready for use yet.
 * [X] Single user read-only access; log in and read home timeline
 * [X] Fix edge cases of toot display (CW, media, boosts)
 * [X] Multi-user, multi-instance support
-* [ ] Add support for reading local and federated timelines, notifications, favorites, threads
-* [ ] Add support for tag timelines
+* [X] Add support for reading local and federated timelines, notifications, favorites, threads
+* [X] Add support for tag timelines
 * [ ] Add support for viewing profiles
-* [ ] Add support for posting.
-* [ ] Add support for posting media.
-* [ ] Add support for favoriting and boosting toots.
+* [X] Add support for posting.
+* [X] Add support for posting media.
+* [X] Add support for favoriting and boosting toots.
 * [ ] Add support for following, blocking, and muting users.
 
 ## Aesthetic
