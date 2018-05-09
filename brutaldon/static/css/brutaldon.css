@@ -16,9 +16,7 @@ img.fav-avatar {
 
 div.card-header-title, div.card-header-icon {
     color: black;
-    text-shadow:
-    -1px -1px 0 #FFF,
-    1px -1px 0 #FFF,
-    -1px 1px 0 #FFF,
-    1px 1px 0 #FFF;
+    -webkit-text-stroke: 2px white;
+    -moz-text-stroke: 2px white;
+    text-stroke: 2px white;
 }
