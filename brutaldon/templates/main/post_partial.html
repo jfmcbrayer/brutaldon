@@ -34,14 +34,26 @@
     </div>
 
     <div class="field">
-        <label class="label"> {{ form.media_file_1.label }}</label>
-        <div class="content">
-            {% render_field form.media_file_1 %}
+        <div class="file has-name">
+            <label class="file-label">
+                {% render_field form.media_file_1 class+="file-input" %}
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fa fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        {{ form.media_file_1.label }}
+                    </span>
+                </span>
+                <span class="file-name"  id="media_filename_1">
+                </span>
+            </label>
         </div>
         <div class="control">
             {% render_field form.media_text_1 class+="input" placeholder="Describe attachment" %}
         </div>
     </div>
+
 
     <div>
         {{ form.errors }}
@@ -53,4 +65,15 @@
                    name="toot" value="Toot">
         </div>
     </div>
-</form>
+        </form>
+
+<script type="application/javascript">
+var file = document.getElementById("id_media_file_1");
+file.onchange = function(){
+    if(file.files.length > 0)
+    {
+        document.getElementById('media_filename_1').innerHTML =  file.files[0].name;
+    }
+};
+
+</script>
