@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import never_cache
 from brutaldon.forms import LoginForm, SettingsForm, PostForm
@@ -48,19 +48,15 @@ def timeline(request, timeline='home', timeline_name='Home'):
                   {'toots': data, 'form': form, 'timeline': timeline_name,
                    'fullbrutalism': fullbrutalism_p(request)})
 
-@never_cache
 def home(request):
     return timeline(request, 'home', 'Home')
 
-@never_cache
 def local(request):
     return timeline(request, 'local', 'Local')
 
-@never_cache
 def fed(request):
     return timeline(request, 'public', 'Federated')
 
-@never_cache
 def tag(request, tag):
     try:
         mastodon = get_mastodon(request)
@@ -71,7 +67,7 @@ def tag(request, tag):
                   {'toots': data, 'timeline': '#'+tag,
                    'fullbrutalism': fullbrutalism_p(request)})
 
-
+@never_cache
 def login(request):
     if request.method == "GET":
         form = LoginForm()
@@ -129,6 +125,7 @@ def login(request):
         else:
             return render(request, 'setup/login.html', {'form': form})
 
+@never_cache
 def logout(request):
     request.session.flush()
     return redirect(home)
@@ -136,7 +133,6 @@ def logout(request):
 def error(request):
     return render(request, 'error.html', { 'error': "Not logged in yet."})
 
-@never_cache
 def note(request):
     mastodon = get_mastodon(request)
     notes = mastodon.notifications()
@@ -144,7 +140,6 @@ def note(request):
                   {'notes': notes,'timeline': 'Notifications',
                    'fullbrutalism': fullbrutalism_p(request)})
 
-@never_cache
 def thread(request, id):
     mastodon = get_mastodon(request)
     context = mastodon.status_context(id)
@@ -152,6 +147,18 @@ def thread(request, id):
     return render(request, 'main/thread.html',
                   {'context': context, 'toot': toot,
                    'fullbrutalism': fullbrutalism_p(request)})
+
+def user(request, username):
+    mastodon = get_mastodon(request)
+    try:
+        user_dict = mastodon.account_search(username)[0]
+    except IndexError:
+        raise Http404("The user %s could not be found." % username)
+    data = mastodon.account_statuses(user_dict.id)
+    return render(request, 'main/user.html',
+                  {'toots': data, 'user': user_dict,
+                   'fullbrutalism': fullbrutalism_p(request)})
+
 
 @never_cache
 def settings(request):
@@ -202,7 +209,6 @@ def toot(request):
     else:
         return redirect(toot)
 
-@never_cache
 def reply(request, id):
     if request.method == 'GET':
         mastodon = get_mastodon(request)

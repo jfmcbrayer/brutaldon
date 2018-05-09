@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}
+    Brutaldon - {{ timeline }} timelime
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="title">User information for {{ user.display_name }} (@{{ user.acct }})</h1>
+    <div class="box">
+        <p>FIXME</p>
+    </div>
+
+    <h1 class="title">{{ user.display_name }}'s visible toots</h1>
+    {% for toot in toots %}
+        <div class="box">
+            {% if toot.reblog %}
+                {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar %}
+            {% else %}
+                {% include "main/toot_partial.html" with toot=toot reblog=False %}
+            {% endif %}
+        </div>
+        <hr class="is-hidden">
+    {% endfor %}
+
+    <nav class="pagination" role="navigation" aria-label="pagination">
+        <a class="pagination-previous"
+           title="This is the first page" disabled>Previous</a>
+        <a class="pagination-next">Next page</a>
+        <ul class="pagination-list">
+            <li>
+                <a class="pagination-link is-current" aria-label="Page 1"
+                   aria-current="page">1</a>
+            </li>
+            <li>
+                <a class="pagination-link" aria-label="Goto page 2">2</a>
+            </li>
+            <li>
+                <a class="pagination-link" aria-label="Goto page 3">3</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}

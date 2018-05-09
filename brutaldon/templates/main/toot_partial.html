@@ -5,12 +5,16 @@
 <article class="media">
     <figure class="media-left">
         <p class="image is-64x64">
-            <img src="{{ toot.account.avatar }}"
-                 alt="">
+            <a href="{% url "user" toot.account.acct %}">
+                <img src="{{ toot.account.avatar }}"
+                     alt="">
+            </a>
         </p>
         {% if reblog %}
             <p class="image is-32x32 reblog-icon" >
-                <img src ="{{ reblog_icon }}" alt="">
+                <a href="{% url "user" reblog_by %}">
+                    <img src ="{{ reblog_icon }}" alt="">
+                </a>
             </p>
         {% endif %}
     </figure>
@@ -18,7 +22,7 @@
         <div class="content">
             <p>
                 <strong>{{ toot.account.display_name }}</strong>
-                <small>@{{ toot.account.acct }}</small>
+                <small><a href="{% url "user" toot.account.acct %}">@{{ toot.account.acct }}</a></small>
                 <a href="{{ toot.url }}">
                     <small>{{ toot.created_at |naturaltime  }}</small>
                 </a>
