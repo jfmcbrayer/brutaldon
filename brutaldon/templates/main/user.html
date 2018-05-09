@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load sanitizer %}
+{% load taglinks %}
 
 {% block title %}
     Brutaldon - {{ timeline }} timelime
@@ -7,12 +9,28 @@
 
 {% block content %}
 
-    <h1 class="title">User information for {{ user.display_name }} (@{{ user.acct }})</h1>
-    <div class="box">
-        <p>FIXME</p>
+    <div class="card">
+        {% if not fullbrutalism %}
+            <div class="card-header" style="background-image: url({{ user.header }});">
+        {% else %}
+            <div class="card-header">
+        {% endif %}
+            <div class="card-header-title title">
+                {{ user.display_name }} (@{{ user.acct }})
+            </div>
+            <figure class="image is-96x96 card-header-icon">
+                    <img src="{{ user.avatar }}" alt="Avatar">
+                </figure>
+            </div>
+        <div class="card-content">
+            <div class="content">
+                {{ user.note | relink_toot | strip_html | safe }}
+            </div>
+        </div>
     </div>
 
-    <h1 class="title">{{ user.display_name }}'s visible toots</h1>
+    <br>
+
     {% for toot in toots %}
         <div class="box">
             {% if toot.reblog %}

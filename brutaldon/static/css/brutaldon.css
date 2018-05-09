@@ -1,3 +1,4 @@
+
 .reblog-icon {
     position: relative;
     top: -24px;
@@ -11,4 +12,13 @@ img.fav-avatar {
 
 .box.active_context {
     background-color: #FFF8DC;
+}
+
+div.card-header-title, div.card-header-icon {
+    color: black;
+    text-shadow:
+    -1px -1px 0 #FFF,
+    1px -1px 0 #FFF,
+    -1px 1px 0 #FFF,
+    1px 1px 0 #FFF;
 }
