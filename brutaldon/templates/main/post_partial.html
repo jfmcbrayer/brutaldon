@@ -33,23 +33,21 @@
         </div>
     </div>
 
-    <div class="field">
-        <div class="file has-name">
+    <div class="field has-addons">
+        <div class="file">
             <label class="file-label">
                 {% render_field form.media_file_1 class+="file-input" %}
                 <span class="file-cta">
                     <span class="file-icon">
                         <i class="fa fa-upload"></i>
                     </span>
-                    <span class="file-label">
+                    <span class="file-label" id="media_filename_1">
                         {{ form.media_file_1.label }}
                     </span>
                 </span>
-                <span class="file-name"  id="media_filename_1">
-                </span>
             </label>
         </div>
-        <div class="control">
+        <div class="control is-expanded"> 
             {% render_field form.media_text_1 class+="input" placeholder="Describe attachment" %}
         </div>
     </div>
