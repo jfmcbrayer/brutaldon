@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,18 +13,18 @@
               href="https://cdn.jsdelivr.net/npm/fork-awesome@1.0.11/css/fork-awesome.min.css"
               integrity="sha256-MGU/JUq/40CFrfxjXb5pZjpoZmxiP2KuICN5ElLFNd8="
               crossorigin="anonymous">
-        <link rel="stylesheet" href="/static/css/brutaldon.css">
+        <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
     {% else %}
-        <link rel="stylesheet" href="/static/css/fullbrutalism.css" >
+        <link rel="stylesheet" href="{% static "css/fullbrutalism.css" %}" >
     {% endif %}
-    <link rel="icon" href="/static/images/brutaldon.png" type="image/png">
+    <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
   </head>
   <body>
       {% block navbar %}
       <nav class="navbar" role="navigation" aria-label="main navigation">
           <div class="navbar-brand">
               <a class="navbar-item">
-                  <img src="/static/images/brutaldon.png" 
+                  <img src="{% static "images/brutaldon.png" %}" 
                        width="32" height="32" alt="Brutaldon">
               </a>
               <!-- navbar items, navbar burger... -->
