@@ -225,9 +225,8 @@ def reply(request, id):
                        'fullbrutalism': fullbrutalism_p(request)})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
+        mastodon = get_mastodon(request)
         if form.is_valid():
-            # create media objects
-            mastodon = get_mastodon(request)
             # create media objects
             media_objects = []
             for index in range(1,5):
@@ -244,6 +243,8 @@ def reply(request, id):
                                  in_reply_to_id=id)
             return redirect(thread, id)
         else:
+            toot = mastodon.status(id)
+            context = mastodon.status_context(id)
             return render(request, 'main/reply.html',
                           {'context': context, 'toot': toot, 'form': form, 'reply': True,
                            'fullbrutalism': fullbrutalism_p(request)})
