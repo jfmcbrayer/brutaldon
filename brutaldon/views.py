@@ -1,33 +1,47 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import never_cache
-from brutaldon.forms import LoginForm, SettingsForm, PostForm
+from django.urls import reverse
+from  django.core.files.uploadhandler import TemporaryFileUploadHandler
+from brutaldon.forms import LoginForm, OAuthLoginForm, SettingsForm, PostForm
 from brutaldon.models import Client, Account
 from mastodon import Mastodon
 from urllib import parse
-from  django.core.files.uploadhandler import TemporaryFileUploadHandler
 
 class NotLoggedInException(Exception):
     pass
 
 def get_mastodon(request):
     if not (request.session.has_key('instance') and
-            request.session.has_key('username')):
+            (request.session.has_key('username') or
+             request.session.has_key('access_token'))):
         raise NotLoggedInException()
 
-    try:
-        client = Client.objects.get(api_base_id=request.session['instance'])
-        user = Account.objects.get(username=request.session['username'])
-    except (Client.DoesNotExist, Client.MultipleObjectsReturned,
-            Account.DoesNotExist, Account.MultipleObjectsReturned):
-        raise NotLoggedInException()
+    if request.session.has_key('access_token'):
+        try:
+            client = Client.objects.get(api_base_id=request.session['instance'])
+        except (Client.DoesNotExist, Client.MultipleObjectsReturned):
+            raise NotLoggedInException()
+        mastodon = Mastodon(
+            client_id = client.client_id,
+            client_secret = client.client_secret,
+            api_base_url = client.api_base_id,
+            access_token = request.session['access_token'],
+            ratelimit_method='pace')
+    else:
+        try:
+            client = Client.objects.get(api_base_id=request.session['instance'])
+            user = Account.objects.get(username=request.session['username'])
+        except (Client.DoesNotExist, Client.MultipleObjectsReturned,
+                Account.DoesNotExist, Account.MultipleObjectsReturned):
+            raise NotLoggedInException()
 
-    mastodon = Mastodon(
-        client_id = client.client_id,
-        client_secret = client.client_secret,
-        access_token = user.access_token,
-        api_base_url = client.api_base_id,
-        ratelimit_method="pace")
+        mastodon = Mastodon(
+            client_id = client.client_id,
+            client_secret = client.client_secret,
+            access_token = user.access_token,
+            api_base_url = client.api_base_id,
+            ratelimit_method="pace")
     return mastodon
 
 def fullbrutalism_p(request):
@@ -69,6 +83,68 @@ def tag(request, tag):
 
 @never_cache
 def login(request):
+    # User posts instance name in form.
+    # POST page redirects user to instance, where they log in.
+    # Instance redirects user to oauth_after_login view.
+    # oauth_after_login view saves credential in session, then redirects to home.
+    if request.method == "GET":
+        form = OAuthLoginForm()
+        return render(request, 'setup/login-oauth.html', {'form': form})
+    elif request.method == "POST":
+        form = OAuthLoginForm(request.POST)
+        redirect_uris = request.build_absolute_uri(reverse('oauth_callback'))
+        if form.is_valid():
+            api_base_url = form.cleaned_data['instance']
+            tmp_base = parse.urlparse(api_base_url.lower())
+            if tmp_base.netloc == '':
+                api_base_url = parse.urlunparse(('https', tmp_base.path,
+                                                 '','','',''))
+            else:
+                api_base_url = api_base_url.lower()
+
+            request.session['instance'] = api_base_url
+            try:
+                client = Client.objects.get(api_base_id=api_base_url)
+            except (Client.DoesNotExist, Client.MultipleObjectsReturned):
+                (client_id, client_secret) = Mastodon.create_app('brutaldon',
+                                    api_base_url=api_base_url,
+                                    redirect_uris=redirect_uris)
+                client = Client(
+                    api_base_id = api_base_url,
+                    client_id=client_id,
+                    client_secret = client_secret)
+                client.save()
+
+            request.session['client_id'] = client.client_id
+            request.session['client_secret'] = client.client_secret
+
+            mastodon = Mastodon(
+                client_id = client.client_id,
+                client_secret = client.client_secret,
+                api_base_url = api_base_url)
+            return redirect(mastodon.auth_request_url(redirect_uris=redirect_uris))
+        else:
+            return render(request, 'setup/login.html', {'form': form})
+
+    else:
+        return redirect(login)
+
+@never_cache
+def oauth_callback(request):
+    code = request.GET.get('code', '')
+    mastodon = Mastodon(client_id=request.session['client_id'],
+                        client_secret=request.session['client_secret'],
+                        api_base_url=request.session['instance'])
+    redirect_uri = request.build_absolute_uri(reverse('oauth_callback'))
+    access_token = mastodon.log_in(code=code,
+                                   redirect_uri=redirect_uri,
+                                   scopes=['read', 'write', 'follow'])
+    request.session['access_token'] = access_token
+    return redirect(home)
+
+
+@never_cache
+def old_login(request):
     if request.method == "GET":
         form = LoginForm()
         return render(request, 'setup/login.html', {'form': form})
@@ -76,7 +152,6 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             api_base_url = form.cleaned_data['instance']
-            # Fixme, make sure this is url
             tmp_base = parse.urlparse(api_base_url.lower())
             if tmp_base.netloc == '':
                 api_base_url = parse.urlunparse(('https', tmp_base.path,

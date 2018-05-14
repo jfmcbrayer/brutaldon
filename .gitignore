@@ -107,3 +107,5 @@ db.sqlite3
 include/
 lib64
 pip-selfcheck.json
+/Pipfile.lock
+/dev_https

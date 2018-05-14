@@ -13,6 +13,10 @@ class LoginForm(forms.Form):
                                max_length=256)
     password = forms.CharField(widget=forms.PasswordInput())
 
+class OAuthLoginForm(forms.Form):
+    instance = forms.CharField(label="Instance",
+                               max_length=256)
+
 class SettingsForm(forms.Form):
     fullbrutalism = forms.BooleanField(label="Use FULLBRUTALISM mode?",
                                        required=False,

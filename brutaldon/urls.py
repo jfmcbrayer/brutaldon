@@ -22,6 +22,7 @@ urlpatterns = [
     path('home', views.home, name='home'),
     path('login', views.login, name="login"),
     path('logout', views.logout, name='logout'),
+    path('oauth_callback', views.oauth_callback, name="oauth_callback"),
     path('error', views.error, name='error'),
     path('note', views.note, name='note'),
     path('local', views.local, name='local'),
