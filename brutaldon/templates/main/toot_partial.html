@@ -75,6 +75,7 @@
                         </i></span>
                     </a>
                 </div>
+                {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
                 <div class="level-item">
                     <a href="{% url "boost" toot.id %}">
                         <span class="icon is-small">
@@ -88,6 +89,7 @@
                         </span>
                     </a>
                 </div>
+                {% endif %}
                 <div class="level-item">
                     <a href="{% url "fav" toot.id %}">
                         <span class="icon is-small">
