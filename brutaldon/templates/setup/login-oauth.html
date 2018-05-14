@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <h1 class="title">Log in to your instance</h1>
+
+    <form method="post" action="{% url "login" %}">
+        {% csrf_token %}
+        <div class="field">
+            <label class="label">{{ form.instance.label  }}</label>
+            <div class="control has-icons-left">
+                {% render_field form.instance class+="input" %}
+                <span class="icon is-small is-left">
+                    <i class="fa fa-mastodon"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <input type="submit" name="log_in"
+                   value="Log in" class="button is-primary" >
+        </div>
+    </form>
+
+
+{% endblock %}
