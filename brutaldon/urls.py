@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home', views.home, name='home'),
     path('login', views.login, name="login"),
+    path('oldlogin', views.old_login, name="oldlogin"),
     path('logout', views.logout, name='logout'),
     path('oauth_callback', views.oauth_callback, name="oauth_callback"),
     path('error', views.error, name='error'),

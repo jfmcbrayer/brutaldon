@@ -22,5 +22,13 @@
         </div>
     </form>
 
+    <div class="notification">
+        <button class="delete"></button>
+        <div>
+            Not able to log in with this form? Maybe your brutaldon instance isn't
+            visible on the internet to your Mastodon instance? If so, you can use
+            the <a href="{% url "oldlogin" %}">old login form</a>.
+        </div>
+    </div>
 
 {% endblock %}

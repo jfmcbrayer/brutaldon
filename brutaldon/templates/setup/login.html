@@ -4,7 +4,7 @@
 {% block content %}
     <h1 class="title">Log in to your instance</h1>
 
-    <form method="post" action="{% url "login" %}">
+    <form method="post" action="{% url "oldlogin" %}">
         {% csrf_token %}
         <div class="field">
             <label class="label">{{ form.instance.label  }}</label>
@@ -46,7 +46,9 @@
             This information is only used to log you in to your instance for the
             first time. Brutaldon never stores your username and password; it
             only uses it to acquire a token which you can disable from the
-            settings page of your Mastodon instance.
+            settings page of your Mastodon instance. However, you do need to
+            absolutely trust the person running this copy of brutaldon! If that's
+            not the case, use the <a href="{% url "login" %}">OAuth login form</a>.
         </p>
     </div>
 
