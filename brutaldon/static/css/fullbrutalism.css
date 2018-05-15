@@ -146,6 +146,22 @@ input[type=button] {width: auto; overflow: visible;}
 body {
     font-family: "Courier New", "Courier", "FreeMono", "Liberation Mono", monospace;
     background-color: #CCC;
+    color: #000;
+}
+
+a {
+    color: blue;
+    text-decoration: underline;
+}
+
+a:active {
+    color: red;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: purple;
+    text-decoration: underline;
 }
 
 img {
