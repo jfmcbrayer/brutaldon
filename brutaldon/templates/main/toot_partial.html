@@ -1,6 +1,7 @@
 {% load humanize %}
 {% load sanitizer %}
 {% load taglinks %}
+{% load static %}
 
 <article class="media">
     <figure class="media-left">
@@ -46,7 +47,11 @@
                     <div class="level-left">
                         {% for media in toot.media_attachments %}
                             <a class="level-item" href="{{ media.url }}">
-                                <img src="{{ media.preview_url }}"
+                                {% if toot.sensitive %}
+                                    <img src="{% static "images/sensitive.png" %}"
+                                {% else %}
+                                    <img src="{{ media.preview_url }}"
+                                {% endif %}
                                      alt="{% if media.description  %}
                                           {{ media.description }}
                                      {% elif media.text_url %}
