@@ -65,6 +65,7 @@
     </div>
         </form>
 
+        {% if not fullbrutalism %}
 <script type="application/javascript">
 var file = document.getElementById("id_media_file_1");
 file.onchange = function(){
@@ -75,3 +76,4 @@ file.onchange = function(){
 };
 
 </script>
+{% endif %}
