@@ -2,7 +2,7 @@
 {% load humanize %}
 
 {% block title %}
-    Brutaldon - {{ timeline }} timelime
+    Brutaldon - {{ timeline_name }} timelime
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
     </div>
     <hr class="is-hidden">
 {% endif %}
-    <h1 class="title">Your {{ timeline }} timeline</h1>
+    <h1 class="title">Your {{ timeline_name }} timeline</h1>
     {% for toot in toots %}
     <div class="box">
         {% if toot.reblog %}
@@ -25,4 +25,14 @@
         <hr class="is-hidden">
     {% endfor %}
 
+    {% block pagination %}
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        {% if prev %}
+            <a class="pagination-next" href="{% url 'home_prev' prev.since_id %}">Newer</a>
+        {% endif %}
+        {% if next %}
+            <a class="pagination-previous" href="{% url 'home_next' next.max_id %}">Older</a>
+        {% endif %}
+    </nav>
+    {% endblock %}
 {% endblock %}

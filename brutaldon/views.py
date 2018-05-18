@@ -2,7 +2,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import never_cache
 from django.urls import reverse
-from  django.core.files.uploadhandler import TemporaryFileUploadHandler
+from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from brutaldon.forms import LoginForm, OAuthLoginForm, SettingsForm, PostForm
 from brutaldon.models import Client, Account
 from mastodon import Mastodon
@@ -51,25 +51,37 @@ def fullbrutalism_p(request):
         fullbrutalism = False
     return fullbrutalism
 
-def timeline(request, timeline='home', timeline_name='Home'):
+def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None):
     try:
         mastodon = get_mastodon(request)
     except NotLoggedInException:
         return redirect(login)
-    data = mastodon.timeline(timeline)
+    data = mastodon.timeline(timeline, limit=100, max_id=max_id, since_id=since_id)
     form = PostForm()
-    return render(request, 'main/timeline.html',
-                  {'toots': data, 'form': form, 'timeline': timeline_name,
-                   'fullbrutalism': fullbrutalism_p(request)})
+    try:
+        prev = data[0]._pagination_prev
+        if len(mastodon.timeline(since_id=prev['since_id'])) == 0:
+            prev = None
+    except IndexError:
+        prev = None
+    try:
+        next = data[-1]._pagination_next
+    except IndexError:
+        next = None
+    return render(request, 'main/%s_timeline.html' % timeline,
+                  {'toots': data, 'form': form, 'timeline': timeline,
+                   'timeline_name': timeline_name,
+                   'fullbrutalism': fullbrutalism_p(request),
+                  'prev': prev, 'next': next})
 
-def home(request):
-    return timeline(request, 'home', 'Home')
+def home(request, next=None, prev=None):
+    return timeline(request, 'home', 'Home', max_id=next, since_id=prev)
 
-def local(request):
-    return timeline(request, 'local', 'Local')
+def local(request, next=None, prev=None):
+    return timeline(request, 'local', 'Local', max_id=next, since_id=prev)
 
-def fed(request):
-    return timeline(request, 'public', 'Federated')
+def fed(request, next=None, prev=None):
+    return timeline(request, 'public', 'Federated', max_id=next, since_id=prev)
 
 def tag(request, tag):
     try:

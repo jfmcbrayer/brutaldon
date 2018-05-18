@@ -1,0 +1,12 @@
+{% extends "main/timeline.html" %}
+
+{% block pagination %}
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        {% if prev %}
+            <a class="pagination-next" href="{% url 'fed_prev' prev.since_id %}">Newer</a>
+        {% endif %}
+        {% if next %}
+            <a class="pagination-previous" href="{% url 'fed_next' next.max_id %}">Older</a>
+        {% endif %}
+    </nav>
+{% endblock %}
