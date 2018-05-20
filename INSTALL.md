@@ -40,7 +40,8 @@ WSGIDaemonProcess brutaldon python-path=/usr/local/share/brutaldon python-home=/
 
 <Directory /usr/local/share/brutaldon/brutaldon>
     <Files wsgi.py>
-        Require all granted                                                      </Files>
+    Require all granted                                                    
+    </Files>
 </Directory>
 ```
 
