@@ -15,17 +15,17 @@ You can install it just with  `pip install pipenv`.
 
 Development or local install
 ------------------------------------------------
-In the top brutaldon directory, run `pipenv install`. This will install all the dependencies. Then run `pipenv run python ./manage.py migrate`. That will create a SQLite database the application needs. Then run `pipenv run python ./manage.py migrate`. That will start a local server on http://localhost:8000/.
+In the top brutaldon directory, run `pipenv install`. This will install all the dependencies. Then run `pipenv run python ./manage.py migrate`. That will create a SQLite database the application needs. Then run `pipenv run python ./manage.py runserver`. That will start a local server on http://localhost:8000/.
 
 Point your browser to that address and log in to your instance. You will have to log in with the alternate (username and password) method. 
 
 Server installation
 ----------------------------------------
-This will depend on your server setup, and you should consult [Deploying Django][dd]. Be sure to read the [Deployment checklist][dc], because some things in it are security critical. 
+This will depend on your server setup, and you should consult [Deploying Django][dd]. Be sure to read the [Deployment checklist][dc], because some things in it are security critical. You will also want to set up a database. Brutaldon doesn't use the database very heavily, so if you only have a few users, the default SQLite is probably fine and doesn't require any additional setup.
 
-One common step would be to install dependencies like this: `PIPENV_VENV_IN_PROJECT=1 pipenv install`. This will install dependencies within the project folder.
+One common step would be to install dependencies like this: `PIPENV_VENV_IN_PROJECT=1 pipenv install`. This will install dependencies within the project folder. 
 
-Then edit brutaldon/settings.py. You definitely need to change the values of SECRET_KEY and ALLOWED_HOSTS.
+Then edit brutaldon/settings.py. You definitely need to change the values of SECRET_KEY and ALLOWED_HOSTS. Also edit the database parameters to match the database you chose. Then run `pipenv run python ./manage.py migrate` to populate the database.
 
 I installed brutaldon with Apache and mod_wsgi. If you installed brutaldon in /usr/local/share/, you'd add config lines something like this to the virtual host brutaldon is installed in.
 
