@@ -9,7 +9,8 @@ Brutaldon is a [brutalist][0], [Web 1.0][0.5] web interface for [Mastodon][1]. I
 [3]: https://w3m.sourceforge.net/
 [4]: http://elinks.or.cz/
 
-Brutaldon is not ready for use yet.
+Brutaldon is ready for day to day use, but is still missing many features.
+Please see the issues tracker.
 
 ## Roadmap
 
@@ -18,7 +19,7 @@ Brutaldon is not ready for use yet.
 * [X] Multi-user, multi-instance support
 * [X] Add support for reading local and federated timelines, notifications, favorites, threads
 * [X] Add support for tag timelines
-* [ ] Add support for viewing profiles
+* [X] Add support for viewing profiles
 * [X] Add support for posting.
 * [X] Add support for posting media.
 * [X] Add support for favoriting and boosting toots.
