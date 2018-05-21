@@ -152,6 +152,8 @@ def oauth_callback(request):
                                    redirect_uri=redirect_uri,
                                    scopes=['read', 'write', 'follow'])
     request.session['access_token'] = access_token
+    user = mastodon.account_verify_credentials()
+    request.session['user'] = user.acct
     return redirect(home)
 
 
@@ -204,6 +206,8 @@ def old_login(request):
                 account.access_token = access_token
                 account.save()
                 request.session['username'] = username
+                user = mastodon.account_verify_credentials()
+                request.session['user'] = user.acct
 
                 return redirect(home)
             except:
