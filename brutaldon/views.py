@@ -27,7 +27,7 @@ def get_mastodon(request):
             client_secret = client.client_secret,
             api_base_url = client.api_base_id,
             access_token = request.session['access_token'],
-            ratelimit_method='pace')
+            ratelimit_method='throw')
     else:
         try:
             client = Client.objects.get(api_base_id=request.session['instance'])
@@ -41,7 +41,7 @@ def get_mastodon(request):
             client_secret = client.client_secret,
             access_token = user.access_token,
             api_base_url = client.api_base_id,
-            ratelimit_method="pace")
+            ratelimit_method="throw")
     return mastodon
 
 def fullbrutalism_p(request):
