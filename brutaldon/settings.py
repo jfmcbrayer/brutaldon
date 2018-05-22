@@ -131,3 +131,7 @@ SANITIZER_ALLOWED_ATTRIBUTES = ['href', 'src']
 # File upload settings.
 # Important: media will not work if you change this.
 FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.TemporaryFileUploadHandler"]
+
+# Session serialization
+# Important: whatever you choose has to be able to serialize DateTime, so not JSON.
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

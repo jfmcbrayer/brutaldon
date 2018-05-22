@@ -57,7 +57,7 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
     except NotLoggedInException:
         return redirect(login)
     data = mastodon.timeline(timeline, limit=100, max_id=max_id, since_id=since_id)
-    form = PostForm()
+    form = PostForm(initial={'visibility': request.session['user'].source.privacy})
     try:
         prev = data[0]._pagination_prev
         if len(mastodon.timeline(since_id=prev['since_id'])) == 0:
@@ -153,7 +153,7 @@ def oauth_callback(request):
                                    scopes=['read', 'write', 'follow'])
     request.session['access_token'] = access_token
     user = mastodon.account_verify_credentials()
-    request.session['user'] = user.acct
+    request.session['user'] = user
     return redirect(home)
 
 
@@ -207,7 +207,7 @@ def old_login(request):
                 account.save()
                 request.session['username'] = username
                 user = mastodon.account_verify_credentials()
-                request.session['user'] = user.acct
+                request.session['user'] = user
 
                 return redirect(home)
             except:
@@ -269,7 +269,7 @@ def settings(request):
 @never_cache
 def toot(request):
     if request.method == 'GET':
-        form = PostForm()
+        form = PostForm(initial={'visibility': request.session['user'].source.privacy})
         return render(request, 'main/post.html',
                       {'form': form,
                        'fullbrutalism': fullbrutalism_p(request)})
@@ -288,6 +288,8 @@ def toot(request):
                                             description=request.POST.get('media_text_'
                                                                          +str(index),
                                                                          None)))
+            if form.cleaned_data['visibility'] == '':
+                form.cleaned_data['visibility'] = request.session['user'].source.privacy
             mastodon.status_post(status=form.cleaned_data['status'],
                                  visibility=form.cleaned_data['visibility'],
                                  spoiler_text=form.cleaned_data['spoiler_text'],

@@ -1,6 +1,7 @@
 from django import forms
 
-PRIVACY_CHOICES = (('public', 'Public'),
+PRIVACY_CHOICES = (('default', 'Default'),
+                   ('public', 'Public'),
                    ('unlisted', 'Unlisted'),
                    ('private', 'Private'),
                    ('direct', 'Direct'))
@@ -29,7 +30,8 @@ class PostForm(forms.Form):
     """def status_post(self, status, in_reply_to_id=None, media_ids=None,
 sensitive=False, visibility=None, spoiler_text=None):"""
     status = forms.CharField(label="Toot", max_length=500, widget=forms.Textarea)
-    visibility = forms.ChoiceField(label="Toot visibility", choices=PRIVACY_CHOICES)
+    visibility = forms.ChoiceField(label="Toot visibility", choices=PRIVACY_CHOICES,
+                                   required=False)
     spoiler_text = forms.CharField(label="CW or Subject", max_length=500,
                                    required=False)
     media_file_1 = forms.FileField(label = "Media attachment 1",

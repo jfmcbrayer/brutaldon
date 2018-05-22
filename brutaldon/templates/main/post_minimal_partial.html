@@ -1,0 +1,27 @@
+{% load widget_tweaks %}
+<form method="post" action="{% url "toot" %}" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="field" >
+        <label class="label" >{{ form.status.label }}</label>
+        <div class="control">
+            {% render_field form.status class+="textarea is-primary" rows="4" %}
+        </div>
+    </div>
+
+    <div>
+        {{ form.errors }}
+    </div>
+
+    <div class="field has-addons">
+        <div class="control">
+            <input type="submit" class="button is-primary"
+                   name="toot" value="Toot">
+        </div>
+    </div>
+    <div class="field">
+        <a href="{% url "toot" %}">
+            Complete toot form (media, etc)
+        </a>
+    </div>
+</form>
