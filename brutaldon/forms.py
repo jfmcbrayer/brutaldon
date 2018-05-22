@@ -1,7 +1,6 @@
 from django import forms
 
-PRIVACY_CHOICES = (('default', 'Default'),
-                   ('public', 'Public'),
+PRIVACY_CHOICES = (('public', 'Public'),
                    ('unlisted', 'Unlisted'),
                    ('private', 'Private'),
                    ('direct', 'Direct'))

@@ -42,5 +42,6 @@ urlpatterns = [
     path('reply/<int:id>', views.reply, name='reply'),
     path('fav/<int:id>', views.fav, name='fav'),
     path('boost/<int:id>', views.boost, name='boost'),
+    path('delete/<int:id>', views.delete, name='delete'),
     path('', views.home),
 ]

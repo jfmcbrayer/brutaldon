@@ -112,6 +112,11 @@
                 </div>
             </div>
             <div class="level-right">
+                {% if toot.account.acct == own_username %}
+                    <a class="level-item" href="{% url "delete" toot.id %}">
+                        delete
+                    </a>
+                {% endif %}
                 <span class="level-item">
                     {{ toot.visibility }}
                 </span>
