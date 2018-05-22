@@ -333,6 +333,7 @@ def reply(request, id):
             mastodon.status_post(status=form.cleaned_data['status'],
                                  visibility=form.cleaned_data['visibility'],
                                  spoiler_text=form.cleaned_data['spoiler_text'],
+                                 media_ids=media_objects,
                                  in_reply_to_id=id)
             return redirect(thread, id)
         else:
