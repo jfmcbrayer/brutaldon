@@ -355,7 +355,7 @@ def fav(request, id):
         return redirect(thread, id)
     else:
         return render(request, 'main/fav.html',
-                      {"toot": toot,
+                      {"toot": toot, "confirm_page": True,
                        'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
@@ -371,5 +371,5 @@ def boost(request, id):
         return redirect(thread, id)
     else:
         return render(request, 'main/boost.html',
-                      {"toot": toot,
+                      {"toot": toot, 'confirm_page': True,
                        "fullbrutalism": fullbrutalism_p(request)})

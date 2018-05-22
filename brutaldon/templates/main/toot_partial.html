@@ -71,6 +71,8 @@
             <br>
         </div>
         <p class="is-hidden"></p>
+
+        {% if not confirm_page %}
         <nav class="level is-mobile">
             <div class="level-left">
                 <div class="level-item">
@@ -118,6 +120,7 @@
                 </a>
             </div>
         </nav>
+        {% endif %}
     </div>
     <div class="media-right">
     </div>
