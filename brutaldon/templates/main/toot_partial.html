@@ -33,13 +33,17 @@
                 {% endif %}
             </p>
             {% if toot.spoiler_text %}
-                <p>
-                    <strong>{{ toot.spoiler_text }} </strong>
-                </p>
-            {% endif %}
+                <details>
+                    <summary><strong>{{ toot.spoiler_text }} </strong></summary>
+                    <div class="toot">
+                        {{ toot.content | relink_toot | strip_html | safe }}
+                    </div>
+                </details>
+            {% else %}
             <div class="toot">
                 {{ toot.content | relink_toot | strip_html | safe }}
             </div>
+            {% endif %}
 
             {% if toot.media_attachments %}
                 <br>
