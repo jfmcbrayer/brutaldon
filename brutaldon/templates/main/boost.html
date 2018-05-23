@@ -3,34 +3,32 @@
 {% block title  %} Brutaldon - confirm boost {% endblock %}
 
 {% block content %}
-    {% if toot.reblogged %}
-        <h1 class="title">Unboost that toot?</h1>
-    {% else %}
-        <h1 class="title" >Boost that toot?</h1>
-    {% endif %}
+{% if toot.reblogged %}
+<h1 class="title">Unboost that toot?</h1>
+{% else %}
+<h1 class="title" >Boost that toot?</h1>
+{% endif %}
 
-    <div class="box">
-        {% include "main/toot_partial.html" with toot=toot %}
-    </div>
-    <form method="POST" action="{% url "boost" toot.id %}">
-        {% csrf_token %}
-        <div class="level is-mobile">
-            <div class="level-left">
-                <div class="level-item">
-                    <input class="button" type="submit" name="cancel" value="Cancel">
-                </div>
-            </div>
-            <div class="level-right">
-                <div class="level-item">
-                    {% if toot.reblogged %}
-                        <input class="button is-primary" type="submit" name="boost"
-                               value="Unboost">
-                    {% else %}
-                        <input class="button is-primary" type="submit" name="boost"
-                               value="Boost">
-                    {% endif %}
-                </div>
+{% include "main/toot_partial.html" with toot=toot %}
+<form method="POST" action="{% url "boost" toot.id %}">
+    {% csrf_token %}
+    <div class="level is-mobile">
+        <div class="level-left">
+            <div class="level-item">
+                <input class="button" type="submit" name="cancel" value="Cancel">
             </div>
         </div>
-    </form>
+        <div class="level-right">
+            <div class="level-item">
+                {% if toot.reblogged %}
+                <input class="button is-primary" type="submit" name="boost"
+                       value="Unboost">
+                {% else %}
+                <input class="button is-primary" type="submit" name="boost"
+                       value="Boost">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</form>
 {% endblock %}
