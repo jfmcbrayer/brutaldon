@@ -27,9 +27,14 @@
                   <img src="{% static "images/brutaldon.png" %}" 
                        width="32" height="32" alt="Brutaldon">
               </a>
-              <!-- navbar items, navbar burger... -->
+              <a role="button" class="navbar-burger" aria-label="menu"
+                 aria-expanded="false" data-target="navMenu">
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+              </a>              <!-- navbar items, navbar burger... -->
           </div>
-          <div class="navbar-menu is-active">
+          <div class="navbar-menu" id="navMenu">
               <!-- navbar start, navbar end -->
               <div class="navbar-start">
                   <a href="{% url "home" %}" class="navbar-item">Home</a>
@@ -56,5 +61,35 @@
       {% endblock %}
     </div>
   </section>
+  {% if not fullbrutalism %}
+      <script type="application/javascript">
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Get all "navbar-burger" elements
+    var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(function ($el) {
+            $el.addEventListener('click', function () {
+
+                // Get the target from the "data-target" attribute
+                var target = $el.dataset.target;
+                var $target = document.getElementById(target);
+
+                // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+                $el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+    }
+
+});
+      </script>
+  {% endif %}
+
   </body>
 </html>
