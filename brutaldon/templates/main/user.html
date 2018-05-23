@@ -4,26 +4,26 @@
 {% load taglinks %}
 
 {% block title %}
-    Brutaldon - {{ timeline }} timelime
+Brutaldon - {{ timeline }} timelime
 {% endblock %}
 
 {% block content %}
 
-    <div class="card">
-        {% if not fullbrutalism %}
-            <div class="card-header" style="background-image: url({{ user.header }});">
+<div class="card">
+    {% if not fullbrutalism %}
+    <div class="card-header" style="background-image: url({{ user.header }});">
         {% else %}
-            <div class="card-header">
-        {% endif %}
+        <div class="card-header">
+            {% endif %}
             <div class="card-header-title title">
                 <a href="{{ user.url }}">
                     {{ user.display_name }}
                 </a>
             </div>
             <figure class="image is-96x96 card-header-icon">
-                    <img src="{{ user.avatar }}" alt="Avatar">
-                </figure>
-            </div>
+                <img src="{{ user.avatar }}" alt="Avatar">
+            </figure>
+        </div>
         <div class="card-content">
             <div class="content">
                 {{ user.note | relink_toot | strip_html | safe }}
@@ -34,14 +34,12 @@
     <br>
 
     {% for toot in toots %}
-        <div class="box">
-            {% if toot.reblog %}
-                {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar %}
-            {% else %}
-                {% include "main/toot_partial.html" with toot=toot reblog=False %}
-            {% endif %}
-        </div>
-        <hr class="is-hidden">
+    {% if toot.reblog %}
+    {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar %}
+    {% else %}
+    {% include "main/toot_partial.html" with toot=toot reblog=False %}
+    {% endif %}
+    <hr class="is-hidden">
     {% endfor %}
 
     <nav class="pagination" role="navigation" aria-label="pagination">
@@ -61,4 +59,4 @@
             </li>
         </ul>
     </nav>
-{% endblock %}
+    {% endblock %}
