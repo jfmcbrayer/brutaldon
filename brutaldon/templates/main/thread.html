@@ -2,7 +2,7 @@
 {% load humanize %}
 
 {% block title %}
-Brutaldon - thread 
+Brutaldon - thread
 {% endblock %}
 
 {% comment %}
@@ -12,26 +12,20 @@ mastodon.status_context(<numerical id>)
     'ancestors': # A list of toot dicts
     'descendants': # A list of toot dicts
     }
-{% endcomment %}
+    {% endcomment %}
 
-{% block content %}
+    {% block content %}
     <h1 class="title">Thread</h1>
     {% for ancestor in context.ancestors %}
-        <div class="box">
-            {% include "main/toot_partial.html" with toot=ancestor %}
-        </div>
-        <hr class="is-hidden">
+    {% include "main/toot_partial.html" with toot=ancestor %}
+    <hr class="is-hidden">
     {% endfor %}
-    <div class="box active_context">
-        {% include "main/toot_partial.html" with toot=toot %}
-    </div>
+        {% include "main/toot_partial.html" with toot=toot active=True %}
     <hr class="is-hidden">
     {% for descendant in context.descendants %}
-        <div class="box">
-            {% include "main/toot_partial.html" with toot=descendant %}
-        </div>
-        <hr class="is-hidden">
+    {% include "main/toot_partial.html" with toot=descendant %}
+    <hr class="is-hidden">
     {% endfor %}
 
 
-{% endblock %}
+    {% endblock %}

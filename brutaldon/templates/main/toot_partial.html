@@ -3,7 +3,12 @@
 {% load taglinks %}
 {% load static %}
 
-<article class="media">
+{% if active %}
+    <article class="media active-context">
+{% else %}
+    <article class="media">
+{% endif %}
+
     <figure class="media-left">
         <p class="image is-64x64">
             <a href="{% url "user" toot.account.acct %}">

@@ -10,9 +10,6 @@ img.fav-avatar {
 
 }
 
-.box.active_context {
-    background-color: #FFF8DC;
-}
 
 div.card-header-title, div.card-header-icon {
     color: black;
@@ -35,6 +32,10 @@ div.card-header-title, div.card-header-icon {
 figure.media-left p.image a img
 {
     border-radius: 5px;
+}
+
+.active-context {
+    background-color: #FFF8DC;
 }
 
 @media screen and (max-width: 768px) {
