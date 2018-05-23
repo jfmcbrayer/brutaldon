@@ -20,42 +20,41 @@
         {% endif %}
     </figure>
     <div class="media-content">
-        <div class="content">
-            <p>
-                <strong>{{ toot.account.display_name }}</strong>
-                <small><a href="{% url "user" toot.account.acct %}">@{{ toot.account.acct }}</a></small>
-                <a href="{{ toot.url }}">
-                    <small>{{ toot.created_at |naturaltime  }}</small>
-                </a>
-                {% if reblog %}
-                    <br>
-                    Boosted by @{{ reblog_by }}
-                {% endif %}
-            </p>
-            {% if toot.spoiler_text %}
-                <details>
-                    <summary><strong>{{ toot.spoiler_text }} </strong></summary>
-                    <div class="toot">
-                        {{ toot.content | relink_toot | strip_html | safe }}
-                    </div>
-                </details>
-            {% else %}
+        <p>
+            <strong>{{ toot.account.display_name }}</strong>
+            <small><a href="{% url "user" toot.account.acct %}">@{{ toot.account.acct }}</a></small>
+            <a href="{{ toot.url }}">
+                <small>{{ toot.created_at |naturaltime  }}</small>
+            </a>
+            {% if reblog %}
+                <br>
+                Boosted by @{{ reblog_by }}
+            {% endif %}
+        </p>
+        {% if toot.spoiler_text %}
+            <details class="toot">
+                <summary><strong>{{ toot.spoiler_text }} </strong></summary>
+                <div class="toot">
+                    {{ toot.content | relink_toot | strip_html | safe }}
+                </div>
+            </details>
+        {% else %}
             <div class="toot">
                 {{ toot.content | relink_toot | strip_html | safe }}
             </div>
-            {% endif %}
+        {% endif %}
 
-            {% if toot.media_attachments %}
-                <br>
-                <div class="level">
-                    <div class="level-left">
-                        {% for media in toot.media_attachments %}
-                            <a class="level-item" href="{{ media.url }}">
-                                {% if toot.sensitive %}
-                                    <img src="{% static "images/sensitive.png" %}"
-                                {% else %}
-                                    <img src="{{ media.preview_url }}"
-                                {% endif %}
+        {% if toot.media_attachments %}
+            <br>
+            <div class="level">
+                <div class="level-left">
+                    {% for media in toot.media_attachments %}
+                        <a class="level-item" href="{{ media.url }}">
+                            {% if toot.sensitive %}
+                                <img src="{% static "images/sensitive.png" %}"
+                            {% else %}
+                                <img src="{{ media.preview_url }}"
+                            {% endif %}
                                      alt="{% if media.description  %}
                                           {{ media.description }}
                                      {% elif media.text_url %}
@@ -67,42 +66,36 @@
                                      title="{{ media.description }}"
                                      {% endif %}
                                      class="image is-128x128">
-                            </a>
-                        {% endfor %}
-                    </div>
+                        </a>
+                    {% endfor %}
                 </div>
-            {% endif %}
-            <br>
-        </div>
+            </div>
+        {% endif %}
+        <br>
         <p class="is-hidden"></p>
 
         {% if not confirm_page %}
-        <nav class="level is-mobile">
-            <div class="level-left">
-                <div class="level-item">
-                    <a href="{% url "reply" toot.id %}">
+            <nav class="level is-mobile">
+                <div class="level-left">
+                    <a href="{% url "reply" toot.id %}" class="level-item">
                         <span class="icon is-small"><i class="fa fa-reply">
                             <span class="is-invisible">Reply</span>
                         </i></span>
                     </a>
-                </div>
-                {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
-                <div class="level-item">
-                    <a href="{% url "boost" toot.id %}">
-                        <span class="icon is-small">
-                            {% if toot.reblogged %}
-                                <i class="fa fa-retweet has-text-warning">
-                            {% else %}
-                                    <i class="fa fa-retweet" >
-                            {% endif %}
-                            <span class="is-invisible" >Boost</span>
-                                    </i>
-                        </span>
-                    </a>
-                </div>
-                {% endif %}
-                <div class="level-item">
-                    <a href="{% url "fav" toot.id %}">
+                    {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
+                        <a href="{% url "boost" toot.id %}" class="level-item">
+                            <span class="icon is-small">
+                                {% if toot.reblogged %}
+                                    <i class="fa fa-retweet has-text-warning">
+                                {% else %}
+                                        <i class="fa fa-retweet" >
+                                {% endif %}
+                                <span class="is-invisible" >Boost</span>
+                                        </i>
+                            </span>
+                        </a>
+                    {% endif %}
+                    <a href="{% url "fav" toot.id %}" class="level-item">
                         <span class="icon is-small">
                             {% if toot.favourited %}
                                 <i class="fa fa-heart has-text-warning">
@@ -114,23 +107,20 @@
                         </span>
                     </a>
                 </div>
-            </div>
-            <div class="level-right">
-                {% if toot.account.acct == own_username %}
-                    <a class="level-item" href="{% url "delete" toot.id %}">
-                        delete
+                <div class="level-right">
+                    {% if toot.account.acct == own_username %}
+                        <a class="level-item" href="{% url "delete" toot.id %}">
+                            delete
+                        </a>
+                    {% endif %}
+                    <span class="level-item">
+                        {{ toot.visibility }}
+                    </span>
+                    <a class="level-item" href="{% url "thread" toot.id %}">
+                        thread
                     </a>
-                {% endif %}
-                <span class="level-item">
-                    {{ toot.visibility }}
-                </span>
-                <a class="level-item" href="{% url "thread" toot.id %}">
-                    thread
-                </a>
-            </div>
-        </nav>
+                </div>
+            </nav>
         {% endif %}
-    </div>
-    <div class="media-right">
     </div>
 </article>

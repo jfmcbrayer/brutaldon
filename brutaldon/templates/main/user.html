@@ -16,10 +16,8 @@
             <div class="card-header">
         {% endif %}
             <div class="card-header-title title">
-                {{ user.display_name }}
-
                 <a href="{{ user.url }}">
-                    (@{{ user.acct }})
+                    {{ user.display_name }}
                 </a>
             </div>
             <figure class="image is-96x96 card-header-icon">

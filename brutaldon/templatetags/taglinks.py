@@ -44,3 +44,15 @@ def relink_mentions(value):
 @register.filter
 def relink_toot(value):
     return relink_tags(relink_mentions(value))
+
+@register.filter
+def localuser(value):
+    '''Convert a remote user link to local'''
+    try:
+        parsed = parse.urlparse(value)
+        instance = parsed[1]
+        user = parsed[2][2:]
+        local = reverse('user', args=[user+'@'+instance])
+    except:
+        local = value
+    return local
