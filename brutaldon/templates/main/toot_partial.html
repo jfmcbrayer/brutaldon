@@ -20,7 +20,8 @@
         {% endif %}
     </figure>
     <div class="media-content">
-        <p>
+        <div class="content">
+            <p>
             <strong>{{ toot.account.display_name }}</strong>
             <small><a href="{% url "user" toot.account.acct %}">@{{ toot.account.acct }}</a></small>
             <a href="{{ toot.url }}">
@@ -122,5 +123,7 @@
                 </div>
             </nav>
         {% endif %}
+        </div>
     </div>
+    <div class="media-right"></div>
 </article>
