@@ -192,12 +192,6 @@ img {
     clear: both;
 }
 
-.box {
-    padding: 4px;
-    margin: 4px;
-    border: 8px ridge #CCC;
-}
-
 .image.is-32x32, .is-32x32 img {
     width: 32px;
     height: 32px;
@@ -208,6 +202,12 @@ img {
     height: 64px;
 }
 
-.box.active_context {
+.media {
+    padding: 4px;
+    margin: 4px;
+    border: 8px ridge #CCC;
+}
+
+.media.active_context {
     background-color: #DDD;
 }
