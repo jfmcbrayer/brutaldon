@@ -398,3 +398,10 @@ def delete(request, id):
         return render(request, 'main/delete.html',
                       {"toot": toot, 'confirm_page': True,
                        "fullbrutalism": fullbrutalism_p(request)})
+
+def about(request):
+    return render(request, 'main/about.html',
+                      {"fullbrutalism": fullbrutalism_p(request)})
+def privacy(request):
+    return render(request, 'main/privacy.html',
+                      {"fullbrutalism": fullbrutalism_p(request)})

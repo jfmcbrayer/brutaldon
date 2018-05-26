@@ -19,6 +19,8 @@ from brutaldon import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('about', views.about, name='about'),
+    path('privacy', views.privacy, name='privacy'),
     path('home/next/<int:next>', views.home, name='home_next'),
     path('home/prev/<int:prev>', views.home, name='home_prev'),
     path('home', views.home, name='home'),
