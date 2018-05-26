@@ -52,7 +52,7 @@ mastodon.notifications()[0]
     <small>{{ note.created_at |naturaltime  }}</small>
     </span>)
 </p>
-{% include "main/toot_partial.html" with toot=note.status reblog=True reblog_by=note.account.acct reblog_icon=note.account.avatar %}
+{% include "main/toot_partial.html" with toot=note.status %}
 <hr class="is-hidden">
 {% elif note.type == 'follow' %}
 <article class="media">
