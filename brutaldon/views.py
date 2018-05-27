@@ -400,8 +400,8 @@ def delete(request, id):
                        "fullbrutalism": fullbrutalism_p(request)})
 
 def about(request):
-    return render(request, 'main/about.html',
+    return render(request, 'about.html',
                       {"fullbrutalism": fullbrutalism_p(request)})
 def privacy(request):
-    return render(request, 'main/privacy.html',
+    return render(request, 'privacy.html',
                       {"fullbrutalism": fullbrutalism_p(request)})

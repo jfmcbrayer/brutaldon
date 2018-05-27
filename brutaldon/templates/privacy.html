@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1 class="title">Privacy statement</h1>
+<h2 class="subtitle">A shameful attempt at ass-covering</h2>
+
+<section class="section">
+    <h2 class="subtitle">Summary</h2>
+    <p>
+        Brutaldon tries to collect as little information about you as possible. The information that it collects in order to log you in to your instance and to implement client features is stored as transiently as possible.
+    </p>
+</section>
+<section class="section">
+    <h2 class="subtitle">
+        Information that is stored until a database wipe
+    </h2>
+    <p>
+        If you use the old login form (instance, email, password), which is only recommended if you running your own copy of brutaldon behind a firewall, the email you use to sign in will be stored along with an access token and the name of the instance you connected to. Your password will never be stored. We will never share your email with anyone for any reason, unless legally forced to do so. We will never send you email except in the case of an unforseen emergency requiring us to.
+    </p>
+    <p>
+        If you use the normal login form, your email will not be stored, only your instance name and access token.
+    </p>
+    <p>
+        You can always revoke an access token through the web interface of your instance.
+    </p>
+    <h2 class="subtitle">
+        Information that is stored only during your session
+    </h2>
+    <p>
+        Data stored in your session is deleted when you log out, or periodically by the server.
+    </p>
+    <p></p>
+    <p>
+        Data stored in the session includes:
+    </p>
+    <ul>
+        <li> A reference to your information in the database.</li>
+        <li> All of your <em>public</em> Mastodon profile information. This is needed for some client functionality.</li>
+        <li> A couple of Mastodon settings: your default post privacy, and whether your media default to sensitive.</li>
+    </ul>
+</section>
+{% endblock %}

@@ -56,6 +56,23 @@
     </div>
   </section>
   {% if not fullbrutalism %}
+
+  <footer class="footer">
+      <div class="level">
+          <div class="level-left">
+              <a class="level-item is-size-7" href="{% url "about" %}">
+                  About
+              </a>
+          </div>
+          <div class="level-right">
+              <a class="level-item is-size-7" href="{% url "privacy" %}">
+                  Privacy
+              </a>
+          </div>
+      </div>
+  </footer>
+
+
       <script type="application/javascript">
 document.addEventListener('DOMContentLoaded', function () {
     // Remove is-active from navbar menu
