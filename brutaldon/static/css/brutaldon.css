@@ -29,6 +29,16 @@ div.card-header-title, div.card-header-icon {
     margin-top: 0.75rem;
 }
 
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
 figure.media-left p.image a img
 {
     border-radius: 5px;
