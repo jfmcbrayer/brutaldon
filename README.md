@@ -16,11 +16,27 @@ Please see the issues tracker.
 
 People love screenshots, whatever the project, so here we are.
 
-<img alt="Brutaldon in Lynx" src="/docs/screenshots/screenshot-lynx.png?raw=true" title="Brutaldon in Lynx" width="256" />
-<img alt="Brutaldon in Firefox" src="/docs/screenshots/screenshot-firefox.png?raw=true" title="Brutaldon in Firefox" width="256" />
-<img alt="Brutaldon in Firefox (2)" src="/docs/screenshots/screenshot-firefox-2.png?raw=true" title="Brutaldon in Firefox (2)" width="256" />
-<img alt="Brutaldon in Firefox - Full Brutalism" src="/docs/screenshots/screenshot-firefox-brutalist.png?raw=true" title="Brutaldon in Firefox - Full Brutalism" width="256" />
-<img alt="Brutaldon in Firefox - Full Brutalism (2)" src="/docs/screenshots/screenshot-firefox-brutalist-2.png?raw=true" title="Brutaldon in Firefox - Full Brutalism (2)" width="256" />
+<table>
+ <tr>
+   <td>
+     <img alt="Brutaldon in Lynx" src="/docs/screenshots/screenshot-lynx.png?raw=true" title="Brutaldon in Lynx" width="256" />
+   </td>
+   <td>
+     <img alt="Brutaldon in Firefox" src="/docs/screenshots/screenshot-firefox.png?raw=true" title="Brutaldon in Firefox" width="256" />
+   </td>
+  </tr>
+  <tr>
+    <td>
+      <img alt="Brutaldon in Firefox (2)" src="/docs/screenshots/screenshot-firefox-2.png?raw=true" title="Brutaldon in Firefox (2)" width="256" />
+    </td>
+    <td>
+      <img alt="Brutaldon in Firefox - Full Brutalism" src="/docs/screenshots/screenshot-firefox-brutalist.png?raw=true" title="Brutaldon in Firefox - Full Brutalism" width="256" />
+    </td>
+    <td>
+      <img alt="Brutaldon in Firefox - Full Brutalism (2)" src="/docs/screenshots/screenshot-firefox-brutalist-2.png?raw=true" title="Brutaldon in Firefox - Full Brutalism (2)" width="256" />
+    </td>
+  </tr>
+</table>
 
 
 
