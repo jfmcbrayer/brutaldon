@@ -12,6 +12,20 @@ Brutaldon is a [brutalist][0], [Web 1.0][0.5] web interface for [Mastodon][1]. I
 Brutaldon is ready for day to day use, but is still missing many features.
 Please see the issues tracker.
 
+## Screenshots
+
+People love screenshots, whatever the project, so here we are.
+
+![Brutaldon in Lynx](/docs/screenshots/screenshot-lynx.png?raw=true "Brutaldon in Lynx")
+![Brutaldon in Firefox](/docs/screenshots/screenshot-firefox.png?raw=true "Brutaldon in Firefox")
+![Brutaldon in Firefox (2)](/docs/screenshots/screenshot-firefox-2.png?raw=true "Brutaldon in Firefox (2)")
+![Brutaldon in Firefox - Full Brutalism](/docs/screenshots/screenshot-firefox-brutalist.png?raw=true "Brutaldon in Firefox - Full Brutalism")
+![Brutaldon in Firefox - Full Brutalism (2)](/docs/screenshots/screenshot-firefox-brutalist-2.png?raw=true "Brutaldon in Firefox - Full Brutalism (2)")
+
+
+
+
+
 ## Roadmap
 
 * [X] Single user read-only access; log in and read home timeline
