@@ -211,3 +211,11 @@ img {
 .media.active_context {
     background-color: #DDD;
 }
+
+summary::before {
+    content: " 🠞  ";
+}
+
+details[open] summary::before {
+    content: " 🠟  ";
+}
