@@ -55,7 +55,7 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
     try:
         mastodon = get_mastodon(request)
     except NotLoggedInException:
-        return redirect(login)
+        return redirect(about)
     data = mastodon.timeline(timeline, limit=100, max_id=max_id, since_id=since_id)
     form = PostForm(initial={'visibility': request.session['user'].source.privacy})
     try:
@@ -221,7 +221,7 @@ def old_login(request):
 @never_cache
 def logout(request):
     request.session.flush()
-    return redirect(home)
+    return redirect(about)
 
 def error(request):
     return render(request, 'error.html', { 'error': "Not logged in yet."})
