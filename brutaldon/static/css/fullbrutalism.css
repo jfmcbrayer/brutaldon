@@ -147,6 +147,7 @@ body {
     font-family: "Courier New", "Courier", "FreeMono", "Liberation Mono", monospace;
     background-color: #CCC;
     color: #000;
+    margin: 1em;
 }
 
 a {
