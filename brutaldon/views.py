@@ -313,8 +313,9 @@ def reply(request, id):
         toot = mastodon.status(id)
         context = mastodon.status_context(id)
         initial_text = '@' + toot.account.acct + " "
-        for mention in toot.mentions:
+        for mention in [x for x in toot.mentions if x.acct != request.session['user'].acct]:
             initial_text +=('@' + mention.acct + " ")
+        initial_text += "\n"
         form = PostForm({'status': initial_text,
                          'visibility': toot.visibility,
                          'spoiler_text': toot.spoiler_text})
