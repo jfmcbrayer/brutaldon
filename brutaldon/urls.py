@@ -45,5 +45,7 @@ urlpatterns = [
     path('fav/<int:id>', views.fav, name='fav'),
     path('boost/<int:id>', views.boost, name='boost'),
     path('delete/<int:id>', views.delete, name='delete'),
+    path('search', views.search, name='search'),
+    path('search_results', views.search_results, name='search_results'),
     path('', views.home),
 ]

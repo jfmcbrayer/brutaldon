@@ -418,6 +418,24 @@ def delete(request, id):
                       {"toot": toot, 'confirm_page': True,
                        "fullbrutalism": fullbrutalism_p(request)})
 
+
+def search(request):
+    return render(request, 'search.html',
+                      {"fullbrutalism": fullbrutalism_p(request)})
+
+def search_results(request):
+    if request.method == 'GET':
+        query = request.GET.get('q', '')
+    elif request.method == 'POST':
+        query = request.POST.get('q', '')
+    else:
+        query = ''
+    mastodon = get_mastodon(request)
+    results = mastodon.search(query)
+    return render(request, 'search_results.html',
+                  {"results": results,
+                   "fullbrutalism": fullbrutalism_p(request)})
+
 def about(request):
     return render(request, 'about.html',
                       {"fullbrutalism": fullbrutalism_p(request)})
