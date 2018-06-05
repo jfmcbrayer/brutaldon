@@ -11,23 +11,40 @@ from urllib import parse
 class NotLoggedInException(Exception):
     pass
 
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class MastodonPool(dict, metaclass=Singleton):
+    pass
+
 def get_mastodon(request):
     if not (request.session.has_key('instance') and
             (request.session.has_key('username') or
              request.session.has_key('access_token'))):
         raise NotLoggedInException()
 
+    pool = MastodonPool()
     if request.session.has_key('access_token'):
         try:
             client = Client.objects.get(api_base_id=request.session['instance'])
         except (Client.DoesNotExist, Client.MultipleObjectsReturned):
             raise NotLoggedInException()
-        mastodon = Mastodon(
-            client_id = client.client_id,
-            client_secret = client.client_secret,
-            api_base_url = client.api_base_id,
-            access_token = request.session['access_token'],
-            ratelimit_method='throw')
+        if request.session['access_token'] in pool.keys():
+            mastodon = pool[request.session['access_token']]
+            print("Mastodon from pool")
+        else:
+            mastodon = Mastodon(
+                client_id = client.client_id,
+                client_secret = client.client_secret,
+                api_base_url = client.api_base_id,
+                access_token = request.session['access_token'],
+                ratelimit_method='throw')
+            print("New Mastodon added to pool")
+            pool[request.session['access_token']] = mastodon
     else:
         try:
             client = Client.objects.get(api_base_id=request.session['instance'])
@@ -35,13 +52,18 @@ def get_mastodon(request):
         except (Client.DoesNotExist, Client.MultipleObjectsReturned,
                 Account.DoesNotExist, Account.MultipleObjectsReturned):
             raise NotLoggedInException()
-
-        mastodon = Mastodon(
-            client_id = client.client_id,
-            client_secret = client.client_secret,
-            access_token = user.access_token,
-            api_base_url = client.api_base_id,
-            ratelimit_method="throw")
+        if user.access_token in pool.keys():
+            mastodon = pool[user.access_token]
+            print("Mastodon from pool")
+        else:
+            mastodon = Mastodon(
+                client_id = client.client_id,
+                client_secret = client.client_secret,
+                access_token = user.access_token,
+                api_base_url = client.api_base_id,
+                ratelimit_method="throw")
+            print("New Mastodon added to pool")
+            pool[user.access_token] = mastodon
     return mastodon
 
 def fullbrutalism_p(request):
