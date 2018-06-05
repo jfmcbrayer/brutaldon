@@ -35,7 +35,6 @@ def get_mastodon(request):
             raise NotLoggedInException()
         if request.session['access_token'] in pool.keys():
             mastodon = pool[request.session['access_token']]
-            print("Mastodon from pool")
         else:
             mastodon = Mastodon(
                 client_id = client.client_id,
@@ -43,7 +42,6 @@ def get_mastodon(request):
                 api_base_url = client.api_base_id,
                 access_token = request.session['access_token'],
                 ratelimit_method='throw')
-            print("New Mastodon added to pool")
             pool[request.session['access_token']] = mastodon
     else:
         try:
@@ -54,7 +52,6 @@ def get_mastodon(request):
             raise NotLoggedInException()
         if user.access_token in pool.keys():
             mastodon = pool[user.access_token]
-            print("Mastodon from pool")
         else:
             mastodon = Mastodon(
                 client_id = client.client_id,
@@ -63,7 +60,6 @@ def get_mastodon(request):
                 api_base_url = client.api_base_id,
                 ratelimit_method="throw")
             print("New Mastodon added to pool")
-            pool[user.access_token] = mastodon
     return mastodon
 
 def fullbrutalism_p(request):
