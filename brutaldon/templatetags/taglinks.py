@@ -21,6 +21,7 @@ def relink_tags(value):
 
     FIXME: handle arbitrary tag links
     '''
+    value = value.replace('&apos;', "'")
     soup = BeautifulSoup(value, 'html.parser')
     for link in soup.find_all('a', class_='hashtag'):
         link['href'] = reverse('tag', args=[link.span.string])
@@ -36,6 +37,7 @@ def relink_mentions(value):
 
     FIXME: handle arbitrary mention links
     '''
+    value = value.replace('&apos;', "'")
     soup = BeautifulSoup(value, 'html.parser')
     for link in soup.find_all('a', class_='mention'):
         parsed = parse.urlparse(link['href'])
