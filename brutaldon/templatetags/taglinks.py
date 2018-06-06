@@ -2,8 +2,14 @@ from django import template
 from bs4 import BeautifulSoup
 from urllib import parse
 from django.urls import reverse
+from pdb import set_trace
 
 register = template.Library()
+
+@register.filter
+def pdb(element):
+    set_trace()
+    return element
 
 @register.filter
 def relink_tags(value):
@@ -18,7 +24,7 @@ def relink_tags(value):
     soup = BeautifulSoup(value, 'html.parser')
     for link in soup.find_all('a', class_='hashtag'):
         link['href'] = reverse('tag', args=[link.span.string])
-    return soup.decode(formatter=None)
+    return soup.decode(formatter='html')
 
 @register.filter
 def relink_mentions(value):
@@ -39,7 +45,7 @@ def relink_mentions(value):
             link['href'] = reverse('user', args=[user+'@'+instance])
         except:
             continue
-    return soup.decode(formatter=None)
+    return soup.decode(formatter='html')
 
 @register.filter
 def relink_toot(value):
