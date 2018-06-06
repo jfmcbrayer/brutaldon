@@ -59,7 +59,6 @@ def get_mastodon(request):
                 access_token = user.access_token,
                 api_base_url = client.api_base_id,
                 ratelimit_method="throw")
-            print("New Mastodon added to pool")
     return mastodon
 
 def fullbrutalism_p(request):
