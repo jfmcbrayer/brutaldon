@@ -108,7 +108,7 @@ def tag(request, tag):
         return redirect(login)
     data = mastodon.timeline_hashtag(tag)
     return render(request, 'main/timeline.html',
-                  {'toots': data, 'timeline': '#'+tag,
+                  {'toots': data, 'timeline_name': '#'+tag,
                    'own_username': request.session['user'].acct,
                    'fullbrutalism': fullbrutalism_p(request)})
 
