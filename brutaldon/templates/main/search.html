@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}brutaldon – search {% endblock %}
+
+{% block content %}
+<h1 class="title">Search</h1>
+
+<div class="notification">
+    <div>
+        You can search for tags, users, or for specific toots by URL. You may
+        also be able to full-text search for toots you have previously
+        interacted with.
+    </div>
+</div>
+
+<form method="get" action="{% url "search_results" %}">
+    {% csrf_token %}
+    <div class="field">
+        <label class="label">{{ form.instance.label  }}</label>
+        <div class="control has-icons-left">
+            <input type="search" name="q" id="q" class="input">
+            <span class="icon is-small is-left">
+                <i class="fa fa-search"></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="field">
+        <input type="submit" name="search"
+               value="Search" class="button is-primary" >
+    </div>
+</form>
+
+{% endblock %}

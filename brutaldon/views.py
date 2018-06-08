@@ -419,7 +419,7 @@ def delete(request, id):
 
 
 def search(request):
-    return render(request, 'search.html',
+    return render(request, 'main/search.html',
                       {"fullbrutalism": fullbrutalism_p(request)})
 
 def search_results(request):
@@ -431,7 +431,7 @@ def search_results(request):
         query = ''
     mastodon = get_mastodon(request)
     results = mastodon.search(query)
-    return render(request, 'search_results.html',
+    return render(request, 'main/search_results.html',
                   {"results": results,
                    "fullbrutalism": fullbrutalism_p(request)})
 

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load taglinks %}
+
+{% block title %}
+Brutaldon - search results
+{% endblock %}
+
+{% comment %}
+mastodon.search("<query>")
+    # Returns the following dictionary
+    {
+    'accounts': # List of account dicts resulting from the query
+    'hashtags': # List of hashtag dicts resulting from the query
+    'statuses': # List of toot dicts resulting from the query
+    }
+
+{% endcomment %}
+
+
+{% block content %}
+<h1 class="title">Search results</h1>
+
+<h2 class="subtitle">Users</h2>
+
+
+<h2 class="subtitle">Tags</h2>
+
+<h2 class="subtitle">Toots</h2>
+{% endblock %}
