@@ -3,7 +3,7 @@
 {% load taglinks %}
 
 {% block title %}
-Brutaldon - {{ timeline }} timelime
+Brutaldon - Notifications timelime
 {% endblock %}
 
 {% comment %}
@@ -21,7 +21,7 @@ mastodon.notifications()[0]
 
 
 {% block content %}
-<h1 class="title">Your {{ timeline }} timeline</h1>
+<h1 class="title">Your notifications timeline</h1>
 {% for note in notes %}
 {% if note.type == 'mention' %}
 <p>
