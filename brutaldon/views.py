@@ -7,6 +7,7 @@ from brutaldon.forms import LoginForm, OAuthLoginForm, SettingsForm, PostForm
 from brutaldon.models import Client, Account
 from mastodon import Mastodon
 from urllib import parse
+from pdb import set_trace
 
 class NotLoggedInException(Exception):
     pass

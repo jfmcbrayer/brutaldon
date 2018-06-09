@@ -15,7 +15,6 @@
 </div>
 
 <form method="get" action="{% url "search_results" %}">
-    {% csrf_token %}
     <div class="field">
         <label class="label">{{ form.instance.label  }}</label>
         <div class="control has-icons-left">
@@ -27,8 +26,7 @@
     </div>
 
     <div class="field">
-        <input type="submit" name="search"
-               value="Search" class="button is-primary" >
+        <input type="submit" value="Search" class="button is-primary" >
     </div>
 </form>
 
