@@ -24,7 +24,7 @@ mastodon.search("<query>")
     <div class="container">
         <h2 class="subtitle">Users</h2>
         {% for user in results.accounts %}
-            <article class="media">
+            <article class="media user-info">
                 <figure class="media-left">
                     <p class="image is-64x64">
                         <a href="{% url "user" user.acct %}">

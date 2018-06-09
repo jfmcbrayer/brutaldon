@@ -48,16 +48,16 @@ figure.media-left p.image a img
     background-color: #FFF8DC;
 }
 
-article.media .content img
-{
-    max-height: 1.5rem;
-    max-width: 1.5rem;
-}
-
 h2.subtitle
 {
     margin-top: 2rem;
     margin-bottom: 1rem;
+}
+
+article.media.user-info .content img
+{
+    max-height: 1.5rem;
+    max-width: 1.5rem;
 }
 
 @media screen and (max-width: 768px) {
