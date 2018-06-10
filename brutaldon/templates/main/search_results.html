@@ -4,52 +4,69 @@
 {% load sanitizer %}
 
 {% block title %}
-    Brutaldon - search results
+Brutaldon - search results
 {% endblock %}
 
 {% comment %}
 mastodon.search("<query>")
-# Returns the following dictionary
-{
-'accounts': # List of account dicts resulting from the query
-'hashtags': # List of hashtag dicts resulting from the query
-'statuses': # List of toot dicts resulting from the query
-}
+    # Returns the following dictionary
+    {
+    'accounts': # List of account dicts resulting from the query
+    'hashtags': # List of hashtag dicts resulting from the query
+    'statuses': # List of toot dicts resulting from the query
+    }
 
-{% endcomment %}
+    {% endcomment %}
 
+    {% block content %}
 
-{% block content %}
+    <section>
+        <form method="get" action="{% url "search_results" %}">
+            <div class="field has-addons">
+                <label class="label">{{ form.instance.label  }}</label>
+                <div class="control has-icons-left">
+                    <input type="search" name="q" id="q" class="input">
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                <input type="submit" value="Search" class="button is-primary" >
+            </div>
+
+        </form>
+        <br>
+    </section>
+
     <h1 class="title">Search results</h1>
     <div class="container">
         <h2 class="subtitle">Users</h2>
         {% for user in results.accounts %}
-            <article class="media user-info">
-                <figure class="media-left">
-                    <p class="image is-64x64">
-                        <a href="{% url "user" user.acct %}">
-                            <img src="{{ user.avatar }}"
-                                 alt="">
-                        </a>
+        <article class="media user-info">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                    <a href="{% url "user" user.acct %}">
+                        <img src="{{ user.avatar }}"
+                             alt="">
+                    </a>
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong>{{ user.display_name }}</strong>
+                        <small>
+                            <a href="{% url "user" user.acct %}">
+                                @{{ user.acct }}
+                            </a>
+                        </small>
                     </p>
-                </figure>
-                <div class="media-content">
-                    <div class="content">
-                        <p>
-                            <strong>{{ user.display_name }}</strong>
-                            <small>
-                                <a href="{% url "user" user.acct %}">
-                                    @{{ user.acct }}
-                                </a>
-                            </small>
-                        </p>
-                            {{ user.note | relink_toot | strip_html | safe }}
-                        <p>
-                        </p>
+                    {{ user.note | relink_toot | strip_html | safe }}
+                    <p>
+                    </p>
 
-                    </div>
                 </div>
-            </article>
+            </div>
+        </article>
 
 
         {% endfor %}
@@ -58,13 +75,13 @@ mastodon.search("<query>")
         <h2 class="subtitle">Tags</h2>
         <ul>
             {% for tag in results.hashtags %}
-                <li><a href="{% url 'tag' tag %}">#{{ tag }}</a></li>
+            <li><a href="{% url 'tag' tag %}">#{{ tag }}</a></li>
             {% endfor %}
         </ul>
 
         <h2 class="subtitle">Toots</h2>
         {% for toot in results.statuses %}
-            {% include "main/toot_partial.html" with toot=toot reblog=False %}
+        {% include "main/toot_partial.html" with toot=toot reblog=False %}
         {% endfor %}
     </div>
-{% endblock %}
+    {% endblock %}
