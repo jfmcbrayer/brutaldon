@@ -55,6 +55,10 @@ Brutaldon - {{ timeline }} timelime
                        href="{{ user.url }}" title="home">
                         <span class="is-hidden">View on home site</span>
                     </a>
+                    <a class="level-item fa fa-envelope"
+                       href="{% url 'toot' user.acct %}" title="mention">
+                        <span class="is-hidden">Mention</span>
+                    </a>
                 </div>
                 <div class="level-right">
                     {% if not relationship.muting %}

@@ -40,6 +40,7 @@ urlpatterns = [
     path('thread/<int:id>', views.thread, name='thread'),
     path('tags/<tag>', views.tag, name='tag'),
     path('user/<username>', views.user, name='user'),
+    path('toot/<mention>', views.toot, name='toot'),
     path('toot', views.toot, name="toot"),
     path('reply/<int:id>', views.reply, name='reply'),
     path('fav/<int:id>', views.fav, name='fav'),

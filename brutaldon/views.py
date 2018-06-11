@@ -292,9 +292,15 @@ def settings(request):
                       { 'form': form, 'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
-def toot(request):
+def toot(request, mention=None):
     if request.method == 'GET':
-        form = PostForm(initial={'visibility': request.session['user'].source.privacy})
+        if mention:
+            if not mention.startswith('@'):
+                mention = '@'+mention
+            form = PostForm(initial={'visibility': request.session['user'].source.privacy,
+                                     'status': mention + '\n' })
+        else:
+            form = PostForm(initial={'visibility': request.session['user'].source.privacy})
         return render(request, 'main/post.html',
                       {'form': form,
                        'fullbrutalism': fullbrutalism_p(request)})
