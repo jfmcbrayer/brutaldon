@@ -60,6 +60,12 @@ article.media.user-info .content img
     max-width: 1.5rem;
 }
 
+span.account-locked
+{
+    margin-top: 48px;
+    margin-left: -16px;
+}
+
 @media screen and (max-width: 768px) {
     .media {
         display: block;

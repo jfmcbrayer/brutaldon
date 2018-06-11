@@ -268,8 +268,10 @@ def user(request, username):
     except IndexError:
         raise Http404("The user %s could not be found." % username)
     data = mastodon.account_statuses(user_dict.id)
+    relationship = mastodon.account_relationships(user_dict.id)[0]
     return render(request, 'main/user.html',
                   {'toots': data, 'user': user_dict,
+                   'relationship': relationship,
                    'own_username': request.session['user'].acct,
                    'fullbrutalism': fullbrutalism_p(request)})
 
