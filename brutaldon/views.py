@@ -418,6 +418,17 @@ def delete(request, id):
                       {"toot": toot, 'confirm_page': True,
                        "fullbrutalism": fullbrutalism_p(request)})
 
+@never_cache
+def follow(request, id):
+    pass
+
+@never_cache
+def block(request, id):
+    pass
+
+@never_cache
+def mute(request, id):
+    pass
 
 def search(request):
     return render(request, 'main/search.html',
