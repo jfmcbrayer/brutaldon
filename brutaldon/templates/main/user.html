@@ -11,10 +11,10 @@ Brutaldon - {{ timeline }} timelime
 
 <div class="card">
     {% if not fullbrutalism %}
-    <div class="card-header" style="background-image: url({{ user.header }});">
-        {% else %}
+        <div class="card-header" style="background-image: url({{ user.header }});">
+    {% else %}
         <div class="card-header">
-            {% endif %}
+    {% endif %}
             <div class="card-header-title title">
                 <a href="{{ user.url }}">
                     {{ user.display_name }}
