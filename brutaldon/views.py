@@ -422,7 +422,23 @@ def delete(request, id):
 
 @never_cache
 def follow(request, id):
-    pass
+    mastodon = get_mastodon(request)
+    try:
+        user_dict = mastodon.account(id)
+        relationship = mastodon.account_relationships(user_dict.id)[0]
+    except IndexError:
+        raise Http404("The user could not be found.")
+    if request.method == 'POST':
+        if not request.POST.get('cancel', None):
+            if relationship.requested or relationship.following:
+                mastodon.account_unfollow(id)
+            else:
+                mastodon.account_follow(id)
+            return redirect(user, user_dict.acct)
+    else:
+        return render(request, 'main/follow.html',
+        {"user": user_dict, "relationship": relationship, "confirm_page": True,
+         'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
 def block(request, id):
