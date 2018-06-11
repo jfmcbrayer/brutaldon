@@ -4,7 +4,7 @@
 {% load taglinks %}
 
 {% block title %}
-Brutaldon - {{ timeline }} timelime
+Brutaldon - {{ user.acct }} timelime
 {% endblock %}
 
 {% block content %}
@@ -33,6 +33,7 @@ Brutaldon - {{ timeline }} timelime
             <div class="content">
                 {{ user.note | relink_toot | strip_html | safe }}
             </div>
+            {% if user.acct != own_username %}
             <div class="level">
                 <div class="level-left">
                     {% if relationship.requested %}
@@ -85,6 +86,7 @@ Brutaldon - {{ timeline }} timelime
                     {% endif %}
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 

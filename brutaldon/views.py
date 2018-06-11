@@ -443,16 +443,53 @@ def follow(request, id):
             return redirect(user, user_dict.acct)
     else:
         return render(request, 'main/follow.html',
-        {"user": user_dict, "relationship": relationship, "confirm_page": True,
-         'fullbrutalism': fullbrutalism_p(request)})
+                      {"user": user_dict, "relationship": relationship,
+                       "confirm_page": True,
+                       'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
 def block(request, id):
-    pass
+    mastodon = get_mastodon(request)
+    try:
+        user_dict = mastodon.account(id)
+        relationship = mastodon.account_relationships(user_dict.id)[0]
+    except IndexError:
+        raise Http404("The user could not be found.")
+    if request.method == 'POST':
+        if not request.POST.get('cancel', None):
+            if relationship.blocking:
+                mastodon.account_unblock(id)
+            else:
+                mastodon.account_block(id)
+            return redirect(user, user_dict.acct)
+    else:
+        return render(request, 'main/block.html',
+                      {"user": user_dict, "relationship": relationship,
+                       "confirm_page": True,
+                       'fullbrutalism': fullbrutalism_p(request)})
+
 
 @never_cache
 def mute(request, id):
-    pass
+    mastodon = get_mastodon(request)
+    try:
+        user_dict = mastodon.account(id)
+        relationship = mastodon.account_relationships(user_dict.id)[0]
+    except IndexError:
+        raise Http404("The user could not be found.")
+    if request.method == 'POST':
+        if not request.POST.get('cancel', None):
+            if relationship.muting:
+                mastodon.account_unmute(id)
+            else:
+                mastodon.account_mute(id)
+            return redirect(user, user_dict.acct)
+    else:
+        return render(request, 'main/mute.html',
+                      {"user": user_dict, "relationship": relationship,
+                       "confirm_page": True,
+                       'fullbrutalism': fullbrutalism_p(request)})
+
 
 def search(request):
     return render(request, 'main/search.html',

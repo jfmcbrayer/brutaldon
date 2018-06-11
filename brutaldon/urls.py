@@ -48,7 +48,7 @@ urlpatterns = [
     path('delete/<int:id>', views.delete, name='delete'),
     path('follow/<int:id>', views.follow, name='follow'),
     path('block/<int:id>', views.block, name='block'),
-    path('mute/<int:id>', views.follow, name='mute'),
+    path('mute/<int:id>', views.mute, name='mute'),
     path('search', views.search, name='search'),
     path('search_results', views.search_results, name='search_results'),
     path('', views.home),
