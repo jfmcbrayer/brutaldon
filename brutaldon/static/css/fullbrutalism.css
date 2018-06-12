@@ -203,6 +203,21 @@ img {
     height: 64px;
 }
 
+.image.is-96x96, .is-96x96 img {
+    width: 96px;
+    height: 96px;
+}
+
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
 .media {
     padding: 1ex;
     margin: 4px;
