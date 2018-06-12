@@ -109,3 +109,4 @@ lib64
 pip-selfcheck.json
 /Pipfile.lock
 /dev_https
+node_modules

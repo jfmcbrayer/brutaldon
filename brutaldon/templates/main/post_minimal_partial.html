@@ -1,11 +1,11 @@
 {% load widget_tweaks %}
-<form method="post" action="{% url "toot" %}" enctype="multipart/form-data">
+<form method="post" id="post-form" action="{% url "toot" %}" enctype="multipart/form-data">
     {% csrf_token %}
 
     <div class="field" >
         <label class="label" >{{ form.status.label }}</label>
         <div class="control">
-            {% render_field form.status class+="textarea is-primary" rows="4" %}
+            {% render_field form.status class+="textarea is-primary mousetrap" rows="4" %}
         </div>
     </div>
 

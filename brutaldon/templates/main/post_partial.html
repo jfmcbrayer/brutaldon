@@ -1,7 +1,7 @@
 {% load widget_tweaks %}
 
 {% if reply %}
-    <form method="post" action="{% url "reply" toot.id %}" enctype="multipart/form-data">
+    <form method="post" id="post-form" action="{% url "reply" toot.id %}" enctype="multipart/form-data">
 {% else %}
         <form method="post" action="{% url "toot" %}" enctype="multipart/form-data">
 {% endif %}
@@ -10,14 +10,14 @@
     <div class="field">
         <label class="label"> {{ form.spoiler_text.label }}</label>
         <div class="control">
-            {% render_field form.spoiler_text class+="input" placeholder="Optional" %}
+            {% render_field form.spoiler_text class+="input mousetrap" placeholder="Optional" %}
         </div>
     </div>
 
     <div class="field" >
         <label class="label" >{{ form.status.label }}</label>
         <div class="control">
-            {% render_field form.status class+="textarea is-primary" rows="4" %}
+            {% render_field form.status class+="textarea mousetrap is-primary" rows="4" %}
         </div>
     </div>
 
@@ -48,7 +48,7 @@
             </label>
         </div>
         <div class="control is-expanded"> 
-            {% render_field form.media_text_1 class+="input" placeholder="Describe attachment" %}
+            {% render_field form.media_text_1 class+="input mousetrap" placeholder="Describe attachment" %}
         </div>
     </div>
 
@@ -67,7 +67,7 @@
             </label>
         </div>
         <div class="control is-expanded"> 
-            {% render_field form.media_text_2 class+="input" placeholder="Describe attachment" %}
+            {% render_field form.media_text_2 class+="input mousetrap" placeholder="Describe attachment" %}
         </div>
     </div>
 
@@ -86,7 +86,7 @@
             </label>
         </div>
         <div class="control is-expanded"> 
-            {% render_field form.media_text_3 class+="input" placeholder="Describe attachment" %}
+            {% render_field form.media_text_3 class+="input mousetrap" placeholder="Describe attachment" %}
         </div>
     </div>
     <div class="field has-addons">
@@ -104,7 +104,7 @@
             </label>
         </div>
         <div class="control is-expanded"> 
-            {% render_field form.media_text_4 class+="input" placeholder="Describe attachment" %}
+            {% render_field form.media_text_4 class+="input mousetrap" placeholder="Describe attachment" %}
         </div>
     </div>
 

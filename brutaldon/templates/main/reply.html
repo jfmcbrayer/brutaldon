@@ -1,20 +1,37 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load static %}
 
 {% block title %}
-Brutaldon - reply
+    Brutaldon - reply
+{% endblock %}
+
+{% block page_scripts %}
+    <script src="{% static 'js/mousetrap.min.js' %}" type="application/javascript"></script>
 {% endblock %}
 
 {% block content %}
-<h1 class="title">Thread</h1>
-{% for ancestor in context.ancestors %}
-{% include "main/toot_partial.html" with toot=ancestor %}
-<hr class="is-hidden">
-{% endfor %}
-{% include "main/toot_partial.html" with toot=toot active=True %}
-<hr class="is-hidden">
-<div class="box">
-    {% include "main/post_partial.html" %}
-</div>
+    <h1 class="title">Thread</h1>
+    {% for ancestor in context.ancestors %}
+        {% include "main/toot_partial.html" with toot=ancestor %}
+        <hr class="is-hidden">
+    {% endfor %}
+    {% include "main/toot_partial.html" with toot=toot active=True %}
+    <hr class="is-hidden">
+    <div class="box">
+        {% include "main/post_partial.html" %}
+    </div>
 
+{% endblock %}
+
+{% block page_scripts_inline %}
+    <script type="application/javascript">
+     document.addEventListener('DOMContentLoaded', function () {
+         Mousetrap.bind('ctrl+enter', function(e) {
+             var form = document.querySelector('#post-form');
+             form.submit();
+             return true;
+         });
+     });
+    </script>
 {% endblock %}

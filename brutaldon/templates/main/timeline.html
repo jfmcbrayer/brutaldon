@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load static %}
 
 {% block title %}
 Brutaldon - {{ timeline_name }} timelime
+{% endblock %}
+
+{% block page_scripts %}
+    <script src="{% static 'js/mousetrap.min.js' %}" type="application/javascript"></script>
 {% endblock %}
 
 {% block content %}
@@ -33,4 +38,16 @@ Brutaldon - {{ timeline_name }} timelime
     {% endif %}
 </nav>
 {% endblock %}
+{% endblock %}
+
+{% block page_scripts_inline %}
+    <script type="application/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+     Mousetrap.bind('ctrl+enter', function(e) {
+         var form = document.querySelector('#post-form');
+         form.submit();
+         return true;
+     });
+     });
+    </script>
 {% endblock %}
