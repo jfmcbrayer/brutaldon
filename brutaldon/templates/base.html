@@ -72,6 +72,12 @@
               </a>
           </div>
           <div class="level-right">
+              {% if fullbrutalism %}
+                  <img class="level-item" src="{% static '/images/lynx.gif' %}"
+                       alt="Lynx Now!">
+                  <img class="level-item" src="{% static '/images/now9.gif' %}"
+                       alt="Netscape Now!">
+              {% endif %}
               <a class="level-item is-size-7" href="{% url "privacy" %}">
                   Privacy
               </a>
