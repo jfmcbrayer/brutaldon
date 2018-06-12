@@ -9,6 +9,10 @@ Brutaldon is a [brutalist][0], [Web 1.0][0.5] web interface for [Mastodon][1]. I
 [3]: https://w3m.sourceforge.net/
 [4]: http://elinks.or.cz/
 
+There is a hosted instance at [brutaldon.online][hosted] which you can use to log in to any instance. However, you are also encouraged to run your own, either locally or on a public server. 
+
+[hosted]: https://brutaldon.online/
+
 Brutaldon is ready for day to day use, but is still missing many features.
 Please see the issues tracker.
 
