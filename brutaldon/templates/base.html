@@ -8,11 +8,9 @@
     <title>{% block title %}brutaldon{% endblock %}</title>
     {% if not fullbrutalism %}
         <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+              href="{% static 'css/bulma.min.css' %}">
         <link rel="stylesheet"
-              href="https://cdn.jsdelivr.net/npm/fork-awesome@1.0.11/css/fork-awesome.min.css"
-              integrity="sha256-MGU/JUq/40CFrfxjXb5pZjpoZmxiP2KuICN5ElLFNd8="
-              crossorigin="anonymous">
+              href="{% static 'css/fork-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
         {% block page_scripts %}
         {% endblock %}

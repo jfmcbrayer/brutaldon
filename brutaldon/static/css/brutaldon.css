@@ -19,14 +19,18 @@ div.card-header-title, div.card-header-icon {
 }
 
 .media {
-    background-color: white;
+    /* background-color: white; */
     border-radius: 5px;
     -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
     box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-    color: #4a4a4a;
+    /* color: #4a4a4a; */
     padding: 1.25rem;
     margin-bottom: 0.75rem;
     margin-top: 0.75rem;
+}
+
+.media-content {
+    padding: 1.5ex;
 }
 
 .is-max-128 {
@@ -45,7 +49,7 @@ figure.media-left p.image a img
 }
 
 .active-context {
-    background-color: #FFF8DC;
+    /* background-color: #FFF8DC; */
 }
 
 h2.subtitle
