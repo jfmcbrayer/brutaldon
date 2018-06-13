@@ -235,3 +235,19 @@ summary::before {
 details[open] summary::before {
     content: " 🠟  ";
 }
+
+.field
+{
+    margin-top: 1em;
+}
+
+label
+{
+    font-weight: bold;
+}
+
+.control, .select
+{
+    margin-top: 0.5ex;
+    margin-bottom: 0.5ex;
+}
