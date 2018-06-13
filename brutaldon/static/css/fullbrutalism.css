@@ -252,3 +252,18 @@ label
     margin-top: 0.5ex;
     margin-bottom: 0.5ex;
 }
+
+.account-avatar
+{
+    display: inline-block;
+}
+.reblog-icon
+{
+    margin-top: 32px;
+    display: inline-block;
+}
+
+.media-content
+{
+    margin-top: 1ex;
+}
