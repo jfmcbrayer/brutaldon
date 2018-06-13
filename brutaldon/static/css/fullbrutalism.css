@@ -222,6 +222,7 @@ img {
     padding: 1ex;
     margin: 4px;
     border: 8px ridge #CCC;
+    overflow: auto;
 }
 
 .media.active_context {
