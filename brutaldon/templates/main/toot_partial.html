@@ -93,11 +93,12 @@
                             <span class="icon is-small">
                                 {% if toot.reblogged %}
                                     <i class="fa fa-retweet has-text-warning">
+                                    <span class="is-invisible" >Boosted</span>
                                 {% else %}
-                                        <i class="fa fa-retweet" >
+                                    <i class="fa fa-retweet" >
+                                    <span class="is-invisible" >Boost</span>
                                 {% endif %}
-                                <span class="is-invisible" >Boost</span>
-                                        </i>
+                                     </i>
                             </span>
                         </a>
                     {% endif %}
@@ -105,11 +106,12 @@
                         <span class="icon is-small">
                             {% if toot.favourited %}
                                 <i class="fa fa-heart has-text-warning">
+                                <span class="is-invisible" >Favorited</span>
                             {% else %}
-                                    <i class="fa fa-heart">
+                                 <i class="fa fa-heart">
+                                 <span class="is-invisible" >Favorite</span>
                             {% endif %}
-                            <span class="is-invisible" >Favorite</span>
-                                    </i>
+                                 </i>
                         </span>
                     </a>
                 </div>
