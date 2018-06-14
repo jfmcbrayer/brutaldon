@@ -225,7 +225,7 @@ img {
     overflow: auto;
 }
 
-.media.active_context {
+.media.active-context {
     background-color: #DDD;
 }
 
