@@ -1,6 +1,8 @@
 from django import forms
 from django.conf import settings
 from pytz import common_timezones
+from .models import Theme
+
 
 PRIVACY_CHOICES = (('public', 'Public'),
                    ('unlisted', 'Unlisted'),

@@ -11,11 +11,14 @@ class Client(models.Model):
         return self.name + ": " + self.api_base_id
 
 class Theme(models.Model):
-    name = models.TextField(max_length=80)
+    name = models.TextField(max_length=80, unique=True)
     main_css = models.TextField(max_length=1024, blank=True, null=True,
                                 default="css/fullbrutalism.css")
     tweaks_css = models.TextField(max_length=1024, blank=True, null=True)
     is_brutalist = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
 
 class Preference(models.Model):
     theme = models.ForeignKey(Theme, models.SET_NULL, null=True)
