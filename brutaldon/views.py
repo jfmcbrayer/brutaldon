@@ -216,6 +216,17 @@ def oauth_callback(request):
                                    redirect_uri=redirect_uri)
     request.session['access_token'] = access_token
     user = mastodon.account_verify_credentials()
+    try:
+        account = Account.objects.get(username=username, client_id=client.id)
+        account.access_token = access_token
+        account.save()
+    except (Account.DoesNotExist, Account.MultipleObjectsReturned):
+        preferences = Preferences(theme = Theme.objects.get(1))
+        account = Account(username=user.acct,
+                          access_token = access_token,
+                          client = Client.objects.get(api_base_id=request.session['instance']),
+                          preferences = preferences)
+        account.save()
     request.session['user'] = user
     return redirect(home)
 
@@ -259,10 +270,12 @@ def old_login(request):
             try:
                 account = Account.objects.get(username=username, client_id=client.id)
             except (Account.DoesNotExist, Account.MultipleObjectsReturned):
+                preferences = Preferences(theme = Theme.objects.get(1))
                 account = Account(
                     username = username,
                     access_token = "",
-                    client = client)
+                    client = client,
+                    preferences = preferences)
             try:
                 access_token = mastodon.log_in(username,
                                                password)
