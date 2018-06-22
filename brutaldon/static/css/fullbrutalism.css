@@ -272,3 +272,8 @@ label
 {
     margin-bottom: 1ex;
 }
+
+.textarea
+{
+    max-width: 100%;
+}

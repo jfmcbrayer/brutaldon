@@ -7,7 +7,9 @@ Brutaldon - {{ timeline_name }} timelime
 {% endblock %}
 
 {% block page_scripts %}
-    <script src="{% static 'js/mousetrap.min.js' %}" type="application/javascript"></script>
+    {% if not fullbrutalism %}
+        <script src="{% static 'js/mousetrap.min.js' %}" type="application/javascript"></script>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
