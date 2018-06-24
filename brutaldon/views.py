@@ -252,7 +252,7 @@ def note(request, next=None, prev=None):
     notes = mastodon.notifications(limit=100, max_id=next, since_id=prev)
     try:
         prev = notes[0]._pagination_prev
-        if len(mastodon.timeline(since_id=prev['since_id'])) == 0:
+        if len(mastodon.notifications(since_id=prev['since_id'])) == 0:
             prev = None
     except IndexError:
         prev = None
