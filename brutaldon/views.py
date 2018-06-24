@@ -298,7 +298,7 @@ def user(request, username):
         next = data[-1]._pagination_next
     except IndexError:
         next = None
-        return render(request, 'main/user.html',
+    return render(request, 'main/user.html',
                   {'toots': data, 'user': user_dict,
                    'relationship': relationship,
                    'own_username': request.session['user'].acct,
