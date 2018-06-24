@@ -277,18 +277,33 @@ def thread(request, id):
                    'fullbrutalism': fullbrutalism_p(request)})
 
 def user(request, username):
-    mastodon = get_mastodon(request)
+    try:
+        mastodon = get_mastodon(request)
+    except NotLoggedInException:
+        return redirect(about)
     try:
         user_dict = mastodon.account_search(username)[0]
     except IndexError:
         raise Http404("The user %s could not be found." % username)
     data = mastodon.account_statuses(user_dict.id)
     relationship = mastodon.account_relationships(user_dict.id)[0]
-    return render(request, 'main/user.html',
+    try:
+        prev = data[0]._pagination_prev
+        if len(mastodon.account_statuses(user_dict.id,
+                                         since_id=prev['since_id'])) == 0:
+            prev = None
+    except IndexError:
+        prev = None
+    try:
+        next = data[-1]._pagination_next
+    except IndexError:
+        next = None
+        return render(request, 'main/user.html',
                   {'toots': data, 'user': user_dict,
                    'relationship': relationship,
                    'own_username': request.session['user'].acct,
-                   'fullbrutalism': fullbrutalism_p(request)})
+                   'fullbrutalism': fullbrutalism_p(request),
+                  'prev': prev, 'next': next})
 
 
 @never_cache
