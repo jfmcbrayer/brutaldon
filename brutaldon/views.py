@@ -244,11 +244,25 @@ def logout(request):
 def error(request):
     return render(request, 'error.html', { 'error': "Not logged in yet."})
 
-def note(request):
-    mastodon = get_mastodon(request)
-    notes = mastodon.notifications()
+def note(request, next=None, prev=None):
+    try:
+        mastodon = get_mastodon(request)
+    except NotLoggedInException:
+        return redirect(about)
+    notes = mastodon.notifications(limit=100, max_id=next, since_id=prev)
+    try:
+        prev = notes[0]._pagination_prev
+        if len(mastodon.timeline(since_id=prev['since_id'])) == 0:
+            prev = None
+    except IndexError:
+        prev = None
+    try:
+        next = notes[-1]._pagination_next
+    except IndexError:
+        next = None
     return render(request, 'main/notifications.html',
                   {'notes': notes,'timeline': 'Notifications',
+                   'timeline_name': 'Notifications',
                    'own_username': request.session['user'].acct,
                    'fullbrutalism': fullbrutalism_p(request)})
 
