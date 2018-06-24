@@ -75,7 +75,7 @@ mastodon.notifications()[0]
 <hr class="is-hidden">
 {% endif %}
 {% endfor %}
-{% block pagination %}
+
 <nav class="pagination is-centered" role="navigation" aria-label="pagination">
     {% if prev %}
     <a class="pagination-next" href="{% url 'note_prev' prev.since_id %}">Newer</a>
@@ -84,6 +84,6 @@ mastodon.notifications()[0]
     <a class="pagination-previous" href="{% url 'note_next' next.max_id %}">Older</a>
     {% endif %}
 </nav>
-{% endblock %}
+
 
 {% endblock %}
