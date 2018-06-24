@@ -276,7 +276,7 @@ def thread(request, id):
                    'own_username': request.session['user'].acct,
                    'fullbrutalism': fullbrutalism_p(request)})
 
-def user(request, username):
+def user(request, username, prev=None, next=None):
     try:
         mastodon = get_mastodon(request)
     except NotLoggedInException:
