@@ -264,7 +264,8 @@ def note(request, next=None, prev=None):
                   {'notes': notes,'timeline': 'Notifications',
                    'timeline_name': 'Notifications',
                    'own_username': request.session['user'].acct,
-                   'fullbrutalism': fullbrutalism_p(request)})
+                   'fullbrutalism': fullbrutalism_p(request),
+                  'prev': prev, 'next': next})
 
 def thread(request, id):
     mastodon = get_mastodon(request)
