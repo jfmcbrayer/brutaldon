@@ -5,7 +5,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}brutaldon{% endblock %}</title>
+    <title>
+        {% block title %}
+            {% if own_acct %}
+                brutaldon ({{ own_acct.username }})
+            {% else %}
+                brutaldon
+            {% endif %}
+        {% endblock %}</title>
     {% if not fullbrutalism %}
         <link rel="stylesheet"
               href="{% static 'css/bulma.min.css' %}">
@@ -24,8 +31,14 @@
       <nav class="navbar" role="navigation" aria-label="main navigation">
           <div class="navbar-brand">
               <a class="navbar-item" href="{% url "home" %}">
-                  <img src="{% static "images/brutaldon.png" %}" 
-                       width="32" height="32" alt="Brutaldon">
+                  {% if own_acct %}
+                      <img src="{{ own_acct.avatar_static }}"
+                           class="image is-32x32"
+                           alt="Brutaldon ({{ own_acct.username }})">
+                  {% else %}
+                      <img src="{% static "images/brutaldon.png" %}" 
+                           class="image is-32x32" alt="Brutaldon">
+                  {% endif %}
               </a>
           </div>
           <div class="navbar-menu is-active" id="navMenu">

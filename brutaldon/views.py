@@ -89,7 +89,7 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
     return render(request, 'main/%s_timeline.html' % timeline,
                   {'toots': data, 'form': form, 'timeline': timeline,
                    'timeline_name': timeline_name,
-                   'own_username': request.session['user'].acct,
+                   'own_acct': request.session['user'],
                    'fullbrutalism': fullbrutalism_p(request),
                   'prev': prev, 'next': next})
 
@@ -110,7 +110,7 @@ def tag(request, tag):
     data = mastodon.timeline_hashtag(tag)
     return render(request, 'main/timeline.html',
                   {'toots': data, 'timeline_name': '#'+tag,
-                   'own_username': request.session['user'].acct,
+                   'own_acct': request.session['user'],
                    'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
@@ -170,7 +170,7 @@ def oauth_callback(request):
     redirect_uri = request.build_absolute_uri(reverse('oauth_callback'))
     access_token = mastodon.log_in(code=code,
                                    redirect_uri=redirect_uri,
-                                   scopes=['read', 'write', 'follow'])
+                                   scopes=['read', 'write', 'follow', 'push'])
     request.session['access_token'] = access_token
     user = mastodon.account_verify_credentials()
     request.session['user'] = user
@@ -222,7 +222,8 @@ def old_login(request):
                     client = client)
             try:
                 access_token = mastodon.log_in(username,
-                                               password)
+                                               password,
+                                               scopes=['read', 'write', 'follow', 'push'])
                 account.access_token = access_token
                 account.save()
                 request.session['username'] = username
@@ -230,8 +231,9 @@ def old_login(request):
                 request.session['user'] = user
 
                 return redirect(home)
-            except:
-                # FIXME: add the errors
+            except Exception as ex:
+                form.add_error('', ex)
+
                 return render(request, 'setup/login.html', {'form': form})
         else:
             return render(request, 'setup/login.html', {'form': form})
@@ -263,7 +265,7 @@ def note(request, next=None, prev=None):
     return render(request, 'main/notifications.html',
                   {'notes': notes,'timeline': 'Notifications',
                    'timeline_name': 'Notifications',
-                   'own_username': request.session['user'].acct,
+                   'own_acct': request.session['user'],
                    'fullbrutalism': fullbrutalism_p(request),
                   'prev': prev, 'next': next})
 
@@ -273,7 +275,7 @@ def thread(request, id):
     toot = mastodon.status(id)
     return render(request, 'main/thread.html',
                   {'context': context, 'toot': toot,
-                   'own_username': request.session['user'].acct,
+                   'own_acct': request.session['user'],
                    'fullbrutalism': fullbrutalism_p(request)})
 
 def user(request, username, prev=None, next=None):
@@ -301,7 +303,7 @@ def user(request, username, prev=None, next=None):
     return render(request, 'main/user.html',
                   {'toots': data, 'user': user_dict,
                    'relationship': relationship,
-                   'own_username': request.session['user'].acct,
+                   'own_acct': request.session['user'],
                    'fullbrutalism': fullbrutalism_p(request),
                   'prev': prev, 'next': next})
 
@@ -315,11 +317,15 @@ def settings(request):
             return redirect(home)
         else:
             return render(request, 'setup/settings.html',
-                          {'form' : form, 'fullbrutalism': fullbrutalism_p(request)})
+                          {'form' : form,
+                           'own_acct': request.session['user'],
+                           'fullbrutalism': fullbrutalism_p(request)})
     else:
         form = SettingsForm(request.session)
         return render(request, 'setup/settings.html',
-                      { 'form': form, 'fullbrutalism': fullbrutalism_p(request)})
+                      { 'form': form,
+                        'own_acct': request.session['user'],
+                        'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
 def toot(request, mention=None):
@@ -333,6 +339,7 @@ def toot(request, mention=None):
             form = PostForm(initial={'visibility': request.session['user'].source.privacy})
         return render(request, 'main/post.html',
                       {'form': form,
+                       'own_acct': request.session['user'],
                        'fullbrutalism': fullbrutalism_p(request)})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -359,6 +366,7 @@ def toot(request, mention=None):
         else:
             return render(request, 'main/post.html',
                           {'form': form,
+                           'own_acct': request.session['user'],
                            'fullbrutalism': fullbrutalism_p(request)})
     else:
         return redirect(toot)
@@ -381,7 +389,7 @@ def reply(request, id):
                          'spoiler_text': toot.spoiler_text})
         return render(request, 'main/reply.html',
                       {'context': context, 'toot': toot, 'form': form, 'reply':True,
-                       'own_username': request.session['user'].acct,
+                       'own_acct': request.session['user'],
                        'fullbrutalism': fullbrutalism_p(request)})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -408,7 +416,7 @@ def reply(request, id):
             context = mastodon.status_context(id)
             return render(request, 'main/reply.html',
                           {'context': context, 'toot': toot, 'form': form, 'reply': True,
-                           'own_username': request.session['user'].acct,
+                           'own_acct': request.session['user'],
                            'fullbrutalism': fullbrutalism_p(request)})
     else:
         return redirect(reply, id)
@@ -426,7 +434,9 @@ def fav(request, id):
         return redirect(thread, id)
     else:
         return render(request, 'main/fav.html',
-                      {"toot": toot, "confirm_page": True,
+                      {"toot": toot,
+                       'own_acct': request.session['user'],
+                       "confirm_page": True,
                        'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
@@ -442,7 +452,9 @@ def boost(request, id):
         return redirect(thread, id)
     else:
         return render(request, 'main/boost.html',
-                      {"toot": toot, 'confirm_page': True,
+                      {"toot": toot,
+                       'own_acct': request.session['user'],
+                       'confirm_page': True,
                        "fullbrutalism": fullbrutalism_p(request)})
 
 @never_cache
@@ -457,7 +469,9 @@ def delete(request, id):
             return redirect(home)
     else:
         return render(request, 'main/delete.html',
-                      {"toot": toot, 'confirm_page': True,
+                      {"toot": toot,
+                       'own_acct': request.session['user'],
+                       'confirm_page': True,
                        "fullbrutalism": fullbrutalism_p(request)})
 
 @never_cache
@@ -479,6 +493,7 @@ def follow(request, id):
         return render(request, 'main/follow.html',
                       {"user": user_dict, "relationship": relationship,
                        "confirm_page": True,
+                       'own_acct':  request.session['user'],
                        'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
@@ -500,6 +515,7 @@ def block(request, id):
         return render(request, 'main/block.html',
                       {"user": user_dict, "relationship": relationship,
                        "confirm_page": True,
+                       'own_acct': request.session['user'],
                        'fullbrutalism': fullbrutalism_p(request)})
 
 
@@ -522,12 +538,15 @@ def mute(request, id):
         return render(request, 'main/mute.html',
                       {"user": user_dict, "relationship": relationship,
                        "confirm_page": True,
+                       'own_acct':  request.session['user'],
                        'fullbrutalism': fullbrutalism_p(request)})
 
 
 def search(request):
     return render(request, 'main/search.html',
-                      {"fullbrutalism": fullbrutalism_p(request)})
+                      {"fullbrutalism": fullbrutalism_p(request),
+                           'own_acct':  request.session['user'],
+                      })
 
 def search_results(request):
     if request.method == 'GET':
@@ -540,11 +559,15 @@ def search_results(request):
     results = mastodon.search(query)
     return render(request, 'main/search_results.html',
                   {"results": results,
+                   'own_acct': request.session['user'],
                    "fullbrutalism": fullbrutalism_p(request)})
 
 def about(request):
     return render(request, 'about.html',
-                      {"fullbrutalism": fullbrutalism_p(request)})
+                      {"fullbrutalism": fullbrutalism_p(request),
+                       'own_acct': request.session.get('user', None),
+                      })
 def privacy(request):
     return render(request, 'privacy.html',
-                      {"fullbrutalism": fullbrutalism_p(request)})
+                      {"fullbrutalism": fullbrutalism_p(request),
+                       'own_acct' : request.session['user']})

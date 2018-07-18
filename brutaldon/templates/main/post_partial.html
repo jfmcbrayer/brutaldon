@@ -113,9 +113,11 @@
         {{ form.errors }}
     </div>
 
-    <div class="field">
-        <div class="control">
-            <input type="submit" class="button is-primary"
+    <div class="field has-addons">
+        <div class="control level is-mobile">
+            <img class="image avatar is-48x48 level-item" src="{{ own_acct.avatar_static }}"
+                 alt="">
+            <input type="submit" class="button is-primary level-item"
                    name="toot" value="Toot">
         </div>
     </div>

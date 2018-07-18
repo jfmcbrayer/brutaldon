@@ -48,6 +48,11 @@ figure.media-left p.image a img
     border-radius: 5px;
 }
 
+img.avatar
+{
+    border-radius: 5px;
+}
+
 .active-context {
     background-color: #FFF8DC;
 }

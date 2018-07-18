@@ -39,6 +39,11 @@
                    value="Log in" class="button is-primary" >
         </div>
     </form>
+    {% if form.errors %}
+    <p class="error">
+      {{ form.non_field_errors | escape }}
+    </p>
+    {% endif %}
 
     <div class="notification">
         <button class="delete"></button>
