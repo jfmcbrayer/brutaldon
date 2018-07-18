@@ -24,7 +24,11 @@
     {% else %}
         <link rel="stylesheet" href="{% static "css/fullbrutalism.css" %}" >
     {% endif %}
-    <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
+    {% if own_acct %}
+        <link rel="icon" href="{{ own_acct.avatar_static }}">
+    {% else %}
+        <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
+    {% endif %}
   </head>
   <body>
       {% block navbar %}
