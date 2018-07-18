@@ -170,7 +170,7 @@ def oauth_callback(request):
     redirect_uri = request.build_absolute_uri(reverse('oauth_callback'))
     access_token = mastodon.log_in(code=code,
                                    redirect_uri=redirect_uri,
-                                   scopes=['read', 'write', 'follow', 'push'])
+                                   scopes=['read', 'write', 'follow'])
     request.session['access_token'] = access_token
     user = mastodon.account_verify_credentials()
     request.session['user'] = user
