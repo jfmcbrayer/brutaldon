@@ -2,7 +2,7 @@
 {% load taglinks %}
 {% load sanitizer %}
 
-{% block title %}Brutaldon - confirm (un)follow {% endblock %}
+{% block title %}Brutaldon ({{ own_acct.username }}) - confirm (un)follow {% endblock %}
 
 {% block content %}
     {% if relationship.requested %}
