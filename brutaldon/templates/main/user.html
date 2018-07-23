@@ -33,7 +33,7 @@ Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
             <div class="content">
                 {{ user.note | relink_toot | strip_html | safe }}
             </div>
-            {% if user.acct != own_username %}
+            {% if user.acct != own_acct.acct %}
             <div class="level is-mobile">
                 <div class="level-left">
                     {% if relationship.requested %}

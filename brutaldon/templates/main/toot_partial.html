@@ -116,7 +116,7 @@
                     </a>
                 </div>
                 <div class="level-right">
-                    {% if toot.account.acct == own_username %}
+                    {% if toot.account.acct == own_acct.acct %}
                         <a class="level-item" href="{% url "delete" toot.id %}">
                             delete
                         </a>
