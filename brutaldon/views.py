@@ -287,7 +287,7 @@ def user(request, username, prev=None, next=None):
         user_dict = mastodon.account_search(username)[0]
     except IndexError:
         raise Http404("The user %s could not be found." % username)
-    data = mastodon.account_statuses(user_dict.id)
+    data = mastodon.account_statuses(user_dict.id, max_id=prev, since_id=next)
     relationship = mastodon.account_relationships(user_dict.id)[0]
     try:
         prev = data[0]._pagination_prev
