@@ -2,15 +2,16 @@
 <form method="post" id="post-form" action="{% url "toot" %}" enctype="multipart/form-data">
     {% csrf_token %}
 
+    <div>
+        {{ form.non_field_errors }}
+        <br>
+    </div>
+
     <div class="field" >
         <label class="label" >{{ form.status.label }}</label>
         <div class="control">
             {% render_field form.status class+="textarea is-primary mousetrap" rows="4" %}
         </div>
-    </div>
-
-    <div>
-        {{ form.errors }}
     </div>
 
     <div class="field has-addons">

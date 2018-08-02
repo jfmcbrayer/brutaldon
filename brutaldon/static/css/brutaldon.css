@@ -75,6 +75,11 @@ span.account-locked
     margin-left: -16px;
 }
 
+.errorlist
+{
+    color: #FF0000;
+}
+
 @media screen and (max-width: 768px) {
     .media {
         display: block;

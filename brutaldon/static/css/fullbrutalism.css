@@ -282,3 +282,8 @@ label
 {
     max-width: 100%;
 }
+
+.errorlist
+{
+    color: #FF0000;
+}

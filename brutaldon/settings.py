@@ -187,3 +187,8 @@ FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.TemporaryFileUploadHand
 # Session serialization
 # Important: whatever you choose has to be able to serialize DateTime, so not JSON.
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+# Max length of toots
+# Later this will be a user setting, but I am adding it here so that I don't
+# write any magic numbers into the validation code
+TOOT_MAX_LENGTH = 500
