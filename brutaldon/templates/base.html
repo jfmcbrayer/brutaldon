@@ -30,9 +30,10 @@
         <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
     {% endif %}
   </head>
-  <body>
+  <body class="has-navbar-fixed-top">
       {% block navbar %}
-      <nav class="navbar" role="navigation" aria-label="main navigation">
+      <nav class="navbar is-fixed-top" role="navigation"
+           aria-label="main navigation">
           <div class="navbar-brand">
               <a class="navbar-item" href="{% url "home" %}">
                   {% if own_acct %}
