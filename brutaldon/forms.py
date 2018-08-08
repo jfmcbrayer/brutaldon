@@ -62,7 +62,7 @@ class PostForm(forms.Form):
         status = cleaned_data.get("status")
         spoiler_text = cleaned_data.get("spoiler_text")
 
-        if len(status) + len(spoiler_text) > MAX_LENGTH:
+        if (status and spoiler_text and len(status) + len(spoiler_text) > MAX_LENGTH):
             raise forms.ValidationError("Max length of toot exceeded: %(max_length)s",
                                         code="too_long",
                                         params={"max_length": MAX_LENGTH})
