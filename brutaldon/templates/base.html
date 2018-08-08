@@ -53,8 +53,17 @@
                   <a class="navbar-item" href="{% url "note" %}">Notifications</a>
                   <a class="navbar-item" href="{% url "local" %}">Local</a>
                   <a class="navbar-item" href="{% url "fed" %}">Federated</a>
+                  <a class="navbar-item" href="{% url "toot" %}">
+                      <span class="fa fa-commenting">
+                          <span class="is-hidden">
+                          New Toot
+                          </span>
+                      </span>
+                  </a>
                   <a class="navbar-item" href="{% url "search" %}">
-                      <span class="fa fa-search"><span class="is-hidden">Search</span></span>
+                      <span class="fa fa-search">
+                          <span class="is-hidden">Search</span>
+                      </span>
                   </a>
               </div>
               <div class="navbar-end" >
