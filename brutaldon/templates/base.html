@@ -37,7 +37,7 @@
               <a class="navbar-item" href="{% url "home" %}">
                   {% if own_acct %}
                       <img src="{{ own_acct.avatar_static }}"
-                           class="image is-32x32"
+                           class="image is-32x32 avatar"
                            alt="Brutaldon ({{ own_acct.username }})">
                   {% else %}
                       <img src="{% static "images/brutaldon.png" %}" 
