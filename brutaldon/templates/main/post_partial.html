@@ -3,7 +3,7 @@
 {% if reply %}
     <form method="post" id="post-form" action="{% url "reply" toot.id %}" enctype="multipart/form-data">
 {% else %}
-        <form method="post" action="{% url "toot" %}" enctype="multipart/form-data">
+        <form id="post-form" method="post" action="{% url "toot" %}" enctype="multipart/form-data">
 {% endif %}
 {% csrf_token %}
 
