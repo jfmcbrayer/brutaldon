@@ -569,3 +569,12 @@ def privacy(request):
     return render(request, 'privacy.html',
                       {"fullbrutalism": fullbrutalism_p(request),
                        'own_acct' : request.session['user']})
+
+@cache_page(60 * 30)
+def emoji_reference(request):
+    mastodon = get_mastodon(request)
+    emojos = mastodon.custom_emojis()
+    return render(request, 'main/emoji.html',
+                      {"fullbrutalism": fullbrutalism_p(request),
+                       "emojos"=emojos,
+                       'own_acct' : request.session['user']})

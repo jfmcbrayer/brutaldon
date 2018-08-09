@@ -55,5 +55,6 @@ urlpatterns = [
     path('mute/<int:id>', views.mute, name='mute'),
     path('search', views.search, name='search'),
     path('search_results', views.search_results, name='search_results'),
+    path('emoji', views.emoji_reference, name='emoji'),
     path('', views.home),
 ]
