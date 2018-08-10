@@ -95,6 +95,11 @@ img.emoji
     max-width: 1.5rem;
 }
 
+emoji-link
+{
+    font-size: 2em;
+
+
 @media screen and (max-width: 768px) {
     .media {
         display: block;
