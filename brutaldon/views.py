@@ -1,6 +1,6 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
-from django.views.decorators.cache import never_cache
+from django.views.decorators.cache import never_cache, cache_page
 from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from brutaldon.forms import LoginForm, OAuthLoginForm, SettingsForm, PostForm
@@ -576,5 +576,5 @@ def emoji_reference(request):
     emojos = mastodon.custom_emojis()
     return render(request, 'main/emoji.html',
                       {"fullbrutalism": fullbrutalism_p(request),
-                       "emojos"=emojos,
+                       "emojos": emojos,
                        'own_acct' : request.session['user']})
