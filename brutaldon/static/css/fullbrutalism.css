@@ -287,3 +287,10 @@ label
 {
     color: #FF0000;
 }
+
+img.emoji
+{
+    display: inline;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+}

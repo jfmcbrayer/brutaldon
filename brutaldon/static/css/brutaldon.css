@@ -80,6 +80,21 @@ span.account-locked
     color: #FF0000;
 }
 
+.emoji-box
+{
+    padding: .75rem;
+    background-color: #FCFCFC;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+}
+
+img.emoji
+{
+    display: inline;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+}
+
 @media screen and (max-width: 768px) {
     .media {
         display: block;

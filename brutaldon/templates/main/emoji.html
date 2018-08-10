@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Brutaldon ({{ own_acct.username }}) - Custom emoji reference {% endblock %}
+
+{% block content %}
+    <section>
+        <h1 class="title">Custom emoji reference</h1>
+        <p class="subtitle">
+            Copy shortcodes from the list below to use your instance's custom emoji.
+        </p>
+    </section>
+
+    <hr>
+    <section>
+        <div class="columns is-9 is-variable is-centered is-multiline">
+            {% for emojo in emojos  %}
+                <div class="column is-one-quarter">
+                    <p class="level emoji-box">
+                        <img alt="" class="level-item emoji" src="{{ emojo.url }}">
+                        <span class="level-item">:{{ emojo.shortcode }}:</span>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
