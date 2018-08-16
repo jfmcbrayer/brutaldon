@@ -293,4 +293,5 @@ img.emoji
     display: inline;
     max-height: 1.5rem;
     max-width: 1.5rem;
+    vertical-align: text-bottom;
 }

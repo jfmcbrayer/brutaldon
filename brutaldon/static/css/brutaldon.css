@@ -91,8 +91,9 @@ span.account-locked
 img.emoji
 {
     display: inline;
-    max-height: 1.5rem;
-    max-width: 1.5rem;
+    max-height: 1.5em;
+    max-width: 1.5em;
+    vertical-align: text-bottom;
 }
 
 emoji-link

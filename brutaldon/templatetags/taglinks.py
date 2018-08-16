@@ -64,3 +64,15 @@ def localuser(value):
     except:
         local = value
     return local
+
+@register.filter
+def fix_emojos(value, emojos):
+    '''Replace instances of recognized custom emoji :shortcodes: in value with image link tags
+    '''
+    for emojo in emojos:
+        try:
+            value = value.replace(":%(shortcode)s:" % emojo,
+                                  '<img src="%(url)s" title=":%(shortcode)s:" alt=":%(shortcode)s:" class="emoji">' % emojo)
+        except:
+            pass
+    return value

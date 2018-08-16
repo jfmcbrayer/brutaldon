@@ -41,12 +41,12 @@
             <details class="toot">
                 <summary><strong>{{ toot.spoiler_text }} </strong></summary>
                 <div class="toot">
-                    {{ toot.content | relink_toot | strip_html | safe }}
+                    {{ toot.content | relink_toot | fix_emojos:toot.emojis | strip_html | safe }}
                 </div>
             </details>
         {% else %}
             <div class="toot">
-                {{ toot.content | relink_toot | strip_html | safe }}
+                {{ toot.content | relink_toot | fix_emojos:toot.emojis | strip_html | safe }}
             </div>
         {% endif %}
 
