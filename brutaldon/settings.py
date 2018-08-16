@@ -192,3 +192,7 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 # Later this will be a user setting, but I am adding it here so that I don't
 # write any magic numbers into the validation code
 TOOT_MAX_LENGTH = 500
+
+# Version number displayed on about page
+BRUTALDON_VERSION = "1.2.1"
+

@@ -1,4 +1,5 @@
 from django.http import HttpResponse, Http404
+from django.conf import settings as django_settings
 from django.shortcuts import render, redirect
 from django.views.decorators.cache import never_cache, cache_page
 from django.urls import reverse
@@ -561,8 +562,10 @@ def search_results(request):
                    "fullbrutalism": fullbrutalism_p(request)})
 
 def about(request):
+    version = django_settings.BRUTALDON_VERSION
     return render(request, 'about.html',
                       {"fullbrutalism": fullbrutalism_p(request),
+                       "version": version,
                        'own_acct': request.session.get('user', None),
                       })
 def privacy(request):
