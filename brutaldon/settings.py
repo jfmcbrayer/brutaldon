@@ -194,5 +194,5 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 TOOT_MAX_LENGTH = 500
 
 # Version number displayed on about page
-BRUTALDON_VERSION = "1.2.1"
+BRUTALDON_VERSION = "1.3"
 
