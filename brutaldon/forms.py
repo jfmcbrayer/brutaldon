@@ -25,6 +25,16 @@ class SettingsForm(forms.Form):
                                        help_text=
     """FULLBRUTALISM mode strips away most of the niceties of modern web design when
     brutaldon is viewed in a graphical browser. It has no effect in text-only browsers.""")
+    filter_replies = forms.BooleanField(label="Filter replies from home timeline?",
+                                        required=False,
+                                        help_text=
+    """Should replies be filtered out of your home timeline, giving you only pure,
+    top-level posts?""")
+    filter_boosts = forms.BooleanField(label="Filter boosts from home timeline?",
+                                        required=False,
+                                        help_text=
+    """Should replies be filtered out of your home timeline, giving you only pure,
+    Original Content?""")
 
 
 class PostForm(forms.Form):

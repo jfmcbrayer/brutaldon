@@ -87,6 +87,12 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
         next = data[-1]._pagination_next
     except (IndexError, AttributeError):
         next = None
+
+    # This filtering has to be done *after* getting next/prev links
+    if request.session.get('filter_replies', False):
+        data = [x for x in data if not x.in_reply_to_id]
+    if request.session.get('filter_boosts', False):
+        data = [x for x in data if not x.reblog]
     return render(request, 'main/%s_timeline.html' % timeline,
                   {'toots': data, 'form': form, 'timeline': timeline,
                    'timeline_name': timeline_name,
@@ -313,6 +319,8 @@ def settings(request):
         form = SettingsForm(request.POST)
         if form.is_valid():
             request.session['fullbrutalism'] = form.cleaned_data['fullbrutalism']
+            request.session['filter_replies'] = form.cleaned_data['filter_replies']
+            request.session['filter_boosts'] = form.cleaned_data['filter_boosts']
             return redirect(home)
         else:
             return render(request, 'setup/settings.html',

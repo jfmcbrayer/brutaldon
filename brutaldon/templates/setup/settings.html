@@ -12,6 +12,18 @@
             </label>
         </div>
         <div class="field">
+            <label class="label checkbox">
+                {% render_field form.filter_replies %}
+                {{ form.filter_replies.label  }}
+            </label>
+        </div>
+        <div class="field">
+            <label class="label checkbox">
+                {% render_field form.filter_boosts %}
+                {{ form.filter_boosts.label  }}
+            </label>
+        </div>
+        <div class="field">
             <input type="submit" name="submit"
                    value="Save" class="button is-primary" >
         </div>
