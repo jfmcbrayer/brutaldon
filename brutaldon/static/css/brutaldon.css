@@ -1,3 +1,7 @@
+body > section > div.container {
+    max-width: 90ex;
+}
+
 
 .reblog-icon {
     position: relative;
