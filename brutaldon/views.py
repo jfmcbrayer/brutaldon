@@ -579,5 +579,5 @@ def emoji_reference(request):
     emojos = mastodon.custom_emojis()
     return render(request, 'main/emoji.html',
                       {"fullbrutalism": fullbrutalism_p(request),
-                       "emojos": emojos,
+                       "emojos": sorted(emojos, key=lambda x: x['shortcode']),
                        'own_acct' : request.session['user']})
