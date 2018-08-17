@@ -7,10 +7,17 @@
         <br>
     </div>
 
+    <div class="field">
+        <label class="label"> {{ form.spoiler_text.label }}</label>
+        <div class="control">
+            {% render_field form.spoiler_text class+="input mousetrap" placeholder="Optional" %}
+        </div>
+    </div>
+
     <div class="field" >
         <label class="label" >{{ form.status.label }}</label>
         <div class="control">
-            {% render_field form.status class+="textarea is-primary mousetrap" rows="4" %}
+            {% render_field form.status class+="textarea is-primary mousetrap" rows="3" %}
         </div>
     </div>
 
@@ -25,7 +32,7 @@
     </div>
     <div class="field">
         <a href="{% url "toot" %}">
-            Complete toot form (media, etc)
+            Complete toot form (media, visibility etc)
         </a>
     </div>
 </form>
