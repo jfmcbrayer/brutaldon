@@ -32,7 +32,7 @@
   </head>
   <body class="has-navbar-fixed-top">
       {% block navbar %}
-      <nav class="navbar is-fixed-top" role="navigation"
+      <nav class="navbar is-fixed-top is-light" role="navigation"
            aria-label="main navigation">
           <div class="navbar-brand">
               <a class="navbar-item" href="{% url "home" %}">
@@ -49,26 +49,40 @@
           <div class="navbar-menu is-active" id="navMenu">
               <!-- navbar start, navbar end -->
               <div class="navbar-start">
-                  <a href="{% url "home" %}" class="navbar-item">Home</a>
-                  <a class="navbar-item" href="{% url "note" %}">Notifications</a>
-                  <a class="navbar-item" href="{% url "local" %}">Local</a>
-                  <a class="navbar-item" href="{% url "fed" %}">Federated</a>
+                  <a href="{% url "home" %}" class="navbar-item">
+                      <span class="fa fa-home"></span>
+                      <span>&nbsp; Home</span>
+                  </a>
+                  <a class="navbar-item" href="{% url "note" %}">
+                      <span class="fa fa-bell-o"></span>
+                      <span >&nbsp; Notifications</span>
+                  </a>
+                  <a class="navbar-item" href="{% url "local" %}">
+                      <span class="fa fa-community"></span>
+                      <span >&nbsp; Local</span>
+                  </a>
+                  <a class="navbar-item" href="{% url "fed" %}">
+                      <span class="fa fa-globe"></span>
+                      <span >&nbsp;Federated</span>
+                  </a>
                   <a class="navbar-item" href="{% url "toot" %}">
-                      <span class="fa fa-commenting">
-                          <span class="is-hidden">
-                          New Toot
-                          </span>
-                      </span>
+                      <span class="fa fa-edit"> </span>
+                      <span >&nbsp; New Toot</span>
                   </a>
                   <a class="navbar-item" href="{% url "search" %}">
-                      <span class="fa fa-search">
-                          <span class="is-hidden">Search</span>
-                      </span>
+                      <span class="fa fa-search"> </span>
+                      <span >&nbsp; Search</span>
                   </a>
               </div>
               <div class="navbar-end" >
-                  <a class="navbar-item" href="{% url "settings" %}">Settings</a>
-                  <a class="navbar-item" href="{% url "logout" %}">Log out</a>
+                  <a class="navbar-item" href="{% url "settings" %}">
+                      <span class="fa fa-gear"></span>
+                      <span >&nbsp;Settings</span>
+                  </a>
+                  <a class="navbar-item" href="{% url "logout" %}">
+                      <span class="fa fa-power-off"></span>
+                      <span >&nbsp;Log out</span>
+                  </a>
               </div>
           </div>
       </nav>
