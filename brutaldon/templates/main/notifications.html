@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load humanize %}
+{% load humanetime %}
 {% load taglinks %}
 
 {% block title %}
@@ -38,7 +38,7 @@ mastodon.notifications()[0]
     (<a href="{{ note.account.url | localuser }}">{{ note.account.acct }}</a>)
     boosted your toot.
     (<span>
-    <small>{{ note.created_at |naturaltime  }}</small>
+    <small>{{ note.created_at |humane_time  }}</small>
     </span>)
 </p>
 {% include "main/toot_partial.html" with toot=note.status reblog=True reblog_by=note.account.acct reblog_icon=note.account.avatar %}
@@ -49,7 +49,7 @@ mastodon.notifications()[0]
     (<a href="{{ note.account.url | localuser}}">{{ note.account.acct }}</a>)
     favorited your toot.
     (<span>
-    <small>{{ note.created_at |naturaltime  }}</small>
+    <small>{{ note.created_at |humane_time  }}</small>
     </span>)
 </p>
 {% include "main/toot_partial.html" with toot=note.status %}
@@ -67,7 +67,7 @@ mastodon.notifications()[0]
             (<a href="{{ note.account.url |localuser }}">{{ note.account.acct }}</a>)
             followed you.
             (<a href="{{ note.url }}">
-                <small>{{ note.created_at |naturaltime  }}</small>
+                <small>{{ note.created_at |humane_time  }}</small>
             </a>)
         </div>
     </div>
