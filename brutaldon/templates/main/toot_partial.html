@@ -1,3 +1,4 @@
+{% load humanetime %}
 {% load humanize %}
 {% load sanitizer %}
 {% load taglinks %}
@@ -30,7 +31,7 @@
             <strong>{{ toot.account.display_name }}</strong>
             <small><a href="{% url "user" toot.account.acct %}">@{{ toot.account.acct }}</a></small>
             <a href="{{ toot.url }}">
-                <small>{{ toot.created_at |naturaltime  }}</small>
+                <small>{{ toot.created_at |humane_time  }}</small>
             </a>
             {% if reblog %}
                 <br>
