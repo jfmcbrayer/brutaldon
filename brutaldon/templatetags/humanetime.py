@@ -34,9 +34,9 @@ def humane_time(arg):
     else:
         utc = ""
     if diff < timedelta(hours=6):
-        return arg.strftime("%a, %b %d, %Y at %I:%M %p") + utc
+        return arg.strftime("%a, %b %d, %Y at %-I:%M %p") + utc
     elif diff < timedelta(hours=12):
-        return arg.strftime("%a, %b %d, %Y around %I %p") + utc
+        return arg.strftime("%a, %b %d, %Y around %-I %p") + utc
     elif diff < timedelta(hours=36):
         return arg.strftime("%a, %b %d, %Y in the ") + time_of_day(arg.hour) + utc
     elif diff < timedelta(days=6*28):
