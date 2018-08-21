@@ -18,11 +18,21 @@
             </label>
         </div>
         <div class="field">
-            <label class="label checkbox">
+            <label class="label checkbox"">
                 {% render_field form.filter_boosts %}
                 {{ form.filter_boosts.label  }}
             </label>
         </div>
+        <div class="field">
+            <label class="label" for="timezone">{{ form.timezone.label }}</label>
+            <div class="control has-icons-left">
+                <div class="select">
+                    {% render_field form.timezone class+="select" %}
+                    <span class="icon is-small is-left">
+                        <span class="fa fa-clock-o"></span>
+                </div>
+            </div>
+        </div> 
         <div class="field">
             <input type="submit" name="submit"
                    value="Save" class="button is-primary" >

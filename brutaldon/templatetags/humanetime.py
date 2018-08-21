@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
-from django.utils.timezone import get_default_timezone, get_current_timezone, make_naive
+from django.utils.timezone import get_default_timezone, get_current_timezone, localtime
+from django.utils.timezone import now as django_now
 from django import template
 
 register = template.Library()
@@ -24,16 +25,20 @@ def humane_time(arg):
     It is not safe to use on future times.
 
     '''
-    now = datetime.now()
-    arg = make_naive(arg, timezone=get_current_timezone())
+    now = django_now()
+    arg = localtime(arg)
     diff = now - arg
 
+    if arg.tzinfo == now.tzinfo:
+        utc = " (UTC)"
+    else:
+        utc = ""
     if diff < timedelta(hours=6):
-        return arg.strftime("%a, %b %d, %Y at %I:%M %p")
+        return arg.strftime("%a, %b %d, %Y at %I:%M %p") + utc
     elif diff < timedelta(hours=12):
-        return arg.strftime("%a, %b %d, %Y around %I %p")
-    elif diff < timedelta(days=2):
-        return arg.strftime("%a, %b %d, %Y in the ") + time_of_day(arg.hour)
+        return arg.strftime("%a, %b %d, %Y around %I %p") + utc
+    elif diff < timedelta(hours=36):
+        return arg.strftime("%a, %b %d, %Y in the ") + time_of_day(arg.hour) + utc
     elif diff < timedelta(days=6*28):
         return arg.strftime("%b %d, %Y")
     elif diff < timedelta(days=10*365):

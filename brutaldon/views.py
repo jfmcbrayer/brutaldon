@@ -321,6 +321,7 @@ def settings(request):
             request.session['fullbrutalism'] = form.cleaned_data['fullbrutalism']
             request.session['filter_replies'] = form.cleaned_data['filter_replies']
             request.session['filter_boosts'] = form.cleaned_data['filter_boosts']
+            request.session['timezone'] = form.cleaned_data['timezone']
             return redirect(home)
         else:
             return render(request, 'setup/settings.html',
@@ -328,7 +329,12 @@ def settings(request):
                            'own_acct': request.session['user'],
                            'fullbrutalism': fullbrutalism_p(request)})
     else:
-        form = SettingsForm(request.session)
+        form = SettingsForm(initial={
+            "fullbrutalism": fullbrutalism_p(request),
+            "filter_replies": request.session.get('filter_replies', False),
+            "filter_boosts": request.session.get('filter_boosts', False),
+            "timezone": request.session.get('timezone', 'UTC')
+        })
         return render(request, 'setup/settings.html',
                       { 'form': form,
                         'own_acct': request.session['user'],

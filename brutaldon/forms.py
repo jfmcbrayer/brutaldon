@@ -1,10 +1,13 @@
 from django import forms
 from django.conf import settings
+from pytz import common_timezones
 
 PRIVACY_CHOICES = (('public', 'Public'),
                    ('unlisted', 'Unlisted'),
                    ('private', 'Private'),
                    ('direct', 'Direct'))
+
+timezones = [ (tz, tz) for tz in common_timezones]
 
 MAX_LENGTH = settings.TOOT_MAX_LENGTH
 
@@ -35,6 +38,11 @@ class SettingsForm(forms.Form):
                                         help_text=
     """Should replies be filtered out of your home timeline, giving you only pure,
     Original Content?""")
+    timezone = forms.ChoiceField(label="Your local timezone",
+                                 choices=timezones,
+                                 required=False,
+                                 help_text=
+    """What time zone do you prefer to have times displayed in? The default choice is UTC.""")
 
 
 class PostForm(forms.Form):
