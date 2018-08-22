@@ -61,6 +61,7 @@ def get_mastodon(request):
                 access_token = user.access_token,
                 api_base_url = client.api_base_id,
                 ratelimit_method="throw")
+            pool[user.access_token] = mastodon
     return mastodon
 
 def fullbrutalism_p(request):
