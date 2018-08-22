@@ -1,6 +1,7 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.conf import settings as django_settings
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.decorators.cache import never_cache, cache_page
 from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
@@ -67,11 +68,50 @@ def get_mastodon(request):
 def fullbrutalism_p(request):
     return request.session.get('fullbrutalism', False)
 
+def is_logged_in(request):
+    return (request.session.has_key('instance') and
+            (request.session.has_key('username') or
+             request.session.has_key('access_token')))
+
+def br_login_required(function=None, home_url=None, redirect_field_name=None):
+    """Check that the user is logged in to a Mastodon instance.
+
+    This decorator ensures that the view functions it is called on can be
+    accessed only by logged in users. When an instanceless user accesses
+    such a protected view, they are redirected to the address specified in
+    the field named in `next_field` or, lacking such a value, the URL in
+    `home_url`, or the `ANONYMOUS_HOME_URL` setting.
+    """
+    if home_url is None:
+        home_url = django_settings.ANONYMOUS_HOME_URL
+
+    def _dec(view_func):
+        def _view(request, *args, **kwargs):
+            if not is_logged_in(request):
+                url = None
+                if redirect_field_name and redirect_field_name in request.REQUEST:
+                    url = request.REQUEST[redirect_field_name]
+                if not url:
+                    url = home_url
+                if not url:
+                    url = "/"
+                return HttpResponseRedirect(url)
+            else:
+                return view_func(request, *args, **kwargs)
+
+        _view.__name__ = view_func.__name__
+        _view.__dict__ = view_func.__dict__
+        _view.__doc__ = view_func.__doc__
+
+        return _view
+
+    if function is None:
+        return _dec
+    else:
+        return _dec(function)
+
 def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None):
-    try:
-        mastodon = get_mastodon(request)
-    except NotLoggedInException:
-        return redirect(about)
+    mastodon = get_mastodon(request)
     data = mastodon.timeline(timeline, limit=100, max_id=max_id, since_id=since_id)
     form = PostForm(initial={'visibility': request.session['user'].source.privacy})
     try:
@@ -97,15 +137,19 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
                    'fullbrutalism': fullbrutalism_p(request),
                   'prev': prev, 'next': next})
 
+@br_login_required
 def home(request, next=None, prev=None):
     return timeline(request, 'home', 'Home', max_id=next, since_id=prev)
 
+@br_login_required
 def local(request, next=None, prev=None):
     return timeline(request, 'local', 'Local', max_id=next, since_id=prev)
 
+@br_login_required
 def fed(request, next=None, prev=None):
     return timeline(request, 'public', 'Federated', max_id=next, since_id=prev)
 
+@br_login_required
 def tag(request, tag):
     try:
         mastodon = get_mastodon(request)
@@ -248,6 +292,7 @@ def logout(request):
 def error(request):
     return render(request, 'error.html', { 'error': "Not logged in yet."})
 
+@br_login_required
 def note(request, next=None, prev=None):
     try:
         mastodon = get_mastodon(request)
@@ -271,6 +316,7 @@ def note(request, next=None, prev=None):
                    'fullbrutalism': fullbrutalism_p(request),
                   'prev': prev, 'next': next})
 
+@br_login_required
 def thread(request, id):
     mastodon = get_mastodon(request)
     context = mastodon.status_context(id)
@@ -280,6 +326,7 @@ def thread(request, id):
                    'own_acct': request.session['user'],
                    'fullbrutalism': fullbrutalism_p(request)})
 
+@br_login_required
 def user(request, username, prev=None, next=None):
     try:
         mastodon = get_mastodon(request)
@@ -311,6 +358,7 @@ def user(request, username, prev=None, next=None):
 
 
 @never_cache
+@br_login_required
 def settings(request):
     if request.method == 'POST':
         form = SettingsForm(request.POST)
@@ -338,6 +386,7 @@ def settings(request):
                         'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
+@br_login_required
 def toot(request, mention=None):
     if request.method == 'GET':
         if mention:
@@ -381,6 +430,7 @@ def toot(request, mention=None):
     else:
         return redirect(toot)
 
+@br_login_required
 def reply(request, id):
     if request.method == 'GET':
         mastodon = get_mastodon(request)
@@ -432,6 +482,7 @@ def reply(request, id):
         return redirect(reply, id)
 
 @never_cache
+@br_login_required
 def fav(request, id):
     mastodon = get_mastodon(request)
     toot = mastodon.status(id)
@@ -450,6 +501,7 @@ def fav(request, id):
                        'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
+@br_login_required
 def boost(request, id):
     mastodon = get_mastodon(request)
     toot = mastodon.status(id)
@@ -468,6 +520,7 @@ def boost(request, id):
                        "fullbrutalism": fullbrutalism_p(request)})
 
 @never_cache
+@br_login_required
 def delete(request, id):
     mastodon = get_mastodon(request)
     toot = mastodon.status(id)
@@ -485,6 +538,7 @@ def delete(request, id):
                        "fullbrutalism": fullbrutalism_p(request)})
 
 @never_cache
+@br_login_required
 def follow(request, id):
     mastodon = get_mastodon(request)
     try:
@@ -507,6 +561,7 @@ def follow(request, id):
                        'fullbrutalism': fullbrutalism_p(request)})
 
 @never_cache
+@br_login_required
 def block(request, id):
     mastodon = get_mastodon(request)
     try:
@@ -528,8 +583,8 @@ def block(request, id):
                        'own_acct': request.session['user'],
                        'fullbrutalism': fullbrutalism_p(request)})
 
-
 @never_cache
+@br_login_required
 def mute(request, id):
     mastodon = get_mastodon(request)
     try:
@@ -551,13 +606,14 @@ def mute(request, id):
                        'own_acct':  request.session['user'],
                        'fullbrutalism': fullbrutalism_p(request)})
 
-
+@br_login_required
 def search(request):
     return render(request, 'main/search.html',
                       {"fullbrutalism": fullbrutalism_p(request),
                            'own_acct':  request.session['user'],
                       })
 
+@br_login_required
 def search_results(request):
     if request.method == 'GET':
         query = request.GET.get('q', '')
@@ -585,6 +641,7 @@ def privacy(request):
                        'own_acct' : request.session['user']})
 
 @cache_page(60 * 30)
+@br_login_required
 def emoji_reference(request):
     mastodon = get_mastodon(request)
     emojos = mastodon.custom_emojis()

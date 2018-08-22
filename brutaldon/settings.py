@@ -194,6 +194,9 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 # write any magic numbers into the validation code
 TOOT_MAX_LENGTH = 500
 
+# URL to redirect users to when not logged in
+ANONYMOUS_HOME_URL = 'about'
+
 # Version number displayed on about page
 BRUTALDON_VERSION = "1.5"
 
