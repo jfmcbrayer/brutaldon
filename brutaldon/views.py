@@ -638,7 +638,7 @@ def about(request):
 def privacy(request):
     return render(request, 'privacy.html',
                       {"fullbrutalism": fullbrutalism_p(request),
-                       'own_acct' : request.session['user', None]})
+                       'own_acct' : request.session.get('user', None)})
 
 @cache_page(60 * 30)
 @br_login_required
