@@ -19,24 +19,26 @@
         </p>
     </section>
 
-    <section class="section">
-        <div class="level">
-            <div class="level-left">
-                <a class="level-item button is-primary" href="{% url "login" %}">
-                    Log in
-                </a>
-            </div>
-            <div class="level-right">
-                <a class="level-item" href="{% url "home" %}">
-                    Or continue to your home timeline.
-                </a>
-            </div>
-        </div>
+    <section class="section container">
+        <p>
+            <a class="button is-primary" href="{% url "login" %}">
+                Log in
+            </a>
+        </p>
+        {% if request.session.instance %}
+            {% if request.session.username or request.session.access_token %}
+
+                <p>
+                    <a href="{% url "home" %}">
+                        Or continue to your home timeline.
+                    </a>
+                </p>
+            {% endif %}
+        {% endif %}
 
     </section>
 
     <section>
         This is version {{ version }} of brutaldon.
     </section>
-
 {% endblock %}
