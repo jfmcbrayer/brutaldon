@@ -64,11 +64,7 @@ def get_mastodon(request):
     return mastodon
 
 def fullbrutalism_p(request):
-    if request.session.has_key('fullbrutalism'):
-        fullbrutalism = request.session['fullbrutalism']
-    else:
-        fullbrutalism = False
-    return fullbrutalism
+    return request.session.get('fullbrutalism', False)
 
 def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None):
     try:
