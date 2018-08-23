@@ -2,30 +2,64 @@
 {% load humanize %}
 
 {% block title %}
-Brutaldon ({{ own_acct.username }}) - thread
+    Brutaldon ({{ own_acct.username }}) - thread
 {% endblock %}
 
 {% comment %}
 mastodon.status_context(<numerical id>)
-    # Returns the following dictionary:
-    {
-    'ancestors': # A list of toot dicts
-    'descendants': # A list of toot dicts
-    }
-    {% endcomment %}
+# Returns the following dictionary:
+{
+'ancestors': # A list of toot dicts
+'descendants': # A list of toot dicts
+}
+{% endcomment %}
 
-    {% block content %}
-    <h1 class="title">Thread</h1>
+{% block content %}
+    <h1 id="title" class="title">
+        Thread
+    </h1>
     {% for ancestor in context.ancestors %}
-    {% include "main/toot_partial.html" with toot=ancestor %}
-    <hr class="is-hidden">
+        {% include "main/toot_partial.html" with toot=ancestor %}
+        <hr class="is-hidden">
     {% endfor %}
-        {% include "main/toot_partial.html" with toot=toot active=True %}
+    {% include "main/toot_partial.html" with toot=toot active=True %}
     <hr class="is-hidden">
     {% for descendant in context.descendants %}
-    {% include "main/toot_partial.html" with toot=descendant %}
-    <hr class="is-hidden">
+        {% include "main/toot_partial.html" with toot=descendant %}
+        <hr class="is-hidden">
     {% endfor %}
 
 
-    {% endblock %}
+{% endblock %}
+
+{% block page_scripts_inline %}
+    <script type="application/javascript">
+     document.addEventListener('DOMContentLoaded', function () {
+         var theButton = document.createElement('p');
+         theButton.textContent = "Expand CWs";
+         theButton.classList.toggle('button');
+         document.querySelector('#title').insertAdjacentElement('afterend', theButton);
+         var details = document.querySelectorAll('details');
+         var openState = false;
+
+         if (details != null) {
+             theButton.addEventListener('click', function() {
+                 openState = details.item(0).hasAttribute('open');
+                 details.forEach(function ($el) {
+                     if (openState)
+                         {
+                             $el.removeAttribute('open');
+                         } else
+                     {
+                         $el.setAttribute('open', '');
+                     }
+                 });
+                 openState = !openState;
+                 if (openState) { theButton.textContent = 'Collapse CWs'; }
+                 else { theButton.textContent = "Expand CWs"; };
+                 theButton.classList.toggle('is-active');
+             });
+         };
+     });
+    </script>
+{% endblock %}
