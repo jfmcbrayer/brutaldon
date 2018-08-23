@@ -25,11 +25,6 @@ class MastodonPool(dict, metaclass=Singleton):
     pass
 
 def get_mastodon(request):
-    if not (request.session.has_key('instance') and
-            (request.session.has_key('username') or
-             request.session.has_key('access_token'))):
-        raise NotLoggedInException()
-
     pool = MastodonPool()
     if request.session.has_key('access_token'):
         try:
