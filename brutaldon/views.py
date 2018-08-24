@@ -7,9 +7,10 @@ from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from brutaldon.forms import LoginForm, OAuthLoginForm, SettingsForm, PostForm
 from brutaldon.models import Client, Account
-from mastodon import Mastodon
+from mastodon import Mastodon, AttribAccessDict, MastodonError
 from urllib import parse
 from pdb import set_trace
+from bs4 import BeautifulSoup
 
 class NotLoggedInException(Exception):
     pass
@@ -430,13 +431,14 @@ def redraft(request, id):
     if request.method == 'GET':
         mastodon = get_mastodon(request)
         toot = mastodon.status(id)
-        form = PostForm({'status': toot.content,
+        toot_content = BeautifulSoup(toot.content).get_text("\n")
+        form = PostForm({'status': toot_content,
                          'visibility': toot.visibility,
                          'spoiler_text': toot.spoiler_text,
-                         'media_text_1': safe_get_attachment(toot, 0),
-                         'media_text_2': safe_get_attachment(toot, 1),
-                         'media_text_3': safe_get_attachment(toot, 2),
-                         'media_text_4': safe_get_attachment(toot, 3),
+                         'media_text_1': safe_get_attachment(toot, 0).description,
+                         'media_text_2': safe_get_attachment(toot, 1).description,
+                         'media_text_3': safe_get_attachment(toot, 2).description,
+                         'media_text_4': safe_get_attachment(toot, 3).description,
         })
         return render(request, 'main/redraft.html',
                       {'toot': toot, 'form': form, 'redraft':True,
@@ -447,7 +449,17 @@ def redraft(request, id):
         mastodon = get_mastodon(request)
         toot = mastodon.status(id)
         if form.is_valid():
-            media_objects = toot.media_attachments
+            media_objects = []
+            for index in range(1,5):
+                if 'media_file_'+str(index) in request.FILES:
+                    media_objects.append(
+                        mastodon.media_post(request.FILES['media_file_'+str(index)]
+                                            .temporary_file_path(),
+                                            description=request.POST.get('media_text_'
+                                                                         +str(index),
+                                                                         None)))
+            if form.cleaned_data['visibility'] == '':
+                form.cleaned_data['visibility'] = request.session['user'].source.privacy
             mastodon.status_post(status=form.cleaned_data['status'],
                                  visibility=form.cleaned_data['visibility'],
                                  spoiler_text=form.cleaned_data['spoiler_text'],
@@ -468,14 +480,11 @@ def safe_get_attachment(toot, index):
     try:
         return toot.media_attachments[index]
     except IndexError:
-        return {
-            'id': "",
-            'type': 'unknown',
-            'url': '',
-            'remote_url': '',
-            'preview_url': "",
-            'text_url': "",
-        }
+        adict = AttribAccessDict()
+        adict.id, adict.type, adict.description = "", "unknown", ""
+        adict.url, adict.remote_url, adict.preview_url = '', '', ''
+        adict.text_url = ''
+        return adict
 
 
 @br_login_required
