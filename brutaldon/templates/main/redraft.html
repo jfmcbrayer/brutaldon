@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}
+Brutaldon ({{ own_acct.username }}) - reply
+{% endblock %}
+
+{% block page_scripts %}
+    <script src="{% static 'js/mousetrap.min.js' %}" type="application/javascript"></script>
+{% endblock %}
+
+{% block content %}
+    <h1 class="title">Redraft</h1>
+    {% include "main/toot_partial.html" with toot=toot active=True %}
+    <hr class="is-hidden">
+    <div class="notification">
+        <p>
+            Submitting this form will <em>post</em> this replacement toot, and
+            <em class="error">delete</em> the original toot. The replacement toot will not
+            have any favs, boosts, or replies that the original toot had.
+            Currently, media attachments must be re-uploaded. Sorry, working on it.
+        </p>
+    </div>
+
+    <div class="box">
+        {% include "main/post_partial.html" %}
+    </div>
+
+{% endblock %}
+
+{% block page_scripts_inline %}
+    <script type="application/javascript">
+     document.addEventListener('DOMContentLoaded', function () {
+         Mousetrap.bind('ctrl+enter', function(e) {
+             var form = document.querySelector('#post-form');
+             form.submit();
+             return true;
+         });
+     });
+    </script>
+{% endblock %}

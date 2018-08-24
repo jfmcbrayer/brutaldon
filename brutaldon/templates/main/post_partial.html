@@ -2,6 +2,8 @@
 
 {% if reply %}
     <form method="post" id="post-form" action="{% url "reply" toot.id %}" enctype="multipart/form-data">
+{% elif redraft %}
+        <form method="post" id="post-form" action="{% url "redraft" toot.id %}" enctype="multipart/form-data">
 {% else %}
         <form id="post-form" method="post" action="{% url "toot" %}" enctype="multipart/form-data">
 {% endif %}

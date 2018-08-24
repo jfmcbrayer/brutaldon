@@ -426,6 +426,59 @@ def toot(request, mention=None):
         return redirect(toot)
 
 @br_login_required
+def redraft(request, id):
+    if request.method == 'GET':
+        mastodon = get_mastodon(request)
+        toot = mastodon.status(id)
+        form = PostForm({'status': toot.content,
+                         'visibility': toot.visibility,
+                         'spoiler_text': toot.spoiler_text,
+                         'media_text_1': safe_get_attachment(toot, 0),
+                         'media_text_2': safe_get_attachment(toot, 1),
+                         'media_text_3': safe_get_attachment(toot, 2),
+                         'media_text_4': safe_get_attachment(toot, 3),
+        })
+        return render(request, 'main/redraft.html',
+                      {'toot': toot, 'form': form, 'redraft':True,
+                       'own_acct': request.session['user'],
+                       'fullbrutalism': fullbrutalism_p(request)})
+    elif request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        mastodon = get_mastodon(request)
+        toot = mastodon.status(id)
+        if form.is_valid():
+            media_objects = toot.media_attachments
+            mastodon.status_post(status=form.cleaned_data['status'],
+                                 visibility=form.cleaned_data['visibility'],
+                                 spoiler_text=form.cleaned_data['spoiler_text'],
+                                 media_ids=media_objects,
+                                 in_reply_to_id=toot.in_reply_to_id)
+            mastodon.status_delete(id)
+            return redirect(home)
+        else:
+            return render(request, 'main/redraft.html',
+                          {'toot': toot, 'form': form, 'redraft': True,
+                           'own_acct': request.session['user'],
+                           'fullbrutalism': fullbrutalism_p(request)})
+    else:
+        return redirect(redraft, id)
+
+def safe_get_attachment(toot, index):
+    """Get an attachment from a toot, without crashing if it isn't there."""
+    try:
+        return toot.media_attachments[index]
+    except IndexError:
+        return {
+            'id': "",
+            'type': 'unknown',
+            'url': '',
+            'remote_url': '',
+            'preview_url': "",
+            'text_url': "",
+        }
+
+
+@br_login_required
 def reply(request, id):
     if request.method == 'GET':
         mastodon = get_mastodon(request)

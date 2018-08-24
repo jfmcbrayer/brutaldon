@@ -47,6 +47,7 @@ urlpatterns = [
     path('toot/<mention>', views.toot, name='toot'),
     path('toot', views.toot, name="toot"),
     path('reply/<int:id>', views.reply, name='reply'),
+    path('redraft/<int:id>', views.redraft, name='redraft'),
     path('fav/<int:id>', views.fav, name='fav'),
     path('boost/<int:id>', views.boost, name='boost'),
     path('delete/<int:id>', views.delete, name='delete'),
