@@ -10,7 +10,6 @@ from brutaldon.models import Client, Account, Preference, Theme
 from mastodon import Mastodon, AttribAccessDict, MastodonError
 from urllib import parse
 from pdb import set_trace
-from bs4 import BeautifulSoup
 
 class NotLoggedInException(Exception):
     pass
