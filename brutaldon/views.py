@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.decorators.cache import never_cache, cache_page
 from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
-from brutaldon.forms import LoginForm, OAuthLoginForm, SettingsForm, PostForm
+from brutaldon.forms import LoginForm, OAuthLoginForm, PreferencesForm, PostForm
 from brutaldon.models import Client, Account, Preference, Theme
 from mastodon import Mastodon, AttribAccessDict, MastodonError
 from urllib import parse
@@ -370,7 +370,7 @@ def user(request, username, prev=None, next=None):
 def settings(request):
     account = Account.objects.get(username=username, client_id=client.id)
     if request.method == 'POST':
-        form = SettingsForm(request.POST)
+        form = PreferencesForm(request.POST)
         if form.is_valid():
             account.preferences.theme = Theme.objects.get(form.cleaned_data['theme'])
             account.preferences.filter_replies = form.cleaned_data['filter_replies']
@@ -383,7 +383,7 @@ def settings(request):
             return render(request, 'setup/settings.html',
                           {'form' : form, 'account': account})
     else:
-        form = SettingsForm(account.preferences)
+        form = PreferencesForm(account.preferences)
         return render(request, 'setup/settings.html',
                       { 'form': form,
                         'own_acct': request.session['user'],
