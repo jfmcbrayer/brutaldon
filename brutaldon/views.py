@@ -26,47 +26,29 @@ class MastodonPool(dict, metaclass=Singleton):
 
 def get_mastodon(request):
     pool = MastodonPool()
-    if request.session.has_key('access_token'):
-        try:
-            client = Client.objects.get(api_base_id=request.session['instance'])
-        except (Client.DoesNotExist, Client.MultipleObjectsReturned):
-            raise NotLoggedInException()
-        if request.session['access_token'] in pool.keys():
-            mastodon = pool[request.session['access_token']]
-        else:
-            mastodon = Mastodon(
-                client_id = client.client_id,
-                client_secret = client.client_secret,
-                api_base_url = client.api_base_id,
-                access_token = request.session['access_token'],
-                ratelimit_method='throw')
-            pool[request.session['access_token']] = mastodon
+    try:
+        client = Client.objects.get(api_base_id=request.session['instance'])
+        user = Account.objects.get(username=request.session['username'])
+    except (Client.DoesNotExist, Client.MultipleObjectsReturned,
+            Account.DoesNotExist, Account.MultipleObjectsReturned):
+        raise NotLoggedInException()
+    if user.access_token in pool.keys():
+        mastodon = pool[user.access_token]
     else:
-        try:
-            client = Client.objects.get(api_base_id=request.session['instance'])
-            user = Account.objects.get(username=request.session['username'])
-        except (Client.DoesNotExist, Client.MultipleObjectsReturned,
-                Account.DoesNotExist, Account.MultipleObjectsReturned):
-            raise NotLoggedInException()
-        if user.access_token in pool.keys():
-            mastodon = pool[user.access_token]
-        else:
-            mastodon = Mastodon(
-                client_id = client.client_id,
-                client_secret = client.client_secret,
-                access_token = user.access_token,
-                api_base_url = client.api_base_id,
-                ratelimit_method="throw")
-            pool[user.access_token] = mastodon
+        mastodon = Mastodon(
+            client_id = client.client_id,
+            client_secret = client.client_secret,
+            access_token = user.access_token,
+            api_base_url = client.api_base_id,
+            ratelimit_method="throw")
+        pool[user.access_token] = mastodon
     return mastodon
 
 def fullbrutalism_p(request):
     return request.session.get('fullbrutalism', False)
 
 def is_logged_in(request):
-    return (request.session.has_key('instance') and
-            (request.session.has_key('username') or
-             request.session.has_key('access_token')))
+    return request.session.has_key('user')
 
 def br_login_required(function=None, home_url=None, redirect_field_name=None):
     """Check that the user is logged in to a Mastodon instance.
@@ -216,7 +198,7 @@ def oauth_callback(request):
     request.session['access_token'] = access_token
     user = mastodon.account_verify_credentials()
     try:
-        account = Account.objects.get(username=username, client_id=client.id)
+        account = Account.objects.get(username=user.username, client_id=client.id)
         account.access_token = access_token
         account.save()
     except (Account.DoesNotExist, Account.MultipleObjectsReturned):
@@ -247,7 +229,7 @@ def old_login(request):
                 api_base_url = api_base_url.lower()
 
             request.session['instance'] = api_base_url
-            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
             try:
@@ -267,11 +249,11 @@ def old_login(request):
                 api_base_url = api_base_url)
 
             try:
-                account = Account.objects.get(username=username, client_id=client.id)
+                account = Account.objects.get(email=email, client_id=client.id)
             except (Account.DoesNotExist, Account.MultipleObjectsReturned):
                 preferences = Preferences(theme = Theme.objects.get(1))
                 account = Account(
-                    username = username,
+                    email = email,
                     access_token = "",
                     client = client,
                     preferences = preferences)
@@ -279,15 +261,15 @@ def old_login(request):
                 access_token = mastodon.log_in(username,
                                                password)
                 account.access_token = access_token
-                account.save()
-                request.session['username'] = username
                 user = mastodon.account_verify_credentials()
                 request.session['user'] = user
-
+                request.session['username'] = user.username
+                account.username = user.username
+                account.save()
                 return redirect(home)
+
             except Exception as ex:
                 form.add_error('', ex)
-
                 return render(request, 'setup/login.html', {'form': form})
         else:
             return render(request, 'setup/login.html', {'form': form})

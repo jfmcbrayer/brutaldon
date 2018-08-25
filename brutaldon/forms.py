@@ -16,8 +16,7 @@ MAX_LENGTH = settings.TOOT_MAX_LENGTH
 class LoginForm(forms.Form):
     instance = forms.CharField(label="Instance",
                                max_length=256)
-    username = forms.CharField(label="Email",
-                               max_length=256)
+    email = forms.EmailField(label="Email")
     password = forms.CharField(widget=forms.PasswordInput())
 
 class OAuthLoginForm(forms.Form):
