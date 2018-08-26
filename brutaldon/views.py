@@ -355,7 +355,7 @@ def settings(request):
     if request.method == 'POST':
         form = PreferencesForm(request.POST)
         if form.is_valid():
-            account.preferences.theme = Theme.objects.get(form.cleaned_data['theme'])
+            account.preferences.theme =form.cleaned_data['theme']
             account.preferences.filter_replies = form.cleaned_data['filter_replies']
             account.preferences.filter_boosts = form.cleaned_data['filter_boosts']
             account.preferences.timezone = form.cleaned_data['timezone']
@@ -368,10 +368,11 @@ def settings(request):
                           {'form' : form, 'account': account})
     else:
         request.session['timezone'] = account.preferences.timezone
-        form = PreferencesForm(account.preferences)
+        form = PreferencesForm(instance=account.preferences)
         return render(request, 'setup/settings.html',
                       { 'form': form,
-                        'account': account})
+                        'account': account,
+                        'preferences': account.preferences})
 
 @never_cache
 @br_login_required

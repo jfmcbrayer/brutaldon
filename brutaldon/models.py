@@ -25,7 +25,7 @@ class Theme(models.Model):
         return self.name
 
 class Preference(models.Model):
-    theme = models.ForeignKey(Theme, models.SET_NULL, null=True)
+    theme = models.ForeignKey(Theme, models.CASCADE, null=False, default=1)
     filter_replies = models.BooleanField(default=False)
     filter_boosts = models.BooleanField(default=False)
     timezone = models.CharField(max_length=80, blank=True, null=True,
