@@ -24,28 +24,28 @@ class Singleton(type):
 class MastodonPool(dict, metaclass=Singleton):
     pass
 
-def get_mastodon(request):
-    pool = MastodonPool()
-    try:
-        client = Client.objects.get(api_base_id=request.session['instance'])
-        user = Account.objects.get(username=request.session['username'])
-    except (Client.DoesNotExist, Client.MultipleObjectsReturned,
-            Account.DoesNotExist, Account.MultipleObjectsReturned):
-        raise NotLoggedInException()
-    if user.access_token in pool.keys():
-        mastodon = pool[user.access_token]
+def get_usercontext(request):
+    if is_logged_in(request):
+        pool = MastodonPool()
+        try:
+            client = Client.objects.get(api_base_id=request.session['instance'])
+            user = Account.objects.get(username=request.session['username'])
+        except (Client.DoesNotExist, Client.MultipleObjectsReturned,
+                Account.DoesNotExist, Account.MultipleObjectsReturned):
+            raise NotLoggedInException()
+        if user.access_token in pool.keys():
+            mastodon = pool[user.access_token]
+        else:
+            mastodon = Mastodon(
+                client_id = client.client_id,
+                client_secret = client.client_secret,
+                access_token = user.access_token,
+                api_base_url = client.api_base_id,
+                ratelimit_method="throw")
+            pool[user.access_token] = mastodon
+        return user, mastodon
     else:
-        mastodon = Mastodon(
-            client_id = client.client_id,
-            client_secret = client.client_secret,
-            access_token = user.access_token,
-            api_base_url = client.api_base_id,
-            ratelimit_method="throw")
-        pool[user.access_token] = mastodon
-    return mastodon
-
-def fullbrutalism_p(request):
-    return request.session.get('fullbrutalism', False)
+        return None, None
 
 def is_logged_in(request):
     return request.session.has_key('user')
@@ -88,7 +88,7 @@ def br_login_required(function=None, home_url=None, redirect_field_name=None):
         return _dec(function)
 
 def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None):
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     data = mastodon.timeline(timeline, limit=100, max_id=max_id, since_id=since_id)
     form = PostForm(initial={'visibility': request.session['user'].source.privacy})
     try:
@@ -111,7 +111,7 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
                   {'toots': data, 'form': form, 'timeline': timeline,
                    'timeline_name': timeline_name,
                    'own_acct': request.session['user'],
-                   'fullbrutalism': fullbrutalism_p(request),
+                   'preferences': account.preferences,
                   'prev': prev, 'next': next})
 
 @br_login_required
@@ -129,14 +129,14 @@ def fed(request, next=None, prev=None):
 @br_login_required
 def tag(request, tag):
     try:
-        mastodon = get_mastodon(request)
+        account, mastodon = get_usercontext(request)
     except NotLoggedInException:
         return redirect(login)
     data = mastodon.timeline_hashtag(tag)
     return render(request, 'main/timeline.html',
                   {'toots': data, 'timeline_name': '#'+tag,
                    'own_acct': request.session['user'],
-                   'fullbrutalism': fullbrutalism_p(request)})
+                   'preferences': account.preferences})
 
 @never_cache
 def login(request):
@@ -251,14 +251,15 @@ def old_login(request):
             try:
                 account = Account.objects.get(email=email, client_id=client.id)
             except (Account.DoesNotExist, Account.MultipleObjectsReturned):
-                preferences = Preferences(theme = Theme.objects.get(1))
+                preferences = Preference(theme = Theme.objects.get(id=1))
+                preferences.save()
                 account = Account(
                     email = email,
                     access_token = "",
                     client = client,
                     preferences = preferences)
             try:
-                access_token = mastodon.log_in(username,
+                access_token = mastodon.log_in(email,
                                                password)
                 account.access_token = access_token
                 user = mastodon.account_verify_credentials()
@@ -285,7 +286,7 @@ def error(request):
 @br_login_required
 def note(request, next=None, prev=None):
     try:
-        mastodon = get_mastodon(request)
+        account, mastodon = get_usercontext(request)
     except NotLoggedInException:
         return redirect(about)
     notes = mastodon.notifications(limit=100, max_id=next, since_id=prev)
@@ -303,23 +304,23 @@ def note(request, next=None, prev=None):
                   {'notes': notes,'timeline': 'Notifications',
                    'timeline_name': 'Notifications',
                    'own_acct': request.session['user'],
-                   'fullbrutalism': fullbrutalism_p(request),
+                   'preferences': account.preferences,
                   'prev': prev, 'next': next})
 
 @br_login_required
 def thread(request, id):
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     context = mastodon.status_context(id)
     toot = mastodon.status(id)
     return render(request, 'main/thread.html',
                   {'context': context, 'toot': toot,
                    'own_acct': request.session['user'],
-                   'fullbrutalism': fullbrutalism_p(request)})
+                   'preferences': account.preferences})
 
 @br_login_required
 def user(request, username, prev=None, next=None):
     try:
-        mastodon = get_mastodon(request)
+        account, mastodon = get_usercontext(request)
     except NotLoggedInException:
         return redirect(about)
     try:
@@ -343,7 +344,7 @@ def user(request, username, prev=None, next=None):
                   {'toots': data, 'user': user_dict,
                    'relationship': relationship,
                    'own_acct': request.session['user'],
-                   'fullbrutalism': fullbrutalism_p(request),
+                   'preferences': account.preferences,
                   'prev': prev, 'next': next})
 
 
@@ -358,6 +359,7 @@ def settings(request):
             account.preferences.filter_replies = form.cleaned_data['filter_replies']
             account.preferences.filter_boosts = form.cleaned_data['filter_boosts']
             account.preferences.timezone = form.cleaned_data['timezone']
+            request.session['timezone'] = account.preferences.timezone
             account.preferences.save()
             account.save()
             return redirect(home)
@@ -365,6 +367,7 @@ def settings(request):
             return render(request, 'setup/settings.html',
                           {'form' : form, 'account': account})
     else:
+        request.session['timezone'] = account.preferences.timezone
         form = PreferencesForm(account.preferences)
         return render(request, 'setup/settings.html',
                       { 'form': form,
@@ -384,11 +387,11 @@ def toot(request, mention=None):
         return render(request, 'main/post.html',
                       {'form': form,
                        'own_acct': request.session['user'],
-                       'fullbrutalism': fullbrutalism_p(request)})
+                       'preferences': account.preferences})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            mastodon = get_mastodon(request)
+            account, mastodon = get_usercontext(request)
 
             # create media objects
             media_objects = []
@@ -411,14 +414,14 @@ def toot(request, mention=None):
             return render(request, 'main/post.html',
                           {'form': form,
                            'own_acct': request.session['user'],
-                           'fullbrutalism': fullbrutalism_p(request)})
+                           'preferences': account.preferences})
     else:
         return redirect(toot)
 
 @br_login_required
 def redraft(request, id):
     if request.method == 'GET':
-        mastodon = get_mastodon(request)
+        account, mastodon = get_usercontext(request)
         toot = mastodon.status(id)
         toot_content = BeautifulSoup(toot.content).get_text("\n")
         form = PostForm({'status': toot_content,
@@ -432,10 +435,10 @@ def redraft(request, id):
         return render(request, 'main/redraft.html',
                       {'toot': toot, 'form': form, 'redraft':True,
                        'own_acct': request.session['user'],
-                       'fullbrutalism': fullbrutalism_p(request)})
+                       'preferences': account.preferences})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
-        mastodon = get_mastodon(request)
+        account, mastodon = get_usercontext(request)
         toot = mastodon.status(id)
         if form.is_valid():
             media_objects = []
@@ -460,7 +463,7 @@ def redraft(request, id):
             return render(request, 'main/redraft.html',
                           {'toot': toot, 'form': form, 'redraft': True,
                            'own_acct': request.session['user'],
-                           'fullbrutalism': fullbrutalism_p(request)})
+                           'preferences': account.preferences})
     else:
         return redirect(redraft, id)
 
@@ -479,7 +482,7 @@ def safe_get_attachment(toot, index):
 @br_login_required
 def reply(request, id):
     if request.method == 'GET':
-        mastodon = get_mastodon(request)
+        account, mastodon = get_usercontext(request)
         toot = mastodon.status(id)
         context = mastodon.status_context(id)
         if toot.account.acct != request.session['user'].acct:
@@ -496,10 +499,10 @@ def reply(request, id):
         return render(request, 'main/reply.html',
                       {'context': context, 'toot': toot, 'form': form, 'reply':True,
                        'own_acct': request.session['user'],
-                       'fullbrutalism': fullbrutalism_p(request)})
+                       'preferences': account.preferences})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
-        mastodon = get_mastodon(request)
+        account, mastodon = get_usercontext(request)
         if form.is_valid():
             # create media objects
             media_objects = []
@@ -523,14 +526,14 @@ def reply(request, id):
             return render(request, 'main/reply.html',
                           {'context': context, 'toot': toot, 'form': form, 'reply': True,
                            'own_acct': request.session['user'],
-                           'fullbrutalism': fullbrutalism_p(request)})
+                           'preferences': account.preferences})
     else:
         return redirect(reply, id)
 
 @never_cache
 @br_login_required
 def fav(request, id):
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     toot = mastodon.status(id)
     if request.method == 'POST':
         if not request.POST.get('cancel', None):
@@ -544,12 +547,12 @@ def fav(request, id):
                       {"toot": toot,
                        'own_acct': request.session['user'],
                        "confirm_page": True,
-                       'fullbrutalism': fullbrutalism_p(request)})
+                       'preferences': account.preferences})
 
 @never_cache
 @br_login_required
 def boost(request, id):
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     toot = mastodon.status(id)
     if request.method == 'POST':
         if not request.POST.get('cancel', None):
@@ -563,12 +566,12 @@ def boost(request, id):
                       {"toot": toot,
                        'own_acct': request.session['user'],
                        'confirm_page': True,
-                       "fullbrutalism": fullbrutalism_p(request)})
+                       "preferences": account.preferences})
 
 @never_cache
 @br_login_required
 def delete(request, id):
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     toot = mastodon.status(id)
     if request.method == 'POST':
         if toot.account.acct != request.session['user'].acct:
@@ -581,12 +584,12 @@ def delete(request, id):
                       {"toot": toot,
                        'own_acct': request.session['user'],
                        'confirm_page': True,
-                       "fullbrutalism": fullbrutalism_p(request)})
+                       "preferences": account.preferences})
 
 @never_cache
 @br_login_required
 def follow(request, id):
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     try:
         user_dict = mastodon.account(id)
         relationship = mastodon.account_relationships(user_dict.id)[0]
@@ -604,12 +607,12 @@ def follow(request, id):
                       {"user": user_dict, "relationship": relationship,
                        "confirm_page": True,
                        'own_acct':  request.session['user'],
-                       'fullbrutalism': fullbrutalism_p(request)})
+                       'preferences': account.preferences})
 
 @never_cache
 @br_login_required
 def block(request, id):
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     try:
         user_dict = mastodon.account(id)
         relationship = mastodon.account_relationships(user_dict.id)[0]
@@ -627,12 +630,12 @@ def block(request, id):
                       {"user": user_dict, "relationship": relationship,
                        "confirm_page": True,
                        'own_acct': request.session['user'],
-                       'fullbrutalism': fullbrutalism_p(request)})
+                       'preferences': account.preferences})
 
 @never_cache
 @br_login_required
 def mute(request, id):
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     try:
         user_dict = mastodon.account(id)
         relationship = mastodon.account_relationships(user_dict.id)[0]
@@ -650,12 +653,12 @@ def mute(request, id):
                       {"user": user_dict, "relationship": relationship,
                        "confirm_page": True,
                        'own_acct':  request.session['user'],
-                       'fullbrutalism': fullbrutalism_p(request)})
+                       'preferences': account.preferences})
 
 @br_login_required
 def search(request):
     return render(request, 'main/search.html',
-                      {"fullbrutalism": fullbrutalism_p(request),
+                      {"preferences": account.preferences,
                            'own_acct':  request.session['user'],
                       })
 
@@ -667,31 +670,37 @@ def search_results(request):
         query = request.POST.get('q', '')
     else:
         query = ''
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     results = mastodon.search(query)
     return render(request, 'main/search_results.html',
                   {"results": results,
                    'own_acct': request.session['user'],
-                   "fullbrutalism": fullbrutalism_p(request)})
+                   "preferences": account.preferences})
 
 def about(request):
     version = django_settings.BRUTALDON_VERSION
+    account, mastodon = get_usercontext(request)
+    if account:
+        preferences = account.preferences
+    else:
+        preferences = None
     return render(request, 'about.html',
-                      {"fullbrutalism": fullbrutalism_p(request),
+                      {"preferences": preferences,
                        "version": version,
                        'own_acct': request.session.get('user', None),
                       })
 def privacy(request):
+    account, mastodon = get_usercontext(request)
     return render(request, 'privacy.html',
-                      {"fullbrutalism": fullbrutalism_p(request),
+                      {"preferences": preferences,
                        'own_acct' : request.session.get('user', None)})
 
 @cache_page(60 * 30)
 @br_login_required
 def emoji_reference(request):
-    mastodon = get_mastodon(request)
+    account, mastodon = get_usercontext(request)
     emojos = mastodon.custom_emojis()
     return render(request, 'main/emoji.html',
-                      {"fullbrutalism": fullbrutalism_p(request),
+                      {"preferences": account.preferences,
                        "emojos": sorted(emojos, key=lambda x: x['shortcode']),
                        'own_acct' : request.session['user']})
