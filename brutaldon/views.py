@@ -350,7 +350,7 @@ def user(request, username, prev=None, next=None):
 @never_cache
 @br_login_required
 def settings(request):
-    account = Account.objects.get(username=username, client_id=client.id)
+    account = Account.objects.get(username=request.session['username'])
     if request.method == 'POST':
         form = PreferencesForm(request.POST)
         if form.is_valid():
@@ -368,8 +368,7 @@ def settings(request):
         form = PreferencesForm(account.preferences)
         return render(request, 'setup/settings.html',
                       { 'form': form,
-                        'own_acct': request.session['user'],
-                        'fullbrutalism': fullbrutalism_p(request)})
+                        'account': account})
 
 @never_cache
 @br_login_required

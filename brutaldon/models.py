@@ -32,7 +32,7 @@ class Preference(models.Model):
                                 choices=timezones, default='UTC')
 
 class Account(models.Model):
-    username = models.EmailField()
+    username = models.EmailField(unique=True)
     email = models.EmailField(null=True, blank=True)
     django_user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True)
     access_token = models.CharField(null=True, blank=True, max_length=2048)
