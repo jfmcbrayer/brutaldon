@@ -103,9 +103,9 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
         next = None
 
     # This filtering has to be done *after* getting next/prev links
-    if request.session.get('filter_replies', False):
+    if account.preferences.filter_replies:
         data = [x for x in data if not x.in_reply_to_id]
-    if request.session.get('filter_boosts', False):
+    if account.preferences.filter_boosts:
         data = [x for x in data if not x.reblog]
     return render(request, 'main/%s_timeline.html' % timeline,
                   {'toots': data, 'form': form, 'timeline': timeline,
