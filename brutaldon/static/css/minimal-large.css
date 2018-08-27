@@ -1,0 +1,689 @@
+body, input, textarea {
+    font-family: sans-serif;
+    background-color: #FAFAFA;
+    color: #000;
+    margin: 1em;
+    font-size: larger;
+}
+
+
+a {
+    color: blue;
+    text-decoration: underline;
+}
+
+a:active {
+    color: red;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: purple;
+    text-decoration: underline;
+}
+
+img, img.is-32x32 {
+    float: left;
+    max-width: 512px;
+    max-height: auto;
+    margin: 4px;
+}
+
+.container {
+    margin: 0 auto;
+    position: relative;
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        max-width: 960px;
+        width: 960px;
+    }
+    .container.is-fluid {
+        margin-left: 64px;
+        margin-right: 64px;
+        max-width: none;
+        width: auto;
+    }
+    .navbar,
+    .navbar-menu,
+    .navbar-start,
+    .navbar-end {
+        align-items: stretch;
+        display: flex;
+    }
+    .navbar-start {
+        justify-content: flex-start;
+        margin-right: auto;
+    }
+    .navbar-end {
+        justify-content: flex-end;
+        margin-left: auto;
+    }
+}
+
+@media screen and (max-width: 1279px) {
+    .container.is-widescreen {
+        max-width: 1152px;
+        width: auto;
+    }
+}
+
+@media screen and (max-width: 1471px) {
+    .container.is-fullhd {
+        max-width: 1344px;
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .container {
+        max-width: 1152px;
+        width: 1152px;
+    }
+}
+
+@media screen and (min-width: 1472px) {
+    .container {
+        max-width: 1344px;
+        width: 1344px;
+    }
+}
+
+body > section > div.container {
+    max-width: 90ex;
+}
+
+.level {
+    clear: both;
+}
+
+.title {
+    font-size: 3ex;
+    font-weight: bold;
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+}
+.subtitle {
+    font-size: 1.5ex;
+    font-weight: bold;
+    margin-top: 0.25ex;
+    margin-bottom: 0.25ex;
+}
+.toot {
+    clear: both;
+}
+
+.image.is-32x32, .is-32x32 img, img.is-32x32 {
+    width: 32px;
+    height: 32px;
+}
+
+.image.is-48x48, .is-48x48 img, img.is-48x48 {
+    width: 48px;
+    height: 48px;
+}
+
+.image.is-64x64, .is-64x64 img, img.is-64x64 {
+    width: 64px;
+    height: 64px;
+}
+
+.image.is-96x96, .is-96x96 img, img.is-96x96 {
+    width: 96px;
+    height: 96px;
+}
+
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
+.media {
+    padding: 1ex;
+    margin: 4px;
+    overflow: auto;
+}
+
+.media.active-context {
+    background-color: #DDD;
+}
+
+
+.field
+{
+    margin-top: 1em;
+}
+
+label
+{
+    font-weight: bold;
+}
+
+.control, .select
+{
+    margin-top: 0.5ex;
+    margin-bottom: 0.5ex;
+}
+
+.account-avatar
+{
+    display: inline-block;
+}
+.reblog-icon
+{
+    margin-top: 32px;
+    display: inline-block;
+}
+
+.media-content
+{
+    margin-top: 1ex;
+}
+
+.media-content > div > p
+{
+    margin-bottom: 1ex;
+}
+
+.textarea
+{
+    max-width: 100%;
+}
+
+.errorlist
+{
+    color: #FF0000;
+}
+
+img.emoji
+{
+    display: inline;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+    vertical-align: text-bottom;
+}
+
+.input,
+.textarea {
+  background-color: white;
+  border-color: #dbdbdb;
+  color: #363636;
+  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+  max-width: 100%;
+  width: 100%;
+}
+
+.input::-moz-placeholder,
+.textarea::-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.input::-webkit-input-placeholder,
+.textarea::-webkit-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.input:-moz-placeholder,
+.textarea:-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.input:-ms-input-placeholder,
+.textarea:-ms-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.input:hover, .input.is-hovered,
+.textarea:hover,
+.textarea.is-hovered {
+  border-color: #b5b5b5;
+}
+
+.input:focus, .input.is-focused, .input:active, .input.is-active,
+.textarea:focus,
+.textarea.is-focused,
+.textarea:active,
+.textarea.is-active {
+  border-color: #3273dc;
+  box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+}
+
+.input[disabled],
+.textarea[disabled] {
+  background-color: whitesmoke;
+  border-color: whitesmoke;
+  box-shadow: none;
+  color: #7a7a7a;
+}
+
+.input[disabled]::-moz-placeholder,
+.textarea[disabled]::-moz-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.input[disabled]::-webkit-input-placeholder,
+.textarea[disabled]::-webkit-input-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.input[disabled]:-moz-placeholder,
+.textarea[disabled]:-moz-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.input[disabled]:-ms-input-placeholder,
+.textarea[disabled]:-ms-input-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.input[readonly],
+.textarea[readonly] {
+  box-shadow: none;
+}
+.textarea {
+  display: block;
+  max-width: 100%;
+  min-width: 100%;
+  padding: 0.625em;
+  resize: vertical;
+}
+
+.textarea:not([rows]) {
+  max-height: 600px;
+  min-height: 120px;
+}
+
+.textarea[rows] {
+  height: initial;
+}
+
+.textarea.has-fixed-size {
+  resize: none;
+}
+
+.checkbox,
+.radio {
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1.25;
+  position: relative;
+}
+
+.checkbox input,
+.radio input {
+  cursor: pointer;
+}
+
+.checkbox:hover,
+.radio:hover {
+  color: #363636;
+}
+
+.checkbox[disabled],
+.radio[disabled] {
+  color: #7a7a7a;
+  cursor: not-allowed;
+}
+
+.radio + .radio {
+  margin-left: 0.5em;
+}
+
+.select {
+  display: inline-block;
+  max-width: 100%;
+  position: relative;
+  vertical-align: top;
+}
+
+.select:not(.is-multiple) {
+  height: 2.25em;
+}
+
+
+.select select {
+  background-color: white;
+  border-color: #dbdbdb;
+  color: #363636;
+  cursor: pointer;
+  display: block;
+  font-size: 1em;
+  max-width: 100%;
+  outline: none;
+}
+
+.select select::-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.select select::-webkit-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.select select:-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.select select:-ms-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+.select select:hover, .select select.is-hovered {
+  border-color: #b5b5b5;
+}
+
+.select select:focus, .select select.is-focused, .select select:active, .select select.is-active {
+  border-color: #3273dc;
+  box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+}
+
+.select select[disabled] {
+  background-color: whitesmoke;
+  border-color: whitesmoke;
+  box-shadow: none;
+  color: #7a7a7a;
+}
+
+.select select[disabled]::-moz-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.select select[disabled]::-webkit-input-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.select select[disabled]:-moz-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.select select[disabled]:-ms-input-placeholder {
+  color: rgba(122, 122, 122, 0.3);
+}
+
+.select select::-ms-expand {
+  display: none;
+}
+
+.select select[disabled]:hover {
+  border-color: whitesmoke;
+}
+
+.select select:not([multiple]) {
+  padding-right: 2.5em;
+}
+
+.select select[multiple] {
+  height: initial;
+  padding: 0;
+}
+
+.select select[multiple] option {
+  padding: 0.5em 1em;
+}
+
+.select:not(.is-multiple):not(.is-loading):hover::after {
+  border-color: #363636;
+}
+
+.file {
+    align-items: stretch;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+.file-label {
+  align-items: stretch;
+  display: flex;
+  cursor: pointer;
+  justify-content: flex-start;
+  overflow: hidden;
+  position: relative;
+}
+
+.file-label:hover .file-cta {
+  background-color: #eeeeee;
+  color: #363636;
+}
+
+.file-label:hover .file-name {
+  border-color: #d5d5d5;
+}
+
+.file-label:active .file-cta {
+  background-color: #e8e8e8;
+  color: #363636;
+}
+
+.file-label:active .file-name {
+  border-color: #cfcfcf;
+}
+
+.file-input {
+  height: 0.01em;
+  left: 0;
+  outline: none;
+  position: absolute;
+  top: 0;
+  width: 0.01em;
+}
+
+.file-cta,
+.file-name {
+  border-color: #dbdbdb;
+  border-radius: 4px;
+  font-size: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  white-space: nowrap;
+}
+
+.file-cta {
+  background-color: whitesmoke;
+  color: #4a4a4a;
+}
+
+.file-name {
+  border-color: #dbdbdb;
+  border-style: solid;
+  border-width: 1px 1px 1px 0;
+  display: block;
+  max-width: 16em;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+}
+
+.file-icon {
+  align-items: center;
+  display: flex;
+  height: 1em;
+  justify-content: center;
+  margin-right: 0.5em;
+  width: 1em;
+}
+
+.file-icon .fa {
+  font-size: 14px;
+}
+
+.label {
+  color: #363636;
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.label:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+.field.has-addons {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.field.has-addons .control:not(:last-child) {
+  margin-right: -1px;
+}
+
+.field.has-addons .control:not(:first-child):not(:last-child) .button,
+.field.has-addons .control:not(:first-child):not(:last-child) .input,
+.field.has-addons .control:not(:first-child):not(:last-child) .select select {
+  border-radius: 0;
+}
+
+.field.has-addons .control:first-child .button,
+.field.has-addons .control:first-child .input,
+.field.has-addons .control:first-child .select select {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.field.has-addons .control:last-child .button,
+.field.has-addons .control:last-child .input,
+.field.has-addons .control:last-child .select select {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.field.has-addons .control .button:hover, .field.has-addons .control .button.is-hovered,
+.field.has-addons .control .input:hover,
+.field.has-addons .control .input.is-hovered,
+.field.has-addons .control .select select:hover,
+.field.has-addons .control .select select.is-hovered {
+  z-index: 2;
+}
+
+.field.has-addons .control .button:focus, .field.has-addons .control .button.is-focused, .field.has-addons .control .button:active, .field.has-addons .control .button.is-active,
+.field.has-addons .control .input:focus,
+.field.has-addons .control .input.is-focused,
+.field.has-addons .control .input:active,
+.field.has-addons .control .input.is-active,
+.field.has-addons .control .select select:focus,
+.field.has-addons .control .select select.is-focused,
+.field.has-addons .control .select select:active,
+.field.has-addons .control .select select.is-active {
+  z-index: 3;
+}
+
+.field.has-addons .control .button:focus:hover, .field.has-addons .control .button.is-focused:hover, .field.has-addons .control .button:active:hover, .field.has-addons .control .button.is-active:hover,
+.field.has-addons .control .input:focus:hover,
+.field.has-addons .control .input.is-focused:hover,
+.field.has-addons .control .input:active:hover,
+.field.has-addons .control .input.is-active:hover,
+.field.has-addons .control .select select:focus:hover,
+.field.has-addons .control .select select.is-focused:hover,
+.field.has-addons .control .select select:active:hover,
+.field.has-addons .control .select select.is-active:hover {
+  z-index: 4;
+}
+
+.field.has-addons .control.is-expanded {
+  flex-grow: 1;
+}
+
+.field.has-addons.has-addons-centered {
+  justify-content: center;
+}
+
+.field.has-addons.has-addons-right {
+  justify-content: flex-end;
+}
+
+.field.has-addons.has-addons-fullwidth .control {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+.control {
+    font-size: 1rem;
+    position: relative;
+    text-align: left;
+}
+
+.control.has-icon .icon {
+    color: #dbdbdb;
+    height: 2.25em;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 2.25em;
+    z-index: 4;
+}
+
+.control.has-icon .input:focus + .icon {
+    color: #7a7a7a;
+}
+
+
+.control.has-icon:not(.has-icon-right) .icon {
+  left: 0;
+}
+
+.control.has-icon:not(.has-icon-right) .input {
+  padding-left: 2.25em;
+}
+
+.control.has-icon.has-icon-right .icon {
+  right: 0;
+}
+
+.control.has-icon.has-icon-right .input {
+  padding-right: 2.25em;
+}
+
+.control.has-icons-left .input:focus ~ .icon,
+.control.has-icons-left .select:focus ~ .icon, .control.has-icons-right .input:focus ~ .icon,
+.control.has-icons-right .select:focus ~ .icon {
+  color: #7a7a7a;
+}
+
+.control.has-icons-left .input.is-small ~ .icon,
+.control.has-icons-left .select.is-small ~ .icon, .control.has-icons-right .input.is-small ~ .icon,
+.control.has-icons-right .select.is-small ~ .icon {
+  font-size: 0.75rem;
+}
+
+.control.has-icons-left .input.is-medium ~ .icon,
+.control.has-icons-left .select.is-medium ~ .icon, .control.has-icons-right .input.is-medium ~ .icon,
+.control.has-icons-right .select.is-medium ~ .icon {
+  font-size: 1.25rem;
+}
+
+.control.has-icons-left .input.is-large ~ .icon,
+.control.has-icons-left .select.is-large ~ .icon, .control.has-icons-right .input.is-large ~ .icon,
+.control.has-icons-right .select.is-large ~ .icon {
+  font-size: 1.5rem;
+}
+
+.control.has-icons-left .icon, .control.has-icons-right .icon {
+  color: #dbdbdb;
+  height: 2.25em;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 2.25em;
+  z-index: 4;
+}
+
+.control.has-icons-left .input,
+.control.has-icons-left .select select {
+  padding-left: 2.25em;
+}
+
+.control.has-icons-left .icon.is-left {
+  left: 0;
+}
+
+.control.has-icons-right .input,
+.control.has-icons-right .select select {
+  padding-right: 2.25em;
+}
+
+.control.has-icons-right .icon.is-right {
+  right: 0;
+}

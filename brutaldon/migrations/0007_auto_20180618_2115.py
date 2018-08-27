@@ -18,6 +18,9 @@ def set_up_default_themes(apps, schema_editor):
                       main_css="css/fullbrutalism.css",
                       is_brutalist=True)
     brutalism.save()
+    large = Theme(name="Minimalist Large", main_css="css/minimal-large.css",
+                  is_brutalist=True)
+    large.save()
     vt240 = Theme(name="vt240", main_css="css/vt240don.css",
                   is_brutalist=True)
     vt240.save()
