@@ -208,8 +208,10 @@ def oauth_callback(request):
                           client = Client.objects.get(api_base_id=request.session['instance']),
                           preferences = preferences)
         preferences.save()
-        account.save()
     request.session['user'] = user
+    request.session['username'] = user.username
+    account.username = user.username
+    account.save()
     return redirect(home)
 
 
