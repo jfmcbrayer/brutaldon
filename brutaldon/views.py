@@ -202,7 +202,7 @@ def oauth_callback(request):
         account.access_token = access_token
         account.save()
     except (Account.DoesNotExist, Account.MultipleObjectsReturned):
-        preferences = Preferences(theme = Theme.objects.get(1))
+        preferences = Preference(theme = Theme.objects.get(id=1))
         account = Account(username=user.acct,
                           access_token = access_token,
                           client = Client.objects.get(api_base_id=request.session['instance']),
