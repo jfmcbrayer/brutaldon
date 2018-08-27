@@ -5,7 +5,7 @@ from django.db import migrations
 def set_up_default_themes(apps, schema_editor):
     Theme = apps.get_model('brutaldon', 'Theme')
     default = Theme(name="default",
-                    main_css="css/bulmaswatch-materia.min.css",
+                    main_css="css/bulma.min.css",
                     tweaks_css="css/brutaldon.css",
                     is_brutalist=False)
     default.save()
@@ -18,7 +18,7 @@ def set_up_default_themes(apps, schema_editor):
                       main_css="css/fullbrutalism.css",
                       is_brutalist=True)
     brutalism.save()
-    minimal = Theme(name="minimalist", main_css=None, is_brutalist=True)
+    minimal = Theme(name="No styling at all", main_css=None, is_brutalist=True)
     minimal.save()
 
 def delete_themes(apps, schema_editor):
