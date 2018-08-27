@@ -1,0 +1,105 @@
+body > section > div.container {
+    max-width: 90ex;
+}
+
+
+.reblog-icon {
+    position: relative;
+    top: -24px;
+    left: 40px;
+}
+
+img.fav-avatar {
+    display: inline;
+
+}
+
+
+
+.media {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.media-content {
+    padding: 1.5ex;
+}
+
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
+figure.media-left p.image a img
+{
+    border-radius: 5px;
+}
+
+img.avatar
+{
+    border-radius: 5px;
+}
+
+.active-context {
+    background-color: #444;
+}
+
+h2.subtitle
+{
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+article.media.user-info .content img
+{
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+}
+
+span.account-locked
+{
+    margin-top: 48px;
+    margin-left: -16px;
+}
+
+.errorlist
+{
+    color: #FF0000;
+}
+
+.emoji-box
+{
+    padding: .75rem;
+    background-color: #444;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+img.emoji
+{
+    display: inline;
+    max-height: 1.5em;
+    max-width: 1.5em;
+    vertical-align: text-bottom;
+}
+
+emoji-link
+{
+    font-size: 2em;
+}
+
+
+@media screen and (max-width: 768px) {
+    .media {
+        display: block;
+    }
+}
