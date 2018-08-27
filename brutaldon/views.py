@@ -200,14 +200,18 @@ def oauth_callback(request):
     try:
         account = Account.objects.get(username=user.username)
         account.access_token = access_token
+        if not account.preferences:
+            preferences = Preference(theme = Theme.objects.get(id=1))
+            preferences.save()
+            account.preferences = preferences
         account.save()
     except (Account.DoesNotExist, Account.MultipleObjectsReturned):
         preferences = Preference(theme = Theme.objects.get(id=1))
+        preferences.save()
         account = Account(username=user.acct,
                           access_token = access_token,
                           client = Client.objects.get(api_base_id=request.session['instance']),
                           preferences = preferences)
-        preferences.save()
     request.session['user'] = user
     request.session['username'] = user.username
     account.username = user.username
