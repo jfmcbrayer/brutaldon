@@ -198,7 +198,7 @@ def oauth_callback(request):
     request.session['access_token'] = access_token
     user = mastodon.account_verify_credentials()
     try:
-        account = Account.objects.get(username=user.username, client_id=client.id)
+        account = Account.objects.get(username=user.username)
         account.access_token = access_token
         account.save()
     except (Account.DoesNotExist, Account.MultipleObjectsReturned):
