@@ -13,16 +13,22 @@
                 brutaldon
             {% endif %}
         {% endblock %}</title>
-    {% if not preferences.theme.is_brutalist %}
-        <link rel="stylesheet"
-              href="{% static 'css/bulma.min.css' %}">
-        <link rel="stylesheet"
-              href="{% static 'css/fork-awesome.min.css' %}">
-        <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
-        {% block page_scripts %}
-        {% endblock %}
-    {% else %}
-        <link rel="stylesheet" href="{% static "css/fullbrutalism.css" %}" >
+        {% if not preferences %}
+            <link rel="stylesheet"
+                  href="{% static 'css/bulma.min.css' %}">
+            <link rel="stylesheet"
+                  href="{% static 'css/fork-awesome.min.css' %}">
+            <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
+        {% else  %}
+            <link rel="stylesheet"
+                  href="{% static preferences.theme.main_css %}">
+            <link rel="stylesheet" href="{% static preferences.theme.tweaks_css %}">
+            {% if not prefrences.theme.is_brutalist %}
+                <link rel="stylesheet"
+                      href="{% static 'css/fork-awesome.min.css' %}">
+            {% block page_scripts %}
+            {% endblock %}
+        {% endif %}
     {% endif %}
     {% if own_acct %}
         <link rel="icon" href="{{ own_acct.avatar_static }}">
