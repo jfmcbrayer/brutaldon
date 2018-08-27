@@ -10,7 +10,7 @@ Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
 {% block content %}
 
 <div class="card">
-    {% if not fullbrutalism %}
+    {% if not preferences.theme.is_brutalist %}
         <div class="card-header" style="background-image: url({{ user.header }});">
     {% else %}
         <div class="card-header">

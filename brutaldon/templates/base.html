@@ -13,7 +13,7 @@
                 brutaldon
             {% endif %}
         {% endblock %}</title>
-    {% if not fullbrutalism %}
+    {% if not preferences.theme.is_brutalist %}
         <link rel="stylesheet"
               href="{% static 'css/bulma.min.css' %}">
         <link rel="stylesheet"
@@ -115,7 +115,7 @@
               </a>
           </div>
           <div class="level-right">
-              {% if fullbrutalism %}
+              {% if preferences.theme.is_brutalist %}
                   <img class="level-item" src="{% static '/images/lynx.gif' %}"
                        alt="Lynx Now!">
                   <img class="level-item" src="{% static '/images/now9.gif' %}"
@@ -128,7 +128,7 @@
       </div>
   </footer>
 
-  {% if not fullbrutalism %}
+  {% if not preferences.theme.is_brutalist %}
 
       <script type="application/javascript">
 document.addEventListener('DOMContentLoaded', function () {
