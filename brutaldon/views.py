@@ -664,6 +664,7 @@ def mute(request, id):
 
 @br_login_required
 def search(request):
+    account, mastodon = get_usercontext(request)
     return render(request, 'main/search.html',
                       {"preferences": account.preferences,
                            'own_acct':  request.session['user'],
