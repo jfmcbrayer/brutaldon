@@ -199,8 +199,8 @@ def login(request):
                 client_id = client.client_id,
                 client_secret = client.client_secret,
                 api_base_url = api_base_url)
-            return redirect(mastodon.auth_request_url(redirect_uris=redirect_uris),
-                            scopes=['read', 'write', 'follow'])
+            return redirect(mastodon.auth_request_url(redirect_uris=redirect_uris,
+                                                      scopes=['read', 'write', 'follow']))
         else:
             return render(request, 'setup/login.html', {'form': form})
 
