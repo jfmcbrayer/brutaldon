@@ -377,6 +377,7 @@ def settings(request):
 @never_cache
 @br_login_required
 def toot(request, mention=None):
+    account, mastodon = get_usercontext(request)
     if request.method == 'GET':
         if mention:
             if not mention.startswith('@'):
@@ -392,8 +393,6 @@ def toot(request, mention=None):
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            account, mastodon = get_usercontext(request)
-
             # create media objects
             media_objects = []
             for index in range(1,5):
