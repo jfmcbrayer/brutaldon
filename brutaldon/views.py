@@ -182,9 +182,11 @@ def login(request):
             try:
                 client = Client.objects.get(api_base_id=api_base_url)
             except (Client.DoesNotExist, Client.MultipleObjectsReturned):
-                (client_id, client_secret) = Mastodon.create_app('brutaldon',
+                (client_id, client_secret) =
+                Mastodon.create_app('brutaldon',
                                     api_base_url=api_base_url,
-                                    redirect_uris=redirect_uris)
+                                    redirect_uris=redirect_uris,
+                                    scopes=['read', 'write', 'follow'])
                 client = Client(
                     api_base_id = api_base_url,
                     client_id=client_id,
@@ -243,8 +245,10 @@ def old_login(request):
             try:
                 client = Client.objects.get(api_base_id=api_base_url)
             except (Client.DoesNotExist, Client.MultipleObjectsReturned):
-                (client_id, client_secret) = Mastodon.create_app('brutaldon',
-                                                             api_base_url=api_base_url)
+                (client_id, client_secret) =
+                Mastodon.create_app('brutaldon',
+                                    api_base_url=api_base_url,
+                                    scopes=['read', 'write', 'follow'])
                 client = Client(
                     api_base_id = api_base_url,
                     client_id=client_id,
