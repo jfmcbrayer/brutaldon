@@ -5,12 +5,12 @@ from django.db import migrations
 def set_up_default_themes(apps, schema_editor):
     Theme = apps.get_model('brutaldon', 'Theme')
     default = Theme(name="default",
-                    main_css="css/bulma.min.css",
+                    main_css="css/bulmaswatch-materia.min.css",
                     tweaks_css="css/brutaldon.css",
                     is_brutalist=False)
     default.save()
     dark = Theme(name="default dark",
-                 main_css="css/bulmaswatch-darkly-min.css",
+                 main_css="css/bulmaswatch-darkly.min.css",
                  tweaks_css="css/brutaldon-dark.css",
                  is_brutalist=False)
     dark.save()
