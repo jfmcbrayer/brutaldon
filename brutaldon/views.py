@@ -264,7 +264,7 @@ def old_login(request):
                     client = client,
                     preferences = preferences)
             try:
-                access_token = mastodon.log_in(username,
+                access_token = mastodon.log_in(email,
                                                password,
                                                scopes=['read', 'write', 'follow'])
                 account.access_token = access_token
