@@ -107,3 +107,20 @@ emoji-link
         display: block;
     }
 }
+
+.file-cta
+{
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 0;
+    -webkit-border-top-right-radius: 0;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomright: 0;
+    -moz-border-radius-topright: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    height: 38px;
+}
