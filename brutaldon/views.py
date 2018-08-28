@@ -14,13 +14,6 @@ from pdb import set_trace
 class NotLoggedInException(Exception):
     pass
 
-class Singleton(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
-
 def get_usercontext(request):
     if is_logged_in(request):
         try:
@@ -148,8 +141,10 @@ def login(request):
             if tmp_base.netloc == '':
                 api_base_url = parse.urlunparse(('https', tmp_base.path,
                                                  '','','',''))
+                request.session['instance_hostname'] = tmp_base.path
             else:
                 api_base_url = api_base_url.lower()
+                request.session['instance_hostname'] = tmp_base.netloc
 
             request.session['instance'] = api_base_url
             try:
@@ -210,8 +205,8 @@ def oauth_callback(request):
                           client = Client.objects.get(api_base_id=request.session['instance']),
                           preferences = preferences)
     request.session['user'] = user
-    request.session['username'] = user.username
-    account.username = user.username
+    request.session['username'] = user.username + '@' + request.session['instance_hostname']
+    account.username = user.username + '@' + request.session['instance_hostname']
     account.save()
     return redirect(home)
 
@@ -229,8 +224,10 @@ def old_login(request):
             if tmp_base.netloc == '':
                 api_base_url = parse.urlunparse(('https', tmp_base.path,
                                                  '','','',''))
+                request.session['instance_hostname'] = tmp_base.path
             else:
                 api_base_url = api_base_url.lower()
+                request.session['instance_hostname'] = tmp_base.netloc
 
             request.session['instance'] = api_base_url
             email = form.cleaned_data['email']
@@ -270,8 +267,8 @@ def old_login(request):
                 account.access_token = access_token
                 user = mastodon.account_verify_credentials()
                 request.session['user'] = user
-                request.session['username'] = user.username
-                account.username = user.username
+                request.session['username'] = user.username + '@' + request.session['instance_hostname']
+                account.username = request.session['username']
                 request.session['timezone'] = account.preferences.timezone;
                 account.save()
                 return redirect(home)
