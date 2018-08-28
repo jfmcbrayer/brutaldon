@@ -1,0 +1,184 @@
+html, a, div, div.notification, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video, details, summary, h1.title, h2.subtitle {
+  font-family: "monospace";
+  color: #ff7700;
+  background-color: #000000;
+  font-size: medium;
+}
+
+
+tr, td, ul, ol {
+  border-color: #ff7700;
+  outline: 1px solid #ff7700;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+a, a.button, a.button.is-primary, input.button.is-primary, input, .input, .textarea, .footer, .label, select, textarea {
+  color: #ff8800;
+  border-color: #ff8800;
+  background-color: #000000;
+  font-weight: bolder;
+  text-decoration-line: none;
+  font-size: medium;
+}
+
+
+a:hover, a.button:hover, a.button.is-primary:hover, input.button.is-primary:hover {
+  color: #000000;
+  background-color: #ff8800;
+}
+
+.control input[type=text], .control textarea
+{
+    width: 100%;
+    max-width: 80em;
+    border: 1px solid #ff7700;
+    margin-bottom: 1ex;
+}
+
+.control input, .control select
+{
+    border: 1px solid #ff7700;
+    background-color: #000000;
+    margin-bottom: 1ex;
+}
+
+img {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+
+
+div.card-header-title, div.card-header-icon {
+    color: #ff7700;
+    -webkit-text-stroke: 2px black;
+    -moz-text-stroke: 2px black;
+    text-stroke: 2px black;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 80em;
+}
+
+.box {
+    padding: 1em;
+    border-color: #ff7700;
+    outline: 1px solid #ff7700;
+    background-color: #000;
+    margin-bottom: 1em;
+}
+
+hr.is-hidden {
+    display: none;
+}
+
+.image.is-32x32, .is-32x32 img, img.is-32x32 {
+    width: 32px;
+    height: 32px;
+}
+
+.image.is-48x48, .is-48x48 img, img.is-48x48 {
+    width: 48px;
+    height: 48px;
+}
+
+.image.is-64x64, .is-64x64 img, img.is-64x64 {
+    width: 64px;
+    height: 64px;
+}
+
+.image.is-96x96, .is-96x96 img, img.is-96x96 {
+    width: 96px;
+    height: 96px;
+}
+
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
+
+.media {
+    background-color: black;
+    border-radius: 5px;
+    /*-webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);*/
+    color: #4a4a00;
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
+figure.media-left p.image a img
+{
+    border-radius: 5px;
+}
+
+.active-context {
+    background-color: #000000;
+    border-color: #ffcc00;
+    outline: 1px solid #ffcc00;
+}
+
+.account-avatar
+{
+    display: inline-block;
+}
+.reblog-icon
+{
+    margin-top: 32px;
+    display: inline-block;
+}
+
+img.fav-avatar {
+    display: inline;
+
+}
+
+.level {
+    display: block;
+    margin-bottom: 1ex;
+    margin-top: 1ex;
+}
+
+@media screen and (max-width: 768px) {
+    .media {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .navbar,
+    .navbar-menu,
+    .navbar-start,
+    .navbar-end {
+        align-items: stretch;
+        display: flex;
+    }
+    .navbar-start {
+        justify-content: flex-start;
+        margin-right: auto;
+    }
+    .navbar-end {
+        justify-content: flex-end;
+        margin-left: auto;
+    }
+}

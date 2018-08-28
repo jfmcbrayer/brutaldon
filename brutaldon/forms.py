@@ -1,6 +1,8 @@
 from django import forms
 from django.conf import settings
 from pytz import common_timezones
+from .models import Theme, Preference
+
 
 PRIVACY_CHOICES = (('public', 'Public'),
                    ('unlisted', 'Unlisted'),
@@ -14,36 +16,17 @@ MAX_LENGTH = settings.TOOT_MAX_LENGTH
 class LoginForm(forms.Form):
     instance = forms.CharField(label="Instance",
                                max_length=256)
-    username = forms.CharField(label="Email",
-                               max_length=256)
+    email = forms.EmailField(label="Email")
     password = forms.CharField(widget=forms.PasswordInput())
 
 class OAuthLoginForm(forms.Form):
     instance = forms.CharField(label="Instance",
                                max_length=256)
 
-class SettingsForm(forms.Form):
-    fullbrutalism = forms.BooleanField(label="Use FULLBRUTALISM mode?",
-                                       required=False,
-                                       help_text=
-    """FULLBRUTALISM mode strips away most of the niceties of modern web design when
-    brutaldon is viewed in a graphical browser. It has no effect in text-only browsers.""")
-    filter_replies = forms.BooleanField(label="Filter replies from home timeline?",
-                                        required=False,
-                                        help_text=
-    """Should replies be filtered out of your home timeline, giving you only pure,
-    top-level posts?""")
-    filter_boosts = forms.BooleanField(label="Filter boosts from home timeline?",
-                                        required=False,
-                                        help_text=
-    """Should replies be filtered out of your home timeline, giving you only pure,
-    Original Content?""")
-    timezone = forms.ChoiceField(label="Your local timezone",
-                                 choices=timezones,
-                                 required=False,
-                                 help_text=
-    """What time zone do you prefer to have times displayed in? The default choice is UTC.""")
-
+class PreferencesForm(forms.ModelForm):
+    class Meta:
+        model = Preference
+        fields = ['theme', 'filter_replies', 'filter_boosts', 'timezone']
 
 class PostForm(forms.Form):
     """def status_post(self, status, in_reply_to_id=None, media_ids=None,

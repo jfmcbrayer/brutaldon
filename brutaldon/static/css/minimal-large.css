@@ -1,0 +1,230 @@
+body, input, textarea, select {
+    font-family: sans-serif;
+    background-color: #FAFAFA;
+    color: #000;
+    margin: 1em;
+    font-size: larger;
+}
+
+input[text], textarea
+{
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+    max-width: 120em;
+}
+
+a {
+    color: blue;
+    text-decoration: underline;
+}
+
+a:active {
+    color: red;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: purple;
+    text-decoration: underline;
+}
+
+img, img.is-32x32 {
+    float: left;
+    max-width: 512px;
+    max-height: auto;
+    margin: 4px;
+}
+
+.container {
+    margin: 0 auto;
+    position: relative;
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        max-width: 960px;
+        width: 960px;
+    }
+    .container.is-fluid {
+        margin-left: 64px;
+        margin-right: 64px;
+        max-width: none;
+        width: auto;
+    }
+    .navbar,
+    .navbar-menu,
+    .navbar-start,
+    .navbar-end {
+        align-items: stretch;
+        display: flex;
+    }
+    .navbar-start {
+        justify-content: flex-start;
+        margin-right: auto;
+    }
+    .navbar-end {
+        justify-content: flex-end;
+        margin-left: auto;
+    }
+}
+
+@media screen and (max-width: 1279px) {
+    .container.is-widescreen {
+        max-width: 1152px;
+        width: auto;
+    }
+}
+
+@media screen and (max-width: 1471px) {
+    .container.is-fullhd {
+        max-width: 1344px;
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .container {
+        max-width: 1152px;
+        width: 1152px;
+    }
+}
+
+@media screen and (min-width: 1472px) {
+    .container {
+        max-width: 1344px;
+        width: 1344px;
+    }
+}
+
+body > section > div.container {
+    max-width: 90ex;
+}
+
+.level {
+    clear: both;
+}
+
+.title {
+    font-size: 3ex;
+    font-weight: bold;
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+}
+.subtitle {
+    font-size: 1.5ex;
+    font-weight: bold;
+    margin-top: 0.25ex;
+    margin-bottom: 0.25ex;
+}
+.toot {
+    clear: both;
+}
+
+.image.is-32x32, .is-32x32 img, img.is-32x32 {
+    width: 32px;
+    height: 32px;
+}
+
+.image.is-48x48, .is-48x48 img, img.is-48x48 {
+    width: 48px;
+    height: 48px;
+}
+
+.image.is-64x64, .is-64x64 img, img.is-64x64 {
+    width: 64px;
+    height: 64px;
+}
+
+.image.is-96x96, .is-96x96 img, img.is-96x96 {
+    width: 96px;
+    height: 96px;
+}
+
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
+.media {
+    padding: 1ex;
+    margin: 4px;
+    overflow: auto;
+}
+
+.media.active-context {
+    background-color: #DDD;
+}
+
+
+.field
+{
+    margin-top: 1em;
+}
+
+label
+{
+    font-weight: bold;
+}
+
+.control, .select
+{
+    margin-top: 0.5ex;
+    margin-bottom: 0.5ex;
+}
+
+.account-avatar
+{
+    display: inline-block;
+}
+.reblog-icon
+{
+    margin-top: 32px;
+    display: inline-block;
+}
+
+.media-content
+{
+    margin-top: 1ex;
+}
+
+.media-content > div > p
+{
+    margin-bottom: 1ex;
+}
+
+.textarea
+{
+    max-width: 100%;
+}
+
+.errorlist
+{
+    color: #FF0000;
+}
+
+img.emoji
+{
+    display: inline;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+    vertical-align: text-bottom;
+}
+
+hr.is-hidden
+{
+    display: none;
+}
+
+.box
+{
+    border-radius: 5px;
+    border: 1px solid #000;
+    padding: 1.5em;
+    margin-bottom: 1.5em;
+}
