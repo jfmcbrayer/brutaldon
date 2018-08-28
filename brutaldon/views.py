@@ -21,28 +21,20 @@ class Singleton(type):
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
 
-class MastodonPool(dict, metaclass=Singleton):
-    pass
-
 def get_usercontext(request):
     if is_logged_in(request):
-        pool = MastodonPool()
         try:
             client = Client.objects.get(api_base_id=request.session['instance'])
             user = Account.objects.get(username=request.session['username'])
         except (Client.DoesNotExist, Client.MultipleObjectsReturned,
                 Account.DoesNotExist, Account.MultipleObjectsReturned):
             raise NotLoggedInException()
-        if user.access_token in pool.keys():
-            mastodon = pool[user.access_token]
-        else:
-            mastodon = Mastodon(
-                client_id = client.client_id,
-                client_secret = client.client_secret,
-                access_token = user.access_token,
-                api_base_url = client.api_base_id,
-                ratelimit_method="throw")
-            pool[user.access_token] = mastodon
+        mastodon = Mastodon(
+            client_id = client.client_id,
+            client_secret = client.client_secret,
+            access_token = user.access_token,
+            api_base_url = client.api_base_id,
+            ratelimit_method="throw")
         return user, mastodon
     else:
         return None, None
