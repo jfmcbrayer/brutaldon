@@ -24,6 +24,9 @@ def set_up_default_themes(apps, schema_editor):
     vt240 = Theme(name="vt240", main_css="css/vt240don.css",
                   is_brutalist=True)
     vt240.save()
+    vt240_green = Theme(name="vt240 green", main_css="css/vt240don-green.css",
+                        is_brutalist=True)
+    vt240_green.save()
     minimal = Theme(name="No styling at all", main_css=None, is_brutalist=True)
     minimal.save()
 
