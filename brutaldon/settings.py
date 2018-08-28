@@ -198,5 +198,5 @@ TOOT_MAX_LENGTH = 500
 ANONYMOUS_HOME_URL = 'about'
 
 # Version number displayed on about page
-BRUTALDON_VERSION = "1.6"
+BRUTALDON_VERSION = "2.0"
 
