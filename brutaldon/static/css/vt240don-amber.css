@@ -71,7 +71,7 @@ div.card-header-title, div.card-header-icon {
     margin-bottom: 1em;
 }
 
-.is-hidden {
+hr.is-hidden {
     display: none;
 }
 

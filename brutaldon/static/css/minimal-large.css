@@ -216,7 +216,7 @@ img.emoji
     vertical-align: text-bottom;
 }
 
-.is-hidden
+hr.is-hidden
 {
     display: none;
 }
