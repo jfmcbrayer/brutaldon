@@ -196,6 +196,8 @@ def oauth_callback(request):
             preferences = Preference(theme = Theme.objects.get(id=1))
             preferences.save()
             account.preferences = preferences
+        else:
+            request.session['timezone'] = account.preferences.timezone
         account.save()
     except (Account.DoesNotExist, Account.MultipleObjectsReturned):
         preferences = Preference(theme = Theme.objects.get(id=1))
@@ -265,6 +267,7 @@ def old_login(request):
                 request.session['user'] = user
                 request.session['username'] = user.username
                 account.username = user.username
+                request.session['timezone'] = account.preferences.timezone;
                 account.save()
                 return redirect(home)
 
