@@ -41,6 +41,20 @@ div.card-header-title, div.card-header-icon {
 
 }
 
+@media screen and (min-width: 769px)
+{
+    .is-max-128 {
+        max-height: 40em;
+        max-width: 40em;
+    }
+
+    .is-max-256 {
+        max-height: 80em;
+        max-width: 80em;
+    }
+
+}
+
 figure.media-left p.image a img
 {
     border-radius: 5px;
