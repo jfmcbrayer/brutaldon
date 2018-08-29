@@ -19,28 +19,22 @@ img.fav-avatar {
 }
 
 
-
-.media {
-    border-radius: 5px;
-    -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-    padding: 1.25rem;
-    margin-bottom: 0.75rem;
-    margin-top: 0.75rem;
-}
-
 .media-content {
     padding: 1.5ex;
 }
 
-.is-max-128 {
-    max-height: 128px;
-    max-width: 128px;
-}
+@media screen and (max-width: 768px)
+{
+    .is-max-128 {
+        max-height: 128px;
+        max-width: 128px;
+    }
 
-.is-max-256 {
-    max-height: 256px;
-    max-width: 256px;
+    .is-max-256 {
+        max-height: 256px;
+        max-width: 256px;
+    }
+
 }
 
 figure.media-left p.image a img
