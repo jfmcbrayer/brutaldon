@@ -85,32 +85,32 @@
             <nav class="level is-mobile">
                 <div class="level-left">
                     <a href="{% url "reply" toot.id %}" class="level-item">
-                        <span ><span class="fa fa-reply">
-                            <span>Reply</span>
+                        <span class="icon is-small"><span class="fa fa-reply">
+                            <span class="is-invisible">Reply</span>
                         </span></span>
                     </a>
                     {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
                         <a href="{% url "boost" toot.id %}" class="level-item">
-                            <span >
+                            <span class="icon is-small">
                                 {% if toot.reblogged %}
                                 <span class="fa fa-retweet has-text-warning">
-                                        <strong >Boosted</strong>
+                                        <strong class="is-invisible" >Boosted</strong>
                                 {% else %}
                                     <span class="fa fa-retweet" >
-                                        <span  >Boost</span>
+                                        <span class="is-invisible" >Boost</span>
                                 {% endif %}
                                     </span>
                             </span>
                         </a>
                     {% endif %}
                     <a href="{% url "fav" toot.id %}" class="level-item">
-                        <span>
+                        <span class="icon is-small">
                             {% if toot.favourited %}
                                 <span class="fa fa-heart has-text-warning">
-                                    <strong  >Favorited</strong>
+                                    <strong class="is-invisible" >Favorited</strong>
                             {% else %}
                                 <span class="fa fa-heart">
-                                    <span  >Favorite</span>
+                                    <span class="is-invisible" >Favorite</span>
                             {% endif %}
                                 </span>
                         </span>
