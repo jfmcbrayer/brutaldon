@@ -204,6 +204,7 @@ def oauth_callback(request):
                           access_token = access_token,
                           client = Client.objects.get(api_base_id=request.session['instance']),
                           preferences = preferences)
+        account.save()
     request.session['user'] = user
     request.session['username'] = user.username + '@' + request.session['instance_hostname']
     return redirect(home)
