@@ -14,6 +14,11 @@ def set_up_default_themes(apps, schema_editor):
                  tweaks_css="css/brutaldon-dark.css",
                  is_brutalist=False)
     dark.save()
+    lux = Theme(name="Lux",
+                    main_css="css/bulmaswatch-lux.min.css",
+                    tweaks_css="css/brutaldon.css",
+                    is_brutalist=False)
+    lux.save()
     brutalism = Theme(name="FULLBRUTALISM",
                       main_css="css/fullbrutalism.css",
                       is_brutalist=True)
