@@ -200,14 +200,12 @@ def oauth_callback(request):
     except (Account.DoesNotExist, Account.MultipleObjectsReturned):
         preferences = Preference(theme = Theme.objects.get(id=1))
         preferences.save()
-        account = Account(username=user.acct,
+        account = Account(username=user.username + '@' + request.session['instance_hostname'],
                           access_token = access_token,
                           client = Client.objects.get(api_base_id=request.session['instance']),
                           preferences = preferences)
     request.session['user'] = user
     request.session['username'] = user.username + '@' + request.session['instance_hostname']
-    account.username = user.username + '@' + request.session['instance_hostname']
-    account.save()
     return redirect(home)
 
 
