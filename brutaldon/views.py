@@ -188,7 +188,8 @@ def oauth_callback(request):
     request.session['access_token'] = access_token
     user = mastodon.account_verify_credentials()
     try:
-        account = Account.objects.get(username=user.username)
+        account = Account.objects.get(username=user.username + '@' +
+                                      request.session['instance_hostname'])
         account.access_token = access_token
         if not account.preferences:
             preferences = Preference(theme = Theme.objects.get(id=1))
