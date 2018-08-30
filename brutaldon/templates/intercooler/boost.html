@@ -1,0 +1,11 @@
+{% if toot.visibility != 'private' and toot.visibility != 'direct' %}
+    {% if toot.reblogged %}
+    <span class="fa fa-retweet has-text-warning">
+        <strong class="is-hidden-mobile" >Boosted</strong>
+        {% else %}
+        <span class="fa fa-retweet" >
+            <span class="is-hidden-mobile" >Boost</span>
+            {% endif %}
+        </span>
+    </span>
+{% endif %}

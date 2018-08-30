@@ -546,7 +546,14 @@ def fav(request, id):
                 mastodon.status_unfavourite(id)
             else:
                 mastodon.status_favourite(id)
-        return redirect(thread, id)
+        if request.POST.get('ic-request'):
+            toot['favourited'] = not toot['favourited']
+            return render(request, 'intercooler/fav.html',
+                          {"toot": toot,
+                           'own_acct': request.session['user'],
+                           "preferences": account.preferences})
+        else:
+            return redirect(thread, id)
     else:
         return render(request, 'main/fav.html',
                       {"toot": toot,
@@ -565,7 +572,14 @@ def boost(request, id):
                 mastodon.status_unreblog(id)
             else:
                 mastodon.status_reblog(id)
-        return redirect(thread, id)
+        if request.POST.get('ic-request'):
+            toot['reblogged'] = not toot['reblogged']
+            return render(request, 'intercooler/boost.html',
+                          {"toot": toot,
+                           'own_acct': request.session['user'],
+                           "preferences": account.preferences})
+        else:
+            return redirect(thread, id)
     else:
         return render(request, 'main/boost.html',
                       {"toot": toot,
