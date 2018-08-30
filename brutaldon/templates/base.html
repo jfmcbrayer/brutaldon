@@ -26,9 +26,9 @@
                 {% if not preferences.theme.is_brutalist %}
                     <link rel="stylesheet"
                           href="{% static 'css/fork-awesome.min.css' %}">
+                    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+                    <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
                     {% block page_scripts %}
-                        <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-                        <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
                     {% endblock %}
                 {% endif %}
             {% endif %}
