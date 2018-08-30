@@ -2,191 +2,193 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        {% block title %}
-            {% if own_acct %}
-                brutaldon ({{ own_acct.username }})
-            {% else %}
-                brutaldon
-            {% endif %}
-        {% endblock %}</title>
-        {% if not preferences %}
-            <link rel="stylesheet"
-                  href="{% static 'css/bulma.min.css' %}">
-            <link rel="stylesheet"
-                  href="{% static 'css/fork-awesome.min.css' %}">
-            <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
-        {% else  %}
-            <link rel="stylesheet"
-                  href="{% static preferences.theme.main_css %}">
-            <link rel="stylesheet" href="{% static preferences.theme.tweaks_css %}">
-            {% if not preferences.theme.is_brutalist %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            {% block title %}
+                {% if own_acct %}
+                    brutaldon ({{ own_acct.username }})
+                {% else %}
+                    brutaldon
+                {% endif %}
+            {% endblock %}</title>
+            {% if not preferences %}
+                <link rel="stylesheet"
+                      href="{% static 'css/bulma.min.css' %}">
                 <link rel="stylesheet"
                       href="{% static 'css/fork-awesome.min.css' %}">
-            {% block page_scripts %}
+                <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
+            {% else  %}
+                <link rel="stylesheet"
+                      href="{% static preferences.theme.main_css %}">
+                <link rel="stylesheet" href="{% static preferences.theme.tweaks_css %}">
+                {% if not preferences.theme.is_brutalist %}
+                    <link rel="stylesheet"
+                          href="{% static 'css/fork-awesome.min.css' %}">
+                    {% block page_scripts %}
+                        <script type="text/javascript" src="{% static 'js/zepto.min.js' %}"></script>
+                        <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
+                    {% endblock %}
+                {% endif %}
+            {% endif %}
+            {% if own_acct %}
+                <link rel="icon" href="{{ own_acct.avatar_static }}">
+            {% else %}
+                <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
+            {% endif %}
+    </head>
+    <body class="has-navbar-fixed-top">
+        {% block navbar %}
+            <nav class="navbar is-fixed-top" role="navigation"
+                 aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="{% url "home" %}">
+                        {% if own_acct %}
+                            <img src="{{ own_acct.avatar_static }}"
+                                 class="image is-32x32 avatar"
+                                 alt="Brutaldon ({{ own_acct.username }})">
+                        {% else %}
+                            <img src="{% static "images/brutaldon.png" %}"
+                                 class="image is-32x32" alt="Brutaldon">
+                        {% endif %}
+                    </a>
+                </div>
+                {% if request.session.instance %}
+                    {% if request.session.username or request.session.access_token %}
+                        <div class="navbar-menu is-active" id="navMenu">
+                            <!-- navbar start, navbar end -->
+                            <div class="navbar-start">
+                                <a href="{% url "home" %}" class="navbar-item">
+                                    <span class="fa fa-home"></span>
+                                    <span>&nbsp; Home</span>
+                                </a>
+                                <a class="navbar-item" href="{% url "note" %}">
+                                    <span class="fa fa-bell-o"></span>
+                                    <span >&nbsp; Notifications</span>
+                                </a>
+                                <a class="navbar-item" href="{% url "local" %}">
+                                    <span class="fa fa-community"></span>
+                                    <span >&nbsp; Local</span>
+                                </a>
+                                <a class="navbar-item" href="{% url "fed" %}">
+                                    <span class="fa fa-globe"></span>
+                                    <span >&nbsp;Federated</span>
+                                </a>
+                                <a class="navbar-item" href="{% url "toot" %}">
+                                    <span class="fa fa-edit"> </span>
+                                    <span >&nbsp; New Toot</span>
+                                </a>
+                                <a class="navbar-item" href="{% url "search" %}">
+                                    <span class="fa fa-search"> </span>
+                                    <span >&nbsp; Search</span>
+                                </a>
+                            </div>
+                            <div class="navbar-end" >
+                                <a class="navbar-item" href="{% url "settings" %}">
+                                    <span class="fa fa-gear"></span>
+                                    <span >&nbsp;Settings</span>
+                                </a>
+                                <a class="navbar-item" href="{% url "logout" %}">
+                                    <span class="fa fa-power-off"></span>
+                                    <span >&nbsp;Log out</span>
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </nav>
+        {% endblock %}
+        <section class="section">
+            <div class="container">
+                {% block content %}
+                    <h1 class="title">
+                        Title
+                    </h1>
+                    <p class="subtitle">
+                        Brutaldon is totally a thing.
+                    </p>
+                {% endblock %}
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="level">
+                <div class="level-left">
+                    <a class="level-item is-size-7" href="{% url "about" %}">
+                        About
+                    </a>
+                    <a class="level-item is-size-7" href="https://github.com/jfmcbrayer/brutaldon">
+                        Source
+                    </a>
+                </div>
+                <div class="level-right">
+                    {% if preferences.theme.is_brutalist %}
+                        <img class="level-item" src="{% static '/images/lynx.gif' %}"
+                             alt="Lynx Now!">
+                        <img class="level-item" src="{% static '/images/now9.gif' %}"
+                             alt="Netscape Now!">
+                    {% endif %}
+                    <a class="level-item is-size-7" href="{% url "privacy" %}">
+                        Privacy
+                    </a>
+                </div>
+            </div>
+        </footer>
+
+        {% if not preferences.theme.is_brutalist %}
+
+            <script type="application/javascript">
+             document.addEventListener('DOMContentLoaded', function () {
+                 // Remove is-active from navbar menu
+                 var menu = document.querySelector('#navMenu');
+                 menu.classList.remove('is-active');
+
+                 // Add the burger
+                 var brand = document.querySelector('.navbar-brand');
+                 var burger = document.createElement('a');
+                 burger.classList.toggle('navbar-burger');
+                 burger.setAttribute("aria-label", "menu");
+                 burger.setAttribute("aria-expanded", "false");
+                 burger.setAttribute("data-target", "navMenu");
+                 for (var index = 0; index < 3; index++)
+                     {
+                         var span = document.createElement('span');
+                         span.setAttribute('aria-hidden', "true");
+                         burger.appendChild(span);
+                     }
+                 brand.appendChild(burger);
+
+
+
+                 // Get all "navbar-burger" elements
+                 var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+                 // Check if there are any navbar burgers
+                 if ($navbarBurgers.length > 0) {
+
+                     // Add a click event on each of them
+                     $navbarBurgers.forEach(function ($el) {
+                         $el.addEventListener('click', function () {
+
+                             // Get the target from the "data-target" attribute
+                             var target = $el.dataset.target;
+                             var $target = document.getElementById(target);
+
+                             // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+                             $el.classList.toggle('is-active');
+                             $target.classList.toggle('is-active');
+
+                         });
+                     });
+                 }
+
+             });
+            </script>
+            {% block page_scripts_inline %}
             {% endblock %}
+
         {% endif %}
-    {% endif %}
-    {% if own_acct %}
-        <link rel="icon" href="{{ own_acct.avatar_static }}">
-    {% else %}
-        <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
-    {% endif %}
-  </head>
-  <body class="has-navbar-fixed-top">
-      {% block navbar %}
-      <nav class="navbar is-fixed-top" role="navigation"
-           aria-label="main navigation">
-          <div class="navbar-brand">
-              <a class="navbar-item" href="{% url "home" %}">
-                  {% if own_acct %}
-                      <img src="{{ own_acct.avatar_static }}"
-                           class="image is-32x32 avatar"
-                           alt="Brutaldon ({{ own_acct.username }})">
-                  {% else %}
-                      <img src="{% static "images/brutaldon.png" %}" 
-                           class="image is-32x32" alt="Brutaldon">
-                  {% endif %}
-              </a>
-          </div>
-          {% if request.session.instance %}
-              {% if request.session.username or request.session.access_token %}
-                  <div class="navbar-menu is-active" id="navMenu">
-                      <!-- navbar start, navbar end -->
-                      <div class="navbar-start">
-                          <a href="{% url "home" %}" class="navbar-item">
-                              <span class="fa fa-home"></span>
-                              <span>&nbsp; Home</span>
-                          </a>
-                          <a class="navbar-item" href="{% url "note" %}">
-                              <span class="fa fa-bell-o"></span>
-                              <span >&nbsp; Notifications</span>
-                          </a>
-                          <a class="navbar-item" href="{% url "local" %}">
-                              <span class="fa fa-community"></span>
-                              <span >&nbsp; Local</span>
-                          </a>
-                          <a class="navbar-item" href="{% url "fed" %}">
-                              <span class="fa fa-globe"></span>
-                              <span >&nbsp;Federated</span>
-                          </a>
-                          <a class="navbar-item" href="{% url "toot" %}">
-                              <span class="fa fa-edit"> </span>
-                              <span >&nbsp; New Toot</span>
-                          </a>
-                          <a class="navbar-item" href="{% url "search" %}">
-                              <span class="fa fa-search"> </span>
-                              <span >&nbsp; Search</span>
-                          </a>
-                      </div>
-                      <div class="navbar-end" >
-                          <a class="navbar-item" href="{% url "settings" %}">
-                              <span class="fa fa-gear"></span>
-                              <span >&nbsp;Settings</span>
-                          </a>
-                          <a class="navbar-item" href="{% url "logout" %}">
-                              <span class="fa fa-power-off"></span>
-                              <span >&nbsp;Log out</span>
-                          </a>
-                      </div>
-                  </div>
-              {% endif %}
-          {% endif %}
-      </nav>
-      {% endblock %}
-  <section class="section">
-    <div class="container">
-      {% block content %} 
-      <h1 class="title">
-         Title
-      </h1>
-      <p class="subtitle">
-        Brutaldon is totally a thing.
-      </p>
-      {% endblock %}
-    </div>
-  </section>
 
-  <footer class="footer">
-      <div class="level">
-          <div class="level-left">
-              <a class="level-item is-size-7" href="{% url "about" %}">
-                  About
-              </a>
-              <a class="level-item is-size-7" href="https://github.com/jfmcbrayer/brutaldon">
-                  Source
-              </a>
-          </div>
-          <div class="level-right">
-              {% if preferences.theme.is_brutalist %}
-                  <img class="level-item" src="{% static '/images/lynx.gif' %}"
-                       alt="Lynx Now!">
-                  <img class="level-item" src="{% static '/images/now9.gif' %}"
-                       alt="Netscape Now!">
-              {% endif %}
-              <a class="level-item is-size-7" href="{% url "privacy" %}">
-                  Privacy
-              </a>
-          </div>
-      </div>
-  </footer>
-
-  {% if not preferences.theme.is_brutalist %}
-
-      <script type="application/javascript">
-document.addEventListener('DOMContentLoaded', function () {
-    // Remove is-active from navbar menu
-    var menu = document.querySelector('#navMenu');
-    menu.classList.remove('is-active');
-
-    // Add the burger
-    var brand = document.querySelector('.navbar-brand');
-    var burger = document.createElement('a');
-    burger.classList.toggle('navbar-burger');
-    burger.setAttribute("aria-label", "menu");
-    burger.setAttribute("aria-expanded", "false");
-    burger.setAttribute("data-target", "navMenu");
-    for (var index = 0; index < 3; index++)
-    {
-        var span = document.createElement('span');
-        span.setAttribute('aria-hidden', "true");
-        burger.appendChild(span);
-    }
-    brand.appendChild(burger);
-
-
-
-    // Get all "navbar-burger" elements
-    var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-    // Check if there are any navbar burgers
-    if ($navbarBurgers.length > 0) {
-
-        // Add a click event on each of them
-        $navbarBurgers.forEach(function ($el) {
-            $el.addEventListener('click', function () {
-
-                // Get the target from the "data-target" attribute
-                var target = $el.dataset.target;
-                var $target = document.getElementById(target);
-
-                // Toggle the class on both the "navbar-burger" and the "navbar-menu"
-                $el.classList.toggle('is-active');
-                $target.classList.toggle('is-active');
-
-            });
-        });
-    }
-
-});
-      </script>
-      {% block page_scripts_inline %}
-      {% endblock %}
-
-  {% endif %}
-
-  </body>
+    </body>
 </html>
