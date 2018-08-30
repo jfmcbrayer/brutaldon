@@ -1,0 +1,9 @@
+    {% if toot.favourited %}
+    <span class="fa fa-heart has-text-warning">
+        <strong class="is-hidden-mobile" >Favorited</strong>
+        {% else %}
+        <span class="fa fa-heart">
+            <span class="is-hidden-mobile" >Favorite</span>
+            {% endif %}
+        </span>
+    </span>

@@ -27,7 +27,7 @@
                     <link rel="stylesheet"
                           href="{% static 'css/fork-awesome.min.css' %}">
                     {% block page_scripts %}
-                        <script type="text/javascript" src="{% static 'js/zepto.min.js' %}"></script>
+                        <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
                         <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
                     {% endblock %}
                 {% endif %}
@@ -184,6 +184,31 @@
                  }
 
              });
+
+             $.ajaxSetup({
+                 beforeSend: function(xhr, settings) {
+                     function getCookie(name) {
+                         var cookieValue = null;
+                         if (document.cookie && document.cookie != '') {
+                             var cookies = document.cookie.split(';');
+                             for (var i = 0; i < cookies.length; i++) {
+                                 var cookie = jQuery.trim(cookies[i]);
+                                 // Does this cookie string begin with the name we want?
+                                 if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                     break;
+                                 }
+                             }
+                         }
+                         return cookieValue;
+                     }
+                     if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                         // Only send the token to relative URLs i.e. locally.
+                         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                     }
+                 }
+             });
+
             </script>
             {% block page_scripts_inline %}
             {% endblock %}

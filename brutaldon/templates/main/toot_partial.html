@@ -84,13 +84,15 @@
                 {% if not confirm_page %}
                 <nav class="level is-mobile">
                     <div class="level-left">
-                        <a href="{% url "reply" toot.id %}" class="level-item">
+                        <a href="{% url "reply" toot.id %}" class="level-item"
+                           ic-post-to="{% url "reply" toot.id %}">
                             <span class="fa fa-reply">
                                 <span class="is-hidden-mobile">Reply</span>
                             </span>
                         </a>
                         {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
-                        <a href="{% url "boost" toot.id %}" class="level-item">
+                            <a href="{% url "boost" toot.id %}" class="level-item"
+                               ic-post-to="{% url "boost" toot.id %}">
                             {% if toot.reblogged %}
                             <span class="fa fa-retweet has-text-warning">
                                 <strong class="is-hidden-mobile" >Boosted</strong>
@@ -102,7 +104,8 @@
                             </span>
                         </a>
                         {% endif %}
-                        <a href="{% url "fav" toot.id %}" class="level-item">
+                        <a href="{% url "fav" toot.id %}" class="level-item"
+                           ic-post-to="{% url "fav" toot.id %}">
                             {% if toot.favourited %}
                             <span class="fa fa-heart has-text-warning">
                                 <strong class="is-hidden-mobile" >Favorited</strong>

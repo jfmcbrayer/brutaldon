@@ -18,6 +18,10 @@ intercooler@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/intercooler/-/intercooler-1.2.1.tgz#50e9727ef2643ef7d5130c8e58f2af78098aa01f"
 
+jquery@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+
 mousetrap@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.2.tgz#caadd9cf886db0986fb2fee59a82f6bd37527587"
