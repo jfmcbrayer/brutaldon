@@ -3,6 +3,8 @@
     "bulma": "^0.7.1",
     "bulmaswatch": "^0.6.2",
     "fork-awesome": "^1.1.0",
-    "mousetrap": "^1.6.2"
+    "intercooler": "^1.2.1",
+    "mousetrap": "^1.6.2",
+    "zepto": "^1.2.0"
   }
 }
