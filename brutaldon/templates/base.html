@@ -26,8 +26,10 @@
             {% if not preferences.theme.is_brutalist %}
                 <link rel="stylesheet"
                       href="{% static 'css/fork-awesome.min.css' %}">
-            {% block page_scripts %}
-            {% endblock %}
+                {% block page_scripts %}
+                    <script type="application/javascript" src="{% static 'js/zepto.min.js' %}"></script>
+                    <script type="application/javascript" src="{% static 'js/intercooler.js' %}"></script>
+                {% endblock %}
         {% endif %}
     {% endif %}
     {% if own_acct %}
