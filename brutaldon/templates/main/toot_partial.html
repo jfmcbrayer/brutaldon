@@ -92,7 +92,7 @@
                         {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
                             <a href="{% url "boost" toot.id %}" class="level-item"
                                ic-post-to="{% url "boost" toot.id %}"
-                               ic-indicator="#toot-spinner">
+                               ic-indicator="#toot-spinner-{{toot.id}}">
                             {% if toot.reblogged %}
                             <span class="fa fa-retweet has-text-warning">
                                 <strong class="is-hidden-mobile" >Boosted</strong>
@@ -106,7 +106,7 @@
                         {% endif %}
                         <a href="{% url "fav" toot.id %}" class="level-item"
                            ic-post-to="{% url "fav" toot.id %}"
-                           ic-indicator="#toot-spinner">
+                           ic-indicator="#toot-spinner-{{toot.id}}">
                             {% if toot.favourited %}
                             <span class="fa fa-heart has-text-warning">
                                 <strong class="is-hidden-mobile" >Favorited</strong>
@@ -117,7 +117,7 @@
                                 </span>
                             </span>
                         </a>
-                        <i id="toot-spinner" class="fa fa-spinner fa-spin" style="display:none"></i>
+                        <i id="toot-spinner-{{toot.id}}" class="fa fa-spinner fa-spin" style="display:none"></i>
                     </div>
                     <div class="level-right">
                         {% if toot.account.acct == own_acct.acct %}
