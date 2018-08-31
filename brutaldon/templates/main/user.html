@@ -38,17 +38,23 @@ Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
                 <div class="level-left">
                     {% if relationship.requested %}
                         <a class="level-item fa fa-hourglass" title="cancel request"
-                           href="{% url 'follow' user.id %}">
+                           href="{% url 'follow' user.id %}"
+                           ic-post-to="{% url 'follow' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
                             <span class="is-hidden">Cancel request</span>
                         </a>
                     {% elif not relationship.following %}
                         <a class="level-item fa fa-user-plus" title="follow"
-                           href="{% url 'follow' user.id %}">
+                           href="{% url 'follow' user.id %}"
+                           ic-post-to="{% url 'follow' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
                             <span class="is-hidden">Follow</span>
                         </a>
                     {% else %}
                         <a class="level-item fa fa-user-times" title="unfollow"
-                           href="{% url 'follow' user.id %}">
+                           href="{% url 'follow' user.id %}"
+                           ic-post-to="{% url 'follow' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
                             <span class="is-hidden">Unfollow</span>
                         </a>
                     {% endif %}
@@ -60,27 +66,36 @@ Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
                        href="{% url 'toot' user.acct %}" title="mention">
                         <span class="is-hidden">Mention</span>
                     </a>
+                    <i id="user-spinner" class="fa fa-spinner fa-spin" style="display:none"></i>
                 </div>
                 <div class="level-right">
                     {% if not relationship.muting %}
                         <a class="level-item fa fa-volume-off" title="mute"
-                           href="{% url 'mute' user.id %}">
+                           href="{% url 'mute' user.id %}"
+                           ic-post-to="{% url 'mute' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
                             <span class="is-hidden">Mute</span>
                         </a>
                     {% else %}
                         <a class="level-item fa fa-volume-up" title="unmute"
-                           href="{% url 'mute' user.id %}">
+                           href="{% url 'mute' user.id %}"
+                           ic-post-to="{% url 'mute' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
                             <span class="is-hidden">Unmute</span>
                         </a>
                     {% endif %}
                     {% if not relationship.blocking %}
                         <a class="level-item fa fa-ban" title="block"
-                           href="{% url 'block' user.id %}">
+                           href="{% url 'block' user.id %}"
+                           ic-post-to="{% url 'block' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
                             <span class="is-hidden">Block</span>
                         </a>
                     {% else %}
                         <a class="level-item fa fa-circle-o" title="unblock"
-                           href="{% url 'block' user.id %}">
+                           href="{% url 'block' user.id %}"
+                           ic-post-to="{% url 'block' user.id %}"
+                           ic-indicator="#user-spinner" ic-replace-target="true">
                                 <span class="is-hidden">Unblock</span>
                             </a>
                     {% endif %}

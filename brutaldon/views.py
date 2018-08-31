@@ -11,6 +11,7 @@ from mastodon import Mastodon, AttribAccessDict, MastodonError
 from urllib import parse
 from pdb import set_trace
 from bs4 import BeautifulSoup
+from time import sleep
 
 class NotLoggedInException(Exception):
     pass
@@ -620,6 +621,14 @@ def follow(request, id):
                 mastodon.account_unfollow(id)
             else:
                 mastodon.account_follow(id)
+        if request.POST.get('ic-request'):
+            sleep(1) # This is annoying, but the next call will return Requested instead of Following in some cases
+            relationship = mastodon.account_relationships(user_dict.id)[0]
+            return render(request, 'intercooler/follow.html',
+                      {"user": user_dict, "relationship": relationship,
+                       'own_acct':  request.session['user'],
+                       'preferences': account.preferences})
+        else:
             return redirect(user, user_dict.acct)
     else:
         return render(request, 'main/follow.html',

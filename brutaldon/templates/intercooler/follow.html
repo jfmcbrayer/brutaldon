@@ -1,0 +1,22 @@
+{% if relationship.requested %}
+    <a class="level-item fa fa-hourglass" title="cancel request"
+       href="{% url 'follow' user.id %}"
+       ic-post-to="{% url 'follow' user.id %}"
+       ic-indicator="#user-spinner" ic-replace-target="true">
+        <span class="is-hidden">Cancel request</span>
+    </a>
+{% elif not relationship.following %}
+    <a class="level-item fa fa-user-plus" title="follow"
+       href="{% url 'follow' user.id %}"
+       ic-post-to="{% url 'follow' user.id %}"
+       ic-indicator="#user-spinner" ic-replace-target="true">
+        <span class="is-hidden">Follow</span>
+    </a>
+{% else %}
+    <a class="level-item fa fa-user-times" title="unfollow"
+       href="{% url 'follow' user.id %}"
+       ic-post-to="{% url 'follow' user.id %}"
+       ic-indicator="#user-spinner" ic-replace-target="true">
+        <span class="is-hidden">Unfollow</span>
+    </a>
+{% endif %}
