@@ -1,0 +1,15 @@
+{% if not relationship.muting %}
+<a class="level-item fa fa-volume-off" title="mute"
+   href="{% url 'mute' user.id %}"
+   ic-post-to="{% url 'mute' user.id %}"
+   ic-indicator="#user-spinner" ic-replace-target="true">
+    <span class="is-hidden">Mute</span>
+</a>
+{% else %}
+<a class="level-item fa fa-volume-up" title="unmute"
+   href="{% url 'mute' user.id %}"
+   ic-post-to="{% url 'mute' user.id %}"
+   ic-indicator="#user-spinner" ic-replace-target="true">
+    <span class="is-hidden">Unmute</span>
+</a>
+{% endif %}

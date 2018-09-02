@@ -675,7 +675,14 @@ def mute(request, id):
                 mastodon.account_unmute(id)
             else:
                 mastodon.account_mute(id)
-            return redirect(user, user_dict.acct)
+            if request.POST.get('ic-request'):
+                relationship['muting'] = not relationship['muting']
+                return render(request, 'intercooler/mute.html',
+                      {"user": user_dict,
+                       "relationship": relationship,
+                      })
+            else:
+                return redirect(user, user_dict.acct)
     else:
         return render(request, 'main/mute.html',
                       {"user": user_dict, "relationship": relationship,
