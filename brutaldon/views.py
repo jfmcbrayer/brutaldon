@@ -652,7 +652,14 @@ def block(request, id):
                 mastodon.account_unblock(id)
             else:
                 mastodon.account_block(id)
-            return redirect(user, user_dict.acct)
+            if request.POST.get('ic-request'):
+                relationship['blocking'] = not relationship['blocking']
+                return render(request, 'intercooler/block.html',
+                              {"user": user_dict,
+                               "relationship": relationship,
+                              })
+            else:
+                return redirect(user, user_dict.acct)
     else:
         return render(request, 'main/block.html',
                       {"user": user_dict, "relationship": relationship,

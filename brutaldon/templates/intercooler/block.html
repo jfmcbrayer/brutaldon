@@ -1,0 +1,15 @@
+{% if not relationship.blocking %}
+<a class="level-item fa fa-ban" title="block"
+   href="{% url 'block' user.id %}"
+   ic-post-to="{% url 'block' user.id %}"
+   ic-indicator="#user-spinner" ic-replace-target="true">
+    <span class="is-hidden">Block</span>
+</a>
+{% else %}
+<a class="level-item fa fa-circle-o" title="unblock"
+   href="{% url 'block' user.id %}"
+   ic-post-to="{% url 'block' user.id %}"
+   ic-indicator="#user-spinner" ic-replace-target="true">
+    <span class="is-hidden">Unblock</span>
+</a>
+{% endif %}
