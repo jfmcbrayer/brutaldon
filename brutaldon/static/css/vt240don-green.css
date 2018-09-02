@@ -1,5 +1,5 @@
 html, body, a, div, div.notification, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video, details, summary, h1.title, h2.subtitle {
-  font-family: "monospace";
+  font-family: Terminus, Inconsolata, Consolas, "Droid Sans Mono", "DejaVu Sans Mono", "Monaco",  monospace;
   color: #00ff77;
   background-color: #000;
   font-size: medium;

@@ -144,7 +144,7 @@ input[type=button] {width: auto; overflow: visible;}
 /* Okay, now add some extra brutalism */
 
 body {
-    font-family: "Courier New", "Courier", "FreeMono", "Liberation Mono", monospace;
+    font-family: Terminus, Inconsolata, Consolas, "Droid Sans Mono", "DejaVu Sans Mono", "Monaco",  monospace;
     background-color: #CCC;
     color: #000;
     margin: 1em;
