@@ -60,27 +60,57 @@
                         <div class="navbar-menu is-active" id="navMenu">
                             <!-- navbar start, navbar end -->
                             <div class="navbar-start">
-                                <a href="{% url "home" %}" class="navbar-item">
+                                <a href="{% url "home" %}" class="navbar-item"
+                                   ic-post-to="{% url "home" %}"
+                                   ic-target="#main"
+                                   ic-select-from-response="#main"
+                                   ic-push-url="true"
+                                   ic-indicator="#page-load-indicator">
                                     <span class="fa fa-home"></span>
                                     <span>&nbsp; Home</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "note" %}">
+                                <a class="navbar-item" href="{% url "note" %}"
+                                   ic-post-to="{% url "note" %}"
+                                   ic-target="#main"
+                                   ic-select-from-response="#main"
+                                   ic-push-url="true"
+                                   ic-indicator="#page-load-indicator">
                                     <span class="fa fa-bell-o"></span>
                                     <span >&nbsp; Notifications</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "local" %}">
+                                <a class="navbar-item" href="{% url "local" %}"
+                                   ic-post-to="{% url "local" %}"
+                                   ic-target="#main"
+                                   ic-select-from-response="#main"
+                                   ic-push-url="true"
+                                   ic-indicator="#page-load-indicator">
                                     <span class="fa fa-community"></span>
                                     <span >&nbsp; Local</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "fed" %}">
+                                <a class="navbar-item" href="{% url "fed" %}"
+                                   ic-post-to="{% url "fed" %}"
+                                   ic-target="#main"
+                                   ic-select-from-response="#main"
+                                   ic-push-url="true"
+                                   ic-indicator="#page-load-indicator">
                                     <span class="fa fa-globe"></span>
                                     <span >&nbsp;Federated</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "toot" %}">
+                                <a class="navbar-item" href="{% url "toot" %}"
+                                   ic-post-to="{% url "toot" %}"
+                                   ic-target="#main"
+                                   ic-select-from-response="#main"
+                                   ic-push-url="true"
+                                   ic-indicator="#page-load-indicator">
                                     <span class="fa fa-edit"> </span>
                                     <span >&nbsp; New Toot</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "search" %}">
+                                <a class="navbar-item" href="{% url "search" %}"
+                                   ic-post-to="{% url "search" %}"
+                                   ic-target="#main"
+                                   ic-select-from-response="#main"
+                                   ic-push-url="true"
+                                   ic-indicator="#page-load-indicator">
                                     <span class="fa fa-search"> </span>
                                     <span >&nbsp; Search</span>
                                 </a>
@@ -100,7 +130,8 @@
                 {% endif %}
             </nav>
         {% endblock %}
-        <section class="section">
+        <div id="page-load-indicator" class="ic-use-transition">&nbsp</div>
+        <section id="main" class="section">
             <div class="container">
                 {% block content %}
                     <h1 class="title">
