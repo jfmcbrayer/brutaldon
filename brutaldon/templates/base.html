@@ -8,7 +8,7 @@
         <title>
             {% block title %}
                 {% if own_acct %}
-                    brutaldon ({{ own_acct.username }})
+                    brutaldon ('{{ own_acct.username }}')
                 {% else %}
                     brutaldon
                 {% endif %}
@@ -28,6 +28,7 @@
                           href="{% static 'css/fork-awesome.min.css' %}">
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
+                    <script type="text/javascript" src="{% static 'js/brutaldon-enhancements.js' %}"></script>
                     {% block page_scripts %}
                     {% endblock %}
                 {% endif %}
@@ -48,7 +49,7 @@
                         {% if own_acct %}
                             <img src="{{ own_acct.avatar_static }}"
                                  class="image is-32x32 avatar"
-                                 alt="Brutaldon ({{ own_acct.username }})">
+                                 alt="Brutaldon ('{{ own_acct.username }}')">
                         {% else %}
                             <img src="{% static "images/brutaldon.png" %}"
                                  class="image is-32x32" alt="Brutaldon">
@@ -65,6 +66,7 @@
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
+                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Home');"
                                    ic-indicator="#page-load-indicator">
                                     <span class="fa fa-home"></span>
                                     <span>&nbsp; Home</span>
@@ -74,6 +76,7 @@
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
+                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Notifications');"
                                    ic-indicator="#page-load-indicator">
                                     <span class="fa fa-bell-o"></span>
                                     <span >&nbsp; Notifications</span>
@@ -83,6 +86,7 @@
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
+                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Local timeline');"
                                    ic-indicator="#page-load-indicator">
                                     <span class="fa fa-community"></span>
                                     <span >&nbsp; Local</span>
@@ -92,6 +96,7 @@
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
+                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Federated timeline');"
                                    ic-indicator="#page-load-indicator">
                                     <span class="fa fa-globe"></span>
                                     <span >&nbsp;Federated</span>
@@ -101,6 +106,7 @@
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
+                                   ic-on-success="afterPage('{{ own_acct.username }}', 'New toot');"
                                    ic-indicator="#page-load-indicator">
                                     <span class="fa fa-edit"> </span>
                                     <span >&nbsp; New Toot</span>
@@ -110,6 +116,7 @@
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
+                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Search');"
                                    ic-indicator="#page-load-indicator">
                                     <span class="fa fa-search"> </span>
                                     <span >&nbsp; Search</span>
@@ -171,53 +178,7 @@
         {% if not preferences.theme.is_brutalist %}
 
             <script type="application/javascript">
-             document.addEventListener('DOMContentLoaded', function () {
-                 // Remove is-active from navbar menu
-                 var menu = document.querySelector('#navMenu');
-                 menu.classList.remove('is-active');
-
-                 // Add the burger
-                 var brand = document.querySelector('.navbar-brand');
-                 var burger = document.createElement('a');
-                 burger.classList.toggle('navbar-burger');
-                 burger.setAttribute("aria-label", "menu");
-                 burger.setAttribute("aria-expanded", "false");
-                 burger.setAttribute("data-target", "navMenu");
-                 for (var index = 0; index < 3; index++)
-                     {
-                         var span = document.createElement('span');
-                         span.setAttribute('aria-hidden', "true");
-                         burger.appendChild(span);
-                     }
-                 brand.appendChild(burger);
-
-
-
-                 // Get all "navbar-burger" elements
-                 var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-                 // Check if there are any navbar burgers
-                 if ($navbarBurgers.length > 0) {
-
-                     // Add a click event on each of them
-                     $navbarBurgers.forEach(function ($el) {
-                         $el.addEventListener('click', function () {
-
-                             // Get the target from the "data-target" attribute
-                             var target = $el.dataset.target;
-                             var $target = document.getElementById(target);
-
-                             // Toggle the class on both the "navbar-burger" and the "navbar-menu"
-                             $el.classList.toggle('is-active');
-                             $target.classList.toggle('is-active');
-
-                         });
-                     });
-                 }
-
-             });
-
-
+             document.addEventListener('DOMContentLoaded', menuPrepare);
             </script>
             {% block page_scripts_inline %}
             {% endblock %}
