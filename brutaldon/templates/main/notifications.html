@@ -41,7 +41,7 @@ mastodon.notifications()[0]
     <small>{{ note.created_at |humane_time  }}</small>
     </span>)
 </p>
-{% include "main/toot_partial.html" with toot=note.status reblog=True reblog_by=note.account.acct reblog_icon=note.account.avatar %}
+{% include "main/toot_partial.html" with toot=note.status reblog=True reblog_by=note.account.acct reblog_icon=note.account.avatar_static %}
 <hr class="is-hidden">
 {% elif note.type == 'favourite' %}
 <p>
@@ -58,7 +58,7 @@ mastodon.notifications()[0]
 <article class="media">
     <figure class="media-left">
         <p class="image is-64x64">
-            <img src="{{ note.account.avatar }}" alt="">
+            <img src="{{ note.account.avatar_static }}" alt="">
         </p>
     </figure>
     <div class="media-content" >

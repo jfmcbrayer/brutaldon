@@ -23,7 +23,7 @@ Brutaldon ({{ own_acct.username }}) - {{ timeline_name }} timelime
 <h1 class="title">Your {{ timeline_name }} timeline</h1>
 {% for toot in toots %}
 {% if toot.reblog %}
-{% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar %}
+{% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar_static %}
 {% else %}
 {% include "main/toot_partial.html" with toot=toot reblog=False %}
 {% endif %}

@@ -109,7 +109,7 @@ Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
 
     {% for toot in toots %}
     {% if toot.reblog %}
-    {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar %}
+    {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar_static %}
     {% else %}
     {% include "main/toot_partial.html" with toot=toot reblog=False %}
     {% endif %}
