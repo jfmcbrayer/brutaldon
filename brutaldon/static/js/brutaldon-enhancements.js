@@ -13,6 +13,8 @@ function afterPage(user, page)
 {
     scrollTop();
     setTitle(user,page);
+    var menu = document.querySelector('#navMenu');
+    menu.classList.remove('is-active');
 }
 
 function menuPrepare() {
