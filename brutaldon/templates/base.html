@@ -61,7 +61,7 @@
                             <!-- navbar start, navbar end -->
                             <div class="navbar-start">
                                 <a href="{% url "home" %}" class="navbar-item"
-                                   ic-post-to="{% url "home" %}"
+                                   ic-get-from="{% url "home" %}"
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
@@ -70,7 +70,7 @@
                                     <span>&nbsp; Home</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "note" %}"
-                                   ic-post-to="{% url "note" %}"
+                                   ic-get-from="{% url "note" %}"
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
@@ -79,7 +79,7 @@
                                     <span >&nbsp; Notifications</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "local" %}"
-                                   ic-post-to="{% url "local" %}"
+                                   ic-get-from="{% url "local" %}"
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
@@ -88,7 +88,7 @@
                                     <span >&nbsp; Local</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "fed" %}"
-                                   ic-post-to="{% url "fed" %}"
+                                   ic-get-from="{% url "fed" %}"
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
@@ -97,7 +97,7 @@
                                     <span >&nbsp;Federated</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "toot" %}"
-                                   ic-post-to="{% url "toot" %}"
+                                   ic-get-from="{% url "toot" %}"
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
@@ -106,7 +106,7 @@
                                     <span >&nbsp; New Toot</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "search" %}"
-                                   ic-post-to="{% url "search" %}"
+                                   ic-get-from="{% url "search" %}"
                                    ic-target="#main"
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
