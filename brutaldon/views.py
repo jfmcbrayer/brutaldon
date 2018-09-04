@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from brutaldon.forms import LoginForm, OAuthLoginForm, PreferencesForm, PostForm
 from brutaldon.models import Client, Account, Preference, Theme
-from mastodon import Mastodon, AttribAccessDict, MastodonError
+from mastodon import Mastodon, AttribAccessDict, MastodonError, MastodonAPIError
 from urllib import parse
 from pdb import set_trace
 from bs4 import BeautifulSoup
@@ -411,10 +411,17 @@ def toot(request, mention=None):
                                                                          None)))
             if form.cleaned_data['visibility'] == '':
                 form.cleaned_data['visibility'] = request.session['user'].source.privacy
-            mastodon.status_post(status=form.cleaned_data['status'],
-                                 visibility=form.cleaned_data['visibility'],
-                                 spoiler_text=form.cleaned_data['spoiler_text'],
-                                 media_ids=media_objects)
+            try:
+                mastodon.status_post(status=form.cleaned_data['status'],
+                                     visibility=form.cleaned_data['visibility'],
+                                     spoiler_text=form.cleaned_data['spoiler_text'],
+                                     media_ids=media_objects)
+            except MastodonAPIError as error:
+                form.add_error("", "%s" % error.args[-1])
+                return render(request, 'main/post.html',
+                              {'form': form,
+                               'own_acct': request.session['user'],
+                               'preferences': account.preferences})
             return redirect(home)
         else:
             return render(request, 'main/post.html',
