@@ -15,6 +15,8 @@ function afterPage(user, page)
     setTitle(user,page);
     var menu = document.querySelector('#navMenu');
     menu.classList.remove('is-active');
+    var burger = document.querySelector('.navbar-burger');
+    burger.classList.remove('is-active');
 }
 
 function menuPrepare() {
