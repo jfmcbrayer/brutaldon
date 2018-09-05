@@ -6,44 +6,43 @@
         <h1 class="title">Settings</h1>
         <form method="post" action="{% url "settings" %}" >
             {% csrf_token %}
-    </div>
-    <div class="field">
-        <label class="label" for="theme">{{ form.theme.label }}</label>
-        <div class="control has-icons-left">
-            <div class="select">
-                {% render_field form.theme class+="select" %}
-                <span class="icon is-small is-left">
-                    <span class="fa fa-paint-brush"></span>
+            <div class="field">
+                <label class="label" for="theme">{{ form.theme.label }}</label>
+                <div class="control has-icons-left">
+                    <div class="select">
+                        {% render_field form.theme class+="select" %}
+                        <span class="icon is-small is-left">
+                            <span class="fa fa-paint-brush"></span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div> 
 
-    <div class="field">
-        <label class="label checkbox">
-            {% render_field form.filter_replies %}
-            {{ form.filter_replies.label  }}
-        </label>
-    </div>
-    <div class="field">
-        <label class="label checkbox"">
-            {% render_field form.filter_boosts %}
-            {{ form.filter_boosts.label  }}
-        </label>
-    </div>
-    <div class="field">
-        <label class="label" for="timezone">{{ form.timezone.label }}</label>
-        <div class="control has-icons-left">
-            <div class="select">
-                {% render_field form.timezone class+="select" %}
-                <span class="icon is-small is-left">
-                    <span class="fa fa-clock-o"></span>
+            <div class="field">
+                <label class="label checkbox">
+                    {% render_field form.filter_replies %}
+                    {{ form.filter_replies.label  }}
+                </label>
             </div>
-        </div>
-    </div> 
-    <div class="field">
-        <input type="submit" name="submit"
-               value="Save" class="button is-primary" >
-    </div>
+            <div class="field">
+                <label class="label checkbox"">
+                    {% render_field form.filter_boosts %}
+                    {{ form.filter_boosts.label  }}
+                </label>
+            </div>
+            <div class="field">
+                <label class="label" for="timezone">{{ form.timezone.label }}</label>
+                <div class="control has-icons-left">
+                    <div class="select">
+                        {% render_field form.timezone class+="select" %}
+                        <span class="icon is-small is-left">
+                            <span class="fa fa-clock-o"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <input type="submit" name="submit"
+                       value="Save" class="button is-primary" >
+            </div>
         </form>
     </div>
 {% endblock %}
