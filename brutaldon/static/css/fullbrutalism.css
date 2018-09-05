@@ -165,7 +165,7 @@ a:visited {
     text-decoration: underline;
 }
 
-img, img.is-32x32 {
+img.is-32x32 {
     float: left;
     max-width: 512px;
     max-height: auto;

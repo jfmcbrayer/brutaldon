@@ -163,6 +163,14 @@ img.fav-avatar {
     margin-top: 1ex;
 }
 
+img.emoji
+{
+    display: inline;
+    max-height: 1.5em;
+    max-width: 1.5em;
+    vertical-align: text-bottom;
+}
+
 @media screen and (max-width: 768px) {
     .media {
         display: block;
