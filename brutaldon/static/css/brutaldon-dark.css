@@ -155,7 +155,7 @@ emoji-link
     left: -200px;
     width: 200px;
     height: 4px;
-    background-color: #2980b9;
+    background-color: #888;
     animation: page-loading 1.5s linear infinite;
 }
 
