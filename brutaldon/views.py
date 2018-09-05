@@ -465,12 +465,19 @@ def redraft(request, id):
                                                                          None)))
             if form.cleaned_data['visibility'] == '':
                 form.cleaned_data['visibility'] = request.session['user'].source.privacy
-            mastodon.status_post(status=form.cleaned_data['status'],
-                                 visibility=form.cleaned_data['visibility'],
-                                 spoiler_text=form.cleaned_data['spoiler_text'],
-                                 media_ids=media_objects,
-                                 in_reply_to_id=toot.in_reply_to_id)
-            mastodon.status_delete(id)
+            try:
+                mastodon.status_post(status=form.cleaned_data['status'],
+                                     visibility=form.cleaned_data['visibility'],
+                                     spoiler_text=form.cleaned_data['spoiler_text'],
+                                     media_ids=media_objects,
+                                     in_reply_to_id=toot.in_reply_to_id)
+                mastodon.status_delete(id)
+            except MastodonAPIError as error:
+                form.add_error("", "%s" % error.args[-1])
+                return render(request, 'main/redraft.html',
+                              {'toot': toot, 'form': form, 'redraft': True,
+                               'own_acct': request.session['user'],
+                               'preferences': account.preferences})
             return redirect(home)
         else:
             return render(request, 'main/redraft.html',
@@ -516,6 +523,8 @@ def reply(request, id):
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         account, mastodon = get_usercontext(request)
+        toot = mastodon.status(id)
+        context = mastodon.status_context(id)
         if form.is_valid():
             # create media objects
             media_objects = []
@@ -527,15 +536,20 @@ def reply(request, id):
                                             description=request.POST.get('media_text_'
                                                                          +str(index),
                                                                          None)))
-            mastodon.status_post(status=form.cleaned_data['status'],
-                                 visibility=form.cleaned_data['visibility'],
-                                 spoiler_text=form.cleaned_data['spoiler_text'],
-                                 media_ids=media_objects,
-                                 in_reply_to_id=id)
+            try:
+                mastodon.status_post(status=form.cleaned_data['status'],
+                                     visibility=form.cleaned_data['visibility'],
+                                     spoiler_text=form.cleaned_data['spoiler_text'],
+                                     media_ids=media_objects,
+                                     in_reply_to_id=id)
+            except MastodonAPIError as error:
+                form.add_error("", "%s" % error.args[-1])
+                return render(request, 'main/reply.html',
+                              {'context': context, 'toot': toot, 'form': form, 'reply': True,
+                               'own_acct': request.session['user'],
+                               'preferences': account.preferences})
             return redirect(thread, id)
         else:
-            toot = mastodon.status(id)
-            context = mastodon.status_context(id)
             return render(request, 'main/reply.html',
                           {'context': context, 'toot': toot, 'form': form, 'reply': True,
                            'own_acct': request.session['user'],
