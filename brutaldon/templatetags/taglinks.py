@@ -24,7 +24,10 @@ def relink_tags(value):
     value = value.replace('&apos;', "'")
     soup = BeautifulSoup(value, 'html.parser')
     for link in soup.find_all('a', class_='hashtag'):
-        link['href'] = reverse('tag', args=[link.span.string])
+        try:
+            link['href'] = reverse('tag', args=[link.span.string])
+        except:
+            continue
     return soup.decode(formatter='html')
 
 @register.filter
@@ -74,5 +77,5 @@ def fix_emojos(value, emojos):
             value = value.replace(":%(shortcode)s:" % emojo,
                                   '<img src="%(url)s" title=":%(shortcode)s:" alt=":%(shortcode)s:" class="emoji">' % emojo)
         except:
-            pass
+            continue
     return value
