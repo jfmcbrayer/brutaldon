@@ -45,7 +45,13 @@
             <nav class="navbar is-fixed-top" role="navigation"
                  aria-label="main navigation">
                 <div class="navbar-brand">
-                    <a class="navbar-item" href="{% url "home" %}">
+                    <a class="navbar-item" href="{% url "home" %}"
+                       ic-get-from="{% url "home" %}"
+                       ic-target="#main"
+                       ic-select-from-response="#main"
+                       ic-push-url="true"
+                       ic-on-success="afterPage('{{ own_acct.username }}', 'Home');"
+                       ic-indicator="#page-load-indicator">
                         {% if own_acct %}
                             <img src="{{ own_acct.avatar_static }}"
                                  class="image is-32x32 avatar"
@@ -123,7 +129,13 @@
                                 </a>
                             </div>
                             <div class="navbar-end" >
-                                <a class="navbar-item" href="{% url "settings" %}">
+                                <a class="navbar-item" href="{% url "settings" %}
+                                   ic-get-from="{% url "settings" %}"
+                                   ic-target="#main"
+                                   ic-select-from-response="#main"
+                                   ic-push-url="true"
+                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Settings');"
+                                   ic-indicator="#page-load-indicator"">
                                     <span class="fa fa-gear"></span>
                                     <span >&nbsp;Settings</span>
                                 </a>
