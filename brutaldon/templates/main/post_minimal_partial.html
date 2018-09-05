@@ -28,11 +28,14 @@
                    name="toot" value="Toot">
             <a href="{% url "emoji" %}" target="_blank"  rel="noopener noreferrer"
                class="level-item emoji-link" title="custom emoji reference">😊</a>
+            <a href="{% url "toot" %}"
+               ic-get-from="{% url "toot" %}"
+               ic-target="#post-form"
+               ic-select-from-response="#post-form"
+               title="Complete toot form (media, visibility, etc"
+               class="fa fa-ellipsis-v">
+                <span class="is-hidden">Complete toot form (media, visibility etc)</span>
+            </a>
         </div>
-    </div>
-    <div class="field">
-        <a href="{% url "toot" %}">
-            Complete toot form (media, visibility etc)
-        </a>
     </div>
 </form>
