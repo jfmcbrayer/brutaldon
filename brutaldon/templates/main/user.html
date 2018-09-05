@@ -54,7 +54,8 @@ Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
                         <a class="level-item fa fa-user-times" title="unfollow"
                            href="{% url 'follow' user.id %}"
                            ic-post-to="{% url 'follow' user.id %}"
-                           ic-indicator="#user-spinner" ic-replace-target="true">
+                           ic-indicator="#user-spinner" ic-replace-target="true"
+                           ic-confirm="Unfollow this user?">
                             <span class="is-hidden">Unfollow</span>
                         </a>
                     {% endif %}
@@ -73,7 +74,8 @@ Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
                         <a class="level-item fa fa-volume-off" title="mute"
                            href="{% url 'mute' user.id %}"
                            ic-post-to="{% url 'mute' user.id %}"
-                           ic-indicator="#user-spinner" ic-replace-target="true">
+                           ic-indicator="#user-spinner" ic-replace-target="true"
+                           ic-confirm="Mute this user?">
                             <span class="is-hidden">Mute</span>
                         </a>
                     {% else %}
@@ -88,7 +90,8 @@ Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
                         <a class="level-item fa fa-ban" title="block"
                            href="{% url 'block' user.id %}"
                            ic-post-to="{% url 'block' user.id %}"
-                           ic-indicator="#user-spinner" ic-replace-target="true">
+                           ic-indicator="#user-spinner" ic-replace-target="true"
+                           ic-confirm="Block this user?">
                             <span class="is-hidden">Block</span>
                         </a>
                     {% else %}
