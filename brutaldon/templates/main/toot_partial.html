@@ -130,7 +130,13 @@
                         {% endif %}
                         {{ toot.visibility }}
                         &nbsp;&nbsp;
-                        <a class="level-item" href="{% url "thread" toot.id %}">
+                        <a class="level-item" href="{% url "thread" toot.id %}"
+                           ic-get-from="{% url "thread" toot.id %}"
+                           ic-target="#main"
+                           ic-select-from-response="#main"
+                           ic-push-url="true"
+                           ic-on-success="afterPage('{{ own_acct.username }}', 'thread');"
+                           ic-indicator="#page-load-indicator"">
                             thread
                         </a>
                     </div>
