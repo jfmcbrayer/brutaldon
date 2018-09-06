@@ -116,6 +116,11 @@ emoji-link
     }
 }
 
+.level.attachments
+{
+    overflow: auto;
+}
+
 .file-cta
 {
     -webkit-border-top-left-radius: 5px;
