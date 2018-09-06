@@ -64,3 +64,32 @@ function menuPrepare() {
     }
 
 }
+
+function expandCWButtonPrepare()
+{
+    var theButton = document.createElement('p');
+    theButton.textContent = "Expand CWs";
+    theButton.classList.toggle('button');
+    document.querySelector('#title').insertAdjacentElement('afterend', theButton);
+    var details = document.querySelectorAll('details');
+    var openState = false;
+
+    if (details != null) {
+        theButton.addEventListener('click', function() {
+            openState = details.item(0).hasAttribute('open');
+            details.forEach(function ($el) {
+                if (openState)
+                {
+                    $el.removeAttribute('open');
+                } else
+                {
+                    $el.setAttribute('open', '');
+                }
+            });
+            openState = !openState;
+            if (openState) { theButton.textContent = 'Collapse CWs'; }
+            else { theButton.textContent = "Expand CWs"; };
+            theButton.classList.toggle('is-active');
+        });
+    };
+}
