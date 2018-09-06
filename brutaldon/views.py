@@ -614,7 +614,7 @@ def boost(request, id):
 def delete(request, id):
     account, mastodon = get_usercontext(request)
     toot = mastodon.status(id)
-    if request.method == 'POST':
+    if request.method == 'POST' or request.method == 'DELETE':
         if toot.account.acct != request.session['user'].acct:
             return redirect('home')
         if not request.POST.get('cancel', None):

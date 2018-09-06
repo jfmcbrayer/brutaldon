@@ -124,7 +124,12 @@
                         <a class="level-item" href="{% url "redraft" toot.id %}">
                             redraft
                         </a>
-                        <a class="level-item" href="{% url "delete" toot.id %}">
+                        <a class="level-item" href="{% url "delete" toot.id %}"
+                           ic-delete-from="{% url "delete" toot.id %}"
+                           ic-indicator="#toot-spinner-{{toot.id}}"
+                           ic-confirm="Really delete that toot?"
+                           ic-target="#main"
+                           ic-select-from-response="#main">
                             delete
                         </a>
                         {% endif %}
