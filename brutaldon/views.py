@@ -619,7 +619,9 @@ def delete(request, id):
             return redirect('home')
         if not request.POST.get('cancel', None):
             mastodon.status_delete(id)
-            return redirect(home)
+            if request.POST.get('ic-request') or request.DELETE.get('ic-request'):
+                return HttpResponse("")
+        return redirect(home)
     else:
         return render(request, 'main/delete.html',
                       {"toot": toot,

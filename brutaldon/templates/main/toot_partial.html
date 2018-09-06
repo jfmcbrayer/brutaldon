@@ -5,9 +5,9 @@
 {% load static %}
 
 {% if active %}
-<article class="media box active-context">
+<article id="toot-{{toot.id}}" class="media box active-context">
     {% else %}
-    <article class="media box">
+    <article id="toot-{{toot.id}}" class="media box">
         {% endif %}
 
         <figure class="media-left">
@@ -132,8 +132,8 @@
                            ic-delete-from="{% url "delete" toot.id %}"
                            ic-indicator="#toot-spinner-{{toot.id}}"
                            ic-confirm="Really delete that toot?"
-                           ic-target="#main"
-                           ic-select-from-response="#main">
+                           ic-success-action="fadeOut;remove"
+                           ic-action-target="#toot-{{ toot.id }}">
                             delete
                         </a>
                         {% endif %}
