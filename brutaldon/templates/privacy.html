@@ -22,6 +22,10 @@
         If you use the normal login form, your email will not be stored, only your instance name and access token.
     </p>
     <p>
+        Both methods of login will store your username and instance name. All of your brutaldon settings (theme, timezone, etc) are stored and associated with your username.
+    </p>
+
+    <p>
         You can always revoke an access token through the web interface of your instance.
     </p>
     <h2 class="subtitle">
@@ -37,7 +41,6 @@
     <ul>
         <li> A reference to your information in the database.</li>
         <li> All of your <em>public</em> Mastodon profile information. This is needed for some client functionality.</li>
-        <li> A couple of Mastodon settings: your default post privacy, and whether your media default to sensitive.</li>
     </ul>
 </section>
 {% endblock %}

@@ -765,6 +765,10 @@ def about(request):
                       })
 def privacy(request):
     account, mastodon = get_usercontext(request)
+    if account:
+        preferences = account.preferences
+    else:
+        preferences = None
     return render(request, 'privacy.html',
                       {"preferences": preferences,
                        'own_acct' : request.session.get('user', None)})
