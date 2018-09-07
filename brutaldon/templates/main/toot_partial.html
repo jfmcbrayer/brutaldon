@@ -125,7 +125,8 @@
                            ic-get-from="{% url "redraft" toot.id %}"
                            ic-indicator="#page-load-indicator"
                            ic-target="#main"
-                           ic-select-from-response="#main">
+                           ic-select-from-response="#main"
+                           ic-push-url="true">
                             redraft
                         </a>
                         <a class="level-item" href="{% url "delete" toot.id %}"

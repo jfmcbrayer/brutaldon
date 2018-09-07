@@ -10,8 +10,9 @@ from brutaldon.models import Client, Account, Preference, Theme
 from mastodon import Mastodon, AttribAccessDict, MastodonError, MastodonAPIError
 from urllib import parse
 from pdb import set_trace
-from bs4 import BeautifulSoup
+from inscriptis import get_text
 from time import sleep
+import re
 
 class NotLoggedInException(Exception):
     pass
@@ -436,7 +437,8 @@ def redraft(request, id):
     if request.method == 'GET':
         account, mastodon = get_usercontext(request)
         toot = mastodon.status(id)
-        toot_content = BeautifulSoup(toot.content).get_text("\n")
+        toot_content = get_text(toot.content)
+        toot_content = re.sub("(^\n)|(\n$)", '', re.sub("\n\n", "\n", toot_content))
         form = PostForm({'status': toot_content,
                          'visibility': toot.visibility,
                          'spoiler_text': toot.spoiler_text,

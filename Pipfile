@@ -23,6 +23,8 @@ six = "*"
 webencodings = "*"
 Django = "*"
 django-html_sanitizer = "*"
+inscriptis = "*"
+lxml = "*"
 
 [dev-packages]
 
