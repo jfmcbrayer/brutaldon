@@ -26,6 +26,7 @@
     <div class="control">
         {% render_field form.status class+="textarea mousetrap is-primary" rows="4" %}
     </div>
+    <div id="status_count"></div>
 </div>
 
 <div class="field">
@@ -130,6 +131,7 @@
     <script type="application/javascript">
      fileButtonUpdaters();
      Intercooler.ready(fileButtonUpdaters);
+     Intercooler.ready(characterCountSetup);
     </script>
 {% endif %}
             </form>

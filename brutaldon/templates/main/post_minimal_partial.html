@@ -19,6 +19,7 @@
         <div class="control">
             {% render_field form.status class+="textarea is-primary mousetrap" rows="3" %}
         </div>
+        <div id="status_count"></div>
     </div>
 
     <div class="field has-addons">
@@ -38,4 +39,9 @@
             </a>
         </div>
     </div>
+    {% if not preferences.theme.is_brutalist %}
+        <script type="application/javascript">
+         Intercooler.ready(characterCountSetup);
+        </script>
+    {% endif %}
 </form>

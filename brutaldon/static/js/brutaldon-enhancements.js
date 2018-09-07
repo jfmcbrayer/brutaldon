@@ -130,3 +130,19 @@ function fileButtonUpdaters()
     };
 
 }
+
+function characterCountSetup()
+{
+    $("#status_count").text(characterCount());
+    $("#id_status").keyup(function(){
+        $("#status_count").text(characterCount());
+    });
+    $("#id_spoiler_text").keyup(function(){
+        $("#status_count").text(characterCount());
+    });
+}
+
+function characterCount()
+{
+    return $("#id_status").val().length + $("#id_spoiler_text").val().length;
+}

@@ -172,3 +172,18 @@ emoji-link
     95% {left: 120%;}
     to {left: 100%;}
 }
+
+#status_count
+{
+    margin-left: 90%;
+    margin-top: 1rem;
+    background-color: #888;
+    color: #FFF;
+    float: right;
+    padding: 0.5ex;
+    border-radius: 5px;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
+    font-size: 0.8em;
+    text-align: right;
+}
