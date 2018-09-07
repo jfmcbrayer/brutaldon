@@ -418,7 +418,9 @@ def toot(request, mention=None):
                                      spoiler_text=form.cleaned_data['spoiler_text'],
                                      media_ids=media_objects)
             except MastodonAPIError as error:
-                form.add_error("", "%s" % error.args[-1])
+                form.add_error("", "%s (%s used)" % (error.args[-1],
+                                                     len(form.cleaned_data['status'])
+                                                     + len(form.cleaned_data['spoiler_text'])))
                 return render(request, 'main/post.html',
                               {'form': form,
                                'own_acct': request.session['user'],
@@ -475,7 +477,9 @@ def redraft(request, id):
                                      in_reply_to_id=toot.in_reply_to_id)
                 mastodon.status_delete(id)
             except MastodonAPIError as error:
-                form.add_error("", "%s" % error.args[-1])
+                form.add_error("", "%s (%s used)" % (error.args[-1],
+                                                     len(form.cleaned_data['status'])
+                                                     + len(form.cleaned_data['spoiler_text'])))
                 return render(request, 'main/redraft.html',
                               {'toot': toot, 'form': form, 'redraft': True,
                                'own_acct': request.session['user'],
@@ -545,7 +549,9 @@ def reply(request, id):
                                      media_ids=media_objects,
                                      in_reply_to_id=id)
             except MastodonAPIError as error:
-                form.add_error("", "%s" % error.args[-1])
+                form.add_error("", "%s (%s used)" % (error.args[-1],
+                                                     len(form.cleaned_data['status'])
+                                                     + len(form.cleaned_data['spoiler_text'])))
                 return render(request, 'main/reply.html',
                               {'context': context, 'toot': toot, 'form': form, 'reply': True,
                                'own_acct': request.session['user'],
