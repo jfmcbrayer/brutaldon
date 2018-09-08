@@ -38,6 +38,19 @@ def get_usercontext(request):
 def is_logged_in(request):
     return request.session.has_key('user')
 
+def _notes_count(request):
+    try:
+        account, mastodon = get_usercontext(request)
+    except NotLoggedInException:
+        return ""
+    notes = mastodon.notifications(limit=40)
+    for index, item in enumerate(notes):
+        if item.id == account.note_seen:
+            break
+    else:
+        index = "40+"
+    return str(index)
+
 def br_login_required(function=None, home_url=None, redirect_field_name=None):
     """Check that the user is logged in to a Mastodon instance.
 
@@ -74,6 +87,11 @@ def br_login_required(function=None, home_url=None, redirect_field_name=None):
         return _dec
     else:
         return _dec(function)
+
+def notes_count(request):
+    count = _notes_count(request)
+    return render(request, 'intercooler/notes.html',
+                  {'notifications': count,})
 
 def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None):
     account, mastodon = get_usercontext(request)
@@ -296,6 +314,10 @@ def note(request, next=None, prev=None):
         account, mastodon = get_usercontext(request)
     except NotLoggedInException:
         return redirect(about)
+    last_seen = mastodon.notifications(limit=1)[0]
+    account.note_seen = last_seen.id
+    account.save()
+
     notes = mastodon.notifications(limit=100, max_id=next, since_id=prev)
     try:
         prev = notes[0]._pagination_prev

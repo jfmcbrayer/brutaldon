@@ -100,9 +100,12 @@
                                    ic-on-success="afterPage('{{ own_acct.username }}', 'Notifications');"
                                    ic-indicator="#page-load-indicator">
                                     <span class="fa fa-bell-o"></span>
-                                    {% if notifications and not preferences.theme.is_brutalist %}
+                                    {% if not preferences.theme.is_brutalist %}
                                         <span class="badge"
-                                              data-badge="{{ notifications }}">
+                                              data-badge="{{ notifications }}"
+                                              ic-src="{% url 'notes_count' %}"
+                                              ic-poll="60s"
+                                              ic-push-url="false">
                                             &nbsp; Notifications
                                         </span>
                                     {% elif notifications %}

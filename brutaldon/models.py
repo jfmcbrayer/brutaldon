@@ -38,4 +38,5 @@ class Account(models.Model):
     access_token = models.CharField(null=True, blank=True, max_length=2048)
     client= models.ForeignKey(Client, models.SET_NULL, null=True)
     preferences = models.ForeignKey(Preference, models.SET_NULL, null=True)
+    note_seen = models.IntegerField(null=True)
 
