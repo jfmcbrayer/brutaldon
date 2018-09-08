@@ -7,27 +7,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
             {% block title %}
-                {% if own_acct %}
-                    brutaldon ('{{ own_acct.username }}')
-                {% else %}
-                    brutaldon
-                {% endif %}
+            {% if own_acct %}
+            brutaldon ('{{ own_acct.username }}')
+            {% else %}
+            brutaldon
+            {% endif %}
             {% endblock %}</title>
-            <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
-            {% if not preferences %}
-                <link rel="stylesheet"
-                      href="{% static 'css/bulma.min.css' %}">
-                <link rel="stylesheet"
-                      href="{% static 'css/fork-awesome.min.css' %}">
-                <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
-            {% else  %}
-                <link rel="stylesheet"
-                      href="{% static preferences.theme.main_css %}">
-                <link rel="stylesheet" href="{% static preferences.theme.tweaks_css %}">
-                {% if not preferences.theme.is_brutalist %}
-                    <link rel="stylesheet"
-                          href="{% static 'css/fork-awesome.min.css' %}">
-                    <link rel="stylesheet"
+        <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
+        {% if not preferences %}
+        <link rel="stylesheet"
+              href="{% static 'css/bulma.min.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'css/fork-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
+        {% else  %}
+        <link rel="stylesheet"
+              href="{% static preferences.theme.main_css %}">
+        <link rel="stylesheet" href="{% static preferences.theme.tweaks_css %}">
+        {% if not preferences.theme.is_brutalist %}
+        <link rel="stylesheet"
+              href="{% static 'css/fork-awesome.min.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'css/bulma-badge.min.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'css/bulma-badge.min.css' %}">
                           href="{% static 'css/photobox.css' %}">
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
@@ -97,7 +100,16 @@
                                    ic-on-success="afterPage('{{ own_acct.username }}', 'Notifications');"
                                    ic-indicator="#page-load-indicator">
                                     <span class="fa fa-bell-o"></span>
-                                    <span >&nbsp; Notifications</span>
+                                    {% if notifications and not preferences.theme.is_brutalist %}
+                                        <span class="badge"
+                                              data-badge="{{ notifications }}">
+                                            &nbsp; Notifications
+                                        </span>
+                                    {% elif notifications %}
+                                        <span >&nbsp; Notifications ({{ notifications }})</span>
+                                    {% else %}
+                                        <span >&nbsp; Notifications</span>
+                                    {% endif %}
                                 </a>
                                 <a class="navbar-item" href="{% url "local" %}"
                                    ic-get-from="{% url "local" %}"
