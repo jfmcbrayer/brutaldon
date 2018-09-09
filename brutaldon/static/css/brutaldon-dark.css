@@ -116,9 +116,12 @@ emoji-link
     }
 }
 
-.level.attachments
+.slick-initialized
 {
-    overflow: auto;
+    flex: content;
+    max-width: 90%;
+    left: 25px;
+    right: 25px;
 }
 
 .file-cta

@@ -54,7 +54,6 @@
                 {% if toot.media_attachments %}
                 <br>
                 <div class="level attachments">
-                    <div class="level-left">
                         {% for media in toot.media_attachments %}
                         <a class="level-item" href="{{ media.url }}">
                             {% if toot.sensitive %}
@@ -75,84 +74,84 @@
                                  class="image is-max-256">
                         </a>
                         {% endfor %}
-                    </div>
                 </div>
                 {% endif %}
                 <br>
                 <p class="is-hidden"></p>
 
-                {% if not confirm_page %}
-                <nav class="level is-mobile">
-                    <div class="level-left">
-                        <a href="{% url "reply" toot.id %}" class="level-item">
-                            <span class="fa fa-reply">
-                                <span class="is-hidden-mobile">Reply</span>
-                            </span>
-                        </a>
-                        {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
-                            <a href="{% url "boost" toot.id %}" class="level-item"
-                               ic-post-to="{% url "boost" toot.id %}"
-                               ic-indicator="#toot-spinner-{{toot.id}}">
-                            {% if toot.reblogged %}
-                            <span class="fa fa-retweet has-text-warning">
-                                <strong class="is-hidden-mobile" >Boosted</strong>
-                                {% else %}
-                                <span class="fa fa-retweet" >
-                                    <span class="is-hidden-mobile" >Boost</span>
-                                    {% endif %}
-                                </span>
-                            </span>
-                        </a>
-                        {% endif %}
-                        <a href="{% url "fav" toot.id %}" class="level-item"
-                           ic-post-to="{% url "fav" toot.id %}"
-                           ic-indicator="#toot-spinner-{{toot.id}}">
-                            {% if toot.favourited %}
-                            <span class="fa fa-heart has-text-warning">
-                                <strong class="is-hidden-mobile" >Favorited</strong>
-                                {% else %}
-                                <span class="fa fa-heart">
-                                    <span class="is-hidden-mobile" >Favorite</span>
-                                    {% endif %}
-                                </span>
-                            </span>
-                        </a>
-                        <i id="toot-spinner-{{toot.id}}" class="fa fa-spinner fa-spin" style="display:none"></i>
-                    </div>
-                    <div class="level-right">
-                        {% if toot.account.acct == own_acct.acct %}
-                        <a class="level-item" href="{% url "redraft" toot.id %}"
-                           ic-get-from="{% url "redraft" toot.id %}"
-                           ic-indicator="#page-load-indicator"
-                           ic-target="#main"
-                           ic-select-from-response="#main"
-                           ic-push-url="true">
-                            redraft
-                        </a>
-                        <a class="level-item" href="{% url "delete" toot.id %}"
-                           ic-delete-from="{% url "delete" toot.id %}"
-                           ic-indicator="#toot-spinner-{{toot.id}}"
-                           ic-confirm="Really delete that toot?"
-                           ic-success-action="fadeOut;remove"
-                           ic-action-target="#toot-{{ toot.id }}">
-                            delete
-                        </a>
-                        {% endif %}
-                        {{ toot.visibility }}
-                        &nbsp;&nbsp;
-                        <a class="level-item" href="{% url "thread" toot.id %}"
-                           ic-get-from="{% url "thread" toot.id %}"
-                           ic-target="#main"
-                           ic-select-from-response="#main"
-                           ic-push-url="true"
-                           ic-on-success="afterPage('{{ own_acct.username }}', 'thread')"
-                           ic-indicator="#page-load-indicator"">
-                            thread
-                        </a>
-                    </div>
-                </nav>
-                {% endif %}
             </div>
+            {% if not confirm_page %}
+            <nav class="level is-mobile">
+                <div class="level-left">
+                    <a href="{% url "reply" toot.id %}" class="level-item">
+                        <span class="fa fa-reply">
+                            <span class="is-hidden-mobile">Reply</span>
+                        </span>
+                    </a>
+                    {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
+                    <a href="{% url "boost" toot.id %}" class="level-item"
+                       ic-post-to="{% url "boost" toot.id %}"
+                       ic-indicator="#toot-spinner-{{toot.id}}">
+                        {% if toot.reblogged %}
+                        <span class="fa fa-retweet has-text-warning">
+                            <strong class="is-hidden-mobile" >Boosted</strong>
+                            {% else %}
+                            <span class="fa fa-retweet" >
+                                <span class="is-hidden-mobile" >Boost</span>
+                                {% endif %}
+                            </span>
+                        </span>
+                    </a>
+                    {% endif %}
+                    <a href="{% url "fav" toot.id %}" class="level-item"
+                       ic-post-to="{% url "fav" toot.id %}"
+                       ic-indicator="#toot-spinner-{{toot.id}}">
+                        {% if toot.favourited %}
+                        <span class="fa fa-heart has-text-warning">
+                            <strong class="is-hidden-mobile" >Favorited</strong>
+                            {% else %}
+                            <span class="fa fa-heart">
+                                <span class="is-hidden-mobile" >Favorite</span>
+                                {% endif %}
+                            </span>
+                        </span>
+                    </a>
+                    <i id="toot-spinner-{{toot.id}}" class="fa fa-spinner fa-spin" style="display:none"></i>
+                </div>
+                <div class="level-right">
+                    {% if toot.account.acct == own_acct.acct %}
+                    <a class="level-item" href="{% url "redraft" toot.id %}"
+                       ic-get-from="{% url "redraft" toot.id %}"
+                       ic-indicator="#page-load-indicator"
+                       ic-target="#main"
+                       ic-select-from-response="#main"
+                       ic-push-url="true">
+                        redraft
+                    </a>
+                    <a class="level-item" href="{% url "delete" toot.id %}"
+                       ic-delete-from="{% url "delete" toot.id %}"
+                       ic-indicator="#toot-spinner-{{toot.id}}"
+                       ic-confirm="Really delete that toot?"
+                       ic-success-action="fadeOut;remove"
+                       ic-action-target="#toot-{{ toot.id }}">
+                        delete
+                    </a>
+                    {% endif %}
+                    {{ toot.visibility }}
+                    &nbsp;&nbsp;
+                    <a class="level-item" href="{% url "thread" toot.id %}"
+                       ic-get-from="{% url "thread" toot.id %}"
+                       ic-target="#main"
+                       ic-select-from-response="#main"
+                       ic-push-url="true"
+                       ic-on-success="afterPage('{{ own_acct.username }}', 'thread')"
+                       ic-indicator="#page-load-indicator"">
+                        thread
+                    </a>
+                </div>
+            </nav>
+            {% endif %}
+
         </div>
         <div class="media-right"></div>
     </article>
