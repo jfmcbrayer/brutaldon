@@ -5,7 +5,6 @@ html, body, a, div, div.notification, body, body div, span, object, iframe, h1, 
   font-size: medium;
 }
 
-
 tr, td, ul, ol {
   border-color: #00ff77;
   outline: 1px solid #00ff77;
@@ -34,7 +33,7 @@ a:hover, a.button:hover, a.button.is-primary:hover, input.button.is-primary:hove
 .control input[type=text], .control textarea
 {
     width: 100%;
-    max-width: 80em;
+    max-width: 80ex;
     border: 1px solid #00ff77;
     background-color: #000000;
     margin-bottom: 1ex;
@@ -62,7 +61,7 @@ div.card-header-title, div.card-header-icon {
 
 .container {
     margin: 0 auto;
-    max-width: 80em;
+    max-width: 80ex;
     color: #00ff88;
     background-color: #000000;
 }
