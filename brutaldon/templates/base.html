@@ -26,14 +26,10 @@
                 {% if not preferences.theme.is_brutalist %}
                     <link rel="stylesheet"
                           href="{% static 'css/fork-awesome.min.css' %}">
-                    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
-                    <link rel="stylesheet" href="{% static 'css/slick-theme.css' %}">
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-                    <script type="text/javascript" src="{% static 'js/brutaldon-enhancements.js' %}"></script>
-                    <script type="text/javascript" src="{% static 'js/mousetrap.min.js' %}"></script>
-                    <script type="text/javascript" src="{% static 'js/slick.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/intercooler.min.js' %}"></script>
-                        {% block page_scripts %}
+                    <script type="text/javascript" src="{% static 'js/brutaldon-enhancements.js' %}"></script>
+                    {% block page_scripts %}
                     {% endblock %}
                 {% endif %}
             {% endif %}
@@ -204,14 +200,6 @@
 
             <script type="application/javascript">
              document.addEventListener('DOMContentLoaded', menuPrepare);
-             Intercooler.ready(function () {$(".attachments").slick({
-                 infinite: true,
-                 dots: true,
-                 slidesToShow: 1,
-                 centerMode: true,
-                 variableWidth: true,
-                 //adaptiveHeight: true
-             });});
             </script>
             {% block page_scripts_inline %}
             {% endblock %}

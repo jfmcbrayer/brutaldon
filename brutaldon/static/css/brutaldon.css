@@ -97,12 +97,9 @@ emoji-link
     font-size: 2em;
 }
 
-.slick-initialized
+.level.attachments
 {
-    flex: content;
-    max-width: 90%;
-    left: 25px;
-    right: 25px;
+    overflow: auto;
 }
 
 
