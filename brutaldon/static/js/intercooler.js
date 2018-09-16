@@ -4,7 +4,7 @@
     define(["jquery"], function (a0) {
       return (root['Intercooler'] = factory(a0));
     });
-  } else if (typeof module === 'object' && module.exports) {
+  } else if (typeof exports === 'object') {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
@@ -497,6 +497,7 @@ var Intercooler = Intercooler || (function() {
 
             if (xhr.getResponseHeader("X-IC-PushURL") || closestAttrValue(elt, 'ic-push-url') == "true") {
               try {
+                requestCleanup(indicator, elt); // clean up before snap-shotting HTML
                 var newUrl = xhr.getResponseHeader("X-IC-PushURL") || closestAttrValue(elt, 'ic-src');
                 if(_history) {
                   _history.snapshotForHistory(newUrl);

@@ -27,7 +27,7 @@
                     <link rel="stylesheet"
                           href="{% static 'css/fork-awesome.min.css' %}">
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-                    <script type="text/javascript" src="{% static 'js/intercooler.min.js' %}"></script>
+                    <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/brutaldon-enhancements.js' %}"></script>
                     {% block page_scripts %}
                     {% endblock %}
@@ -39,10 +39,10 @@
                 <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
             {% endif %}
     </head>
-    <body class="has-navbar-fixed-top"
-          ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
-          ic-history-elt="true">
-        {% block navbar %}
+    <body class="has-navbar-fixed-top" ic-history-elt="true"
+          ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+        <div id="page-load-indicator">&nbsp</div>
+            {% block navbar %}
             <nav class="navbar is-fixed-top" role="navigation"
                  aria-label="main navigation">
                 <div class="navbar-brand">
@@ -158,7 +158,6 @@
                 {% endif %}
             </nav>
         {% endblock %}
-        <div id="page-load-indicator">&nbsp</div>
         <section id="main" class="section">
             <div class="container">
                 {% block content %}
@@ -205,6 +204,5 @@
             {% endblock %}
 
         {% endif %}
-
     </body>
 </html>
