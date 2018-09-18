@@ -40,7 +40,8 @@
             {% endif %}
     </head>
     <body class="has-navbar-fixed-top" ic-history-elt="true"
-          ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+          ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
+          ic-on-beforeSend="savePlace()">
         <div id="page-load-indicator">&nbsp</div>
             {% block navbar %}
             <nav class="navbar is-fixed-top" role="navigation"
@@ -199,6 +200,8 @@
 
             <script type="application/javascript">
              document.addEventListener('DOMContentLoaded', menuPrepare);
+             $(document).on('handle.onpopstate.ic',
+                            restorePlace);
             </script>
             {% block page_scripts_inline %}
             {% endblock %}
