@@ -157,7 +157,7 @@ function restorePlace(ev)
     var lastScrollPos = sessionStorage.getItem('lastScrollPos');
     Intercooler.ready(function (elt)
                       {
-                          if (elt[0].tagName == 'BODY')
+                          if (elt[0].id == 'main')
                           {
                               window.scrollTo(0, lastScrollPos);
                           }

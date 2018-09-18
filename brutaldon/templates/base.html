@@ -42,7 +42,7 @@
                 <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
             {% endif %}
     </head>
-    <body class="has-navbar-fixed-top" ic-history-elt="true"
+    <body class="has-navbar-fixed-top"
           ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
         <div id="page-load-indicator">&nbsp</div>
             {% block navbar %}
@@ -169,7 +169,7 @@
                 {% endif %}
             </nav>
         {% endblock %}
-        <section id="main" class="section">
+        <section id="main" class="section"  ic-history-elt="true">
             <div class="container">
                 {% block content %}
                     <h1 class="title">
