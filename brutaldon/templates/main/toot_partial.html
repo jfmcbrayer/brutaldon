@@ -146,7 +146,8 @@
                        ic-select-from-response="#main"
                        ic-push-url="true"
                        ic-on-success="afterPage('{{ own_acct.username }}', 'thread')"
-                       ic-indicator="#page-load-indicator"">
+                       ic-indicator="#page-load-indicator"
+                       ic-on-beforeSend="savePlace">
                         thread
                     </a>
                 </div>

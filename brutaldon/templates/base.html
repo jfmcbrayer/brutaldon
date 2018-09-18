@@ -40,8 +40,7 @@
             {% endif %}
     </head>
     <body class="has-navbar-fixed-top" ic-history-elt="true"
-          ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
-          ic-on-beforeSend="savePlace()">
+          ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
         <div id="page-load-indicator">&nbsp</div>
             {% block navbar %}
             <nav class="navbar is-fixed-top" role="navigation"
@@ -53,99 +52,107 @@
                        ic-scroll-to-target="true"
                        ic-select-from-response="#main"
                        ic-push-url="true"
+                       ic-on-beforeSend="savePlace"
                        ic-on-success="afterPage('{{ own_acct.username }}', 'Home');"
                        ic-indicator="#page-load-indicator">
                         {% if own_acct %}
-                            <img src="{{ own_acct.avatar_static }}"
-                                 class="image is-32x32 avatar"
-                                 alt="Brutaldon ('{{ own_acct.username }}')">
+                        <img src="{{ own_acct.avatar_static }}"
+                             class="image is-32x32 avatar"
+                             alt="Brutaldon ('{{ own_acct.username }}')">
                         {% else %}
-                            <img src="{% static "images/brutaldon.png" %}"
-                                 class="image is-32x32" alt="Brutaldon">
+                        <img src="{% static "images/brutaldon.png" %}"
+                             class="image is-32x32" alt="Brutaldon">
                         {% endif %}
                     </a>
                 </div>
                 {% if request.session.instance %}
-                    {% if request.session.username or request.session.access_token %}
-                        <div class="navbar-menu is-active" id="navMenu">
-                            <!-- navbar start, navbar end -->
-                            <div class="navbar-start">
-                                <a href="{% url "home" %}" class="navbar-item"
-                                   ic-get-from="{% url "home" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Home');"
-                                   ic-indicator="#page-load-indicator">
-                                    <span class="fa fa-home"></span>
-                                    <span>&nbsp; Home</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "note" %}"
-                                   ic-get-from="{% url "note" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Notifications');"
-                                   ic-indicator="#page-load-indicator">
-                                    <span class="fa fa-bell-o"></span>
-                                    <span >&nbsp; Notifications</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "local" %}"
-                                   ic-get-from="{% url "local" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Local timeline');"
-                                   ic-indicator="#page-load-indicator">
-                                    <span class="fa fa-community"></span>
-                                    <span >&nbsp; Local</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "fed" %}"
-                                   ic-get-from="{% url "fed" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Federated timeline');"
-                                   ic-indicator="#page-load-indicator">
-                                    <span class="fa fa-globe"></span>
-                                    <span >&nbsp;Federated</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "toot" %}"
-                                   ic-get-from="{% url "toot" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'New toot');"
-                                   ic-indicator="#page-load-indicator">
-                                    <span class="fa fa-edit"> </span>
-                                    <span >&nbsp; New Toot</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "search" %}"
-                                   ic-get-from="{% url "search" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Search');"
-                                   ic-indicator="#page-load-indicator">
-                                    <span class="fa fa-search"> </span>
-                                    <span >&nbsp; Search</span>
-                                </a>
-                            </div>
-                            <div class="navbar-end" >
-                                <a class="navbar-item" href="{% url "settings" %}"
-                                   ic-get-from="{% url "settings" %}"
-                                   ic-target="#main"
+                {% if request.session.username or request.session.access_token %}
+                <div class="navbar-menu is-active" id="navMenu">
+                    <!-- navbar start, navbar end -->
+                    <div class="navbar-start">
+                        <a href="{% url "home" %}" class="navbar-item"
+                           ic-get-from="{% url "home" %}"
+                           ic-target="#main"
+                           ic-scroll-to-target="true"
+                           ic-select-from-response="#main"
+                           ic-push-url="true"
+                           ic-on-beforeSend="savePlace"
+                           ic-on-success="afterPage('{{ own_acct.username }}', 'Home');"
+                           ic-indicator="#page-load-indicator">
+                            <span class="fa fa-home"></span>
+                            <span>&nbsp; Home</span>
+                        </a>
+                        <a class="navbar-item" href="{% url "note" %}"
+                           ic-get-from="{% url "note" %}"
+                           ic-target="#main"
+                           ic-scroll-to-target="true"
+                           ic-select-from-response="#main"
+                           ic-push-url="true"
+                           ic-on-beforeSend="savePlace"
+                           ic-on-success="afterPage('{{ own_acct.username }}', 'Notifications');"
+                           ic-indicator="#page-load-indicator">
+                            <span class="fa fa-bell-o"></span>
+                            <span >&nbsp; Notifications</span>
+                        </a>
+                        <a class="navbar-item" href="{% url "local" %}"
+                           ic-get-from="{% url "local" %}"
+                           ic-target="#main"
+                           ic-scroll-to-target="true"
+                           ic-select-from-response="#main"
+                           ic-push-url="true"
+                           ic-on-beforeSend="savePlace"
+                           ic-on-success="afterPage('{{ own_acct.username }}', 'Local timeline');"
+                           ic-indicator="#page-load-indicator">
+                            <span class="fa fa-community"></span>
+                            <span >&nbsp; Local</span>
+                        </a>
+                        <a class="navbar-item" href="{% url "fed" %}"
+                           ic-get-from="{% url "fed" %}"
+                           ic-target="#main"
+                           ic-scroll-to-target="true"
+                           ic-select-from-response="#main"
+                           ic-push-url="true"
+                           ic-on-beforeSend="savePlace"
+                           ic-on-success="afterPage('{{ own_acct.username }}', 'Federated timeline');"
+                           ic-indicator="#page-load-indicator">
+                            <span class="fa fa-globe"></span>
+                            <span >&nbsp;Federated</span>
+                        </a>
+                        <a class="navbar-item" href="{% url "toot" %}"
+                           ic-get-from="{% url "toot" %}"
+                           ic-target="#main"
+                           ic-scroll-to-target="true"
+                           ic-select-from-response="#main"
+                           ic-push-url="true"
+                           ic-on-beforeSend="savePlace"
+                           ic-on-success="afterPage('{{ own_acct.username }}', 'New toot');"
+                           ic-indicator="#page-load-indicator">
+                            <span class="fa fa-edit"> </span>
+                            <span >&nbsp; New Toot</span>
+                        </a>
+                        <a class="navbar-item" href="{% url "search" %}"
+                           ic-get-from="{% url "search" %}"
+                           ic-target="#main"
+                           ic-scroll-to-target="true"
+                           ic-select-from-response="#main"
+                           ic-push-url="true"
+                           ic-on-beforeSend="savePlace"
+                           ic-on-success="afterPage('{{ own_acct.username }}', 'Search');"
+                           ic-indicator="#page-load-indicator">
+                            <span class="fa fa-search"> </span>
+                            <span >&nbsp; Search</span>
+                        </a>
+                    </div>
+                    <div class="navbar-end" >
+                        <a class="navbar-item" href="{% url "settings" %}"
+                           ic-get-from="{% url "settings" %}"
+                           ic-target="#main"
 
-                      ic-scroll-to-target="true"             ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Settings');"
-                                   ic-indicator="#page-load-indicator">
+                           ic-scroll-to-target="true"             ic-select-from-response="#main"
+                           ic-push-url="true"
+                           ic-on-beforeSend="savePlace"
+                           ic-on-success="afterPage('{{ own_acct.username }}', 'Settings');"
+                           ic-indicator="#page-load-indicator">
                                     <span class="fa fa-gear"></span>
                                     <span >&nbsp;Settings</span>
                                 </a>
