@@ -26,8 +26,11 @@
                 {% if not preferences.theme.is_brutalist %}
                     <link rel="stylesheet"
                           href="{% static 'css/fork-awesome.min.css' %}">
+                    <link rel="stylesheet"
+                          href="{% static 'css/photobox.css' %}">
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
+                    <script type="text/javascript" src="{% static 'js/jquery.photobox.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/brutaldon-enhancements.js' %}"></script>
                     {% block page_scripts %}
                     {% endblock %}
@@ -209,6 +212,10 @@
              document.addEventListener('DOMContentLoaded', menuPrepare);
              $(document).on('handle.onpopstate.ic',
                             restorePlace);
+             Intercooler.ready(function ()
+                 {
+                     $(".attachments").photobox('a');
+                 });
             </script>
             {% block page_scripts_inline %}
             {% endblock %}
