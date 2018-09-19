@@ -3,7 +3,7 @@
     "name" : "brutaldon",
     "scope" : "/",
     "display" : "minimal-ui",
-    "start_url" : "https://brutaldon.online/about",
+    "start_url" : "https://brutaldon.online/",
     "short_name" : "brutaldon",
     "theme_color" : "transparent",
     "description" : "",
