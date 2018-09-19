@@ -1,16 +1,19 @@
-{
-    "name": "Brutaldon",
-    "short_name": "Brutaldon",
-    "start_url": ".",
-    "display": "minimal-ui",
-    "description": "A brutalist web client for Mastodon"
-    "icons": [
+{"dir" : "ltr",
+    "lang" : "en",
+    "name" : "brutaldon",
+    "scope" : "/",
+    "display" : "minimal-ui",
+    "start_url" : "https://brutaldon.online/about",
+    "short_name" : "brutaldon",
+    "theme_color" : "transparent",
+    "description" : "",
+    "orientation" : "any",
+    "background_color" : "transparent",
+    "related_applications" : "",
+    "prefer_related_applications" : "false",
+    "icons" : [
         {
-            "src": "images/brutaldon.png",
-            "sizes": "512x512",
-            "type": "image/png"
+            "src": "https://brutaldon.online/static/images/brutaldon.png",
+            "sizes": "320x320"
         }
-    ],
-    "scope": "./",
-    "theme_color": "#CCCCCC"
-}
+    ]}
