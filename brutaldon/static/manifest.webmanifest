@@ -1,0 +1,17 @@
+// -*- json -*-
+{
+    "name": "Brutaldon",
+    "short_name": "Brutaldon",
+    "start_url": ".",
+    "display": "minimal-ui",
+    "description": "A brutalist web client for Mastodon"
+    "icons": [
+        {
+            "src": "images/brutaldon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "scope": "./",
+    "theme_color": "#CCCCCC"
+}

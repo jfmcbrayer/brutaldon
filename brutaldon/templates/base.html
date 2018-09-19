@@ -13,6 +13,7 @@
                     brutaldon
                 {% endif %}
             {% endblock %}</title>
+            <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
             {% if not preferences %}
                 <link rel="stylesheet"
                       href="{% static 'css/bulma.min.css' %}">
