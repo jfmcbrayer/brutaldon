@@ -223,7 +223,7 @@
 
                  //Register the ServiceWorker
                  navigator.serviceWorker.register('{% static "js/pwabuilder-sw.js" %}', {
-                     scope: './'
+                     scope: '{% url 'home' %}'
                  }).then(function(reg) {
                      console.log('Service worker has been registered for scope:'+ reg.scope);
                  });
