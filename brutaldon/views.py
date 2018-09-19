@@ -782,3 +782,6 @@ def emoji_reference(request):
                       {"preferences": account.preferences,
                        "emojos": sorted(emojos, key=lambda x: x['shortcode']),
                        'own_acct' : request.session['user']})
+
+def service_worker(request):
+    return render(request, 'pwabuilder-sw.js', content_type="application/javascript")
