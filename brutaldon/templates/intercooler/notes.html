@@ -1,7 +1,7 @@
-<span class="badge"
-      data-badge="{{ notifications }}"
-      ic-src="{% url 'notes_count' %}"
-      ic-poll="60s"
-      ic-push-url="false">
-    &nbsp; Notifications
+<span
+    {% if notifications != '0' %}
+    class="badge is-badge-warning"
+    {% endif %}
+    data-badge="{{ notifications }}">
+    &nbsp; Notifications</span>
 </span>

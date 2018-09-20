@@ -1,4 +1,5 @@
 {% load static %}
+{% load taglinks %}
 
 <!DOCTYPE html>
 <html>
@@ -7,30 +8,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
             {% block title %}
-            {% if own_acct %}
-            brutaldon ('{{ own_acct.username }}')
-            {% else %}
-            brutaldon
-            {% endif %}
+                {% if own_acct %}
+                    brutaldon ('{{ own_acct.username }}')
+                {% else %}
+                    brutaldon
+                {% endif %}
             {% endblock %}</title>
-        <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
-        {% if not preferences %}
-        <link rel="stylesheet"
-              href="{% static 'css/bulma.min.css' %}">
-        <link rel="stylesheet"
-              href="{% static 'css/fork-awesome.min.css' %}">
-        <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
-        {% else  %}
-        <link rel="stylesheet"
-              href="{% static preferences.theme.main_css %}">
-        <link rel="stylesheet" href="{% static preferences.theme.tweaks_css %}">
-        {% if not preferences.theme.is_brutalist %}
-        <link rel="stylesheet"
-              href="{% static 'css/fork-awesome.min.css' %}">
-        <link rel="stylesheet"
-              href="{% static 'css/bulma-badge.min.css' %}">
-        <link rel="stylesheet"
-              href="{% static 'css/bulma-badge.min.css' %}">
+            <link rel="manifest" href="{% static 'manifest.webmanifest' %}">
+            {% if not preferences %}
+                <link rel="stylesheet"
+                      href="{% static 'css/bulma.min.css' %}">
+                <link rel="stylesheet"
+                      href="{% static 'css/fork-awesome.min.css' %}">
+                <link rel="stylesheet" href="{% static "css/brutaldon.css" %}">
+            {% else  %}
+                <link rel="stylesheet"
+                      href="{% static preferences.theme.main_css %}">
+                <link rel="stylesheet" href="{% static preferences.theme.tweaks_css %}">
+                {% if not preferences.theme.is_brutalist %}
+                    <link rel="stylesheet"
+                          href="{% static 'css/fork-awesome.min.css' %}">
+                    <link rel="stylesheet"
+                          href="{% static 'css/bulma-badge.min.css' %}">
+                    <link rel="stylesheet"
+                          href="{% static 'css/bulma-badge.min.css' %}">
+                    <link rel="stylesheet"
                           href="{% static 'css/photobox.css' %}">
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
@@ -101,13 +103,18 @@
                                    ic-indicator="#page-load-indicator">
                                     <span class="fa fa-bell-o"></span>
                                     {% if not preferences.theme.is_brutalist %}
-                                        <span class="badge"
-                                              data-badge="{{ notifications }}"
-                                              ic-src="{% url 'notes_count' %}"
+                                        <span ic-src="{% url 'notes_count' %}"
                                               ic-poll="60s"
+                                              ic-target="find span"
+                                              id="notes-count"
                                               ic-push-url="false">
-                                            &nbsp; Notifications
-                                        </span>
+                                            <span
+                                                {% if notifications != '0' %}
+                                                class="badge is-badge-warning"
+                                                {% endif %}
+                                                data-badge="{{ notifications }}">
+                                                &nbsp; Notifications</span>
+                                            </span>
                                     {% elif notifications %}
                                         <span >&nbsp; Notifications ({{ notifications }})</span>
                                     {% else %}

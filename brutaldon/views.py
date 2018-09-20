@@ -108,6 +108,8 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
     except (IndexError, AttributeError):
         next = None
 
+    notifications = _notes_count(request)
+
     # This filtering has to be done *after* getting next/prev links
     if account.preferences.filter_replies:
         data = [x for x in data if not x.in_reply_to_id]
@@ -118,6 +120,7 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
                    'timeline_name': timeline_name,
                    'own_acct': request.session['user'],
                    'preferences': account.preferences,
+                   'notifications': notifications,
                   'prev': prev, 'next': next})
 
 @br_login_required
