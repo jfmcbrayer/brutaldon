@@ -171,6 +171,11 @@
                 {% endif %}
             </nav>
         {% endblock %}
+
+        <div id="before-main" class="is-hidden-desktop">
+            <span class="fa fa-bars"></span>
+        </div>
+
         <section id="main" class="section"  ic-history-elt="true">
             <div class="container">
                 {% block content %}
@@ -213,11 +218,11 @@
             <script type="application/javascript">
              $(document).ready(function () {
                  menuPrepare();
-                 $("#main-nav-bar").pullToRefresh({
+                 $("#before-main").pullToRefresh({
                      refresh: 200,
                      simulateTouch: false,
                      threshold: 100,
-                     scroll: "main-nav-bar",
+                     scroll: "before-main",
                  });
                  $(document).on("refresh.pulltorefresh", function ($element, y){
                      $("page-load-indicator").show();

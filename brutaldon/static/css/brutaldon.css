@@ -158,3 +158,18 @@ emoji-link
     font-size: 0.8em;
     text-align: right;
 }
+
+#before-main
+{
+    width: 100%;
+    height: 2em;
+    background-color: #DEDEDE;
+    color: white;
+    margin-top: 0;
+    padding: 0;
+}
+
+#before-main span
+{
+    margin-left: 50%;
+}
