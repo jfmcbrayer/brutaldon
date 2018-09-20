@@ -146,21 +146,3 @@ function characterCount()
     return $("#id_status").val().length + $("#id_spoiler_text").val().length;
 }
 
-function savePlace()
-{
-    sessionStorage.setItem("lastScrollPos", window.scrollY);
-    return true;
-}
-
-function restorePlace(ev)
-{
-    var lastScrollPos = sessionStorage.getItem('lastScrollPos');
-    Intercooler.ready(function (elt)
-                      {
-                          if (elt[0].id == 'main')
-                          {
-                              window.scrollTo(0, lastScrollPos);
-                          }
-                      });
-    return false;
-}
