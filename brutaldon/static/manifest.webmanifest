@@ -3,12 +3,12 @@
     "name" : "brutaldon",
     "scope" : "/",
     "display" : "minimal-ui",
-    "start_url" : "https://brutaldon.online/",
+    "start_url" : "/",
     "short_name" : "brutaldon",
-    "theme_color" : "transparent",
+    "theme_color" : "#CCCCCC",
     "description" : "",
     "orientation" : "any",
-    "background_color" : "transparent",
+    "background_color" : "#CCCCCC",
     "icons" : [
         {
             "src": "https://brutaldon.online/static/images/brutaldon.png",
