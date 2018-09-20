@@ -56,15 +56,7 @@
             <nav class="navbar is-fixed-top is-primary" role="navigation"
                  aria-label="main navigation" id="main-nav-bar">
                 <div class="navbar-brand">
-                    <a class="navbar-item" href="{% url "home" %}"
-                       ic-get-from="{% url "home" %}"
-                       ic-target="#main"
-                       ic-scroll-to-target="true"
-                       ic-select-from-response="#main"
-                       ic-push-url="true"
-                       ic-on-beforeSend="savePlace"
-                       ic-on-success="afterPage('{{ own_acct.username }}', 'Home');"
-                       ic-indicator="#page-load-indicator">
+                    <a class="navbar-item" href="{% url "home" %}">
                         {% if own_acct %}
                             <img src="{{ own_acct.avatar_static }}"
                                  class="image is-32x32 avatar"
@@ -80,37 +72,20 @@
                         <div class="navbar-menu is-active" id="navMenu">
                             <!-- navbar start, navbar end -->
                             <div class="navbar-start">
-                                <a href="{% url "home" %}" class="navbar-item"
-                                   ic-get-from="{% url "home" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-beforeSend="savePlace"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Home');"
-                                   ic-indicator="#page-load-indicator">
+                                <a href="{% url "home" %}" class="navbar-item">
                                     <span class="fa fa-home"></span>
                                     <span>&nbsp; Home</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "note" %}"
-                                   ic-get-from="{% url "note" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-beforeSend="savePlace"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Notifications');"
-                                   ic-indicator="#page-load-indicator">
+>
                                     <span class="fa fa-bell-o"></span>
                                     {% if not preferences.theme.is_brutalist %}
                                         <span ic-src="{% url 'notes_count' %}"
                                               ic-poll="60s"
-                                              ic-target="find span"
-                                              id="notes-count"
-                                              ic-push-url="false">
+                                              ic-target="this">
                                             <span
-                                                {% if notifications != '0' %}
-                                                class="badge is-badge-warning"
+                                                {% if notifications and notifications != '0' %}
+                                                class="badge"
                                                 {% endif %}
                                                 data-badge="{{ notifications }}">
                                                 &nbsp; Notifications</span>
@@ -121,65 +96,25 @@
                                         <span >&nbsp; Notifications</span>
                                     {% endif %}
                                 </a>
-                                <a class="navbar-item" href="{% url "local" %}"
-                                   ic-get-from="{% url "local" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-beforeSend="savePlace"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Local timeline');"
-                                   ic-indicator="#page-load-indicator">
+                                <a class="navbar-item" href="{% url "local" %}">
                                     <span class="fa fa-community"></span>
                                     <span >&nbsp; Local</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "fed" %}"
-                                   ic-get-from="{% url "fed" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-beforeSend="savePlace"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Federated timeline');"
-                                   ic-indicator="#page-load-indicator">
+                                <a class="navbar-item" href="{% url "fed" %}">
                                     <span class="fa fa-globe"></span>
                                     <span >&nbsp;Federated</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "toot" %}"
-                                   ic-get-from="{% url "toot" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-beforeSend="savePlace"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'New toot');"
-                                   ic-indicator="#page-load-indicator">
+                                <a class="navbar-item" href="{% url "toot" %}">
                                     <span class="fa fa-edit"> </span>
                                     <span >&nbsp; New Toot</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "search" %}"
-                                   ic-get-from="{% url "search" %}"
-                                   ic-target="#main"
-                                   ic-scroll-to-target="true"
-                                   ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-beforeSend="savePlace"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Search');"
-                                   ic-indicator="#page-load-indicator">
+                                <a class="navbar-item" href="{% url "search" %}">
                                     <span class="fa fa-search"> </span>
                                     <span >&nbsp; Search</span>
                                 </a>
                             </div>
                             <div class="navbar-end" >
-                                <a class="navbar-item" href="{% url "settings" %}"
-                                   ic-get-from="{% url "settings" %}"
-                                   ic-target="#main"
-
-                                   ic-scroll-to-target="true"             ic-select-from-response="#main"
-                                   ic-push-url="true"
-                                   ic-on-beforeSend="savePlace"
-                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Settings');"
-                                   ic-indicator="#page-load-indicator">
+                                <a class="navbar-item" href="{% url "settings" %}">
                                     <span class="fa fa-gear"></span>
                                     <span >&nbsp;Settings</span>
                                 </a>
@@ -198,7 +133,7 @@
             <span class="fa fa-bars"></span>
         </div>
 
-        <section id="main" class="section"  ic-history-elt="true">
+        <section id="main" class="section">
             <div class="container">
                 {% block content %}
                     <h1 class="title">
@@ -240,19 +175,7 @@
             <script type="application/javascript">
              $(document).ready(function () {
                  menuPrepare();
-                 $("#before-main").pullToRefresh({
-                     refresh: 200,
-                     simulateTouch: false,
-                     threshold: 100,
-                     scroll: "before-main",
-                 });
-                 $(document).on("refresh.pulltorefresh", function ($element, y){
-                     $("page-load-indicator").show();
-                     window.location.reload();
-                 });
              });
-             $(document).on('handle.onpopstate.ic',
-                            restorePlace);
              if (navigator.serviceWorker.controller) {
                  console.log('[PWA Builder] active service worker found, no need to register')
              } else {

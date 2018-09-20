@@ -1,6 +1,6 @@
 <span
-    {% if notifications != '0' %}
-    class="badge is-badge-warning"
+    {% if notifications and notifications != '0' %}
+    class="badge"
     {% endif %}
     data-badge="{{ notifications }}">
     &nbsp; Notifications</span>
