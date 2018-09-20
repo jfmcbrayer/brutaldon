@@ -32,6 +32,7 @@
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/jquery.photobox.js' %}"></script>
+                    <script src="{% static 'js/jquery.p2r.min.js' %}" type='text/javascript'></script>
                     <script type="text/javascript" src="{% static 'js/brutaldon-enhancements.js' %}"></script>
                     {% block page_scripts %}
                     {% endblock %}
@@ -169,19 +170,21 @@
                     {% endif %}
                 {% endif %}
             </nav>
-        {% endblock %}
-        <section id="main" class="section"  ic-history-elt="true">
-            <div class="container">
-                {% block content %}
-                    <h1 class="title">
-                        Title
-                    </h1>
-                    <p class="subtitle">
-                        Brutaldon is totally a thing.
-                    </p>
-                {% endblock %}
+            {% endblock %}
+            <div id="main-outer">
+                <section id="main" class="section"  ic-history-elt="true">
+                    <div class="container">
+                        {% block content %}
+                            <h1 class="title">
+                                Title
+                            </h1>
+                            <p class="subtitle">
+                                Brutaldon is totally a thing.
+                            </p>
+                        {% endblock %}
+                    </div>
+                </section>
             </div>
-        </section>
 
         <footer class="footer">
             <div class="level">
@@ -210,7 +213,19 @@
         {% if not preferences.theme.is_brutalist %}
 
             <script type="application/javascript">
-             document.addEventListener('DOMContentLoaded', menuPrepare);
+             $(document).ready(function () {
+                 menuPrepare();
+                 $("#main-outer").pullToRefresh({
+                     refresh: 200,
+                     simulateTouch: false,
+                     threshold: 100,
+                     scroll: "#main-outer",
+                 });
+                 $(document).on("refresh.pulltorefresh", function ($element, y){
+                     $("page-load-indicator").show();
+                     window.location.reload();
+                 });
+             });
              $(document).on('handle.onpopstate.ic',
                             restorePlace);
              if (navigator.serviceWorker.controller) {
