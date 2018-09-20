@@ -13,5 +13,47 @@
         {
             "src": "https://brutaldon.online/static/images/brutaldon.png",
             "sizes": "320x320"
-        }
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-48.png",
+            "sizes": "48x48"
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-72.png",
+            "sizes": "72x72"
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-76.png",
+            "sizes": "76x76"
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-96.png",
+            "sizes": "96x96"
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-120.png",
+            "sizes": "120x120"
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-144.png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-152.png",
+            "sizes": "152x152"
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-192.png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-180.png",
+            "sizes": "180x180"
+        },
+        {
+            "src": "https://brutaldon.online/static/images/brutaldon-512.png",
+            "sizes": "512x512"
+        },
+
+
     ]}
