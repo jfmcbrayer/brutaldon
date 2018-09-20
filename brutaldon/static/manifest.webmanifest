@@ -2,7 +2,7 @@
     "lang" : "en",
     "name" : "brutaldon",
     "scope" : "/",
-    "display" : "minimal-ui",
+    "display" : "browser",
     "start_url" : "/",
     "short_name" : "brutaldon",
     "theme_color" : "#CCCCCC",
