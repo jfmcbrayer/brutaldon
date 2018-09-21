@@ -142,9 +142,11 @@ def tag(request, tag):
     except NotLoggedInException:
         return redirect(login)
     data = mastodon.timeline_hashtag(tag)
+    notifications = _notes_count(request)
     return render(request, 'main/timeline.html',
                   {'toots': data, 'timeline_name': '#'+tag,
                    'own_acct': request.session['user'],
+                   'notifications': notifications,
                    'preferences': account.preferences})
 
 @never_cache
@@ -344,9 +346,11 @@ def thread(request, id):
     account, mastodon = get_usercontext(request)
     context = mastodon.status_context(id)
     toot = mastodon.status(id)
+    notifications = _notes_count(request)
     return render(request, 'main/thread.html',
                   {'context': context, 'toot': toot,
                    'own_acct': request.session['user'],
+                   'notifications': notifications,
                    'preferences': account.preferences})
 
 @br_login_required
@@ -361,6 +365,7 @@ def user(request, username, prev=None, next=None):
         raise Http404("The user %s could not be found." % username)
     data = mastodon.account_statuses(user_dict.id, max_id=next, since_id=prev)
     relationship = mastodon.account_relationships(user_dict.id)[0]
+    notifications = _notes_count(request)
     try:
         prev = data[0]._pagination_prev
         if len(mastodon.account_statuses(user_dict.id,
@@ -377,6 +382,7 @@ def user(request, username, prev=None, next=None):
                    'relationship': relationship,
                    'own_acct': request.session['user'],
                    'preferences': account.preferences,
+                   'notifications': notifications,
                   'prev': prev, 'next': next})
 
 
@@ -536,6 +542,7 @@ def reply(request, id):
         account, mastodon = get_usercontext(request)
         toot = mastodon.status(id)
         context = mastodon.status_context(id)
+        notifications = _notes_count(request)
         if toot.account.acct != request.session['user'].acct:
             initial_text = '@' + toot.account.acct + " "
         else:
@@ -550,12 +557,14 @@ def reply(request, id):
         return render(request, 'main/reply.html',
                       {'context': context, 'toot': toot, 'form': form, 'reply':True,
                        'own_acct': request.session['user'],
+                       'notifications': notifications,
                        'preferences': account.preferences})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         account, mastodon = get_usercontext(request)
         toot = mastodon.status(id)
         context = mastodon.status_context(id)
+        notifications = _notes_count(request)
         if form.is_valid():
             # create media objects
             media_objects = []
@@ -580,6 +589,7 @@ def reply(request, id):
                 return render(request, 'main/reply.html',
                               {'context': context, 'toot': toot, 'form': form, 'reply': True,
                                'own_acct': request.session['user'],
+                               'notifications': notifications,
                                'preferences': account.preferences})
             return redirect(thread, id)
         else:
@@ -771,9 +781,11 @@ def search_results(request):
         query = ''
     account, mastodon = get_usercontext(request)
     results = mastodon.search(query)
+    notifications = _notes_count(request)
     return render(request, 'main/search_results.html',
                   {"results": results,
                    'own_acct': request.session['user'],
+                   'notifications': notifications,
                    "preferences": account.preferences})
 
 def about(request):
@@ -803,9 +815,11 @@ def privacy(request):
 def emoji_reference(request):
     account, mastodon = get_usercontext(request)
     emojos = mastodon.custom_emojis()
+    notifications = _notes_count(request)
     return render(request, 'main/emoji.html',
                       {"preferences": account.preferences,
                        "emojos": sorted(emojos, key=lambda x: x['shortcode']),
+                       "notifications": notifications,
                        'own_acct' : request.session['user']})
 
 def service_worker(request):
