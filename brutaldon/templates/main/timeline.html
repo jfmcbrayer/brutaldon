@@ -21,25 +21,38 @@
         <hr class="is-hidden">
     {% endif %}
     <h1 class="title">Your {{ timeline_name }} timeline</h1>
-    {% for toot in toots %}
-        {% if toot.reblog %}
-            {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar_static %}
-        {% else %}
-            {% include "main/toot_partial.html" with toot=toot reblog=False %}
-        {% endif %}
-        <hr class="is-hidden">
-    {% endfor %}
+    <div id="timeline">
+        {% for toot in toots %}
+            {% if toot.reblog %}
+                {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar_static %}
+            {% else %}
+                {% include "main/toot_partial.html" with toot=toot reblog=False %}
+            {% endif %}
+            <hr class="is-hidden">
+        {% endfor %}
 
-    {% block pagination %}
-        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-            {% if prev %}
-                <a class="pagination-next" href="{% url 'home_prev' prev.since_id %}">Newer</a>
-            {% endif %}
-            {% if next %}
-                <a class="pagination-previous" href="{% url 'home_next' next.max_id %}">Older</a>
-            {% endif %}
-        </nav>
-    {% endblock %}
+        {% block pagination %}
+            <div class="around-pagination">
+                <div class="columns">
+                    {% if next %}
+                        <p class="column is-one-quarter"></p>
+                        <p class="column">
+                            <a class="pagination-previous is-fullwidth button"
+                               href="{% url 'home_next' next.max_id %}"
+                               ic-get-from="{% url 'home_next' next.max_id %}"
+                               ic-select-from-response="#timeline"
+                               ic-indicator="#page-load-indicator"
+                               ic-target="closest div.around-pagination"
+                            >
+                                Older
+                            </a>
+                        </p>
+                        <p class="column is-one-quarter"></p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endblock %}
+    </div>
 {% endblock %}
 
 {% block page_scripts_inline %}
