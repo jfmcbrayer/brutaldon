@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Brutaldon ({{ own_acct.username }}) - {{ timeline_name }} timelime
+    Brutaldon ({{ own_acct.username }}) - {{ timeline_name }} timelime
 {% endblock %}
 
 {% block page_scripts %}
@@ -13,43 +13,43 @@ Brutaldon ({{ own_acct.username }}) - {{ timeline_name }} timelime
 {% endblock %}
 
 {% block content %}
-{% if form %}
-<h1 class="title">Post</h1>
-<div class="box">
-    {% include "main/post_minimal_partial.html" %}
-</div>
-<hr class="is-hidden">
-{% endif %}
-<h1 class="title">Your {{ timeline_name }} timeline</h1>
-{% for toot in toots %}
-{% if toot.reblog %}
-{% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar_static %}
-{% else %}
-{% include "main/toot_partial.html" with toot=toot reblog=False %}
-{% endif %}
-<hr class="is-hidden">
-{% endfor %}
+    {% if form %}
+        <h1 class="title">Post</h1>
+        <div class="box">
+            {% include "main/post_minimal_partial.html" %}
+        </div>
+        <hr class="is-hidden">
+    {% endif %}
+    <h1 class="title">Your {{ timeline_name }} timeline</h1>
+    {% for toot in toots %}
+        {% if toot.reblog %}
+            {% include "main/toot_partial.html" with toot=toot.reblog reblog=True reblog_by=toot.account.acct reblog_icon=toot.account.avatar_static %}
+        {% else %}
+            {% include "main/toot_partial.html" with toot=toot reblog=False %}
+        {% endif %}
+        <hr class="is-hidden">
+    {% endfor %}
 
-{% block pagination %}
-<nav class="pagination is-centered" role="navigation" aria-label="pagination">
-    {% if prev %}
-    <a class="pagination-next" href="{% url 'home_prev' prev.since_id %}">Newer</a>
-    {% endif %}
-    {% if next %}
-    <a class="pagination-previous" href="{% url 'home_next' next.max_id %}">Older</a>
-    {% endif %}
-</nav>
-{% endblock %}
+    {% block pagination %}
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+            {% if prev %}
+                <a class="pagination-next" href="{% url 'home_prev' prev.since_id %}">Newer</a>
+            {% endif %}
+            {% if next %}
+                <a class="pagination-previous" href="{% url 'home_next' next.max_id %}">Older</a>
+            {% endif %}
+        </nav>
+    {% endblock %}
 {% endblock %}
 
 {% block page_scripts_inline %}
     <script type="application/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-     Mousetrap.bind('ctrl+enter', function(e) {
-         var form = document.querySelector('#post-form');
-         form.submit();
-         return true;
-     });
+     document.addEventListener('DOMContentLoaded', function () {
+         Mousetrap.bind('ctrl+enter', function(e) {
+             var form = document.querySelector('#post-form');
+             form.submit();
+             return true;
+         });
      });
     </script>
 {% endblock %}
