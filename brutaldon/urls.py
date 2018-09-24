@@ -58,6 +58,5 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('search_results', views.search_results, name='search_results'),
     path('emoji', views.emoji_reference, name='emoji'),
-    path('pwabuilder-sw.js', views.service_worker, name="sw"),
     path('', views.home, name=''),
 ]

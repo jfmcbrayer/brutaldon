@@ -822,5 +822,3 @@ def emoji_reference(request):
                        "notifications": notifications,
                        'own_acct' : request.session['user']})
 
-def service_worker(request):
-    return render(request, 'pwabuilder-sw.js', content_type="application/javascript")
