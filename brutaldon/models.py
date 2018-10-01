@@ -30,6 +30,9 @@ class Preference(models.Model):
     filter_boosts = models.BooleanField(default=False)
     timezone = models.CharField(max_length=80, blank=True, null=True,
                                 choices=timezones, default='UTC')
+    no_javascript = models.BooleanField(default=False)
+    notifications = models.BooleanField(default=True)
+    click_to_load = models.BooleanField(default=False)
 
 class Account(models.Model):
     username = models.EmailField(unique=True)
