@@ -39,6 +39,28 @@
                     </div>
                 </div>
             </div>
+
+            <div class="field">
+                <label class="label checkbox" for="no_javascript">
+                    {% render_field form.no_javascript class+="checkbox" %}
+                    {{ form.no_javascript.label }}
+                </label>
+            </div>
+
+            <div class="field">
+                <label class="label checkbox" for="notifications">
+                    {% render_field form.notifications class+="checkbox" %}
+                    {{ form.notifications.label }}
+                </label>
+            </div>
+
+            <div class="field">
+                <label class="label checkbox" for="click_to_load">
+                    {% render_field form.click_to_load class+="checkbox" %}
+                    {{ form.click_to_load.label }}
+                </label>
+            </div>
+
             <div class="field">
                 <input type="submit" name="submit"
                        value="Save" class="button is-primary" >

@@ -397,6 +397,9 @@ def settings(request):
             account.preferences.filter_replies = form.cleaned_data['filter_replies']
             account.preferences.filter_boosts = form.cleaned_data['filter_boosts']
             account.preferences.timezone = form.cleaned_data['timezone']
+            account.preferences.no_javascript = form.cleaned_data['no_javascript']
+            account.preferences.notifications = form.cleaned_data['notifications']
+            account.preferences.click_to_load = form.cleaned_data['click_to_load']
             request.session['timezone'] = account.preferences.timezone
             account.preferences.save()
             account.save()

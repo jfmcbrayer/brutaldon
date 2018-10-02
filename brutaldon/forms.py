@@ -24,7 +24,8 @@ class OAuthLoginForm(forms.Form):
 class PreferencesForm(forms.ModelForm):
     class Meta:
         model = Preference
-        fields = ['theme', 'filter_replies', 'filter_boosts', 'timezone']
+        fields = ['theme', 'filter_replies', 'filter_boosts', 'timezone',
+                  'no_javascript', 'notifications', 'click_to_load']
 
 class PostForm(forms.Form):
     """def status_post(self, status, in_reply_to_id=None, media_ids=None,
