@@ -30,9 +30,12 @@ class Preference(models.Model):
     filter_boosts = models.BooleanField(default=False)
     timezone = models.CharField(max_length=80, blank=True, null=True,
                                 choices=timezones, default='UTC')
-    no_javascript = models.BooleanField(default=False)
-    notifications = models.BooleanField(default=True)
-    click_to_load = models.BooleanField(default=False)
+    no_javascript = models.BooleanField(default=False,
+                                        help_text="""Disable all JavaScript. Overrides all other JavaScript options.""")
+    notifications = models.BooleanField(default=True,
+                                        help_text="""Display live notifications in header.""")
+    click_to_load = models.BooleanField(default=False,
+                                        help_text="""Click to load more toots in the same page, rather than using pagination.""")
 
 class Account(models.Model):
     username = models.EmailField(unique=True)
