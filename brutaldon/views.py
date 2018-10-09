@@ -400,6 +400,7 @@ def settings(request):
             account.preferences.no_javascript = form.cleaned_data['no_javascript']
             account.preferences.notifications = form.cleaned_data['notifications']
             account.preferences.click_to_load = form.cleaned_data['click_to_load']
+            account.preferences.lightbox = form.cleaned_data['lightbox']
             request.session['timezone'] = account.preferences.timezone
             account.preferences.save()
             account.save()

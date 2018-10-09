@@ -173,10 +173,13 @@
              $(document).ready(function () {
                  menuPrepare();
              });
+
+             {% if preferences.lightbox %}
              Intercooler.ready(function ()
                  {
                      $(".attachments").photobox('a', { history: false });
                  });
+             {% endif %}
             </script>
             {% block page_scripts_inline %}
             {% endblock %}

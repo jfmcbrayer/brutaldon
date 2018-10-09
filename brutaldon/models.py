@@ -36,6 +36,8 @@ class Preference(models.Model):
                                         help_text="""Display live notifications in header.""")
     click_to_load = models.BooleanField(default=False,
                                         help_text="""Click to load more toots in the same page, rather than using pagination.""")
+    lightbox = models.BooleanField(default=False,
+                                   help_text="""Use a JavaScript lightbox to display media.""")
 
 class Account(models.Model):
     username = models.EmailField(unique=True)

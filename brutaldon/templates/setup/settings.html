@@ -76,6 +76,16 @@
             </div>
 
             <div class="field">
+                <label class="label checkbox" for="click_to_load">
+                    {% render_field form.lightbox class+="checkbox" %}
+                    {{ form.lightbox.label }}
+                </label>
+                <p class="notification is-info preferences-help">
+                    {{ form.lightbox.help_text }}
+                </p>
+            </div>
+
+            <div class="field">
                 <input type="submit" name="submit"
                        value="Save" class="button is-primary" >
             </div>
