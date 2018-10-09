@@ -80,7 +80,7 @@
                                 <a class="navbar-item" href="{% url "note" %}"
 >
                                     <span class="fa fa-bell-o"></span>
-                                    {% if not preferences.theme.is_brutalist %}
+                                    {% if preferences.notifications and not preferences.theme.is_brutalist %}
                                         <span ic-src="{% url 'notes_count' %}"
                                               ic-poll="60s"
                                               ic-target="this">
@@ -91,7 +91,7 @@
                                                 data-badge="{{ notifications }}">
                                                 &nbsp; Notifications</span>
                                             </span>
-                                    {% elif notifications %}
+                                    {% elif notifications and preferences.notifications %}
                                         <span >&nbsp; Notifications ({{ notifications }})</span>
                                     {% else %}
                                         <span >&nbsp; Notifications</span>
