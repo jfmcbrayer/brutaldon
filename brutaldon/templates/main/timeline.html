@@ -39,11 +39,13 @@
                         <p class="column">
                             <a class="pagination-previous is-fullwidth button"
                                href="{% url 'home_next' next.max_id %}"
+                               {% if preferences.click_to_load %}
                                ic-get-from="{% url 'home_next' next.max_id %}"
                                ic-select-from-response="#timeline"
                                ic-indicator="#page-load-indicator"
                                ic-target="closest div.around-pagination"
                                ic-push-url="true"
+                               {% endif %}
                             >
                                 Older
                             </a>
