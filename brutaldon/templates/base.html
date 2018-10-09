@@ -34,6 +34,8 @@
                           href="{% static 'css/bulma-badge.min.css' %}">
                     <link rel="stylesheet"
                           href="{% static 'css/photobox.css' %}">
+                {% endif %}
+                {% if not preferences.no_javascript %}
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/jquery.photobox.js' %}"></script>
@@ -165,7 +167,7 @@
             </div>
         </footer>
 
-        {% if not preferences.theme.is_brutalist %}
+        {% if not preferences.no_javascript %}
 
             <script type="application/javascript">
              $(document).ready(function () {

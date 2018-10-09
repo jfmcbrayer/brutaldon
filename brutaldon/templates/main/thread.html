@@ -29,7 +29,7 @@ mastodon.status_context(<numerical id>)
         <hr class="is-hidden">
     {% endfor %}
 
-    {% if not preferences.theme.is_brutalist %}
+    {% if not preferences.no_javascript %}
         <script type="application/javascript">
             Intercooler.ready(expandCWButtonPrepare);
         </script>
