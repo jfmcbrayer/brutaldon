@@ -424,10 +424,12 @@ def toot(request, mention=None):
         if mention:
             if not mention.startswith('@'):
                 mention = '@'+mention
-            form = PostForm(initial={'visibility': request.session['user'].source.privacy,
+            form = PostForm(request.GET, request.FILES,
+                            initial={'visibility': request.session['user'].source.privacy,
                                      'status': mention + '\n' })
         else:
-            form = PostForm(initial={'visibility': request.session['user'].source.privacy})
+            form = PostForm(request.GET, request.FILES,
+                            initial={'visibility': request.session['user'].source.privacy})
         return render(request, 'main/post.html',
                       {'form': form,
                        'own_acct': request.session['user'],
