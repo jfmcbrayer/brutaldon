@@ -1,3 +1,8 @@
+String.prototype.trunc = 
+    function(n){
+        return this.substr(0,n-1)+(this.length>n?'&hellip;':'');
+    };
+
 function setTitle(user, page)
 {
     document.title = `Brutaldon (${user}) – ${page}`;
@@ -101,28 +106,28 @@ function fileButtonUpdaters()
     file1.onchange = function(){
         if (file1.files.length > 0)
         {
-            document.getElementById('media_filename_1').innerHTML =  file1.files[0].name;
+            document.getElementById('media_filename_1').innerHTML =  file1.files[0].name.trunc(5);
         }
     };
     var file2 = document.getElementById("id_media_file_2");
     file2.onchange = function(){
         if (file2.files.length > 0)
         {
-            document.getElementById('media_filename_2').innerHTML =  file2.files[0].name;
+            document.getElementById('media_filename_2').innerHTML =  file2.files[0].name.trunc(5);
         }
     };
     var file3 = document.getElementById("id_media_file_3");
     file3.onchange = function(){
         if (file3.files.length > 0)
         {
-            document.getElementById('media_filename_3').innerHTML =  file3.files[0].name;
+            document.getElementById('media_filename_3').innerHTML =  file3.files[0].name.trunc(5);
         }
     };
     var file4 = document.getElementById("id_media_file_4");
     file4.onchange = function(){
         if (file4.files.length > 0)
         {
-            document.getElementById('media_filename_4').innerHTML =  file4.files[0].name;
+            document.getElementById('media_filename_4').innerHTML =  file4.files[0].name.trunc(5);
         }
     };
 
