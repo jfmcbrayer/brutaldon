@@ -151,3 +151,14 @@ function characterCount()
     return $("#id_status").val().length + $("#id_spoiler_text").val().length;
 }
 
+function animateLinks(selector)
+{
+    $(selector).each(
+        function (index, elt) {
+            $(elt).on("click",
+                   function () {
+                       $('#page-load-indicator').fadeIn();
+                       return true;
+                   });
+        });
+}
