@@ -161,4 +161,5 @@ function animateLinks(selector)
                        return true;
                    });
         });
+    $('#page-load-indicator').fadeOut();
 }
