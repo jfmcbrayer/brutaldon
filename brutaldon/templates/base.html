@@ -57,7 +57,7 @@
             <nav class="navbar is-fixed-top is-primary" role="navigation"
                  aria-label="main navigation" id="main-nav-bar">
                 <div class="navbar-brand">
-                    <a class="navbar-item animate-link" href="{% url "home" %}">
+                    <a class="navbar-item" href="{% url "home" %}">
                         {% if own_acct %}
                             <img src="{{ own_acct.avatar_static }}"
                                  class="image is-32x32 avatar"
@@ -73,11 +73,11 @@
                         <div class="navbar-menu is-active" id="navMenu">
                             <!-- navbar start, navbar end -->
                             <div class="navbar-start">
-                                <a href="{% url "home" %}" class="navbar-item animate-link">
+                                <a href="{% url "home" %}" class="navbar-item">
                                     <span class="fa fa-home"></span>
                                     <span>&nbsp; Home</span>
                                 </a>
-                                <a class="navbar-item animate-link" href="{% url "note" %}"
+                                <a class="navbar-item" href="{% url "note" %}"
 >
                                     <span class="fa fa-bell-o"></span>
                                     {% if preferences.notifications and not preferences.theme.is_brutalist %}
@@ -97,29 +97,29 @@
                                         <span >&nbsp; Notifications</span>
                                     {% endif %}
                                 </a>
-                                <a class="navbar-item animate-link" href="{% url "local" %}">
+                                <a class="navbar-item" href="{% url "local" %}">
                                     <span class="fa fa-community"></span>
                                     <span >&nbsp; Local</span>
                                 </a>
-                                <a class="navbar-item animate-link" href="{% url "fed" %}">
+                                <a class="navbar-item" href="{% url "fed" %}">
                                     <span class="fa fa-globe"></span>
                                     <span >&nbsp;Federated</span>
                                 </a>
-                                <a class="navbar-item animate-link" href="{% url "toot" %}">
+                                <a class="navbar-item" href="{% url "toot" %}">
                                     <span class="fa fa-edit"> </span>
                                     <span >&nbsp; New Toot</span>
                                 </a>
-                                <a class="navbar-item animate-link" href="{% url "search" %}">
+                                <a class="navbar-item" href="{% url "search" %}">
                                     <span class="fa fa-search"> </span>
                                     <span >&nbsp; Search</span>
                                 </a>
                             </div>
                             <div class="navbar-end" >
-                                <a class="navbar-item animate-link" href="{% url "settings" %}">
+                                <a class="navbar-item" href="{% url "settings" %}">
                                     <span class="fa fa-gear"></span>
                                     <span >&nbsp;Settings</span>
                                 </a>
-                                <a class="navbar-item animate-link" href="{% url "logout" %}">
+                                <a class="navbar-item" href="{% url "logout" %}">
                                     <span class="fa fa-power-off"></span>
                                     <span >&nbsp;Log out</span>
                                 </a>
@@ -170,9 +170,8 @@
         {% if not preferences.no_javascript %}
 
             <script type="application/javascript">
-             $(function () {
+             $(document).ready(function () {
                  menuPrepare();
-                 animateLinks(".animate-link");
              });
 
              {% if preferences.lightbox %}
