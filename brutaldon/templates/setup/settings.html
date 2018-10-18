@@ -86,6 +86,15 @@
             </div>
 
             <div class="field">
+                <label class="label" for="poll_frequency">{{ form.poll_frequency.label }}</label>
+                <div class="control">
+                    {% render_field form.poll_frequency class+="input" %}
+                </div>
+                <p class="notification is-info preferences-help">
+                    {{ form.poll_frequency.help_text }}
+                </p>
+            </div>
+            <div class="field">
                 <input type="submit" name="submit"
                        value="Save" class="button is-primary" >
             </div>

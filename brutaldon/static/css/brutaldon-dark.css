@@ -208,3 +208,8 @@ emoji-link
     max-width: 30em;
     display: inline-block;
 }
+
+input#id_poll_frequency
+{
+    max-width: 10em;
+}

@@ -82,7 +82,7 @@
                                     <span class="fa fa-bell-o"></span>
                                     {% if preferences.notifications and not preferences.theme.is_brutalist %}
                                         <span ic-src="{% url 'notes_count' %}"
-                                              ic-poll="60s"
+                                              ic-poll="{{ preferences.poll_frequency }}s"
                                               ic-target="this">
                                             <span
                                                 {% if notifications and notifications != '0' %}

@@ -38,6 +38,8 @@ class Preference(models.Model):
                                         help_text="""Click to load more toots in the same page, rather than using pagination.""")
     lightbox = models.BooleanField(default=False,
                                    help_text="""Use a JavaScript lightbox to display media.""")
+    poll_frequency = models.IntegerField(default=300,
+                                         help_text="""Number of seconds to wait between checking notifications. Default: 300""")
 
 class Account(models.Model):
     username = models.EmailField(unique=True)

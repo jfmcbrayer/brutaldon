@@ -25,7 +25,7 @@ class PreferencesForm(forms.ModelForm):
     class Meta:
         model = Preference
         fields = ['theme', 'filter_replies', 'filter_boosts', 'timezone',
-                  'no_javascript', 'notifications', 'click_to_load', 'lightbox']
+                  'no_javascript', 'notifications', 'click_to_load', 'lightbox', 'poll_frequency']
 
 class PostForm(forms.Form):
     """def status_post(self, status, in_reply_to_id=None, media_ids=None,
