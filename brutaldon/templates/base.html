@@ -92,7 +92,11 @@
                                                 &nbsp; Notifications</span>
                                             </span>
                                     {% elif notifications and preferences.notifications %}
-                                        <span >&nbsp; Notifications ({{ notifications }})</span>
+                                            <span ic-src="{% url 'notes_count' %}"
+                                                  ic-poll="60s"
+                                                  ic-target="this">
+                                                <span >&nbsp; Notifications ({{ notifications }})</span>
+                                            </span>
                                     {% else %}
                                         <span >&nbsp; Notifications</span>
                                     {% endif %}

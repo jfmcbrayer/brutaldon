@@ -38,10 +38,8 @@ def get_usercontext(request):
 def is_logged_in(request):
     return request.session.has_key('user')
 
-def _notes_count(request):
-    try:
-        account, mastodon = get_usercontext(request)
-    except NotLoggedInException:
+def _notes_count(account, mastodon):
+    if not mastodon:
         return ""
     notes = mastodon.notifications(limit=40)
     for index, item in enumerate(notes):
@@ -89,9 +87,11 @@ def br_login_required(function=None, home_url=None, redirect_field_name=None):
         return _dec(function)
 
 def notes_count(request):
-    count = _notes_count(request)
+    account, mastodon = get_usercontext(request)
+    count = _notes_count(account, mastodon)
     return render(request, 'intercooler/notes.html',
-                  {'notifications': count,})
+                  {'notifications': count,
+                   'preferences': account.preferences })
 
 def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None):
     account, mastodon = get_usercontext(request)
@@ -108,7 +108,7 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
     except (IndexError, AttributeError):
         next = None
 
-    notifications = _notes_count(request)
+    notifications = _notes_count(account, mastodon)
 
     # This filtering has to be done *after* getting next/prev links
     if account.preferences.filter_replies:
@@ -142,7 +142,7 @@ def tag(request, tag):
     except NotLoggedInException:
         return redirect(login)
     data = mastodon.timeline_hashtag(tag)
-    notifications = _notes_count(request)
+    notifications = _notes_count(account, mastodon)
     return render(request, 'main/timeline.html',
                   {'toots': data, 'timeline_name': '#'+tag,
                    'own_acct': request.session['user'],
@@ -346,7 +346,7 @@ def thread(request, id):
     account, mastodon = get_usercontext(request)
     context = mastodon.status_context(id)
     toot = mastodon.status(id)
-    notifications = _notes_count(request)
+    notifications = _notes_count(account, mastodon)
     return render(request, 'main/thread.html',
                   {'context': context, 'toot': toot,
                    'own_acct': request.session['user'],
@@ -365,7 +365,7 @@ def user(request, username, prev=None, next=None):
         raise Http404("The user %s could not be found." % username)
     data = mastodon.account_statuses(user_dict.id, max_id=next, since_id=prev)
     relationship = mastodon.account_relationships(user_dict.id)[0]
-    notifications = _notes_count(request)
+    notifications = _notes_count(account, mastodon)
     try:
         prev = data[0]._pagination_prev
         if len(mastodon.account_statuses(user_dict.id,
@@ -548,7 +548,7 @@ def reply(request, id):
         account, mastodon = get_usercontext(request)
         toot = mastodon.status(id)
         context = mastodon.status_context(id)
-        notifications = _notes_count(request)
+        notifications = _notes_count(account, mastodon)
         if toot.account.acct != request.session['user'].acct:
             initial_text = '@' + toot.account.acct + " "
         else:
@@ -570,7 +570,7 @@ def reply(request, id):
         account, mastodon = get_usercontext(request)
         toot = mastodon.status(id)
         context = mastodon.status_context(id)
-        notifications = _notes_count(request)
+        notifications = _notes_count(account, mastodon)
         if form.is_valid():
             # create media objects
             media_objects = []
@@ -787,7 +787,7 @@ def search_results(request):
         query = ''
     account, mastodon = get_usercontext(request)
     results = mastodon.search(query)
-    notifications = _notes_count(request)
+    notifications = _notes_count(account, mastodon)
     return render(request, 'main/search_results.html',
                   {"results": results,
                    'own_acct': request.session['user'],
@@ -821,7 +821,7 @@ def privacy(request):
 def emoji_reference(request):
     account, mastodon = get_usercontext(request)
     emojos = mastodon.custom_emojis()
-    notifications = _notes_count(request)
+    notifications = _notes_count(account, mastodon)
     return render(request, 'main/emoji.html',
                       {"preferences": account.preferences,
                        "emojos": sorted(emojos, key=lambda x: x['shortcode']),
