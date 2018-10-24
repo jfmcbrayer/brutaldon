@@ -150,6 +150,11 @@ body {
     margin: 1em;
 }
 
+.container {
+    margin: 0 auto;
+    max-width: 80em;
+}
+
 a {
     color: blue;
     text-decoration: underline;
@@ -224,7 +229,7 @@ img.is-32x32 {
 }
 
 .media {
-    padding: 1ex;
+    padding: 1em;
     margin: 4px;
     border: 8px ridge #CCC;
     overflow: auto;
