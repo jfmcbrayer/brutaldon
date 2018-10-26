@@ -42,6 +42,7 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
     path('thread/<int:id>', views.thread, name='thread'),
     path('tags/<tag>', views.tag, name='tag'),
+    path('user/', views.home, name='user_bad'),
     path('user/<username>', views.user, name='user'),
     path('user/<username>/next/<int:next>', views.user, name='user_next'),
     path('user/<username>/prev/<int:prev>', views.user, name='user_prev'),
