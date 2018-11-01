@@ -38,6 +38,7 @@
                 {% if not preferences.no_javascript %}
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
+                    <script type="application/javascript" src="{% static 'js/mousetrap.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/jquery.photobox.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/brutaldon-enhancements.js' %}"></script>
                     {% block page_scripts %}
@@ -53,6 +54,7 @@
     <body class="has-navbar-fixed-top"
           ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
         <div id="page-load-indicator">&nbsp</div>
+        <div id="new-toot-modal" class="modal"></div>
         {% block navbar %}
             <nav class="navbar is-fixed-top is-primary" role="navigation"
                  aria-label="main navigation" id="main-nav-bar">
@@ -109,7 +111,10 @@
                                     <span class="fa fa-globe"></span>
                                     <span >&nbsp;Federated</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "toot" %}">
+                                <a class="navbar-item" href="{% url "toot" %}"
+                                   ic-get-from="{% url "toot" %}"
+                                   ic-target="#new-toot-modal"
+                                   ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
                                     <span class="fa fa-edit"> </span>
                                     <span >&nbsp; New Toot</span>
                                 </a>

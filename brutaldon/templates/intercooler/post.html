@@ -1,0 +1,19 @@
+<div class="modal-background" ></div>
+<div class="modal-content">
+    <div class="box">
+        {% include "main/post_partial.html" %}
+    </div>
+</div>
+<button id="toot-modal-close" class="modal-close is-large" aria-label="close"></button>
+
+<script type="application/javascript">
+ $("#toot-modal-close").on("click", function () { $("#new-toot-modal").toggleClass("is-active"); });
+ $(".modal-background").on("click", function () { $("#new-toot-modal").toggleClass("is-active"); });
+ 
+ Mousetrap.bind('ctrl+enter', function(e) {
+     var form = document.querySelector('#post-form');
+     form.submit();
+     return true;
+ });
+ Mousetrap.bind('esc', function(e) { $("#new-toot-modal").toggleClass("is-active"); });
+</script>

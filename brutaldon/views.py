@@ -430,10 +430,16 @@ def toot(request, mention=None):
         else:
             form = PostForm(request.GET, request.FILES,
                             initial={'visibility': request.session['user'].source.privacy})
-        return render(request, 'main/post.html',
-                      {'form': form,
-                       'own_acct': request.session['user'],
-                       'preferences': account.preferences})
+        if request.GET.get('ic-request'):
+            return render(request, 'intercooler/post.html',
+                          {'form': form,
+                           'own_acct': request.session['user'],
+                           'preferences': account.preferences})
+        else:
+            return render(request, 'main/post.html',
+                          {'form': form,
+                           'own_acct': request.session['user'],
+                           'preferences': account.preferences})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
