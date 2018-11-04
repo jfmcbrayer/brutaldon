@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views.decorators.cache import never_cache, cache_page
 from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
+from django.utils.translation import gettext as _
 from brutaldon.forms import LoginForm, OAuthLoginForm, PreferencesForm, PostForm
 from brutaldon.models import Client, Account, Preference, Theme
 from mastodon import Mastodon, AttribAccessDict, MastodonError, MastodonAPIError
@@ -311,7 +312,7 @@ def logout(request):
     return redirect(about)
 
 def error(request):
-    return render(request, 'error.html', { 'error': "Not logged in yet."})
+    return render(request, 'error.html', { 'error': _("Not logged in yet.")})
 
 @br_login_required
 def note(request, next=None, prev=None):
@@ -362,7 +363,7 @@ def user(request, username, prev=None, next=None):
     try:
         user_dict = mastodon.account_search(username)[0]
     except (IndexError, AttributeError):
-        raise Http404("The user %s could not be found." % username)
+        raise Http404(_("The user %s could not be found.") % username)
     data = mastodon.account_statuses(user_dict.id, max_id=next, since_id=prev)
     relationship = mastodon.account_relationships(user_dict.id)[0]
     notifications = _notes_count(account, mastodon)
