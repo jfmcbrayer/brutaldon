@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.decorators.cache import never_cache, cache_page
 from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from brutaldon.forms import LoginForm, OAuthLoginForm, PreferencesForm, PostForm
 from brutaldon.models import Client, Account, Preference, Theme
 from mastodon import Mastodon, AttribAccessDict, MastodonError, MastodonAPIError

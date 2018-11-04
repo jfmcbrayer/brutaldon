@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils.translation import gettext as _
 from pytz import common_timezones
 
 timezones = [(tz, tz) for tz in common_timezones]
@@ -31,15 +32,15 @@ class Preference(models.Model):
     timezone = models.CharField(max_length=80, blank=True, null=True,
                                 choices=timezones, default='UTC')
     no_javascript = models.BooleanField(default=False,
-                                        help_text="""Disable all JavaScript. Overrides all other JavaScript options.""")
+                                        help_text=_("""Disable all JavaScript. Overrides all other JavaScript options."""))
     notifications = models.BooleanField(default=True,
-                                        help_text="""Display live notifications in header.""")
+                                        help_text=_("""Display live notifications in header."""))
     click_to_load = models.BooleanField(default=False,
-                                        help_text="""Click to load more toots in the same page, rather than using pagination.""")
+                                        help_text=_("""Click to load more toots in the same page, rather than using pagination."""))
     lightbox = models.BooleanField(default=False,
-                                   help_text="""Use a JavaScript lightbox to display media.""")
+                                   help_text=_("""Use a JavaScript lightbox to display media."""))
     poll_frequency = models.IntegerField(default=300,
-                                         help_text="""Number of seconds to wait between checking notifications. Default: 300""")
+                                         help_text=_("""Number of seconds to wait between checking notifications. Default: 300"""))
 
 class Account(models.Model):
     username = models.EmailField(unique=True)
