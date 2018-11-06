@@ -56,27 +56,49 @@
                 <div class="level attachments">
                     {% for media in toot.media_attachments %}
                         {% if media.type == "image" %}
-                            <a class="level-item" href="{{ media.url }}">
+                            <a class="level-item attachment-image" href="{{ media.url }}">
+                                {% if toot.sensitive %}
+                                    <img src="{% static "images/sensitive.png" %}"
+                                {% else %}
+                                    <img src="{{ media.preview_url }}"
+                                {% endif %}
+                                         alt="{% if media.description  %}
+                                              {{ media.description }}
+                                         {% elif media.text_url %}
+                                              {{ media.text_url }}
+                                         {% else %}
+                                              {{ media.url  }}
+                                         {% endif %}"
+                                         {% if media.description %}
+                                         title="{{ media.description }}"
+                                         {% endif %}
+                                         class="image is-max-256">
+                            </a>
+
                         {% else %}
-                            <a class="level-item" href="{{ media.url }}" rel="video">
-                        {% endif %}
-                        {% if toot.sensitive %}
-                            <img src="{% static "images/sensitive.png" %}"
-                        {% else %}
-                            <img src="{{ media.preview_url }}"
-                        {% endif %}
-                                 alt="{% if media.description  %}
-                                      {{ media.description }}
-                                 {% elif media.text_url %}
-                                      {{ media.text_url }}
-                                 {% else %}
-                                      {{ media.url  }}
-                                 {% endif %}"
-                                 {% if media.description %}
-                                 title="{{ media.description }}"
-                                 {% endif %}
-                                 class="image is-max-256">
+                            <video class="level-item is-max-256" controls>
+                                <source src="{{ media.url }}" type="video/mp4">
+                                <a href="{{ media.url }}">
+                                    {% if toot.sensitive %}
+                                        <img src="{% static "images/sensitive.png" %}"
+                                    {% else %}
+                                        <img src="{{ media.preview_url }}"
+                                    {% endif %}
+                                             alt="{% if media.description  %}
+                                                  {{ media.description }}
+                                             {% elif media.text_url %}
+                                                  {{ media.text_url }}
+                                             {% else %}
+                                                  {{ media.url  }}
+                                             {% endif %}"
+                                             {% if media.description %}
+                                             title="{{ media.description }}"
+                                             {% endif %}
+                                             class="image is-max-256">
                                 </a>
+                            </video>
+
+                        {% endif %}
                     {% endfor %}
                 </div>
                 {% endif %}

@@ -33,13 +33,13 @@
                     <link rel="stylesheet"
                           href="{% static 'css/bulma-badge.min.css' %}">
                     <link rel="stylesheet"
-                          href="{% static 'css/photobox.css' %}">
+                          href="{% static 'css/magnific-popup.css' %}">
                 {% endif %}
                 {% if not preferences.no_javascript %}
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
                     <script type="application/javascript" src="{% static 'js/mousetrap.min.js' %}"></script>
-                    <script type="text/javascript" src="{% static 'js/jquery.photobox.js' %}"></script>
+                    <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/brutaldon-enhancements.js' %}"></script>
                     {% block page_scripts %}
                     {% endblock %}
@@ -186,7 +186,15 @@
              {% if preferences.lightbox %}
              Intercooler.ready(function ()
                  {
-                     $(".attachments").photobox('a', { history: false });
+                     $('.attachments').each(function() {
+                         $(this).magnificPopup({
+                             delegate: 'a.attachment-image',
+                             type: 'image',
+                             preload: [1, 1],
+                             gallery:  {enabled: true },
+                             zoom: { enabled: true }
+                         });
+                     });
                  });
              {% endif %}
             </script>
