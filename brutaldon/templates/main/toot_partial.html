@@ -76,7 +76,8 @@
                             </a>
 
                         {% else %}
-                            <video class="level-item is-max-256" controls>
+                            <video class="level-item is-max-256" controls loop
+                                   poster="{{ media.preview_url }}">
                                 <source src="{{ media.url }}" type="video/mp4">
                                 <a href="{{ media.url }}">
                                     {% if toot.sensitive %}
