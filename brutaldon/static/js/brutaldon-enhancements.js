@@ -15,6 +15,7 @@ function afterPage(user, page)
     menu.classList.remove('is-active');
     var burger = document.querySelector('.navbar-burger');
     burger.classList.remove('is-active');
+    $('#page-load-indicator').hide();
 }
 
 function menuPrepare() {
@@ -166,6 +167,7 @@ function restorePlace(ev)
                           {
                               window.scrollTo(0, lastScrollPos);
                           }
+                          $('#page-load-indicator').hide();
                       });
     return false;
 }
