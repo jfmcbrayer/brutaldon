@@ -183,3 +183,7 @@ input#id_poll_frequency
 {
     max-width: 10em;
 }
+
+body.has-navbar-fixed-top, html.has-navbar-fixed-top {
+	  padding-top: 5rem;
+}
