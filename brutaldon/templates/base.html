@@ -59,7 +59,15 @@
             <nav class="navbar is-fixed-top is-primary" role="navigation"
                  aria-label="main navigation" id="main-nav-bar">
                 <div class="navbar-brand">
-                    <a class="navbar-item" href="{% url "home" %}">
+                    <a class="navbar-item" href="{% url "home" %}"
+                       ic-get-from="{% url "home" %}"
+                       ic-target="#main"
+                       ic-scroll-to-target="true"
+                       ic-push-url="true"
+                       ic-on-beforeSend="savePlace"
+                       ic-on-success="afterPage('{{ own_acct.username }}', 'Home');"
+                       ic-select-from-response="#main"
+                       ic-indicator="#page-load-indicator">
                         {% if own_acct %}
                             <img src="{{ own_acct.avatar_static }}"
                                  class="image is-32x32 avatar"
@@ -94,7 +102,8 @@
                                    ic-select-from-response="#main"
                                    ic-push-url="true"
                                    ic-on-beforeSend="savePlace"
-                                   ic-indicator="#page-load-indicator" ic-on-success="afterPage('{{ own_acct.username }}', 'Notifications');">
+                                   ic-indicator="#page-load-indicator"
+                                   ic-on-success="afterPage('{{ own_acct.username }}', 'Notifications');">
                                     <span class="fa fa-bell-o"></span>
                                     {% if preferences.notifications and not preferences.theme.is_brutalist %}
                                         <span ic-src="{% url 'notes_count' %}"
