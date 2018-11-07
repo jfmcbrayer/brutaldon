@@ -52,4 +52,4 @@ class PostForm(forms.Form):
                                    required=False)
     media_text_4 = forms.CharField(label=_("Describe media 4."),
                                    required=False)
-    media_sensitive = forms.BooleanField(label=_("Sensitive media?", required=False))
+    media_sensitive = forms.BooleanField(label=_("Sensitive media?"), required=False)
