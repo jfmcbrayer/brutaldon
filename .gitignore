@@ -111,3 +111,4 @@ pip-selfcheck.json
 /dev_https
 node_modules
 /TAGS
+.vscode
