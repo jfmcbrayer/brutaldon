@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from django.utils.timezone import get_default_timezone, get_current_timezone, localtime
 from django.utils.timezone import now as django_now
+from django.utils.translation import gettext as _
 from django import template
 
 register = template.Library()
@@ -23,6 +24,8 @@ def humane_time(arg):
     to a degree you are liable to care about.
 
     It is not safe to use on future times.
+
+    FIXME: work out how best to make these strings translatable
 
     '''
     now = django_now()
@@ -52,14 +55,14 @@ def time_of_day(hour):
     This is very english-centric and probably not translatable.
     """
     if hour < 3:
-        return "wee hours"
+        return _("wee hours")
     elif hour < 6:
-        return "early morning"
+        return _("early morning")
     elif hour < 12:
-        return "morning"
+        return _("morning")
     elif hour < 18:
-        return "afternoon"
+        return _("afternoon")
     elif hour < 22:
-        return "evening"
+        return _("evening")
     else:
-        return "night"
+        return _("night")

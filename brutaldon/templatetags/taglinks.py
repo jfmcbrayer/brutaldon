@@ -2,6 +2,7 @@ from django import template
 from bs4 import BeautifulSoup
 from urllib import parse
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from pdb import set_trace
 
 register = template.Library()
