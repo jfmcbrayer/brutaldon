@@ -100,6 +100,9 @@
                                         <span ic-src="{% url 'notes_count' %}"
                                               ic-poll="{{ preferences.poll_frequency }}s"
                                               ic-target="this"
+                                              ic-push-url="false"
+                                              ic-on-beforeSend="false"
+                                              ic-on-success="false"
                                               ic-select-from-response="#notes-count">
                                             <span
                                                 {% if notifications and notifications != '0' %}
@@ -110,8 +113,11 @@
                                             </span>
                                     {% elif notifications and preferences.notifications %}
                                             <span ic-src="{% url 'notes_count' %}"
-                                                  ic-poll="{{ preferences.poll_frequency }}"
+                                                  ic-poll="{{ preferences.poll_frequency }}s"
                                                   ic-target="this"
+                                                  ic-on-beforeSend="false"
+                                                  ic-on-success="false"
+                                                  ic-push-url="false"
                                                   ic-select-from-response="#notes-count">
                                                 <span >&nbsp; Notifications ({{ notifications }})</span>
                                             </span>
