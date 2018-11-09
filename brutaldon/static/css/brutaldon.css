@@ -118,7 +118,7 @@ emoji-link
     left: 0;
     z-index: 666;
     transition: all 500ms;
-    height: 4px;
+    height: 2px;
     overflow: hidden;
     background-color: #ddd;
     display: none;
