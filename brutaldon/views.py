@@ -563,8 +563,6 @@ def reply(request, id):
             initial_text = ""
         for mention in [x for x in toot.mentions if x.acct != request.session['user'].acct]:
             initial_text +=('@' + mention.acct + " ")
-        if initial_text != "":
-            initial_text += "\n"
         form = PostForm({'status': initial_text,
                          'visibility': toot.visibility,
                          'spoiler_text': toot.spoiler_text})
