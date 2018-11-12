@@ -111,9 +111,15 @@
             <nav class="level is-mobile">
                 <div class="level-left">
                     <a href="{% url "reply" toot.id %}" class="level-item">
-                        <span class="fa fa-reply">
-                            <span class="is-hidden-mobile">Reply</span>
-                        </span>
+                        {% if toot.replies_count > 0 %}
+                            <span class="fa fa-reply-all">
+                                <span class="is-hidden-mobile">Reply+</span>
+                            </span>
+                        {% else %}
+                            <span class="fa fa-reply">
+                                <span class="is-hidden-mobile">Reply</span>
+                            </span>
+                        {% endif %}
                     </a>
                     {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
                     <a href="{% url "boost" toot.id %}" class="level-item"
