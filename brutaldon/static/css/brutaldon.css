@@ -15,27 +15,29 @@ img.fav-avatar {
 }
 
 
-div.card-header-title, div.card-header-icon {
-    color: black;
-    -webkit-text-stroke: 2px white;
-    -moz-text-stroke: 2px white;
-    text-stroke: 2px white;
-}
-
-
 .media-content {
     padding: 1.5ex;
 }
 
+.is-max-128 img, .is-max-256 img
+{
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right:0;
+    top: 0;
+}
 
 .is-max-128 {
     max-height: 128px;
     max-width: 128px;
+    padding-top: 75%;
 }
 
 .is-max-256 {
     max-height: 256px;
     max-width: 256px;
+    padding-top: 75%;
 }
 
 
@@ -186,4 +188,15 @@ input#id_poll_frequency
 
 body.has-navbar-fixed-top, html.has-navbar-fixed-top {
 	  padding-top: 5rem;
+}
+
+.card
+{
+    margin-top: 1em;
+}
+
+.card-image
+{
+    padding: 1em;
+    margin 0, auto;
 }

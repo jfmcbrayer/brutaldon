@@ -23,14 +23,25 @@ img.fav-avatar {
     padding: 1.5ex;
 }
 
+.is-max-128 img, .is-max-256 img
+{
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right:0;
+    top: 0;
+}
+
 .is-max-128 {
     max-height: 128px;
     max-width: 128px;
+    padding-top: 75%;
 }
 
 .is-max-256 {
     max-height: 256px;
     max-width: 256px;
+    padding-top: 75%;
 }
 
 figure.media-left p.image a img
@@ -194,4 +205,15 @@ emoji-link
 input#id_poll_frequency
 {
     max-width: 10em;
+}
+
+.card
+{
+    margin-top: 1em;
+}
+
+.card-image
+{
+    padding: 1em;
+    margin 0, auto;
 }

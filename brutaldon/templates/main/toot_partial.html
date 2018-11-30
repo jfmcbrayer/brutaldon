@@ -4,6 +4,7 @@
 {% load taglinks %}
 {% load static %}
 
+
 {% if active %}
 <article id="toot-{{toot.id}}" class="media box active-context">
     {% else %}
@@ -50,6 +51,26 @@
                     {{ toot.content | relink_toot | fix_emojos:toot.emojis | strip_html | safe }}
                 </div>
                 {% endif %}
+
+                {% if toot.card %}
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                <a href="{{ toot.card.url }}"> {{ toot.card.title }} </a>
+                            </div>
+                        </div>
+                        <div class="card-image">
+                            <figure class="image is-max-256">
+                                <a href="{{ toot.card.url }}">
+                                    <img alt="{{ toot.card.title }}" src="{{ toot.card.image }}">
+                                </a>
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <p>{{ toot.card.description }}</p>
+                        </div>
+                    </div>
+                {% endif %} 
 
                 {% if toot.media_attachments %}
                 <br>
