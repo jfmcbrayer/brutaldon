@@ -59,6 +59,7 @@
                                 <a href="{{ toot.card.url }}"> {{ toot.card.title }} </a>
                             </div>
                         </div>
+                        {% if toot.card.image %}
                         <div class="card-image">
                             <figure class="image is-max-256">
                                 <a href="{{ toot.card.url }}">
@@ -66,6 +67,7 @@
                                 </a>
                             </figure>
                         </div>
+                        {% endif %}
                         <div class="card-content">
                             <p>{{ toot.card.description }}</p>
                         </div>
