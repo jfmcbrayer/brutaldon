@@ -119,7 +119,10 @@
                                     <span class="fa fa-edit"> </span>
                                     <span >&nbsp; New Toot</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "search" %}">
+                                <a class="navbar-item" href="{% url "search" %}"
+                                   ic-get-from="{% url "search" %}"
+                                   ic-target="#new-toot-modal"
+                                   ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
                                     <span class="fa fa-search"> </span>
                                     <span >&nbsp; Search</span>
                                 </a>

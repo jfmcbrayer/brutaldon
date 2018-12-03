@@ -777,9 +777,15 @@ def mute(request, id):
 @br_login_required
 def search(request):
     account, mastodon = get_usercontext(request)
-    return render(request, 'main/search.html',
+    if request.GET.get('ic-request'):
+        return render(request, 'intercooler/search.html',
                       {"preferences": account.preferences,
-                           'own_acct':  request.session['user'],
+                       'own_acct':  request.session['user'],
+                      })
+    else:
+        return render(request, 'main/search.html',
+                      {"preferences": account.preferences,
+                       'own_acct':  request.session['user'],
                       })
 
 @br_login_required

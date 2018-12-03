@@ -1,0 +1,37 @@
+<div class="modal-background" ></div>
+<div class="modal-content">
+
+    <div class="box">
+        <h1 class="title">Search</h1>
+
+        <div class="notification">
+            <div>
+                You can search for tags, users, or for specific toots by URL. You may
+                also be able to full-text search for toots you have previously
+                interacted with.
+            </div>
+        </div>
+        <form method="get" action="{% url "search_results" %}">
+            <div class="field">
+                <label class="label">{{ form.instance.label  }}</label>
+                <div class="control has-icons-left">
+                    <input type="search" name="q" id="q" class="input">
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <input type="submit" value="Search" class="button is-primary" >
+            </div>
+        </form>
+    </div>
+</div>
+<button id="toot-modal-close" class="modal-close is-large" aria-label="close"></button>
+
+<script type="application/javascript">
+ $("#toot-modal-close").on("click", function () { $("#new-toot-modal").toggleClass("is-active"); });
+ $(".modal-background").on("click", function () { $("#new-toot-modal").toggleClass("is-active"); });
+ Mousetrap.bind('esc', function(e) { $("#new-toot-modal").toggleClass("is-active"); });
+</script>
