@@ -37,7 +37,7 @@ img.fav-avatar {
 .is-max-256 {
     max-height: 256px;
     max-width: 256px;
-    padding-top: 75%;
+    padding-top: 25%;
 }
 
 
@@ -198,5 +198,4 @@ body.has-navbar-fixed-top, html.has-navbar-fixed-top {
 .card-image
 {
     padding: 1em;
-    margin 0, auto;
 }
