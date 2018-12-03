@@ -61,16 +61,18 @@
                         </div>
                         {% if toot.card.image %}
                         <div class="card-image">
-                            <figure class="image is-max-256">
+                            <figure>
                                 <a href="{{ toot.card.url }}">
-                                    <img alt="{{ toot.card.title }}" src="{{ toot.card.image }}">
+                                    <img class="image is-max-256" alt="{{ toot.card.title }}" src="{{ toot.card.image }}">
                                 </a>
                             </figure>
                         </div>
                         {% endif %}
+                        {% if toot.card.description %}
                         <div class="card-content">
                             <p>{{ toot.card.description }}</p>
                         </div>
+                        {% endif %}
                     </div>
                 {% endif %} 
 

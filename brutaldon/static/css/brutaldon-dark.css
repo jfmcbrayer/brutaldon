@@ -208,15 +208,18 @@ input#id_poll_frequency
 .card
 {
     margin-top: 1em;
+    margin: 0, auto;
 }
 
 .card-image
 {
     padding: 1em;
-    margin 0, auto;
 }
+
 .card-image figure
 {
-    padding-top: 25%;
+    padding: 0;
+    max-height: 256px;
+    max-width: 256px;
 
 }
