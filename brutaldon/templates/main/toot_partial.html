@@ -59,11 +59,12 @@
                                 <a href="{{ toot.card.url }}"> {{ toot.card.title }} </a>
                             </div>
                         </div>
-                        {% if toot.card.image %}
+                        {% if toot.card.image and not toot.media_attachments %}
                         <div class="card-image">
                             <figure>
                                 <a href="{{ toot.card.url }}">
-                                    <img class="image is-max-256" alt="{{ toot.card.title }}" src="{{ toot.card.image }}">
+                                    <img class="image is-max-256" alt="{{ toot.card.title }}"
+                                         src="{{ toot.card.image }}">
                                 </a>
                             </figure>
                         </div>
