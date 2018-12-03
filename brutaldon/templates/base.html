@@ -132,7 +132,9 @@
                                     <span class="fa fa-gear"></span>
                                     <span >&nbsp;Settings</span>
                                 </a>
-                                <a class="navbar-item" href="{% url "logout" %}">
+                                <a class="navbar-item" href="{% url "logout" %}"
+                                   ic-get-from="{% url "logout" %}"
+                                   ic-confirm="Are you sure you want to log out?">
                                     <span class="fa fa-power-off"></span>
                                     <span >&nbsp;Log out</span>
                                 </a>
