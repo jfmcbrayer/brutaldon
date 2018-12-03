@@ -35,13 +35,11 @@ img.fav-avatar {
 .is-max-128 {
     max-height: 128px;
     max-width: 128px;
-    padding-top: 75%;
 }
 
 .is-max-256 {
     max-height: 256px;
     max-width: 256px;
-    padding-top: 75%;
 }
 
 figure.media-left p.image a img
@@ -216,4 +214,9 @@ input#id_poll_frequency
 {
     padding: 1em;
     margin 0, auto;
+}
+.card-image figure
+{
+    padding-top: 25%;
+
 }
