@@ -99,7 +99,8 @@ emoji-link
 
 .level.attachments
 {
-    overflow: auto;
+    overflow-x: auto;
+    max-width: 80ex;
 }
 
 
