@@ -23,6 +23,10 @@ function menuPrepare() {
     var menu = document.querySelector('#navMenu');
     menu.classList.remove('is-active');
 
+    // Pin the navbar to the top
+    document.querySelector('body').classList.toggle("has-navbar-fixed-top");
+    document.querySelector('nav.navbar').classList.toggle("is-fixed-top");
+
     // Add the burger
     var brand = document.querySelector('.navbar-brand');
     var burger = document.createElement('a');

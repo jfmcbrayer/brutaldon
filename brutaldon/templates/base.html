@@ -51,12 +51,11 @@
                 <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
             {% endif %}
     </head>
-    <body class="has-navbar-fixed-top"
-          ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+    <body ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
         <div id="page-load-indicator">&nbsp</div>
         <div id="new-toot-modal" class="modal"></div>
         {% block navbar %}
-            <nav class="navbar is-fixed-top is-primary" role="navigation"
+            <nav class="navbar is-primary" role="navigation"
                  aria-label="main navigation" id="main-nav-bar">
                 <div class="navbar-brand">
                     <a class="navbar-item" href="{% url "home" %}">
