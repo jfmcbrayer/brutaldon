@@ -139,7 +139,7 @@
                     <a href="{% url "reply" toot.id %}" class="level-item">
                         {% if toot.replies_count > 0 %}
                             <span class="fa fa-reply-all">
-                                <span class="is-hidden-mobile">Reply+</span>
+                                <span class="is-hidden-mobile"><strong>Reply</strong></span>
                             </span>
                         {% else %}
                             <span class="fa fa-reply">
@@ -198,9 +198,15 @@
                     {% endif %}
                     {{ toot.visibility }}
                     &nbsp;&nbsp;
+                    {% if toot.in_reply_to_id or toot.replies_count > 0 %}
+                    <a class="level-item" href="{% url "thread" toot.id %}">
+                        <strong>thread</strong>
+                    </a>
+                    {% else %}
                     <a class="level-item" href="{% url "thread" toot.id %}">
                         thread
                     </a>
+                    {% endif %}
                 </div>
             </nav>
             {% endif %}
