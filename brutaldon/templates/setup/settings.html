@@ -86,6 +86,16 @@
             </div>
 
             <div class="field">
+                <label class="label checkbox" for="click_to_load">
+                    {% render_field form.filter_notifications class+="checkbox" %}
+                    {{ form.filter_notifications.label }}
+                </label>
+                <p class="notification is-info preferences-help">
+                    {{ form.filter_notifications.help_text }}
+                </p>
+            </div>
+
+            <div class="field">
                 <label class="label" for="poll_frequency">{{ form.poll_frequency.label }}</label>
                 <div class="control">
                     {% render_field form.poll_frequency class+="input" %}

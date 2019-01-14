@@ -43,8 +43,10 @@ def _notes_count(account, mastodon):
     if not mastodon:
         return ""
     notes = mastodon.notifications(limit=40)
+    if account.preferences.filter_notifications:
+        notes = [ note for note in notes if note.type == 'mention' or note.type == 'follow']
     for index, item in enumerate(notes):
-        if item.id == account.note_seen:
+        if item.id <= account.note_seen:
             break
     else:
         index = "40+"
@@ -325,6 +327,8 @@ def note(request, next=None, prev=None):
     account.save()
 
     notes = mastodon.notifications(limit=100, max_id=next, since_id=prev)
+    if account.preferences.filter_notifications:
+        notes = [ note for note in notes if note.type == 'mention' or note.type == 'follow']
     try:
         prev = notes[0]._pagination_prev
         if len(mastodon.notifications(since_id=prev['since_id'])) == 0:
@@ -402,6 +406,7 @@ def settings(request):
             account.preferences.notifications = form.cleaned_data['notifications']
             account.preferences.click_to_load = form.cleaned_data['click_to_load']
             account.preferences.lightbox = form.cleaned_data['lightbox']
+            account.preferences.filter_notifications = form.cleaned_data['filter_notifications']
             request.session['timezone'] = account.preferences.timezone
             account.preferences.save()
             account.save()
@@ -838,4 +843,3 @@ def emoji_reference(request):
                        "emojos": sorted(emojos, key=lambda x: x['shortcode']),
                        "notifications": notifications,
                        'own_acct' : request.session['user']})
-

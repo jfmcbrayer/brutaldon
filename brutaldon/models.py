@@ -41,6 +41,8 @@ class Preference(models.Model):
                                    help_text=_("""Use a JavaScript lightbox to display media."""))
     poll_frequency = models.IntegerField(default=300,
                                          help_text=_("""Number of seconds to wait between checking notifications. Default: 300"""))
+    filter_notifications = models.BooleanField(default=False,
+                                               help_text=_("""Exclude boosts and favs from your notifications."""))
 
 class Account(models.Model):
     username = models.EmailField(unique=True)
