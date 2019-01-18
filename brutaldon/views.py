@@ -99,6 +99,26 @@ def notes_count(request):
                   {'notifications': count,
                    'preferences': account.preferences })
 
+def user_search(request):
+    check = request.POST.get("status", "").split()
+    if len(check):
+        check = check[-1]
+        if len(check) > 1 and check.startswith('@'):
+            check = check[1:]
+            return user_search_inner(request, check)
+        else:
+            check = "&nbsp;"
+    else:
+        check = "&nbsp;"
+    return HttpResponse(check)
+
+def user_search_inner(request, query):
+    account, mastodon = get_usercontext(request)
+    results = mastodon.search(query)
+    return render(request, 'intercooler/users.html',
+                  {'users': "\n".join([ user.acct for user in results.accounts ]),
+                   'preferences': account.preferences })
+
 def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None):
     account, mastodon = get_usercontext(request)
     data = mastodon.timeline(timeline, limit=100, max_id=max_id, since_id=since_id)

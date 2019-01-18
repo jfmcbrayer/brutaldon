@@ -5,26 +5,32 @@
 bulma-extensions@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/bulma-extensions/-/bulma-extensions-2.2.2.tgz#d46f11d1242a3fdc60a983afaea0b5e6c137362d"
+  integrity sha512-6hV6SiRT7RZD5+scn/462Dz8RURRgxuvlCy+R5LH9U6FLn7Q/sInAA5VdK8c4DKpxZjfsipp72EAKM7yzgzRig==
 
 bulma@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.1.tgz#73c2e3b2930c90cc272029cbd19918b493fca486"
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.2.tgz#8e944377b74c7926558830d38d8e19eaf49f5fb6"
+  integrity sha512-6JHEu8U/1xsyOst/El5ImLcZIiE2JFXgvrz8GGWbnDLwTNRPJzdAM0aoUM1Ns0avALcVb6KZz9NhzmU53dGDcQ==
 
 bulmaswatch@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/bulmaswatch/-/bulmaswatch-0.6.2.tgz#5d102b1986d5f48d7f45ff68354c5fe367dc1c76"
+  integrity sha512-IMYjMqEnHQ1Yhtzkia3ojeFRvJr8DnLBiDMUuvLcGtJwyaAuZ8AQ4tT3TK21lcnt7cngeM3CKzBtkbQulWQI9w==
 
 fork-awesome@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/fork-awesome/-/fork-awesome-1.1.0.tgz#771c8fcee6bb3d1481c8394094d4ea1f2d3e4acc"
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/fork-awesome/-/fork-awesome-1.1.5.tgz#09370221ad752a5396beb62bcb7bd11dab09a132"
+  integrity sha512-AcyPBje/cBkNjLAqxs301XjWSTLcXyktXjo0zhyrXDiEbTFi48HqBYbcPL0QBdtRHXrEdj+1rR5KublMQDwPwQ==
 
 intercooler@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/intercooler/-/intercooler-1.2.1.tgz#50e9727ef2643ef7d5130c8e58f2af78098aa01f"
+  integrity sha512-2/UV4RTZltP8tlV16fqu94aum4zO3uTbDcv843qjGInd+Lf2Pfm2gs2gIlCx5fYo6yUSz9cEwqc3r/+SddugMg==
 
 jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
 
 magnific-popup@^1.1.0:
   version "1.1.0"
@@ -34,3 +40,4 @@ magnific-popup@^1.1.0:
 mousetrap@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.2.tgz#caadd9cf886db0986fb2fee59a82f6bd37527587"
+  integrity sha512-jDjhi7wlHwdO6q6DS7YRmSHcuI+RVxadBkLt3KHrhd3C2b+w5pKefg3oj5beTcHZyVFA9Aksf+yEE1y5jxUjVA==

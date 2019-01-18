@@ -223,3 +223,8 @@ input#id_poll_frequency
     max-width: 256px;
 
 }
+
+#username_autocomplete
+{
+    height: 0;
+}

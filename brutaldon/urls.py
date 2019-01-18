@@ -39,6 +39,7 @@ urlpatterns = [
     path('note/next<int:next>', views.note, name='note_next'),
     path('note/prev/<int:prev>', views.note, name='note_prev'),
     path('notes_count', views.notes_count, name='notes_count'),
+    path('user_search', views.user_search, name='user_search'),
     path('settings', views.settings, name='settings'),
     path('thread/<int:id>', views.thread, name='thread'),
     path('tags/<tag>', views.tag, name='tag'),

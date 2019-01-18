@@ -207,3 +207,8 @@ body.has-navbar-fixed-top, html.has-navbar-fixed-top {
     max-width: 256px;
 
 }
+
+#username_autocomplete
+{
+    height: 0;
+}
