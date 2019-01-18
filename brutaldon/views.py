@@ -46,6 +46,9 @@ def _notes_count(account, mastodon):
     if account.preferences.filter_notifications:
         notes = [ note for note in notes if note.type == 'mention' or note.type == 'follow']
     for index, item in enumerate(notes):
+        if account.note_seen is None:
+            account.note_seen = 0
+            account.save()
         if item.id <= account.note_seen:
             break
     else:
