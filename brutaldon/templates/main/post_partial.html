@@ -24,7 +24,12 @@
 <div class="field" >
     <label class="label" >{{ form.status.label }}</label>
     <div class="control">
-        {% render_field form.status class+="textarea mousetrap is-primary" rows="4" %}
+        <textarea name="status" cols="40" rows="3" class="textarea is-primary mousetrap"
+                  required="" id="id_status"
+                  ic-post-to="{% url "user_search" %}"
+                  ic-trigger-on="keyup changed" ic-trigger-delay="500ms"
+                  ic-target="#username_autocomplete"></textarea>
+        <div id="username_autocomplete"></div>
     </div>
     <div id="status_count"></div>
 </div>
