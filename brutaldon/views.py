@@ -453,12 +453,10 @@ def toot(request, mention=None):
         if mention:
             if not mention.startswith('@'):
                 mention = '@'+mention
-            form = PostForm(request.GET, request.FILES,
-                            initial={'visibility': request.session['user'].source.privacy,
-                                     'status': mention + '\n' })
+            form = PostForm(initial={'visibility': request.session['user'].source.privacy,
+                                     'status': mention + ' ' })
         else:
-            form = PostForm(request.GET, request.FILES,
-                            initial={'visibility': request.session['user'].source.privacy})
+            form = PostForm(initial={'visibility': request.session['user'].source.privacy})
         if request.GET.get('ic-request'):
             return render(request, 'intercooler/post.html',
                           {'form': form,
@@ -590,9 +588,9 @@ def reply(request, id):
             initial_text = ""
         for mention in [x for x in toot.mentions if x.acct != request.session['user'].acct]:
             initial_text +=('@' + mention.acct + " ")
-        form = PostForm({'status': initial_text,
-                         'visibility': toot.visibility,
-                         'spoiler_text': toot.spoiler_text})
+        form = PostForm(initial={'status': initial_text,
+                                 'visibility': toot.visibility,
+                                 'spoiler_text': toot.spoiler_text})
         return render(request, 'main/reply.html',
                       {'context': context, 'toot': toot, 'form': form, 'reply':True,
                        'own_acct': request.session['user'],
