@@ -63,7 +63,11 @@ def localuser(value):
     try:
         parsed = parse.urlparse(value)
         instance = parsed[1]
-        user = parsed[2][2:]
+        set_trace()
+        if parsed[2].startswith('@'):
+            user = parsed[2][2:]
+        else:
+            user = parsed[2].split('/')[-1]
         local = reverse('user', args=[user+'@'+instance])
     except:
         local = value
