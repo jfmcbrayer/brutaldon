@@ -395,7 +395,8 @@ def user(request, username, prev=None, next=None):
     try:
         user_dict = [dict for dict in mastodon.account_search(username)
                      if ((dict.acct == username) or
-                         (dict.acct == username.split('@')[0]))][0]
+                         (dict.acct == username.split('@')[0] and
+                          username.split('@')[1] == account.username.split('@')[1]))][0]
     except (IndexError, AttributeError):
         raise Http404(_("The user %s could not be found.") % username)
     data = mastodon.account_statuses(user_dict.id, max_id=next, since_id=prev)
