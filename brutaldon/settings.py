@@ -194,5 +194,5 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 ANONYMOUS_HOME_URL = 'about'
 
 # Version number displayed on about page
-BRUTALDON_VERSION = "2.8.1"
+BRUTALDON_VERSION = "2.8.2"
 
