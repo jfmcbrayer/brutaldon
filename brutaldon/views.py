@@ -388,7 +388,8 @@ def user(request, username, prev=None, next=None):
     except NotLoggedInException:
         return redirect(about)
     try:
-        user_dict = mastodon.account_search(username)[0]
+        user_dict = [dict for dict in mastodon.account_search(username)
+                     if dict.acct == username][0]
     except (IndexError, AttributeError):
         raise Http404(_("The user %s could not be found.") % username)
     data = mastodon.account_statuses(user_dict.id, max_id=next, since_id=prev)
