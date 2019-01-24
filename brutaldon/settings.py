@@ -178,8 +178,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Sanitizer settings
-SANITIZER_ALLOWED_TAGS = ['a', 'p', 'img', 'br', 'i', 'strong']
-SANITIZER_ALLOWED_ATTRIBUTES = ['href', 'src', 'title', 'alt', 'class']
+SANITIZER_ALLOWED_TAGS = ['a', 'p', 'img', 'br', 'i', 'strong', 'em', 'pre', 'code',
+                          'ul', 'li', 'ol', 'blockquote', 'del', 'span', 'u']
+SANITIZER_ALLOWED_ATTRIBUTES = ['href', 'src', 'title', 'alt', 'class', 'lang']
 
 # File upload settings.
 # Important: media will not work if you change this.
