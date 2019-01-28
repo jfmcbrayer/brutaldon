@@ -47,7 +47,7 @@ def _notes_count(account, mastodon):
         notes = [ note for note in notes if note.type == 'mention' or note.type == 'follow']
     for index, item in enumerate(notes):
         if account.note_seen is None:
-            account.note_seen = 0
+            account.note_seen = "0"
             account.save()
         if item.id <= account.note_seen:
             break
@@ -121,7 +121,7 @@ def user_search_inner(request, query):
 
 def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None):
     account, mastodon = get_usercontext(request)
-    data = mastodon.timeline(timeline, limit=100, max_id=max_id, since_id=since_id)
+    data = mastodon.timeline(timeline, limit=40, max_id=max_id, since_id=since_id)
     form = PostForm(initial={'visibility': request.session['user'].source.privacy})
     try:
         prev = data[0]._pagination_prev
@@ -349,7 +349,7 @@ def note(request, next=None, prev=None):
     account.note_seen = last_seen.id
     account.save()
 
-    notes = mastodon.notifications(limit=100, max_id=next, since_id=prev)
+    notes = mastodon.notifications(limit=40, max_id=next, since_id=prev)
     if account.preferences.filter_notifications:
         notes = [ note for note in notes if note.type == 'mention' or note.type == 'follow']
     try:
