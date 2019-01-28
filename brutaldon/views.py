@@ -13,15 +13,10 @@ from urllib import parse
 from pdb import set_trace
 from inscriptis import get_text
 from time import sleep
-import inspect
 import re
 
 class NotLoggedInException(Exception):
     pass
-
-def post_has_content_type():
-    sig = inspect.signature(Mastodon.status_post)
-    return 'content_type' in sig.parameters.keys()
 
 def get_usercontext(request):
     if is_logged_in(request):
@@ -491,13 +486,13 @@ def toot(request, mention=None):
             if form.cleaned_data['visibility'] == '':
                 form.cleaned_data['visibility'] = request.session['user'].source.privacy
             try:
-                if post_has_content_type():
+                try:
                     mastodon.status_post(status=form.cleaned_data['status'],
                                          visibility=form.cleaned_data['visibility'],
                                          spoiler_text=form.cleaned_data['spoiler_text'],
                                          media_ids=media_objects,
                                          content_type='text/markdown')
-                else:
+                except TypeError:
                     mastodon.status_post(status=form.cleaned_data['status'],
                                          visibility=form.cleaned_data['visibility'],
                                          spoiler_text=form.cleaned_data['spoiler_text'],
@@ -555,14 +550,14 @@ def redraft(request, id):
             if form.cleaned_data['visibility'] == '':
                 form.cleaned_data['visibility'] = request.session['user'].source.privacy
             try:
-                if post_has_content_type():
+                try:
                     mastodon.status_post(status=form.cleaned_data['status'],
                                          visibility=form.cleaned_data['visibility'],
                                          spoiler_text=form.cleaned_data['spoiler_text'],
                                          media_ids=media_objects,
                                          in_reply_to_id=toot.in_reply_to_id,
                                          content_type='text/markdown')
-                else:
+                except TypeError:
                     mastodon.status_post(status=form.cleaned_data['status'],
                                          visibility=form.cleaned_data['visibility'],
                                          spoiler_text=form.cleaned_data['spoiler_text'],
@@ -637,14 +632,14 @@ def reply(request, id):
                                                                          +str(index),
                                                                          None)))
             try:
-                if post_has_content_type():
+                try:
                     mastodon.status_post(status=form.cleaned_data['status'],
                                          visibility=form.cleaned_data['visibility'],
                                          spoiler_text=form.cleaned_data['spoiler_text'],
                                          media_ids=media_objects,
                                          in_reply_to_id=id,
                                          content_type="text/markdown")
-                else:
+                except TypeError:
                     mastodon.status_post(status=form.cleaned_data['status'],
                                          visibility=form.cleaned_data['visibility'],
                                          spoiler_text=form.cleaned_data['spoiler_text'],
