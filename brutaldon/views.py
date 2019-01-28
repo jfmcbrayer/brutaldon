@@ -49,7 +49,7 @@ def _notes_count(account, mastodon):
         if account.note_seen is None:
             account.note_seen = "0"
             account.save()
-        if item.id <= account.note_seen:
+        if str(item.id) <= str(account.note_seen):
             break
     else:
         index = "40+"
