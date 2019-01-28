@@ -607,7 +607,9 @@ def reply(request, id):
             initial_text = '@' + toot.account.acct + " "
         else:
             initial_text = ""
-        for mention in [x for x in toot.mentions if x.acct != request.session['user'].acct]:
+        for mention in [x for x in toot.mentions
+                        if x.acct != request.session['user'].acct and
+                        x.acct != toot.account.acct]:
             initial_text +=('@' + mention.acct + " ")
         form = PostForm(initial={'status': initial_text,
                                  'visibility': toot.visibility,
