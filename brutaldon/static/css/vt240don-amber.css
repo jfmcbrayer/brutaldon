@@ -24,10 +24,16 @@ a, a.button, a.button.is-primary, input.button.is-primary, input, .input, .texta
   font-size: medium;
 }
 
-
 a:hover, a.button:hover, a.button.is-primary:hover, input.button.is-primary:hover {
   color: #000000;
   background-color: #ff8800;
+}
+
+.media-content a:not(.mention):not(.tag)
+{
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration:color: #ff7700;
 }
 
 .control input[type=text], .control textarea
@@ -197,7 +203,6 @@ img.emoji
 .modal.is-active {
 	  display: flex;
 }
-
 
 
 @media screen and (max-width: 768px) {

@@ -30,6 +30,13 @@ a:hover, a.button:hover, a.button.is-primary:hover, input.button.is-primary:hove
   background-color: #00ff88;
 }
 
+.media-content a:not(.mention):not(.tag)
+{
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration:color: #00ff77;
+}
+
 .control input[type=text], .control textarea
 {
     width: 100%;
