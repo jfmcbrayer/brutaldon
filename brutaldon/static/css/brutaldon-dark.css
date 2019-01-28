@@ -3,7 +3,7 @@ body.has-navbar-fixed-top {
 }
 
 body > section > div.container {
-    max-width: 100ex;
+    max-width: 100%;
 }
 
 
@@ -20,10 +20,10 @@ img.fav-avatar {
 
 
 .media-content {
-    padding: 1.5ex;
+    padding: 1.25ex;
 }
 
-.is-max-128 img, .is-max-256 img
+.is-max-128 img, .is-max-192 img, .is-max-256 img
 {
     bottom: 0;
     left: 0;
@@ -40,6 +40,11 @@ img.fav-avatar {
 .is-max-256 {
     max-height: 256px;
     max-width: 256px;
+}
+
+.is-max-192 {
+    max-height: 192px;
+    max-width: 192px;
 }
 
 figure.media-left p.image a img

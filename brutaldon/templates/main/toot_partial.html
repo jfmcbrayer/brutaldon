@@ -59,19 +59,21 @@
                                 <a href="{{ toot.card.url }}"> {{ toot.card.title }} </a>
                             </div>
                         </div>
-                        {% if toot.card.image and not toot.media_attachments %}
-                        <div class="card-image">
-                            <figure>
-                                <a href="{{ toot.card.url }}">
-                                    <img class="image is-max-256" alt="{{ toot.card.title }}"
-                                         src="{{ toot.card.image }}">
-                                </a>
-                            </figure>
-                        </div>
-                        {% endif %}
                         {% if toot.card.description %}
-                        <div class="card-content">
-                            <p>{{ toot.card.description }}</p>
+                        <div class="card-content columns">
+                            {% if toot.card.image and not toot.media_attachments %}
+                                <div class="column is-one-third">
+                                    <figure>
+                                        <a href="{{ toot.card.url }}">
+                                            <img class="image" alt="{{ toot.card.title }}"
+                                                 src="{{ toot.card.image }}">
+                                        </a>
+                                    </figure>
+                                </div>
+                            {% endif %}
+                            <div class="column is-two-thirds">
+                                <p>{{ toot.card.description }}</p>
+                            </div>
                         </div>
                         {% endif %}
                     </div>
