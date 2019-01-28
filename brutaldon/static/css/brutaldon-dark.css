@@ -229,7 +229,7 @@ input#id_poll_frequency
     height: 0;
 }
 
-.media-content a:not(.mention)
+.media-content .content a:not(.mention)
 {
     text-decoration-line: underline;
     text-decoration-style: dotted;

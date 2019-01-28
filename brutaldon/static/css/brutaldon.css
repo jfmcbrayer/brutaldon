@@ -213,7 +213,7 @@ body.has-navbar-fixed-top, html.has-navbar-fixed-top {
     height: 0;
 }
 
-.media-content a:not(.mention)
+.media-content .content a:not(.mention)
 {
     text-decoration-line: underline;
     text-decoration-style: dotted;
