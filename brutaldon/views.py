@@ -127,10 +127,13 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
         prev = data[0]._pagination_prev
         if len(mastodon.timeline(since_id=prev['since_id'])) == 0:
             prev = None
+        else:
+            prev['since_id'] = data[0].id
     except (IndexError, AttributeError):
         prev = None
     try:
         next = data[-1]._pagination_next
+        next['max_id'] = data[-1].id
     except (IndexError, AttributeError):
         next = None
 
