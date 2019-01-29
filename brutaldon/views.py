@@ -659,14 +659,15 @@ def reply(request, id):
                                'own_acct': request.session['user'],
                                'notifications': notifications,
                                'preferences': account.preferences})
-            return redirect(thread, id)
+            return HttpResponseRedirect(reverse('thread', args=[id]) + "#toot-"+str(id))
         else:
             return render(request, 'main/reply.html',
                           {'context': context, 'toot': toot, 'form': form, 'reply': True,
                            'own_acct': request.session['user'],
                            'preferences': account.preferences})
     else:
-        return redirect(reply, id)
+        return HttpResponseRedirect(reverse('reply', args=[id]) + "#toot-"+str(id))
+
 
 @never_cache
 @br_login_required
