@@ -61,7 +61,7 @@
                         </div>
                         {% if toot.card.description %}
                         <div class="card-content columns">
-                            {% if toot.card.image and not toot.media_attachments %}
+                            {% if toot.card.image %}
                                 <div class="column is-one-third">
                                     <figure>
                                         <a href="{{ toot.card.url }}">
@@ -138,7 +138,7 @@
             {% if not confirm_page %}
             <nav class="level is-mobile">
                 <div class="level-left">
-                    <a href="{% url "reply" toot.id %}" class="level-item">
+                    <a href="{% url "reply" toot.id %}#toot-{{ toot.id }}" class="level-item">
                         {% if toot.replies_count > 0 %}
                             <span class="fa fa-reply-all">
                                 <span class="is-hidden-mobile"><strong>Reply</strong></span>
@@ -201,11 +201,11 @@
                     {{ toot.visibility }}
                     &nbsp;&nbsp;
                     {% if toot.in_reply_to_id or toot.replies_count > 0 %}
-                    <a class="level-item" href="{% url "thread" toot.id %}">
+                        <a class="level-item" href="{% url "thread" toot.id %}#toot-{{ toot.id }}">
                         <strong>thread</strong>
                     </a>
                     {% else %}
-                    <a class="level-item" href="{% url "thread" toot.id %}">
+                    <a class="level-item" href="{% url "thread" toot.id %}#toot-{{ toot.id }}">
                         thread
                     </a>
                     {% endif %}
