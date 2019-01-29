@@ -686,7 +686,7 @@ def fav(request, id):
                            'own_acct': request.session['user'],
                            "preferences": account.preferences})
         else:
-            return redirect(thread, id)
+            return HttpResponseRedirect(reverse('thread', args=[id]) + "#toot-"+str(id))
     else:
         return render(request, 'main/fav.html',
                       {"toot": toot,
@@ -712,7 +712,7 @@ def boost(request, id):
                            'own_acct': request.session['user'],
                            "preferences": account.preferences})
         else:
-            return redirect(thread, id)
+            return HttpResponseRedirect(reverse('thread', args=[id]) + "#toot-"+str(id))
     else:
         return render(request, 'main/boost.html',
                       {"toot": toot,
