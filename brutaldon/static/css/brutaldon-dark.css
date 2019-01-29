@@ -240,7 +240,13 @@ input#id_poll_frequency
     text-decoration-style: dotted;
 }
 
+.media-content a.level-item
+{
+    text-decoration: none;
+}
+
 a.navbar-item span:nth-child(2):before
 {
     content: " ";
 }
+
