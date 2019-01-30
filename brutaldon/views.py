@@ -153,18 +153,22 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
                   'prev': prev, 'next': next})
 
 @br_login_required
+@cache_page(60)
 def home(request, next=None, prev=None):
     return timeline(request, 'home', 'Home', max_id=next, since_id=prev)
 
 @br_login_required
+@cache_page(60)
 def local(request, next=None, prev=None):
     return timeline(request, 'local', 'Local', max_id=next, since_id=prev)
 
 @br_login_required
+@cache_page(60)
 def fed(request, next=None, prev=None):
     return timeline(request, 'public', 'Federated', max_id=next, since_id=prev)
 
 @br_login_required
+@cache_page(60*5)
 def tag(request, tag):
     try:
         account, mastodon = get_usercontext(request)
@@ -343,6 +347,7 @@ def error(request):
     return render(request, 'error.html', { 'error': _("Not logged in yet.")})
 
 @br_login_required
+@cache_page(10)
 def note(request, next=None, prev=None):
     try:
         account, mastodon = get_usercontext(request)
@@ -373,6 +378,7 @@ def note(request, next=None, prev=None):
                   'prev': prev, 'next': next})
 
 @br_login_required
+@cache_page(60)
 def thread(request, id):
     account, mastodon = get_usercontext(request)
     context = mastodon.status_context(id)
@@ -385,6 +391,7 @@ def thread(request, id):
                    'preferences': account.preferences})
 
 @br_login_required
+@cache_page(60*5)
 def user(request, username, prev=None, next=None):
     try:
         account, mastodon = get_usercontext(request)
@@ -847,6 +854,7 @@ def search(request):
                       })
 
 @br_login_required
+@cache_page(60*5)
 def search_results(request):
     if request.method == 'GET':
         query = request.GET.get('q', '')
@@ -863,6 +871,7 @@ def search_results(request):
                    'notifications': notifications,
                    "preferences": account.preferences})
 
+@cache_page(60*30)
 def about(request):
     version = django_settings.BRUTALDON_VERSION
     account, mastodon = get_usercontext(request)
@@ -875,6 +884,7 @@ def about(request):
                        "version": version,
                        'own_acct': request.session.get('user', None),
                       })
+@cache_page(60*30)
 def privacy(request):
     account, mastodon = get_usercontext(request)
     if account:
