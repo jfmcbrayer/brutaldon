@@ -223,3 +223,8 @@ body.has-navbar-fixed-top, html.has-navbar-fixed-top {
     text-decoration-line: underline;
     text-decoration-style: dotted;
 }
+
+a.navbar-item span:nth-child(2):before
+{
+    content: " ";
+}

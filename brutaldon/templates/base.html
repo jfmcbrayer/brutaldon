@@ -58,7 +58,7 @@
             {% endif %}
     </head>
     <body ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
-        <div id="page-load-indicator">&nbsp</div>
+        <div id="page-load-indicator"></div>
         <div id="new-toot-modal" class="modal"></div>
         {% block navbar %}
             <nav class="navbar is-primary" role="navigation"
@@ -82,7 +82,7 @@
                             <div class="navbar-start">
                                 <a href="{% url "home" %}" class="navbar-item">
                                     <span class="fa fa-home"></span>
-                                    <span>&nbsp; Home</span>
+                                    <span>Home</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "note" %}">
                                     <span class="fa fa-bell-o"></span>
@@ -96,53 +96,53 @@
                                                 class="badge"
                                                 {% endif %}
                                                 data-badge="{{ notifications }}">
-                                                &nbsp; Notifications</span>
+                                                Notifications</span>
                                             </span>
                                     {% elif notifications and preferences.notifications %}
                                             <span ic-src="{% url 'notes_count' %}"
                                                   ic-poll="{{ preferences.poll_frequency }}s"
                                                   ic-target="this"
                                                   ic-select-from-response="#notes-count">
-                                                <span >&nbsp; Notifications ({{ notifications }})</span>
+                                                <span >Notifications ({{ notifications }})</span>
                                             </span>
                                     {% else %}
-                                        <span >&nbsp; Notifications</span>
+                                        <span >Notifications</span>
                                     {% endif %}
                                 </a>
                                 <a class="navbar-item" href="{% url "local" %}">
                                     <span class="fa fa-community"></span>
-                                    <span >&nbsp; Local</span>
+                                    <span >Local</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "fed" %}">
                                     <span class="fa fa-globe"></span>
-                                    <span >&nbsp;Federated</span>
+                                    <span >Federated</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "toot" %}"
                                    ic-get-from="{% url "toot" %}"
                                    ic-target="#new-toot-modal"
                                    ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
                                     <span class="fa fa-edit"> </span>
-                                    <span >&nbsp; New Toot</span>
+                                    <span >New Toot</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "search" %}"
                                    ic-get-from="{% url "search" %}"
                                    ic-target="#new-toot-modal"
                                    ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
                                     <span class="fa fa-search"> </span>
-                                    <span >&nbsp; Search</span>
+                                    <span >Search</span>
                                 </a>
                             </div>
                             <div class="navbar-end" >
                                 <a class="navbar-item" href="{% url "settings" %}">
                                     <span class="fa fa-gear"></span>
-                                    <span >&nbsp;Settings</span>
+                                    <span >Settings</span>
                                 </a>
                                 <a class="navbar-item" href="{% url "logout" %}"
                                    ic-get-from="{% url "logout" %}"
                                    ic-target="body"
                                    ic-confirm="Are you sure you want to log out?">
                                     <span class="fa fa-power-off"></span>
-                                    <span >&nbsp;Log out</span>
+                                    <span >Log out</span>
                                 </a>
                             </div>
                         </div>
