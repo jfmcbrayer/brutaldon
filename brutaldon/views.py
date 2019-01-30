@@ -153,22 +153,18 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
                   'prev': prev, 'next': next})
 
 @br_login_required
-@cache_page(60)
 def home(request, next=None, prev=None):
     return timeline(request, 'home', 'Home', max_id=next, since_id=prev)
 
 @br_login_required
-@cache_page(60)
 def local(request, next=None, prev=None):
     return timeline(request, 'local', 'Local', max_id=next, since_id=prev)
 
 @br_login_required
-@cache_page(60)
 def fed(request, next=None, prev=None):
     return timeline(request, 'public', 'Federated', max_id=next, since_id=prev)
 
 @br_login_required
-@cache_page(60*5)
 def tag(request, tag):
     try:
         account, mastodon = get_usercontext(request)
@@ -378,7 +374,6 @@ def note(request, next=None, prev=None):
                   'prev': prev, 'next': next})
 
 @br_login_required
-@cache_page(60)
 def thread(request, id):
     account, mastodon = get_usercontext(request)
     context = mastodon.status_context(id)
@@ -391,7 +386,6 @@ def thread(request, id):
                    'preferences': account.preferences})
 
 @br_login_required
-@cache_page(60*5)
 def user(request, username, prev=None, next=None):
     try:
         account, mastodon = get_usercontext(request)
