@@ -23,6 +23,11 @@ def set_up_default_themes(apps, schema_editor):
                       main_css="css/fullbrutalism.css",
                       is_brutalist=True)
     brutalism.save()
+    brutstrap = Theme(name="Brutstrap",
+                      min_css="css/brutstrap.css",
+                      is_brutalist=True,
+                      tweaks_css="css/brutstrap-tweaks.css")
+    brutstrap.save()
     large = Theme(name="Minimalist Large", main_css="css/minimal-large.css",
                   is_brutalist=True)
     large.save()

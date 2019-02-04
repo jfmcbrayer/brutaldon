@@ -1,0 +1,286 @@
+/* Tweaks to make brutstrap work with brutaldon's existing html */
+
+/* Re-implemented brutstrap features for brutaldon's html structure */
+
+nav
+{
+    display: flex;
+}
+nav .navbar-menu, nav .navbar-brand
+{
+    display: flex;
+    margin: 0.2em;
+    padding: 0;
+    padding-bottom: 0.1em;
+}
+
+nav .navbar-item
+{
+    display: inline;
+    text-align: center;
+    padding: 0 0.5em;
+}
+
+article /* As brutstrap's section */
+{
+    border-bottom: 0.1em solid #444;
+    margin-top: 0.25em;
+    margin-bottom: 1em;
+}
+
+article + hr /* Now redundant */
+{
+    display: none;
+}
+
+/* Bulma styles re-implemented for compatibility */
+
+img.is-32x32 {
+    float: left;
+    max-width: 512px;
+    max-height: auto;
+    margin: 4px;
+}
+
+
+.level {
+    clear: both;
+}
+
+.title {
+    font-size: 3ex;
+    font-weight: bold;
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+}
+.subtitle {
+    font-size: 1.5ex;
+    font-weight: bold;
+    margin-top: 0.25ex;
+    margin-bottom: 0.25ex;
+}
+
+.image.is-32x32, .is-32x32 img, img.is-32x32 {
+    width: 32px;
+    height: 32px;
+}
+
+.image.is-48x48, .is-48x48 img, img.is-48x48 {
+    width: 48px;
+    height: 48px;
+}
+
+.image.is-64x64, .is-64x64 img, img.is-64x64 {
+    width: 64px;
+    height: 64px;
+}
+
+.image.is-96x96, .is-96x96 img, img.is-96x96 {
+    width: 96px;
+    height: 96px;
+}
+
+.is-max-128 img, .is-max-256 img
+{
+    display: block;
+    clear: both;
+}
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
+img.emoji
+{
+    display: inline;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+    vertical-align: text-bottom;
+}
+
+.modal {
+	  -webkit-box-align: center;
+	  -ms-flex-align: center;
+	  align-items: center;
+	  display: none;
+	  -webkit-box-pack: center;
+	  -ms-flex-pack: center;
+	  justify-content: center;
+	  overflow: hidden;
+	  position: fixed;
+    z-index: 40;
+}
+.modal-background {
+	  position: absolute;
+	  background-color: rgba(10,10,10,.86);
+}
+.modal, .modal-background {
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
+	  top: 0;
+}
+
+.modal-content
+{
+    z-index: 60;
+    background-color: #CCC;
+    color: #000;
+    padding: 1em;
+    border: 0.2em solid #444;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+.modal.is-active {
+	  display: flex;
+}
+
+.card
+{
+    padding: 1em;
+    margin-top: 1em;
+    border: 0.2em solid black;
+}
+
+.card-header
+{
+    padding-bottom: 1em;
+    border-bottom: 0.2em solid black;
+}
+
+.card-image
+{
+    padding: 1em;
+    margin 0, auto;
+}
+
+/* Fscking levels */
+.level {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.level code {
+  border-radius: 4px;
+}
+
+.level img {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.level.is-mobile {
+  display: flex;
+}
+
+.level.is-mobile .level-left,
+.level.is-mobile .level-right {
+  display: flex;
+}
+
+.level.is-mobile .level-left + .level-right {
+  margin-top: 0;
+}
+
+.level.is-mobile .level-item {
+  margin-right: 0.75rem;
+}
+
+.level.is-mobile .level-item:not(:last-child) {
+  margin-bottom: 0;
+}
+
+.level-item {
+  align-items: center;
+  display: flex;
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+.level-item .title,
+.level-item .subtitle {
+  margin-bottom: 0;
+}
+
+.level-left,
+.level-right {
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+
+.level-left {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.level-right {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.media {
+  align-items: flex-start;
+  display: flex;
+  text-align: left;
+}
+
+
+/* Remaining brutaldon-specific tweaks */
+
+input, textarea
+{
+    font-family: sans-serif;
+
+}
+
+textarea
+{
+    width: 100%;
+}
+
+input#id_spoiler_text
+{
+    width: 100%;
+}
+
+
+.reblog-icon {
+    position: relative;
+    top: -24px;
+    left: 40px;
+}
+
+img.fav-avatar {
+    display: inline;
+
+}
+
+#status_count
+{
+    margin-left: 90%;
+    margin-top: 1rem;
+    background-color: #888;
+    color: #FFF;
+    float: right;
+    padding: 0.5ex;
+    border-radius: 5px;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
+    font-size: 0.8em;
+    text-align: right;
+}
+
+#username_autocomplete
+{
+    height: 0;
+}
