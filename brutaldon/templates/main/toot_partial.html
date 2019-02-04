@@ -83,8 +83,9 @@
                 <br>
                 <div class="level attachments">
                     {% for media in toot.media_attachments %}
-                        {% if media.type == "image" %}
-                            <a class="level-item attachment-image" href="{{ media.url }}">
+                    {% if media.type == "image" %}
+                        <figure class="level-item attachment-image">
+                            <a href="{{ media.url }}">
                                 {% if toot.sensitive %}
                                     <img src="{% static "images/sensitive.png" %}"
                                 {% else %}
@@ -102,9 +103,10 @@
                                          {% endif %}
                                          class="image is-max-256">
                             </a>
-
-                        {% else %}
-                            <video class="level-item is-max-256" controls loop
+                        </figure>
+                    {% else %}
+                        <figure class="level-item is-max-256">
+                            <video controls loop
                                    poster="{{ media.preview_url }}">
                                 <source src="{{ media.url }}" type="video/mp4">
                                 <a href="{{ media.url }}">
@@ -126,8 +128,9 @@
                                              class="image is-max-256">
                                 </a>
                             </video>
+                        </figure>
+                    {% endif %}
 
-                        {% endif %}
                     {% endfor %}
                 </div>
                 {% endif %}

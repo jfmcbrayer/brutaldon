@@ -33,6 +33,7 @@ article + hr /* Now redundant */
     display: none;
 }
 
+
 /* Bulma styles re-implemented for compatibility */
 
 img.is-32x32 {
@@ -164,7 +165,22 @@ img.emoji
 .level {
   align-items: center;
   justify-content: space-between;
+  display:flex;
+  flex-wrap: wrap;
 }
+
+.level.is-mobile {
+    display: flex;
+}
+
+.level.is-mobile .level-left,
+.level.is-mobile .level-right {
+    display: flex;
+}
+.level.is-mobile .level-item {
+    margin-right: 0.75rem;
+}
+
 
 .level code {
   border-radius: 4px;
@@ -173,27 +189,6 @@ img.emoji
 .level img {
   display: inline-block;
   vertical-align: top;
-}
-
-.level.is-mobile {
-  display: flex;
-}
-
-.level.is-mobile .level-left,
-.level.is-mobile .level-right {
-  display: flex;
-}
-
-.level.is-mobile .level-left + .level-right {
-  margin-top: 0;
-}
-
-.level.is-mobile .level-item {
-  margin-right: 0.75rem;
-}
-
-.level.is-mobile .level-item:not(:last-child) {
-  margin-bottom: 0;
 }
 
 .level-item {
@@ -283,4 +278,10 @@ img.fav-avatar {
 #username_autocomplete
 {
     height: 0;
+}
+
+.attachments figure {
+	  border: 0.2ex solid #444;
+	  max-width: 256px;
+	  padding: 1em;
 }
