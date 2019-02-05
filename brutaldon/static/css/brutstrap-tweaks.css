@@ -248,6 +248,13 @@ img.emoji
 
 /* Remaining brutaldon-specific tweaks */
 
+body
+{
+    /* brutstrap's default font-size is fine for full-text web
+       pages, but too big for this purpose. */
+    font-size: 1em;
+}
+
 input, textarea
 {
     font-family: sans-serif;
