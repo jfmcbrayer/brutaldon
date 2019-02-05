@@ -161,6 +161,13 @@ img.emoji
     margin 0, auto;
 }
 
+.button
+{
+    border: 0.2em solid #444;
+    display: inline;
+    padding: 0.4em;
+}
+
 /* Fscking levels */
 .level {
   align-items: center;
