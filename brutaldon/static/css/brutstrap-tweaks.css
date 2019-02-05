@@ -236,6 +236,15 @@ img.emoji
   text-align: left;
 }
 
+#username_autocomplete div.tooltip::after {
+	  content: attr(data-tooltip);
+	  font-size: 0.6em;
+	  margin-left: 1em;
+	  margin-right: 1em;
+	  border: 1pt solid #444;
+	  background-color: #FFF;
+	  padding: 0.2em;
+}
 
 /* Remaining brutaldon-specific tweaks */
 
@@ -255,6 +264,10 @@ input#id_spoiler_text
     width: 100%;
 }
 
+.media-content
+{
+    margin-bottom: 1em;
+}
 
 .reblog-icon {
     position: relative;
