@@ -214,6 +214,7 @@ input#id_poll_frequency
 {
     margin-top: 1em;
     margin: 0, auto;
+    max-width: 90%;
 }
 
 .card-image

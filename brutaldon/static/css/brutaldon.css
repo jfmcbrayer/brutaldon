@@ -198,6 +198,7 @@ body.has-navbar-fixed-top, html.has-navbar-fixed-top {
 {
     margin-top: 1em;
     margin: 0, auto;
+    max-width: 90%;
 }
 
 .card-image
