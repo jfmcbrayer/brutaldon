@@ -234,3 +234,13 @@ a.navbar-item span:nth-child(2):before
 {
     content: " ";
 }
+
+/* Fix some rules that don't need to be there */
+.content figure:not(:last-child)
+{
+    margin-bottom: 0;
+}
+.content figure:not(:first-child)
+{
+    margin-top: 0;
+}
