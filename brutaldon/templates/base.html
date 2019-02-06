@@ -56,6 +56,20 @@
             {% else %}
                 <link rel="icon" href="{% static "images/brutaldon.png" %}" type="image/png">
             {% endif %}
+
+            <meta name="twitter:card" content="summary">
+            <meta property="og:type" content="website">
+            <meta name="twitter:site" content="@jfmcbrayer">
+            <meta name="twitter:url" property="og:url" content="{% url "about" %}">
+            <meta name="twitter:title" property="og:title" content="Brutaldon">
+            <meta name="twitter:image" property="og:image"
+                  content="{% static "images/brutaldon.png" %}">
+            <meta name="twitter:description" property="og:description"
+                  content="A brutalist, web-1.0 web client for Mastodon and Pleroma. Supports text-only browsers like Lynx, older browsers, as well as the latest mainstream browsers. All JavaScript is completely optional and progressively enhances the core application.">
+
+
+
+
     </head>
     <body ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
         <div id="page-load-indicator"></div>
