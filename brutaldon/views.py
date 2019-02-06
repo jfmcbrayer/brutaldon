@@ -424,7 +424,10 @@ def user(request, username, prev=None, next=None):
 @never_cache
 @br_login_required
 def settings(request):
-    account = Account.objects.get(username=request.session['username'])
+    try:
+        account, mastodon = get_usercontext(request)
+    except NotLoggedInException:
+        return redirect(about)
     if request.method == 'POST':
         form = PreferencesForm(request.POST)
         if form.is_valid():
@@ -440,6 +443,12 @@ def settings(request):
             request.session['timezone'] = account.preferences.timezone
             account.preferences.save()
             account.save()
+
+            # Update this here because it's a handy place to do it.
+            user_info = mastodon.account_verify_credentials()
+            request.session['user'] = user_info
+
+
             return redirect(home)
         else:
             return render(request, 'setup/settings.html',
