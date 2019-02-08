@@ -312,3 +312,9 @@ img.fav-avatar {
 	  max-width: 256px;
 	  padding: 1em;
 }
+
+figure.level-item > video
+{
+    max-height: 256px;
+    max-width: 256px;
+}
