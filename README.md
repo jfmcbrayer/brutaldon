@@ -1,6 +1,6 @@
 # Brutaldon
 
-Brutaldon is a [brutalist][0], [Web 1.0][0.5] web interface for [Mastodon][1]. It is not a Mastodon-compatible social networking server; rather, it is just a client, like the Android or iOS client for Mastodon you may already be using, but it runs in a web server, and is accessed through a web browser. The web browser that brutaldon targets is [Lynx][2]. Of course, you can use it in a more heavy-weight graphical browser, as well as other text browsers such as [w3m][3] or [elinks][4].
+Brutaldon is a [brutalist][0], [Web 1.0][0.5] web interface for [Mastodon][1] and [Pleroma][p]. It is not a Mastodon-compatible social networking server; rather, it is just a client, like the Android or iOS client for Mastodon you may already be using, but it runs in a web server, and is accessed through a web browser. It works great in text-mode browsers such as [Lynx][2], [w3m][3], or [elinks][4], and also in more heavy-weight graphical browsers, such as Firefox. It works completely without JavaScript, but if JavaScript is available and enabled, it will be used to unobtrusively enhance the user experience.
 
 [0]:http://brutalistwebsites.com/
 [0.5]: https://en.wikipedia.org/wiki/Web_2.0#%22Web_1.0%22
@@ -8,17 +8,18 @@ Brutaldon is a [brutalist][0], [Web 1.0][0.5] web interface for [Mastodon][1]. I
 [2]: https://lynx.browser.org/
 [3]: https://w3m.sourceforge.net/
 [4]: http://elinks.or.cz/
+[p]: https://pleroma.social/
 
 There is a hosted instance at [brutaldon.online][hosted] which you can use to log in to any instance. However, you are also encouraged to run your own, either locally or on a public server. 
 
 [hosted]: https://brutaldon.online/
 
-Brutaldon is ready for day to day use, but is still missing many features.
+Brutaldon is ready for day to day use, and is my main way of interacting with the fediverse. It is still missing some features you might want, like lists, filters, and editing your own profile.
 Please see the issues tracker.
 
 ## Screenshots
 
-People love screenshots, whatever the project, so here we are.
+People love screenshots, whatever the project, so here we are. These screenshots are relatively old.
 
 <table>
  <tr>
@@ -58,8 +59,13 @@ People love screenshots, whatever the project, so here we are.
 * [X] Add support for posting.
 * [X] Add support for posting media.
 * [X] Add support for favoriting and boosting toots.
-* [ ] Add support for following, blocking, and muting users.
+* [X] Add support for following, blocking, and muting users.
 
 ## Aesthetic
 
 No automatic page updates: refresh the page to see new toots. No endless scroll: there's a "next page" link. No autocompletion of anything: use another lynx process in another screen window to look things up. UTF8 clean.
+
+## Tip Jar
+
+You can buy me a coffee to give me energy to work on this, but only if you have it to spare.
+[![ko-fi](https://www.ko-fi.com/img/donate_sm.png)](https://ko-fi.com/D1D7QBZC)
