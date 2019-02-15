@@ -786,7 +786,7 @@ def delete(request, id):
             return redirect('home')
         if not request.POST.get('cancel', None):
             mastodon.status_delete(id)
-            if request.POST.get('ic-request') or request.DELETE.get('ic-request'):
+            if request.POST.get('ic-request'):
                 return HttpResponse("")
         return redirect(home)
     else:
@@ -989,7 +989,6 @@ def create_filter(request):
             expires = form.cleaned_data['expires_in']
             if expires == "":
                 expires = None
-            set_trace()
             mastodon.filter_create(form.cleaned_data['phrase'],
                                    contexts,
                                    whole_word=form.cleaned_data['whole_word'],
@@ -1006,3 +1005,21 @@ def create_filter(request):
                       { 'form': form,
                         'account': account,
                         'preferences': account.preferences})
+
+@br_login_required
+def delete_filter(request, id):
+    account, mastodon = get_usercontext(request)
+    filter = mastodon.filter(id)
+
+    if request.method == 'POST' or request.method == 'DELETE':
+        if not request.POST.get('cancel', None):
+            mastodon.filter_delete(filter.id)
+            if request.POST.get("ic-request"):
+                return HttpResponse("")
+        return redirect(list_filters)
+    else:
+        return render(request, "filters/delete.html",
+                      {"filter": filter,
+                       "own_acct": request.session["user"],
+                       "confirm_page": True,
+                       "preferences": account.preferences})

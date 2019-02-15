@@ -62,5 +62,6 @@ urlpatterns = [
     path('emoji', views.emoji_reference, name='emoji'),
     path('filters/list', views.list_filters, name='list_filters'),
     path('filters/create', views.create_filter, name='create_filter'),
+    path('filters/delete/<id>', views.delete_filter, name='delete_filter'),
     path('', views.home, name=''),
 ]

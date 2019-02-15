@@ -57,11 +57,11 @@ class PostForm(forms.Form):
 
 class FilterForm(forms.Form):
     phrase = forms.CharField(label=_("Word or phrase to filter"))
-    context_home = forms.BooleanField(label=_("In home timeline"), required=False)
-    context_public = forms.BooleanField(label=_("In public timelines"), required=False)
-    context_notes = forms.BooleanField(label=_("In notifications"), required=False)
-    context_thread = forms.BooleanField(label=_("In thread contexts"), required=False)
-    whole_word = forms.BooleanField(label=_("Whole words only"), required=False)
+    context_home = forms.BooleanField(label=_("In home timeline"), required=False, initial=True)
+    context_public = forms.BooleanField(label=_("In public timelines"), required=False, initial=True)
+    context_notes = forms.BooleanField(label=_("In notifications"), required=False, initial=True)
+    context_thread = forms.BooleanField(label=_("In thread contexts"), required=False, initial=True)
+    whole_word = forms.BooleanField(label=_("Whole words only"), required=False, initial=True)
     expires_in = forms.TypedChoiceField(label=_("Expires in"),
                                         choices=(("", "Never"),
                                                  ("1800", "30 minutes"),

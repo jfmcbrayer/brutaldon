@@ -12,10 +12,11 @@
                     <th>Filter contexts</th>
                     <th></th>
                     <th></th>
+                    <th></th>
             </thead>
             <tbody>
                 {% for filter in filters %}
-                    <tr>
+                    <tr id="filter-{{ filter.id }}">
                         <td>{{ filter.phrase }}</td>
                         <td>
                             {% for context in filter.context %}
@@ -23,7 +24,21 @@
                             {% endfor %}
                         </td>
                         <td>Edit filter</td>
-                        <td>Delete filter</td>
+                        <td>
+                            <a href="{% url "delete_filter" filter.id %}"
+                               ic-delete-from="{% url "delete_filter" filter.id %}",
+                               ic-indicator="#filter-spinner-{{ filter.id }}"
+                               ic-confirm="Really delete that filter?"
+                               ic-success-action="fadeOut;remove"
+                               ic-action-target="#filter-{{ filter.id }}">
+                                <span class="fa fa-times"></span>
+                                Delete filter
+                        </td>
+                        <td>
+                            <i id="filter-spinner-{{filter.id}}"
+                               class="fa fa-spinner fa-spin"
+                               style="display:none"></i>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

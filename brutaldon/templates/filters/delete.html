@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <h1 class="title">Delete that filter?</h1>
+
+    <div class="container">
+        <p class="label">Phrase: {{ filter.phrase }}</p>
+        <p class="label">Context: {{ filter.context|join:", " }}</p>
+        <p class="label">Whole word? {{ filter.whole_word }}</p>
+    </div>
+
+    <div class="container">
+        <form method="POST" action="{% url "delete_filter" filter.id %}">
+            {% csrf_token %}
+            <div class="level is-mobile">
+                <div class="level-left">
+                    <div class="level-item">
+                        <input class="button" type="submit" name="cancel" value="Cancel">
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        <input class="button is-primary" type="submit" name="delete"
+                               value="Delete">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
