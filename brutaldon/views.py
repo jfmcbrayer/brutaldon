@@ -18,6 +18,10 @@ import re
 class NotLoggedInException(Exception):
     pass
 
+###
+### Utility functions
+###
+
 def get_usercontext(request):
     if is_logged_in(request):
         try:
@@ -92,13 +96,6 @@ def br_login_required(function=None, home_url=None, redirect_field_name=None):
     else:
         return _dec(function)
 
-def notes_count(request):
-    account, mastodon = get_usercontext(request)
-    count = _notes_count(account, mastodon)
-    return render(request, 'intercooler/notes.html',
-                  {'notifications': count,
-                   'preferences': account.preferences })
-
 def user_search(request):
     check = request.POST.get("status", "").split()
     if len(check):
@@ -119,7 +116,7 @@ def user_search_inner(request, query):
                   {'users': "\n".join([ user.acct for user in results.accounts ]),
                    'preferences': account.preferences })
 
-def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None):
+def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None, filter_context='home'):
     account, mastodon = get_usercontext(request)
     data = mastodon.timeline(timeline, limit=40, max_id=max_id, since_id=since_id)
     form = PostForm(initial={'visibility': request.session['user'].source.privacy})
@@ -138,12 +135,17 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
         next = None
 
     notifications = _notes_count(account, mastodon)
+    filters = get_filters(mastodon, filter_context)
 
     # This filtering has to be done *after* getting next/prev links
     if account.preferences.filter_replies:
         data = [x for x in data if not x.in_reply_to_id]
     if account.preferences.filter_boosts:
         data = [x for x in data if not x.reblog]
+
+    # Apply filters
+    data = [x for x in data if not toot_matches_filters(x, filters)]
+
     return render(request, 'main/%s_timeline.html' % timeline,
                   {'toots': data, 'form': form, 'timeline': timeline,
                    'timeline_name': timeline_name,
@@ -152,16 +154,48 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
                    'notifications': notifications,
                   'prev': prev, 'next': next})
 
-@br_login_required
-def home(request, next=None, prev=None):
-    return timeline(request, 'home', 'Home', max_id=next, since_id=prev)
+def get_filters(mastodon, context=None):
+    try:
+        if context:
+            return [ff for ff in  mastodon.filters() if context in ff.context]
+        else:
+            return mastodon.filters()
+    except:
+        return []
+
+def toot_matches_filters(toot, filters=[]):
+    for filter in filters:
+        if filter.whole_word:
+            filter = f"\b{filter}\b"
+        try:
+            if re.search(filter.phrase, toot.spoiler_text, re.I) or re.search(filter.phrase, toot.content, re.I):
+                return True
+        except AttributeError: # probably a reblog or favorite
+            continue
+    return False
+
+
+###
+### View functions
+###
+
+def notes_count(request):
+    account, mastodon = get_usercontext(request)
+    count = _notes_count(account, mastodon)
+    return render(request, 'intercooler/notes.html',
+                  {'notifications': count,
+                   'preferences': account.preferences })
 
 @br_login_required
-def local(request, next=None, prev=None):
+def home(request, next=None, prev=None):
+    return timeline(request, 'home', 'Home', max_id=next, since_id=prev, filter_context='home')
+
+@br_login_required
+def local(request, next=None, prev=None, filter_context='public'):
     return timeline(request, 'local', 'Local', max_id=next, since_id=prev)
 
 @br_login_required
-def fed(request, next=None, prev=None):
+def fed(request, next=None, prev=None, filter_context='public'):
     return timeline(request, 'public', 'Federated', max_id=next, since_id=prev)
 
 @br_login_required
@@ -354,8 +388,14 @@ def note(request, next=None, prev=None):
     account.save()
 
     notes = mastodon.notifications(limit=40, max_id=next, since_id=prev)
+    filters = get_filters(mastodon, context='notifications')
+
     if account.preferences.filter_notifications:
         notes = [ note for note in notes if note.type == 'mention' or note.type == 'follow']
+
+    # Apply filters
+    notes = [x for x in notes if not toot_matches_filters(x, filters)]
+
     try:
         prev = notes[0]._pagination_prev
         if len(mastodon.notifications(since_id=prev['since_id'])) == 0:
@@ -379,6 +419,13 @@ def thread(request, id):
     context = mastodon.status_context(id)
     toot = mastodon.status(id)
     notifications = _notes_count(account, mastodon)
+    filters = get_filters(mastodon, context='thread')
+
+    # Apply filters
+    context.ancestors = [x for x in context.ancestors if not toot_matches_filters(x, filters)]
+    context.descendants = [x for x in context.descendants if not toot_matches_filters(x, filters)]
+
+
     return render(request, 'main/thread.html',
                   {'context': context, 'toot': toot,
                    'own_acct': request.session['user'],
