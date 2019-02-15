@@ -164,6 +164,8 @@ def get_filters(mastodon, context=None):
         return []
 
 def toot_matches_filters(toot, filters=[]):
+    if not filters:
+        return False
     def maybe_rewrite_filter(filter):
         if filter.whole_word:
             return f"\\b{filter.phrase}\\b"
@@ -171,7 +173,10 @@ def toot_matches_filters(toot, filters=[]):
             return filter.phrase
     phrases = [maybe_rewrite_filter(x) for x in filters]
     pattern = "|".join(phrases)
-    return re.search(pattern, toot.spoiler_text + toot.content, re.I)
+    try: 
+        return re.search(pattern, toot.spoiler_text + toot.content, re.I)
+    except:
+        return False
 
 ###
 ### View functions
