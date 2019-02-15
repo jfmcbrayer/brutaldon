@@ -23,7 +23,12 @@
                                 {{ context }}
                             {% endfor %}
                         </td>
-                        <td>Edit filter</td>
+                        <td>
+                            <a href="{% url "edit_filter" filter.id %}">
+                                <span class="fa fa-pencil"></span>
+                                Edit filter
+                            </a>
+                        </td>
                         <td>
                             <a href="{% url "delete_filter" filter.id %}"
                                ic-delete-from="{% url "delete_filter" filter.id %}",

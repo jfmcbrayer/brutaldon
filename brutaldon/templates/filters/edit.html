@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <div class="container">
+        <h1 class="title">Edit Filter</h1>
+
+        <form method="post" id="edit-filter-form"
+              action="{% url "edit_filter" filter.id %}">
+            {% csrf_token %}
+
+            <div>
+                {{ form.non_field_errors }}
+            </div>
+
+            <div class="field">
+                <label class="label"> {{ form.phrase.label }}</label>
+                <div class="control">
+                    {% render_field form.phrase class+="input" %}
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column field">
+                    <label class="label checkbox">
+                        {{ form.context_home.label }}
+                        {% render_field form.context_home %}
+                    </label>
+                </div>
+                <div class="column field">
+                    <label class="label checkbox">
+                        {{ form.context_public.label }}
+                        {% render_field form.context_public %}
+                    </label>
+                </div>
+                <div class="column field">
+                    <label class="label checkbox">
+                        {{ form.context_notes.label }}
+                        {% render_field form.context_notes %}
+                    </label>
+                </div>
+                <div class="column field">
+                    <label class="label checkbox">
+                        {{ form.context_thread.label }}
+                        {% render_field form.context_thread %}
+                    </label>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label checkbox">
+                    {{ form.whole_word.label }}
+                    {% render_field form.whole_word %}
+                </label>
+            </div>
+
+            <div class="field">
+                <label class="label" for="expires_in">{{ form.expires_in.label }}</label>
+                <div class="control has-icons-left">
+                    <div class="select">
+                        {% render_field form.expires_in class+="select" %}
+                        <span class="icon is-small is-left">
+                            <span class="fa fa-clock-o"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <input type="submit"  name="submit" value="Save"
+                       class="button is-primary">
+            </div>
+
+        </form>
+    </div>
+
+
+{% endblock %}

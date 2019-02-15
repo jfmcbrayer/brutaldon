@@ -975,10 +975,7 @@ def list_filters(request):
 
 @br_login_required
 def create_filter(request):
-    try:
-        account, mastodon = get_usercontext(request)
-    except NotLoggedInException:
-        return redirect(about)
+    account, mastodon = get_usercontext(request)
     if request.method == 'POST':
         form = FilterForm(request.POST)
         if form.is_valid():
@@ -1028,3 +1025,48 @@ def delete_filter(request, id):
                        "own_acct": request.session["user"],
                        "confirm_page": True,
                        "preferences": account.preferences})
+
+@br_login_required
+def edit_filter(request, id):
+    account, mastodon = get_usercontext(request)
+    filter = mastodon.filter(id)
+
+    contexts = []
+    if request.method == 'POST':
+        form = FilterForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['context_home']:
+                contexts.append('home')
+            if form.cleaned_data['context_public']:
+                contexts.append('public')
+            if form.cleaned_data['context_notes']:
+                contexts.append('notifications')
+            if form.cleaned_data['context_thread']:
+                contexts.append('thread')
+            expires = form.cleaned_data['expires_in']
+            if expires == "":
+                expires = None
+            mastodon.filter_update(id, form.cleaned_data['phrase'],
+                                   contexts,
+                                   whole_word=form.cleaned_data['whole_word'],
+                                   expires_in=expires)
+            return redirect(list_filters)
+        else:
+            return render(request, 'filters/edit.html',
+                          { 'form': form,
+                            'account': account,
+                            'filter': filter,
+                            'preferences': account.preferences})
+    else:
+        contexts = []
+        form = FilterForm({'phrase': filter.phrase,
+                          'context_home': "home" in filter.context,
+                          'context_public': "public" in filter.context,
+                          'context_notes': "notifications" in filter.context,
+                          'context_thread': "thread" in filter.context,
+                          'whole_word': filter.whole_word})
+        return render(request, 'filters/edit.html',
+                      { 'form': form,
+                        'account': account,
+                        'filter': filter,
+                        'preferences': account.preferences})
