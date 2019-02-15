@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="title">Filters</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Phrase</th>
+                    <th>Filter contexts</th>
+                    <th></th>
+                    <th></th>
+            </thead>
+            <tbody>
+                {% for filter in filters %}
+                    <tr>
+                        <td>{{ filter.phrase }}</td>
+                        <td>
+                            {% for context in filter.context %}
+                                {{ context }}
+                            {% endfor %}
+                        </td>
+                        <td>Edit filter</td>
+                        <td>Delete filter</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p>
+            <a class="button is-primary" href="{% url "create_filter" %}">
+                Create filter
+            </a>
+    </div>
+
+{% endblock %}

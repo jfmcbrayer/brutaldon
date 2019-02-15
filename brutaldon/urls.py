@@ -60,5 +60,7 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('search_results', views.search_results, name='search_results'),
     path('emoji', views.emoji_reference, name='emoji'),
+    path('filters/list', views.list_filters, name='list_filters'),
+    path('filters/create', views.create_filter, name='create_filter'),
     path('', views.home, name=''),
 ]

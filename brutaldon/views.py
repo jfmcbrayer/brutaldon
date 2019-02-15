@@ -6,7 +6,7 @@ from django.views.decorators.cache import never_cache, cache_page
 from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from django.utils.translation import gettext as _
-from brutaldon.forms import LoginForm, OAuthLoginForm, PreferencesForm, PostForm
+from brutaldon.forms import LoginForm, OAuthLoginForm, PreferencesForm, PostForm, FilterForm
 from brutaldon.models import Client, Account, Preference, Theme
 from mastodon import Mastodon, AttribAccessDict, MastodonError, MastodonAPIError
 from urllib import parse
@@ -956,3 +956,54 @@ def emoji_reference(request):
                        "emojos": sorted(emojos, key=lambda x: x['shortcode']),
                        "notifications": notifications,
                        'own_acct' : request.session['user']})
+
+
+@br_login_required
+def list_filters(request):
+    try:
+        account, mastodon = get_usercontext(request)
+    except NotLoggedInException:
+        return redirect(about)
+    filters = mastodon.filters()
+    return render(request, 'filters/list.html',
+                  {'account': account,
+                   'preferences': account.preferences,
+                   'filters': filters })
+
+@br_login_required
+def create_filter(request):
+    try:
+        account, mastodon = get_usercontext(request)
+    except NotLoggedInException:
+        return redirect(about)
+    if request.method == 'POST':
+        form = FilterForm(request.POST)
+        if form.is_valid():
+            contexts = []
+            if form.cleaned_data['context_home']:
+                contexts += 'home'
+            if form.cleaned_data['context_public']:
+                contexts += 'public'
+            if form.cleaned_data['context_notes']:
+                contexts += 'notifications'
+            if form.cleaned_data['context_thread']:
+                contexts += 'thread'
+            expires = form.cleaned_data['expires_in']
+            if expires == "":
+                expires = None
+            mastodon.filter_create(form.cleaned_data['phrase'],
+                                   contexts,
+                                   whole_word=form.cleaned_data['whole_word'],
+                                   expires_in=expires)
+            return redirect(list_filters)
+        else:
+            return render(request, 'filters/create.html',
+                          { 'form': form,
+                            'account': account,
+                            'preferences': account.preferences})
+    else:
+        form = FilterForm()
+        return render(request, 'filters/create.html',
+                      { 'form': form,
+                        'account': account,
+                        'preferences': account.preferences})
