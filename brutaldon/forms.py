@@ -54,3 +54,20 @@ class PostForm(forms.Form):
     media_text_4 = forms.CharField(label=_("Describe media 4."),
                                    required=False)
     media_sensitive = forms.BooleanField(label=_("Sensitive media?"), required=False)
+
+class FilterForm(forms.Form):
+    phrase = forms.CharField(label=_("Word or phrase to filter"))
+    context_home = forms.BooleanField(label=_("In home timeline"), required=False)
+    context_public = forms.BooleanField(label=_("In public timelines"), required=False)
+    context_notes = forms.BooleanField(label=_("In notifications"), required=False)
+    context_thread = forms.BooleanField(label=_("In thread contexts"), required=False)
+    whole_word = forms.BooleanField(label=_("Whole words only"), required=False)
+    expires_in = forms.TypedChoiceField(label=_("Expires in"),
+                                        choices=(("", "Never"),
+                                                 ("1800", "30 minutes"),
+                                                 ("3600", "1 hour"),
+                                                 ("21600", "6 hours"),
+                                                 ("43200", "12 hours"),
+                                                 ("86400", "1 day"),
+                                                 ("604800", "1 week")),
+                                        coerce=int)
