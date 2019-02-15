@@ -979,16 +979,17 @@ def create_filter(request):
         if form.is_valid():
             contexts = []
             if form.cleaned_data['context_home']:
-                contexts += 'home'
+                contexts.append('home')
             if form.cleaned_data['context_public']:
-                contexts += 'public'
+                contexts.append('public')
             if form.cleaned_data['context_notes']:
-                contexts += 'notifications'
+                contexts.append('notifications')
             if form.cleaned_data['context_thread']:
-                contexts += 'thread'
+                contexts.append('thread')
             expires = form.cleaned_data['expires_in']
             if expires == "":
                 expires = None
+            set_trace()
             mastodon.filter_create(form.cleaned_data['phrase'],
                                    contexts,
                                    whole_word=form.cleaned_data['whole_word'],
