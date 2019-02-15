@@ -164,16 +164,14 @@ def get_filters(mastodon, context=None):
         return []
 
 def toot_matches_filters(toot, filters=[]):
-    for filter in filters:
+    def maybe_rewrite_filter(filter):
         if filter.whole_word:
-            filter = f"\b{filter}\b"
-        try:
-            if re.search(filter.phrase, toot.spoiler_text, re.I) or re.search(filter.phrase, toot.content, re.I):
-                return True
-        except AttributeError: # probably a reblog or favorite
-            continue
-    return False
-
+            return f"\\b{filter.phrase}\\b"
+        else:
+            return filter.phrase
+    phrases = [maybe_rewrite_filter(x) for x in filters]
+    pattern = "|".join(phrases)
+    return re.search(pattern, toot.spoiler_text + toot.content, re.I)
 
 ###
 ### View functions
