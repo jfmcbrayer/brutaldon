@@ -70,4 +70,4 @@ class FilterForm(forms.Form):
                                                  ("43200", "12 hours"),
                                                  ("86400", "1 day"),
                                                  ("604800", "1 week")),
-                                        coerce=int)
+                                        coerce=int, required=False)
