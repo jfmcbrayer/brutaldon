@@ -200,18 +200,6 @@ body.has-navbar-fixed-top, html.has-navbar-fixed-top {
     max-width: 90%;
 }
 
-.card-image
-{
-    padding: 1em;
-}
-
-.card-image figure
-{
-    padding: 0;
-    max-height: 256px;
-    max-width: 256px;
-
-}
 
 #username_autocomplete
 {

@@ -217,19 +217,6 @@ input#id_poll_frequency
     max-width: 90%;
 }
 
-.card-image
-{
-    padding: 1em;
-}
-
-.card-image figure
-{
-    padding: 0;
-    max-height: 256px;
-    max-width: 256px;
-
-}
-
 #username_autocomplete
 {
     height: 0;
