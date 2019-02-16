@@ -425,12 +425,14 @@ def thread(request, id):
     filters = get_filters(mastodon, context='thread')
 
     # Apply filters
-    context.ancestors = [x for x in context.ancestors if not toot_matches_filters(x, filters)]
-    context.descendants = [x for x in context.descendants if not toot_matches_filters(x, filters)]
+    ancestors = [x for x in context.ancestors if not toot_matches_filters(x, filters)]
+    descendants = [x for x in context.descendants if not toot_matches_filters(x, filters)]
 
 
     return render(request, 'main/thread.html',
                   {'context': context, 'toot': toot,
+                   'ancestors': ancestors,
+                   'descendants': descendants,
                    'own_acct': request.session['user'],
                    'notifications': notifications,
                    'preferences': account.preferences})

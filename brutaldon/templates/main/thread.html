@@ -18,15 +18,15 @@ mastodon.status_context(<numerical id>)
     <h1 id="title" class="title">
         Thread
     </h1>
-    {% for ancestor in context.ancestors %}
-        {% include "main/toot_partial.html" with toot=ancestor %}
-        <hr class="is-hidden">
+    {% for ancestor in ancestors %}
+    {% include "main/toot_partial.html" with toot=ancestor %}
+    <hr class="is-hidden">
     {% endfor %}
     {% include "main/toot_partial.html" with toot=toot active=True %}
     <hr class="is-hidden">
-    {% for descendant in context.descendants %}
-        {% include "main/toot_partial.html" with toot=descendant %}
-        <hr class="is-hidden">
+    {% for descendant in descendants %}
+    {% include "main/toot_partial.html" with toot=descendant %}
+    <hr class="is-hidden">
     {% endfor %}
 
     {% if not preferences.no_javascript %}
