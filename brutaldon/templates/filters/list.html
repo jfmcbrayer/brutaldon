@@ -12,7 +12,7 @@
                     <th>Filter contexts</th>
                     <th></th>
                     <th></th>
-                    <th></th>
+                    <th class="empty-cell"></th>
             </thead>
             <tbody>
                 {% for filter in filters %}
@@ -39,7 +39,7 @@
                                 <span class="fa fa-times"></span>
                                 Delete filter
                         </td>
-                        <td>
+                        <td class="empty-cell">
                             <i id="filter-spinner-{{filter.id}}"
                                class="fa fa-spinner fa-spin"
                                style="display:none"></i>

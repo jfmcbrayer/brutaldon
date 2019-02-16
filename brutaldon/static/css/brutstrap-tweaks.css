@@ -105,26 +105,26 @@ img.emoji
 }
 
 .modal {
-	  -webkit-box-align: center;
-	  -ms-flex-align: center;
-	  align-items: center;
-	  display: none;
-	  -webkit-box-pack: center;
-	  -ms-flex-pack: center;
-	  justify-content: center;
-	  overflow: hidden;
-	  position: fixed;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: none;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: hidden;
+    position: fixed;
     z-index: 40;
 }
 .modal-background {
-	  position: absolute;
-	  background-color: rgba(10,10,10,.86);
+    position: absolute;
+    background-color: rgba(10,10,10,.86);
 }
 .modal, .modal-background {
-	  bottom: 0;
-	  left: 0;
-	  right: 0;
-	  top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
 }
 
 .modal-content
@@ -139,7 +139,7 @@ img.emoji
 }
 
 .modal.is-active {
-	  display: flex;
+    display: flex;
 }
 
 .card
@@ -237,13 +237,13 @@ img.emoji
 }
 
 #username_autocomplete div.tooltip::after {
-	  content: attr(data-tooltip);
-	  font-size: 0.6em;
-	  margin-left: 1em;
-	  margin-right: 1em;
-	  border: 1pt solid #444;
-	  background-color: #FFF;
-	  padding: 0.2em;
+    content: attr(data-tooltip);
+    font-size: 0.6em;
+    margin-left: 1em;
+    margin-right: 1em;
+    border: 1pt solid #444;
+    background-color: #FFF;
+    padding: 0.2em;
 }
 
 /* Remaining brutaldon-specific tweaks */
@@ -308,9 +308,9 @@ img.fav-avatar {
 }
 
 .attachments figure {
-	  border: 0.2ex solid #444;
-	  max-width: 256px;
-	  padding: 1em;
+    border: 0.2ex solid #444;
+    max-width: 256px;
+    padding: 1em;
 }
 
 figure.level-item > video
@@ -318,6 +318,18 @@ figure.level-item > video
     max-height: 256px;
     max-width: 256px;
 }
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+td, th
+{
+    padding: 0.25em;
+    border: 1px solid #444;
+}
+
+td.empty-cell, th.empty-cell { border: none; }
 
 @media screen and (max-width: 768px) {
     .box {
