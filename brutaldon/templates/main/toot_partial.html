@@ -81,10 +81,10 @@
 
                 {% if toot.media_attachments %}
                 <br>
-                <div class="level attachments">
+                <div class="columns is-multiline attachments is-gapless">
                     {% for media in toot.media_attachments %}
                     {% if media.type == "image" %}
-                        <figure class="level-item attachment-image">
+                        <figure class="column attachment-image">
                             <a href="{{ media.url }}">
                                 {% if toot.sensitive %}
                                     <img src="{% static "images/sensitive.png" %}"
@@ -105,8 +105,8 @@
                             </a>
                         </figure>
                     {% else %}
-                        <figure class="level-item is-max-256">
-                            <video controls loop
+                        <figure class="column">
+                            <video controls loop class="is-max-256"
                                    poster="{{ media.preview_url }}">
                                 <source src="{{ media.url }}" type="video/mp4">
                                 <a href="{{ media.url }}">

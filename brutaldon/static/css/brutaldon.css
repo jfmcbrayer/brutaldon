@@ -102,11 +102,12 @@ emoji-link
     font-size: 2em;
 }
 
-.level.attachments
+.content figure.attachment-image
 {
-    overflow-x: auto;
+    text-align:left;
+    margin-left: 0;
+    margin-right: 0;
 }
-
 
 @media screen and (max-width: 768px) {
     .media {

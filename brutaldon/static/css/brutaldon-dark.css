@@ -105,6 +105,13 @@ emoji-link
     font-size: 2em;
 }
 
+.content figure.attachment-image
+{
+    text-align:left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
 
 @media screen and (max-width: 768px) {
     .media {
