@@ -184,12 +184,7 @@
                 </div>
                 <div class="level-right">
                     {% if toot.account.acct == own_acct.acct %}
-                    <a class="level-item" href="{% url "redraft" toot.id %}"
-                       ic-get-from="{% url "redraft" toot.id %}"
-                       ic-indicator="#page-load-indicator"
-                       ic-target="#main"
-                       ic-select-from-response="#main"
-                       ic-push-url="true">
+                    <a class="level-item" href="{% url "redraft" toot.id %}">
                         redraft
                     </a>
                     <a class="level-item" href="{% url "delete" toot.id %}"
