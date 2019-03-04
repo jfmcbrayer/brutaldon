@@ -584,9 +584,16 @@ def redraft(request, id):
     if request.method == 'GET':
         account, mastodon = get_usercontext(request)
         toot = mastodon.status(id)
-        toot_content = get_text(toot.content)
-        toot_content = re.sub("(^\n)|(\n$)", '', re.sub("\n\n", "\n", toot_content))
-        form = PostForm({'status': toot_content,
+        toot_content = get_text(toot.content) # convert to plain text
+        # fix up white space
+        toot_content = re.sub("(^\n)|(\n$)", '',
+                              re.sub("\n\n", "\n", toot_content))
+        # Fix up references
+        for mention in toot.mentions:
+            menchie_re = re.compile( r"\s?@" + mention.username + r"\s", re.I)
+            toot_content = menchie_re.sub(" @" + mention.acct + " ",
+                                          toot_content, count=1)
+        form = PostForm({'status': toot_content.strip(),
                          'visibility': toot.visibility,
                          'spoiler_text': toot.spoiler_text,
                          'media_text_1': safe_get_attachment(toot, 0).description,
