@@ -972,10 +972,7 @@ def emoji_reference(request):
 
 @br_login_required
 def list_filters(request):
-    try:
-        account, mastodon = get_usercontext(request)
-    except NotLoggedInException:
-        return redirect(about)
+    account, mastodon = get_usercontext(request)
     filters = mastodon.filters()
     return render(request, 'filters/list.html',
                   {'account': account,
@@ -1079,3 +1076,22 @@ def edit_filter(request, id):
                         'account': account,
                         'filter': filter,
                         'preferences': account.preferences})
+
+@br_login_required
+def follow_requests(request, id=None):
+    account, mastodon = get_usercontext(request)
+    if request.method == 'GET':
+        reqs = mastodon.follow_requests()
+        return render(request, 'requests/list.html',
+                      {'account': account,
+                       'preferences': account.preferences,
+                       'requests': reqs})
+    elif id is None:
+        return redirect(follow_requests)
+    else:
+        if request.POST.get("accept", None):
+            mastodon.follow_request_authorize(id)
+        elif request.POST.get("rejest", None):
+            mastodon.follow_request_reject(id)
+        return redirect(follow_requests)
+
