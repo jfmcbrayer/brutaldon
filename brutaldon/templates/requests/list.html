@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="title">Follow requests</h1>
+
+        {% if not requests %}
+            <p>No follow requests.</p>
+        {% endif %}
+
+
+        {% for request in requests %}
+            {% include "requests/request_partial.html" %}
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

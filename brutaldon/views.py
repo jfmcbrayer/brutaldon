@@ -1091,7 +1091,7 @@ def follow_requests(request, id=None):
     else:
         if request.POST.get("accept", None):
             mastodon.follow_request_authorize(id)
-        elif request.POST.get("rejest", None):
+        elif request.POST.get("reject", None):
             mastodon.follow_request_reject(id)
         return redirect(follow_requests)
 

@@ -64,5 +64,7 @@ urlpatterns = [
     path('filters/create', views.create_filter, name='create_filter'),
     path('filters/delete/<id>', views.delete_filter, name='delete_filter'),
     path('filters/edit/<id>', views.edit_filter, name='edit_filter'),
+    path('requests/', views.follow_requests, name='follow_requests'),
+    path('requests/<id>', views.follow_requests, name='follow_requests'),
     path('', views.home, name=''),
 ]

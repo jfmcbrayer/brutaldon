@@ -1,0 +1,21 @@
+<article class="media box">
+    <figure class="media-left">
+        <p class="image is-64x64">
+            <img src="{{ request.avatar_static }}"
+                 alt="{{ request.acct }}">
+        </p>
+    </figure>
+    <div class="media-content">
+        <strong>{{ request.display_name }}</strong> ({{ request.acct }})
+    </div>
+    <div class="media-right">
+        <form method="POST" action="{% url "follow_requests" request.id %}">
+            {% csrf_token %}
+            <button name="accept" class="button is-success" value="Accept">
+                Accept
+            </button>
+            <button name="reject" class="button is-danger" value="Reject">
+                Reject
+            </button>
+        </form>
+    </div>
