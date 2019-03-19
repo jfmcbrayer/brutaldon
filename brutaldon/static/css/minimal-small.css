@@ -3,7 +3,7 @@ body, input, textarea, select {
     background-color: #FAFAFA;
     color: #000;
     margin: 1ex;
-    font-size: 13px;
+    font-size: 11pt;
 }
 
 input[text], textarea
