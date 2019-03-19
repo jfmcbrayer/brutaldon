@@ -3,7 +3,7 @@ body, input, textarea, select {
     background-color: #FAFAFA;
     color: #000;
     margin: 1ex;
-    font-size: normal;
+    font-size: 13px;
 }
 
 input[text], textarea
@@ -97,7 +97,7 @@ img.is-32x32 {
     }
 }
 
-body > section > div.container {
+main > div.container {
     max-width: 100ex;
 }
 
