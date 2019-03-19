@@ -265,3 +265,6 @@ hr.is-hidden
 	  display: flex;
 }
 
+.navbar-item span {
+    padding-right: 1ex;
+}
