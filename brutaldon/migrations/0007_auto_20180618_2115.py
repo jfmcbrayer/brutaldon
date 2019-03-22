@@ -34,6 +34,9 @@ def set_up_default_themes(apps, schema_editor):
     small = Theme(name="Minimalist Small", main_css="css/minimal-small.css",
                   is_brutalist=True)
     small.save()
+    dark2 = Theme(name="Minimalist Dark", main_css="css/minimal-dark.css",
+                 is_brutalist=True)
+    dark2.save()
     vt240 = Theme(name="vt240 amber", main_css="css/vt240don-amber.css",
                   is_brutalist=True)
     vt240.save()
