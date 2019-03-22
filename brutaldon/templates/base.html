@@ -31,6 +31,8 @@
                 <link rel="stylesheet"
                       href="{% static preferences.theme.main_css %}">
                 <link rel="stylesheet" href="{% static preferences.theme.tweaks_css %}">
+                <link rel="stylesheet"
+                      href="{% static 'css/magnific-popup.css' %}">
                 {% if not preferences.theme.is_brutalist %}
                     <link rel="stylesheet"
                           href="{% static 'css/fork-awesome.min.css' %}">
@@ -38,8 +40,6 @@
                           href="{% static 'css/bulma-badge.min.css' %}">
                     <link rel="stylesheet"
                           href="{% static 'css/bulma-tooltip.min.css' %}">
-                    <link rel="stylesheet"
-                          href="{% static 'css/magnific-popup.css' %}">
                 {% endif %}
                 {% if not preferences.no_javascript %}
                     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
