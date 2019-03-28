@@ -268,3 +268,29 @@ hr.is-hidden
 .navbar-item span {
     padding-right: 1ex;
 }
+
+.card
+{
+    padding: 1em;
+    margin-top: 1em;
+    border: 0.2em solid black;
+}
+
+.card-header
+{
+    padding-bottom: 1em;
+    border-bottom: 0.2em solid black;
+}
+
+.card-image
+{
+    padding: 1em;
+    margin 0, auto;
+}
+
+.button
+{
+    border: 0.2em solid #444;
+    display: inline;
+    padding: 0.4em;
+}
