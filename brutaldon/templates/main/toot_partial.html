@@ -54,27 +54,27 @@
 
                 {% if toot.card %}
                 <div class="card">
-                    <div class="card-header">
-                        <div class="card-header-title">
-                            <a href="{{ toot.card.url }}"> {{ toot.card.title }} </a>
-                        </div>
-                    </div>
-                    {% if toot.card.description %}
                     <div class="card-content columns">
                         {% if toot.card.image %}
                         <div class="column is-one-third">
                             <a href="{{ toot.card.url }}">
                                 <img alt="{{ toot.card.title }}"
                                      src="{{ toot.card.image }}"
-                                     class="is-max-256">
+                                     class="is-max-128">
                             </a>
                         </div>
                         {% endif %}
                         <div class="column is-two-thirds">
+                            <p>
+                                <strong>
+                                    <a href="{{ toot.card.url }}">
+                                        {{ toot.card.title }}
+                                    </a>
+                                </strong>
+
                             <p>{{ toot.card.description }}</p>
                         </div>
                     </div>
-                    {% endif %}
                 </div>
                 {% endif %}
 
