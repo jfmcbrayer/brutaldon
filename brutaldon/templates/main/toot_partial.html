@@ -53,83 +53,81 @@
                 {% endif %}
 
                 {% if toot.card %}
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-header-title">
-                                <a href="{{ toot.card.url }}"> {{ toot.card.title }} </a>
-                            </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-title">
+                            <a href="{{ toot.card.url }}"> {{ toot.card.title }} </a>
                         </div>
-                        {% if toot.card.description %}
-                        <div class="card-content columns">
-                            {% if toot.card.image %}
-                                <div class="column is-one-third">
-                                    <figure>
-                                        <a href="{{ toot.card.url }}">
-                                            <img alt="{{ toot.card.title }}"
-                                                 src="{{ toot.card.image }}"
-                                                 class="image is-max-256">
-                                        </a>
-                                    </figure>
-                                </div>
-                            {% endif %}
-                            <div class="column is-two-thirds">
-                                <p>{{ toot.card.description }}</p>
-                            </div>
+                    </div>
+                    {% if toot.card.description %}
+                    <div class="card-content columns">
+                        {% if toot.card.image %}
+                        <div class="column is-one-third">
+                            <a href="{{ toot.card.url }}">
+                                <img alt="{{ toot.card.title }}"
+                                     src="{{ toot.card.image }}"
+                                     class="is-max-256">
+                            </a>
                         </div>
                         {% endif %}
+                        <div class="column is-two-thirds">
+                            <p>{{ toot.card.description }}</p>
+                        </div>
                     </div>
-                {% endif %} 
+                    {% endif %}
+                </div>
+                {% endif %}
 
                 {% if toot.media_attachments %}
                 <br>
                 <div class="columns is-multiline attachments is-gapless">
                     {% for media in toot.media_attachments %}
                     {% if media.type == "image" %}
-                        <figure class="column attachment-image">
+                    <figure class="column attachment-image">
+                        <a href="{{ media.url }}">
+                            {% if toot.sensitive %}
+                            <img src="{% static "images/sensitive.png" %}"
+                                 {% else %}
+                            <img src="{{ media.preview_url }}"
+                                 {% endif %}
+                                 alt="{% if media.description  %}
+                                      {{ media.description }}
+                                      {% elif media.text_url %}
+                                      {{ media.text_url }}
+                                      {% else %}
+                                      {{ media.url  }}
+                                      {% endif %}"
+                                 {% if media.description %}
+                                 title="{{ media.description }}"
+                                 {% endif %}
+                                 class="image is-max-256">
+                        </a>
+                    </figure>
+                    {% else %}
+                    <figure class="column">
+                        <video controls loop class="is-max-256"
+                               poster="{{ media.preview_url }}">
+                            <source src="{{ media.url }}" type="video/mp4">
                             <a href="{{ media.url }}">
                                 {% if toot.sensitive %}
-                                    <img src="{% static "images/sensitive.png" %}"
-                                {% else %}
-                                    <img src="{{ media.preview_url }}"
-                                {% endif %}
-                                         alt="{% if media.description  %}
-                                              {{ media.description }}
-                                         {% elif media.text_url %}
-                                              {{ media.text_url }}
-                                         {% else %}
-                                              {{ media.url  }}
-                                         {% endif %}"
-                                         {% if media.description %}
-                                         title="{{ media.description }}"
-                                         {% endif %}
-                                         class="image is-max-256">
+                                <img src="{% static "images/sensitive.png" %}"
+                                     {% else %}
+                                <img src="{{ media.preview_url }}"
+                                     {% endif %}
+                                     alt="{% if media.description  %}
+                                          {{ media.description }}
+                                          {% elif media.text_url %}
+                                          {{ media.text_url }}
+                                          {% else %}
+                                          {{ media.url  }}
+                                          {% endif %}"
+                                     {% if media.description %}
+                                     title="{{ media.description }}"
+                                     {% endif %}
+                                     class="image is-max-256">
                             </a>
-                        </figure>
-                    {% else %}
-                        <figure class="column">
-                            <video controls loop class="is-max-256"
-                                   poster="{{ media.preview_url }}">
-                                <source src="{{ media.url }}" type="video/mp4">
-                                <a href="{{ media.url }}">
-                                    {% if toot.sensitive %}
-                                        <img src="{% static "images/sensitive.png" %}"
-                                    {% else %}
-                                        <img src="{{ media.preview_url }}"
-                                    {% endif %}
-                                             alt="{% if media.description  %}
-                                                  {{ media.description }}
-                                             {% elif media.text_url %}
-                                                  {{ media.text_url }}
-                                             {% else %}
-                                                  {{ media.url  }}
-                                             {% endif %}"
-                                             {% if media.description %}
-                                             title="{{ media.description }}"
-                                             {% endif %}
-                                             class="image is-max-256">
-                                </a>
-                            </video>
-                        </figure>
+                        </video>
+                    </figure>
                     {% endif %}
 
                     {% endfor %}
@@ -144,13 +142,13 @@
                 <div class="level-left">
                     <a href="{% url "reply" toot.id %}#toot-{{ toot.id }}" class="level-item">
                         {% if toot.replies_count > 0 %}
-                            <span class="fa fa-reply-all">
-                                <span class="is-hidden-mobile"><strong>Reply</strong></span>
-                            </span>
+                        <span class="fa fa-reply-all">
+                            <span class="is-hidden-mobile"><strong>Reply</strong></span>
+                        </span>
                         {% else %}
-                            <span class="fa fa-reply">
-                                <span class="is-hidden-mobile">Reply</span>
-                            </span>
+                        <span class="fa fa-reply">
+                            <span class="is-hidden-mobile">Reply</span>
+                        </span>
                         {% endif %}
                     </a>
                     {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
@@ -200,7 +198,7 @@
                     {{ toot.visibility }}
                     &nbsp;&nbsp;
                     {% if toot.in_reply_to_id or toot.replies_count > 0 %}
-                        <a class="level-item" href="{% url "thread" toot.id %}#toot-{{ toot.id }}">
+                    <a class="level-item" href="{% url "thread" toot.id %}#toot-{{ toot.id }}">
                         <strong>thread</strong>
                     </a>
                     {% else %}
