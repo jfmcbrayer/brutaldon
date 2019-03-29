@@ -71,7 +71,9 @@
 
 
     </head>
-    <body ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+    <body ic-enhance="true" ic-target="body"
+          ic-global-indicator="#page-load-indicator"
+          ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
         <div id="page-load-indicator"></div>
         <div id="new-toot-modal" class="modal"></div>
         {% block navbar %}
@@ -165,8 +167,7 @@
             </nav>
         {% endblock %}
 
-            <main id="main" class="section" ic-enhance="true"
-                  ic-global-indicator="#page-load-indicator">
+        <main id="main" class="section">
             <div class="container">
                 {% block content %}
                     <h1 class="title">
@@ -212,7 +213,8 @@
 
              {% if preferences.lightbox %}
              Intercooler.ready(function ()
-                 {
+             {
+                 document.title = $("title").html();
                      $('.attachments').each(function() {
                          $(this).magnificPopup({
                              delegate: 'figure.attachment-image a',

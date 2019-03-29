@@ -3,20 +3,6 @@ String.prototype.trunc =
         return this.substr(0,n-1)+(this.length>n?'&hellip;':'');
     };
 
-function setTitle(user, page)
-{
-    document.title = `Brutaldon (${user}) – ${page}`;
-}
-
-function afterPage(user, page)
-{
-    setTitle(user,page);
-    var menu = document.querySelector('#navMenu');
-    menu.classList.remove('is-active');
-    var burger = document.querySelector('.navbar-burger');
-    burger.classList.remove('is-active');
-    $('#page-load-indicator').hide();
-}
 
 function menuPrepare() {
     // Remove is-active from navbar menu
