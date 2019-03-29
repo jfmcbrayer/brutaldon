@@ -71,9 +71,7 @@
 
 
     </head>
-    <body ic-enhance="true"
-          ic-global-indicator="#page-load-indicator"
-          ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+    <body ic-global-include='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
         <div id="page-load-indicator"></div>
         <div id="new-toot-modal" class="modal"></div>
         {% block navbar %}
@@ -167,7 +165,8 @@
             </nav>
         {% endblock %}
 
-        <main id="main" class="section">
+            <main id="main" class="section" ic-enhance="true"
+                  ic-global-indicator="#page-load-indicator">
             <div class="container">
                 {% block content %}
                     <h1 class="title">
