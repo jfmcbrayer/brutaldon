@@ -138,6 +138,7 @@
                                 </a>
                                 <a class="navbar-item" href="{% url "toot" %}"
                                    ic-enhance="false"
+                                   ic-push-url="false"
                                    ic-get-from="{% url "toot" %}"
                                    ic-target="#new-toot-modal"
                                    ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
@@ -146,6 +147,7 @@
                                 </a>
                                 <a class="navbar-item" href="{% url "search" %}"
                                    ic-enhance="false"
+                                   ic-push-url="false"
                                    ic-get-from="{% url "search" %}"
                                    ic-target="#new-toot-modal"
                                    ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
