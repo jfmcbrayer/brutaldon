@@ -11,9 +11,7 @@
  $(".modal-background").on("click", function () { $("#new-toot-modal").toggleClass("is-active"); });
  
  Mousetrap.bind('ctrl+enter', function(e) {
-     var form = document.querySelector('#post-form');
-     form.submit();
-     return true;
+     Intercooler.triggerRequest("#post-form");
  });
  Mousetrap.bind('esc', function(e) { $("#new-toot-modal").toggleClass("is-active"); });
 </script>

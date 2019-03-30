@@ -187,6 +187,7 @@
                         redraft
                     </a>
                     <a class="level-item" href="{% url "delete" toot.id %}"
+                       ic-enhance="false"
                        ic-delete-from="{% url "delete" toot.id %}"
                        ic-indicator="#toot-spinner-{{toot.id}}"
                        ic-confirm="Really delete that toot?"

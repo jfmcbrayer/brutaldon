@@ -33,9 +33,7 @@ Brutaldon ({{ own_acct.username }}) - reply
     <script type="application/javascript">
      document.addEventListener('DOMContentLoaded', function () {
          Mousetrap.bind('ctrl+enter', function(e) {
-             var form = document.querySelector('#post-form');
-             form.submit();
-             return true;
+             Intercooler.triggerRequest("#post-form");
          });
      });
     </script>
