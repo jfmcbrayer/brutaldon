@@ -382,7 +382,6 @@ def error(request):
     return render(request, 'error.html', { 'error': _("Not logged in yet.")})
 
 @br_login_required
-@cache_page(10)
 def note(request, next=None, prev=None):
     try:
         account, mastodon = get_usercontext(request)
