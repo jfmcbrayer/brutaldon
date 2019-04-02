@@ -173,7 +173,9 @@ def toot_matches_filters(toot, filters=[]):
             return filter.phrase
     phrases = [maybe_rewrite_filter(x) for x in filters]
     pattern = "|".join(phrases)
-    try: 
+    try:
+        if toot.get('type') in ['reblog', 'favourite']:
+            return re.search(pattern, toot.status.spoiler_text + toot.status.content, re.I)
         return re.search(pattern, toot.spoiler_text + toot.content, re.I)
     except:
         return False
