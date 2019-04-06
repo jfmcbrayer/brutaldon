@@ -124,8 +124,9 @@
 
 <div class="field has-addons">
     <div class="control level is-mobile">
-        <img class="image avatar is-48x48 level-item" src="{{ own_acct.avatar_static }}"
-             alt="">
+        <a href="{% url "user" own_acct.acct %}" class="image avatar is-48x48 level-item" >
+            <img src="{{ own_acct.avatar_static }}" alt="[{{ own_acct.acct }}]">
+        </a>
         <input type="submit" class="button is-primary level-item"
                name="toot" value="Toot">
         <a href="{% url "emoji" %}" target="_blank"  rel="noopener noreferrer"
