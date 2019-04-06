@@ -8,7 +8,7 @@ from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from django.utils.translation import gettext as _
 from brutaldon.forms import LoginForm, OAuthLoginForm, PreferencesForm, PostForm, FilterForm
 from brutaldon.models import Client, Account, Preference, Theme
-from mastodon import Mastodon, AttribAccessDict, MastodonError, MastodonAPIError
+from mastodon import Mastodon, AttribAccessDict, MastodonError, MastodonAPIError, MastodonNotFoundError
 from urllib import parse
 from pdb import set_trace
 from inscriptis import get_text
@@ -420,7 +420,10 @@ def note(request, next=None, prev=None):
 @br_login_required
 def thread(request, id):
     account, mastodon = get_usercontext(request)
-    context = mastodon.status_context(id)
+    try:
+        context = mastodon.status_context(id)
+    except MastodonNotFoundError:
+        raise Http404(_("Thread not found; the message may have been deleted."))
     toot = mastodon.status(id)
     notifications = _notes_count(account, mastodon)
     filters = get_filters(mastodon, context='thread')
