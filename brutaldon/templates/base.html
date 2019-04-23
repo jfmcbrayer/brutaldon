@@ -89,78 +89,76 @@
                         {% endif %}
                     </a>
                 </div>
-                {% if request.session.instance %}
-                    {% if request.session.username or request.session.access_token %}
-                        <div class="navbar-menu is-active" id="navMenu">
-                            <!-- navbar start, navbar end -->
-                            <div class="navbar-start">
-                                <a href="{% url "home" %}" class="navbar-item">
-                                    <span class="fa fa-home"></span>
-                                    <span>Home</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "note" %}">
-                                    <span class="fa fa-bell-o"></span>
-                                    {% if preferences.notifications and not preferences.theme.is_brutalist %}
-                                        <span ic-src="{% url 'notes_count' %}"
-                                              ic-poll="{{ preferences.poll_frequency }}s"
-                                              ic-target="this"
-                                              ic-select-from-response="#notes-count">
-                                            <span
-                                                {% if notifications and notifications != '0' %}
-                                                class="badge"
-                                                {% endif %}
-                                                data-badge="{{ notifications }}">
-                                                Notifications</span>
-                                            </span>
-                                    {% elif notifications and preferences.notifications %}
-                                            <span ic-src="{% url 'notes_count' %}"
-                                                  ic-poll="{{ preferences.poll_frequency }}s"
-                                                  ic-target="this"
-                                                  ic-select-from-response="#notes-count">
-                                                <span >Notifications ({{ notifications }})</span>
-                                            </span>
-                                    {% else %}
-                                        <span >Notifications</span>
-                                    {% endif %}
-                                </a>
-                                <a class="navbar-item" href="{% url "local" %}">
-                                    <span class="fa fa-community"></span>
-                                    <span >Local</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "fed" %}">
-                                    <span class="fa fa-globe"></span>
-                                    <span >Federated</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "toot" %}"
-                                   ic-get-from="{% url "toot" %}"
-                                   ic-target="#new-toot-modal"
-                                   ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
-                                    <span class="fa fa-edit"> </span>
-                                    <span >New Toot</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "search" %}"
-                                   ic-get-from="{% url "search" %}"
-                                   ic-target="#new-toot-modal"
-                                   ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
-                                    <span class="fa fa-search"> </span>
-                                    <span >Search</span>
-                                </a>
-                            </div>
-                            <div class="navbar-end" >
-                                <a class="navbar-item" href="{% url "settings" %}">
-                                    <span class="fa fa-gear"></span>
-                                    <span >Settings</span>
-                                </a>
-                                <a class="navbar-item" href="{% url "logout" %}"
-                                   ic-get-from="{% url "logout" %}"
-                                   ic-target="body"
-                                   ic-confirm="Are you sure you want to log out?">
-                                    <span class="fa fa-power-off"></span>
-                                    <span >Log out</span>
-                                </a>
-                            </div>
+                {% if request.session.active_instance and request.session.active_username %}
+                    <div class="navbar-menu is-active" id="navMenu">
+                        <!-- navbar start, navbar end -->
+                        <div class="navbar-start">
+                            <a href="{% url "home" %}" class="navbar-item">
+                                <span class="fa fa-home"></span>
+                                <span>Home</span>
+                            </a>
+                            <a class="navbar-item" href="{% url "note" %}">
+                                <span class="fa fa-bell-o"></span>
+                                {% if preferences.notifications and not preferences.theme.is_brutalist %}
+                                    <span ic-src="{% url 'notes_count' %}"
+                                          ic-poll="{{ preferences.poll_frequency }}s"
+                                          ic-target="this"
+                                          ic-select-from-response="#notes-count">
+                                        <span
+                                            {% if notifications and notifications != '0' %}
+                                            class="badge"
+                                            {% endif %}
+                                            data-badge="{{ notifications }}">
+                                            Notifications</span>
+                                    </span>
+                                {% elif notifications and preferences.notifications %}
+                                    <span ic-src="{% url 'notes_count' %}"
+                                          ic-poll="{{ preferences.poll_frequency }}s"
+                                          ic-target="this"
+                                          ic-select-from-response="#notes-count">
+                                        <span >Notifications ({{ notifications }})</span>
+                                    </span>
+                                {% else %}
+                                    <span >Notifications</span>
+                                {% endif %}
+                            </a>
+                            <a class="navbar-item" href="{% url "local" %}">
+                                <span class="fa fa-community"></span>
+                                <span >Local</span>
+                            </a>
+                            <a class="navbar-item" href="{% url "fed" %}">
+                                <span class="fa fa-globe"></span>
+                                <span >Federated</span>
+                            </a>
+                            <a class="navbar-item" href="{% url "toot" %}"
+                               ic-get-from="{% url "toot" %}"
+                               ic-target="#new-toot-modal"
+                               ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
+                                <span class="fa fa-edit"> </span>
+                                <span >New Toot</span>
+                            </a>
+                            <a class="navbar-item" href="{% url "search" %}"
+                               ic-get-from="{% url "search" %}"
+                               ic-target="#new-toot-modal"
+                               ic-on-complete="$('#new-toot-modal').toggleClass('is-active');">
+                                <span class="fa fa-search"> </span>
+                                <span >Search</span>
+                            </a>
                         </div>
-                    {% endif %}
+                        <div class="navbar-end" >
+                            <a class="navbar-item" href="{% url "settings" %}">
+                                <span class="fa fa-gear"></span>
+                                <span >Settings</span>
+                            </a>
+                            <a class="navbar-item" href="{% url "logout" %}"
+                               ic-get-from="{% url "logout" %}"
+                               ic-target="body"
+                               ic-confirm="Are you sure you want to log out?">
+                                <span class="fa fa-power-off"></span>
+                                <span >Log out</span>
+                            </a>
+                        </div>
+                    </div>
                 {% endif %}
             </nav>
         {% endblock %}
