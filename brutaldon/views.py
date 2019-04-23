@@ -180,6 +180,23 @@ def toot_matches_filters(toot, filters=[]):
     except:
         return False
 
+def switch_accounts(request, new_account):
+    """Try to switch accounts to the specified account, if it is already in
+    the user's session. Sets up new session variables. Returns boolean success
+    code."""
+    accounts_dict = request.session.get("accounts_dict")
+    if not accounts_dict or not new_account in accounts_dict.keys():
+        return False
+    try:
+        account = Account.objects.get(id=accounts_dict[new_account]['account_id'])
+        if account.username != new_account:
+            return False
+    except Account.DoesNotExist:
+        return False
+    request.session['active_user'] = accounts_dict[new_account]['user']
+    request.session['active_username'] = account.username
+    return True
+
 ###
 ### View functions
 ###
