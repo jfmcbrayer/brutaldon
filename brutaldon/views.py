@@ -1132,3 +1132,12 @@ def follow_requests(request, id=None):
             mastodon.follow_request_reject(id)
         return redirect(follow_requests)
 
+@br_login_required
+def accounts(request):
+    active_account, mastodon = get_usercontext(request)
+    if request.method == 'GET':
+        accounts = [x['user'] for x in request.session.get('accounts_dict').values()]
+        return render(request, 'accounts/list.html',
+                      {'active_account': active_account,
+                       'accounts': accounts,
+                       'preferences': active_account.preferences})
