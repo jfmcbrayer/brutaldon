@@ -25,8 +25,8 @@ class NotLoggedInException(Exception):
 def get_usercontext(request):
     if is_logged_in(request):
         try:
-            client = Client.objects.get(api_base_id=request.session['instance'])
-            user = Account.objects.get(username=request.session['username'])
+            client = Client.objects.get(api_base_id=request.session['active_instance'])
+            user = Account.objects.get(username=request.session['active_username'])
         except (Client.DoesNotExist, Client.MultipleObjectsReturned,
                 Account.DoesNotExist, Account.MultipleObjectsReturned):
             raise NotLoggedInException()
@@ -41,7 +41,7 @@ def get_usercontext(request):
         return None, None
 
 def is_logged_in(request):
-    return request.session.has_key('user')
+    return request.session.has_key('active_user')
 
 def _notes_count(account, mastodon):
     if not mastodon:
@@ -113,13 +113,13 @@ def user_search_inner(request, query):
     account, mastodon = get_usercontext(request)
     results = mastodon.search(query)
     return render(request, 'intercooler/users.html',
-                  {'users': "\n".join([ user.acct for user in results.accounts ]),
+                  {'active_users': "\n".join([ user.acct for user in results.accounts ]),
                    'preferences': account.preferences })
 
 def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None, filter_context='home'):
     account, mastodon = get_usercontext(request)
     data = mastodon.timeline(timeline, limit=40, max_id=max_id, since_id=since_id)
-    form = PostForm(initial={'visibility': request.session['user'].source.privacy})
+    form = PostForm(initial={'visibility': request.session['active_user'].source.privacy})
     try:
         prev = data[0]._pagination_prev
         if len(mastodon.timeline(since_id=prev['since_id'])) == 0:
@@ -149,7 +149,7 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
     return render(request, 'main/%s_timeline.html' % timeline,
                   {'toots': data, 'form': form, 'timeline': timeline,
                    'timeline_name': timeline_name,
-                   'own_acct': request.session['user'],
+                   'own_acct': request.session['active_user'],
                    'preferences': account.preferences,
                    'notifications': notifications,
                   'prev': prev, 'next': next})
@@ -213,7 +213,7 @@ def tag(request, tag):
     notifications = _notes_count(account, mastodon)
     return render(request, 'main/timeline.html',
                   {'toots': data, 'timeline_name': '#'+tag,
-                   'own_acct': request.session['user'],
+                   'own_acct': request.session['active_user'],
                    'notifications': notifications,
                    'preferences': account.preferences})
 
@@ -235,12 +235,12 @@ def login(request):
             if tmp_base.netloc == '':
                 api_base_url = parse.urlunparse(('https', tmp_base.path,
                                                  '','','',''))
-                request.session['instance_hostname'] = tmp_base.path
+                request.session['active_instance_hostname'] = tmp_base.path
             else:
                 api_base_url = api_base_url.lower()
-                request.session['instance_hostname'] = tmp_base.netloc
+                request.session['active_instance_hostname'] = tmp_base.netloc
 
-            request.session['instance'] = api_base_url
+            request.session['active_instance'] = api_base_url
             try:
                 client = Client.objects.get(api_base_id=api_base_url)
             except (Client.DoesNotExist, Client.MultipleObjectsReturned):
@@ -254,8 +254,8 @@ def login(request):
                     client_secret = client_secret)
                 client.save()
 
-            request.session['client_id'] = client.client_id
-            request.session['client_secret'] = client.client_secret
+            request.session['active_client_id'] = client.client_id
+            request.session['active_client_secret'] = client.client_secret
 
             mastodon = Mastodon(
                 client_id = client.client_id,
@@ -272,9 +272,9 @@ def login(request):
 @never_cache
 def oauth_callback(request):
     code = request.GET.get('code', '')
-    mastodon = Mastodon(client_id=request.session['client_id'],
-                        client_secret=request.session['client_secret'],
-                        api_base_url=request.session['instance'])
+    mastodon = Mastodon(client_id=request.session['active_client_id'],
+                        client_secret=request.session['active_client_secret'],
+                        api_base_url=request.session['active_instance'])
     redirect_uri = request.build_absolute_uri(reverse('oauth_callback'))
     access_token = mastodon.log_in(code=code,
                                    redirect_uri=redirect_uri,
@@ -283,7 +283,7 @@ def oauth_callback(request):
     user = mastodon.account_verify_credentials()
     try:
         account = Account.objects.get(username=user.username + '@' +
-                                      request.session['instance_hostname'])
+                                      request.session['active_instance_hostname'])
         account.access_token = access_token
         if not account.preferences:
             preferences = Preference(theme = Theme.objects.get(id=1))
@@ -295,13 +295,13 @@ def oauth_callback(request):
     except (Account.DoesNotExist, Account.MultipleObjectsReturned):
         preferences = Preference(theme = Theme.objects.get(id=1))
         preferences.save()
-        account = Account(username=user.username + '@' + request.session['instance_hostname'],
+        account = Account(username=user.username + '@' + request.session['active_instance_hostname'],
                           access_token = access_token,
-                          client = Client.objects.get(api_base_id=request.session['instance']),
+                          client = Client.objects.get(api_base_id=request.session['active_instance']),
                           preferences = preferences)
         account.save()
-    request.session['user'] = user
-    request.session['username'] = user.username + '@' + request.session['instance_hostname']
+    request.session['active_user'] = user
+    request.session['active_username'] = user.username + '@' + request.session['active_instance_hostname']
     return redirect(home)
 
 
@@ -318,12 +318,12 @@ def old_login(request):
             if tmp_base.netloc == '':
                 api_base_url = parse.urlunparse(('https', tmp_base.path,
                                                  '','','',''))
-                request.session['instance_hostname'] = tmp_base.path
+                request.session['active_instance_hostname'] = tmp_base.path
             else:
                 api_base_url = api_base_url.lower()
-                request.session['instance_hostname'] = tmp_base.netloc
+                request.session['active_instance_hostname'] = tmp_base.netloc
 
-            request.session['instance'] = api_base_url
+            request.session['active_instance'] = api_base_url
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
@@ -360,9 +360,9 @@ def old_login(request):
                                                scopes=['read', 'write', 'follow'])
                 account.access_token = access_token
                 user = mastodon.account_verify_credentials()
-                request.session['user'] = user
-                request.session['username'] = user.username + '@' + request.session['instance_hostname']
-                account.username = request.session['username']
+                request.session['active_user'] = user
+                request.session['active_username'] = user.username + '@' + request.session['active_instance_hostname']
+                account.username = request.session['active_username']
                 request.session['timezone'] = account.preferences.timezone;
                 account.save()
                 return redirect(home)
@@ -413,7 +413,7 @@ def note(request, next=None, prev=None):
     return render(request, 'main/notifications.html',
                   {'notes': notes,'timeline': 'Notifications',
                    'timeline_name': 'Notifications',
-                   'own_acct': request.session['user'],
+                   'own_acct': request.session['active_user'],
                    'preferences': account.preferences,
                   'prev': prev, 'next': next})
 
@@ -437,7 +437,7 @@ def thread(request, id):
                   {'context': context, 'toot': toot,
                    'ancestors': ancestors,
                    'descendants': descendants,
-                   'own_acct': request.session['user'],
+                   'own_acct': request.session['active_user'],
                    'notifications': notifications,
                    'preferences': account.preferences})
 
@@ -469,9 +469,9 @@ def user(request, username, prev=None, next=None):
     except (IndexError, AttributeError):
         next = None
     return render(request, 'main/user.html',
-                  {'toots': data, 'user': user_dict,
+                  {'toots': data, 'active_user': user_dict,
                    'relationship': relationship,
-                   'own_acct': request.session['user'],
+                   'own_acct': request.session['active_user'],
                    'preferences': account.preferences,
                    'notifications': notifications,
                   'prev': prev, 'next': next})
@@ -503,7 +503,7 @@ def settings(request):
 
             # Update this here because it's a handy place to do it.
             user_info = mastodon.account_verify_credentials()
-            request.session['user'] = user_info
+            request.session['active_user'] = user_info
 
 
             return redirect(home)
@@ -526,19 +526,19 @@ def toot(request, mention=None):
         if mention:
             if not mention.startswith('@'):
                 mention = '@'+mention
-            form = PostForm(initial={'visibility': request.session['user'].source.privacy,
+            form = PostForm(initial={'visibility': request.session['active_user'].source.privacy,
                                      'status': mention + ' ' })
         else:
-            form = PostForm(initial={'visibility': request.session['user'].source.privacy})
+            form = PostForm(initial={'visibility': request.session['active_user'].source.privacy})
         if request.GET.get('ic-request'):
             return render(request, 'intercooler/post.html',
                           {'form': form,
-                           'own_acct': request.session['user'],
+                           'own_acct': request.session['active_user'],
                            'preferences': account.preferences})
         else:
             return render(request, 'main/post.html',
                           {'form': form,
-                           'own_acct': request.session['user'],
+                           'own_acct': request.session['active_user'],
                            'preferences': account.preferences})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -554,7 +554,7 @@ def toot(request, mention=None):
                                                                          +str(index),
                                                                          None)))
             if form.cleaned_data['visibility'] == '':
-                form.cleaned_data['visibility'] = request.session['user'].source.privacy
+                form.cleaned_data['visibility'] = request.session['active_user'].source.privacy
             try:
                 try:
                     mastodon.status_post(status=form.cleaned_data['status'],
@@ -573,13 +573,13 @@ def toot(request, mention=None):
                                                      + len(form.cleaned_data['spoiler_text'])))
                 return render(request, 'main/post.html',
                               {'form': form,
-                               'own_acct': request.session['user'],
+                               'own_acct': request.session['active_user'],
                                'preferences': account.preferences})
             return redirect(home)
         else:
             return render(request, 'main/post.html',
                           {'form': form,
-                           'own_acct': request.session['user'],
+                           'own_acct': request.session['active_user'],
                            'preferences': account.preferences})
     else:
         return redirect(toot)
@@ -608,7 +608,7 @@ def redraft(request, id):
         })
         return render(request, 'main/redraft.html',
                       {'toot': toot, 'form': form, 'redraft':True,
-                       'own_acct': request.session['user'],
+                       'own_acct': request.session['active_user'],
                        'preferences': account.preferences})
     elif request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -625,7 +625,7 @@ def redraft(request, id):
                                                                          +str(index),
                                                                          None)))
             if form.cleaned_data['visibility'] == '':
-                form.cleaned_data['visibility'] = request.session['user'].source.privacy
+                form.cleaned_data['visibility'] = request.session['active_user'].source.privacy
             try:
                 try:
                     mastodon.status_post(status=form.cleaned_data['status'],
@@ -647,13 +647,13 @@ def redraft(request, id):
                                                      + len(form.cleaned_data['spoiler_text'])))
                 return render(request, 'main/redraft.html',
                               {'toot': toot, 'form': form, 'redraft': True,
-                               'own_acct': request.session['user'],
+                               'own_acct': request.session['active_user'],
                                'preferences': account.preferences})
             return redirect(home)
         else:
             return render(request, 'main/redraft.html',
                           {'toot': toot, 'form': form, 'redraft': True,
-                           'own_acct': request.session['user'],
+                           'own_acct': request.session['active_user'],
                            'preferences': account.preferences})
     else:
         return redirect(redraft, id)
@@ -677,12 +677,12 @@ def reply(request, id):
         toot = mastodon.status(id)
         context = mastodon.status_context(id)
         notifications = _notes_count(account, mastodon)
-        if toot.account.acct != request.session['user'].acct:
+        if toot.account.acct != request.session['active_user'].acct:
             initial_text = '@' + toot.account.acct + " "
         else:
             initial_text = ""
         for mention in [x for x in toot.mentions
-                        if x.acct != request.session['user'].acct and
+                        if x.acct != request.session['active_user'].acct and
                         x.acct != toot.account.acct]:
             initial_text +=('@' + mention.acct + " ")
         form = PostForm(initial={'status': initial_text,
@@ -690,7 +690,7 @@ def reply(request, id):
                                  'spoiler_text': toot.spoiler_text})
         return render(request, 'main/reply.html',
                       {'context': context, 'toot': toot, 'form': form, 'reply':True,
-                       'own_acct': request.session['user'],
+                       'own_acct': request.session['active_user'],
                        'notifications': notifications,
                        'preferences': account.preferences})
     elif request.method == 'POST':
@@ -730,14 +730,14 @@ def reply(request, id):
                                                      + len(form.cleaned_data['spoiler_text'])))
                 return render(request, 'main/reply.html',
                               {'context': context, 'toot': toot, 'form': form, 'reply': True,
-                               'own_acct': request.session['user'],
+                               'own_acct': request.session['active_user'],
                                'notifications': notifications,
                                'preferences': account.preferences})
             return HttpResponseRedirect(reverse('thread', args=[id]) + "#toot-"+str(id))
         else:
             return render(request, 'main/reply.html',
                           {'context': context, 'toot': toot, 'form': form, 'reply': True,
-                           'own_acct': request.session['user'],
+                           'own_acct': request.session['active_user'],
                            'preferences': account.preferences})
     else:
         return HttpResponseRedirect(reverse('reply', args=[id]) + "#toot-"+str(id))
@@ -758,14 +758,14 @@ def fav(request, id):
             toot['favourited'] = not toot['favourited']
             return render(request, 'intercooler/fav.html',
                           {"toot": toot,
-                           'own_acct': request.session['user'],
+                           'own_acct': request.session['active_user'],
                            "preferences": account.preferences})
         else:
             return HttpResponseRedirect(reverse('thread', args=[id]) + "#toot-"+str(id))
     else:
         return render(request, 'main/fav.html',
                       {"toot": toot,
-                       'own_acct': request.session['user'],
+                       'own_acct': request.session['active_user'],
                        "confirm_page": True,
                        'preferences': account.preferences})
 
@@ -784,14 +784,14 @@ def boost(request, id):
             toot['reblogged'] = not toot['reblogged']
             return render(request, 'intercooler/boost.html',
                           {"toot": toot,
-                           'own_acct': request.session['user'],
+                           'own_acct': request.session['active_user'],
                            "preferences": account.preferences})
         else:
             return HttpResponseRedirect(reverse('thread', args=[id]) + "#toot-"+str(id))
     else:
         return render(request, 'main/boost.html',
                       {"toot": toot,
-                       'own_acct': request.session['user'],
+                       'own_acct': request.session['active_user'],
                        'confirm_page': True,
                        "preferences": account.preferences})
 
@@ -801,7 +801,7 @@ def delete(request, id):
     account, mastodon = get_usercontext(request)
     toot = mastodon.status(id)
     if request.method == 'POST' or request.method == 'DELETE':
-        if toot.account.acct != request.session['user'].acct:
+        if toot.account.acct != request.session['active_user'].acct:
             return redirect('home')
         if not request.POST.get('cancel', None):
             mastodon.status_delete(id)
@@ -811,7 +811,7 @@ def delete(request, id):
     else:
         return render(request, 'main/delete.html',
                       {"toot": toot,
-                       'own_acct': request.session['user'],
+                       'own_acct': request.session['active_user'],
                        'confirm_page': True,
                        "preferences": account.preferences})
 
@@ -835,7 +835,7 @@ def follow(request, id):
             relationship = mastodon.account_relationships(user_dict.id)[0]
             return render(request, 'intercooler/follow.html',
                       {"user": user_dict, "relationship": relationship,
-                       'own_acct':  request.session['user'],
+                       'own_acct':  request.session['active_user'],
                        'preferences': account.preferences})
         else:
             return redirect(user, user_dict.acct)
@@ -843,7 +843,7 @@ def follow(request, id):
         return render(request, 'main/follow.html',
                       {"user": user_dict, "relationship": relationship,
                        "confirm_page": True,
-                       'own_acct':  request.session['user'],
+                       'own_acct':  request.session['active_user'],
                        'preferences': account.preferences})
 
 @never_cache
@@ -873,7 +873,7 @@ def block(request, id):
         return render(request, 'main/block.html',
                       {"user": user_dict, "relationship": relationship,
                        "confirm_page": True,
-                       'own_acct': request.session['user'],
+                       'own_acct': request.session['active_user'],
                        'preferences': account.preferences})
 
 @never_cache
@@ -903,7 +903,7 @@ def mute(request, id):
         return render(request, 'main/mute.html',
                       {"user": user_dict, "relationship": relationship,
                        "confirm_page": True,
-                       'own_acct':  request.session['user'],
+                       'own_acct':  request.session['active_user'],
                        'preferences': account.preferences})
 
 @br_login_required
@@ -912,12 +912,12 @@ def search(request):
     if request.GET.get('ic-request'):
         return render(request, 'intercooler/search.html',
                       {"preferences": account.preferences,
-                       'own_acct':  request.session['user'],
+                       'own_acct':  request.session['active_user'],
                       })
     else:
         return render(request, 'main/search.html',
                       {"preferences": account.preferences,
-                       'own_acct':  request.session['user'],
+                       'own_acct':  request.session['active_user'],
                       })
 
 @br_login_required
@@ -934,7 +934,7 @@ def search_results(request):
     notifications = _notes_count(account, mastodon)
     return render(request, 'main/search_results.html',
                   {"results": results,
-                   'own_acct': request.session['user'],
+                   'own_acct': request.session['active_user'],
                    'notifications': notifications,
                    "preferences": account.preferences})
 
@@ -949,7 +949,7 @@ def about(request):
     return render(request, 'about.html',
                       {"preferences": preferences,
                        "version": version,
-                       'own_acct': request.session.get('user', None),
+                       'own_acct': request.session.get('active_user', None),
                       })
 @cache_page(60*30)
 def privacy(request):
@@ -960,7 +960,7 @@ def privacy(request):
         preferences = None
     return render(request, 'privacy.html',
                       {"preferences": preferences,
-                       'own_acct' : request.session.get('user', None)})
+                       'own_acct' : request.session.get('active_user', None)})
 
 @cache_page(60 * 30)
 @br_login_required
@@ -972,7 +972,7 @@ def emoji_reference(request):
                       {"preferences": account.preferences,
                        "emojos": sorted(emojos, key=lambda x: x['shortcode']),
                        "notifications": notifications,
-                       'own_acct' : request.session['user']})
+                       'own_acct' : request.session['active_user']})
 
 
 @br_login_required
