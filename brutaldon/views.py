@@ -300,8 +300,16 @@ def oauth_callback(request):
                           client = Client.objects.get(api_base_id=request.session['active_instance']),
                           preferences = preferences)
         account.save()
+
     request.session['active_user'] = user
     request.session['active_username'] = user.username + '@' + request.session['active_instance_hostname']
+
+    accounts_dict = request.session.get('accounts_dict')
+    if not accounts_dict:
+        accounts_dict = {}
+    accounts_dict[account.username] = { account_id: account.id, user: user }
+    request.session['accounts_dict'] = accounts_dict
+
     return redirect(home)
 
 
@@ -365,6 +373,13 @@ def old_login(request):
                 account.username = request.session['active_username']
                 request.session['timezone'] = account.preferences.timezone;
                 account.save()
+
+                accounts_dict = request.session.get('accounts_dict')
+                if not accounts_dict:
+                    accounts_dict = {}
+                accounts_dict[account.username] = { account_id: account.id, user: user }
+                request.session['accounts_dict'] = accounts_dict
+
                 return redirect(home)
 
             except Exception as ex:
