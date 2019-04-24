@@ -529,7 +529,8 @@ def user(request, username, prev=None, next=None):
     except (IndexError, AttributeError):
         next = None
     return render(request, 'main/user.html',
-                  {'toots': data, 'active_user': user_dict,
+                  {'toots': data,
+                   'user': user_dict,
                    'relationship': relationship,
                    'own_acct': request.session['active_user'],
                    'preferences': account.preferences,
