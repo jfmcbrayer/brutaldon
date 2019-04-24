@@ -347,7 +347,7 @@ def oauth_callback(request):
     accounts_dict = request.session.get('accounts_dict')
     if not accounts_dict:
         accounts_dict = {}
-    accounts_dict[account.username] = { account_id: account.id, user: user }
+    accounts_dict[account.username] = { 'account_id': account.id, 'user': user }
     request.session['accounts_dict'] = accounts_dict
 
     return redirect(home)
