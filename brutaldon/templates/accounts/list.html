@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="title">Signed-in accounts</h1>
+
+        {% if not accounts %}
+            <p>No accounts.</p>
+        {% endif %}
+
+
+        {% for account in accounts %}
+            {% include "accounts/account_partial.html" %}
+        {% endfor %}
+
+        <p>
+            Or <a href="{% url "login" %}">log in</a> to another account to
+            add it to the list.
+        </p>
+
+    </div>
+
+{% endblock %}

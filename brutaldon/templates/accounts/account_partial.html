@@ -1,0 +1,18 @@
+<article class="media box">
+    <figure class="media-left">
+        <p class="image is-64x64">
+            <img src="{{ account.avatar_static }}"
+                 alt="{{ account.acct }}">
+        </p>
+    </figure>
+    <div class="media-content">
+        <strong>{{ account.display_name }}</strong> ({{ account.username }})
+    </div>
+    <div class="media-right">
+        <form method="POST" action="{% url "accounts" account.id %}">
+            {% csrf_token %}
+            <button class="button" name="activate">Activate</button>
+            <button class="button" name="forget">Forget</button>
+        </form>
+    </div>
+</article>

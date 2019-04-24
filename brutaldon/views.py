@@ -1065,7 +1065,7 @@ def delete_filter(request, id):
     else:
         return render(request, "filters/delete.html",
                       {"filter": filter,
-                       "own_acct": request.session["user"],
+                       "own_acct": request.session["active_user"],
                        "confirm_page": True,
                        "preferences": account.preferences})
 
@@ -1133,11 +1133,12 @@ def follow_requests(request, id=None):
         return redirect(follow_requests)
 
 @br_login_required
-def accounts(request):
+def accounts(request, id=None):
     active_account, mastodon = get_usercontext(request)
     if request.method == 'GET':
         accounts = [x['user'] for x in request.session.get('accounts_dict').values()]
         return render(request, 'accounts/list.html',
                       {'active_account': active_account,
+                       "own_acct": request.session["active_user"],
                        'accounts': accounts,
                        'preferences': active_account.preferences})
