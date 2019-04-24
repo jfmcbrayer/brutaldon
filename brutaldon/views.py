@@ -195,7 +195,30 @@ def switch_accounts(request, new_account):
         return False
     request.session['active_user'] = accounts_dict[new_account]['user']
     request.session['active_username'] = account.username
+    request.session['active_instance'] = account.client.api_base_id
     return True
+
+def forget_account(request, account_name):
+    """Forget that you were logged into an account. If it's the last one,
+    log out entirely. Sets up session variables. Returns boolean success
+    code"""
+    accounts_dict = request.session.get("accounts_dict")
+    if not accounts_dict or not account_name in accounts_dict.keys():
+        return False
+    del accounts_dict[account_name]
+    if len(accounts) == 0:
+        request.session.flush()
+        return True
+    else:
+        key = accounts_dict.keys()[0]
+        request.session['active_user'] = accounts_dict[key]['user']
+        try:
+            account = Account.objects.get(id=accounts_dict[key]['account_id'])
+            request.session['active_username'] = account.username
+        except:
+            request.session.flush()
+        return True
+
 
 ###
 ### View functions
@@ -1136,9 +1159,27 @@ def follow_requests(request, id=None):
 def accounts(request, id=None):
     active_account, mastodon = get_usercontext(request)
     if request.method == 'GET':
-        accounts = [x['user'] for x in request.session.get('accounts_dict').values()]
+        accounts = [x for x in request.session.get('accounts_dict').values()]
         return render(request, 'accounts/list.html',
                       {'active_account': active_account,
                        "own_acct": request.session["active_user"],
                        'accounts': accounts,
                        'preferences': active_account.preferences})
+    if request.method == 'POST':
+        if request.POST.get('activate'):
+            to_account = Account.objects.get(id=id).username
+            if switch_accounts(request, to_account):
+                return redirect(home)
+            else:
+                return redirect(accounts)
+        elif request.POST.get('forget'):
+            account = Account.objects.get(id=id).username
+            forget_account(request, account)
+            return redirect(accounts)
+        else:
+            accounts = [x for x in request.session.get('accounts_dict').values()]
+            return render(request, 'accounts/list.html',
+              {'active_account': active_account,
+               "own_acct": request.session["active_user"],
+               'accounts': accounts,
+               'preferences': active_account.preferences})
