@@ -426,6 +426,7 @@ def old_login(request):
                 account = Account.objects.get(username=account.username)
                 accounts_dict[account.username] = { 'account_id': account.id, 'user': user }
                 request.session['accounts_dict'] = accounts_dict
+                return redirect(home)
             except Exception as ex:
                 form.add_error('', ex)
                 return render(request, 'setup/login.html', {'form': form})
