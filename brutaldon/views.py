@@ -425,7 +425,7 @@ def old_login(request):
             except IntegrityError:
                 account = Account.objects.get(username=account.username)
                 accounts_dict[account.username] = { 'account_id': account.id, 'user': user }
-                request.settings['account_dict'] = accounts_dict
+                request.session['accounts_dict'] = accounts_dict
             except Exception as ex:
                 form.add_error('', ex)
                 return render(request, 'setup/login.html', {'form': form})
