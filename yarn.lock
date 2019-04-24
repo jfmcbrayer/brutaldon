@@ -8,9 +8,9 @@ bulma-extensions@^2.2.2:
   integrity sha512-6hV6SiRT7RZD5+scn/462Dz8RURRgxuvlCy+R5LH9U6FLn7Q/sInAA5VdK8c4DKpxZjfsipp72EAKM7yzgzRig==
 
 bulma@^0.7.1:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.2.tgz#8e944377b74c7926558830d38d8e19eaf49f5fb6"
-  integrity sha512-6JHEu8U/1xsyOst/El5ImLcZIiE2JFXgvrz8GGWbnDLwTNRPJzdAM0aoUM1Ns0avALcVb6KZz9NhzmU53dGDcQ==
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.4.tgz#7e74512e9118d9799021339e67e365ee0ac4f3f9"
+  integrity sha512-krG2rP6eAX1WE0sf6O0SC/FUVSOBX4m1PBC2+GKLpb2pX0qanaDqcv9U2nu75egFrsHkI0zdWYuk/oGwoszVWg==
 
 bulmaswatch@^0.6.2:
   version "0.6.2"
@@ -18,19 +18,19 @@ bulmaswatch@^0.6.2:
   integrity sha512-IMYjMqEnHQ1Yhtzkia3ojeFRvJr8DnLBiDMUuvLcGtJwyaAuZ8AQ4tT3TK21lcnt7cngeM3CKzBtkbQulWQI9w==
 
 fork-awesome@^1.1.0:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/fork-awesome/-/fork-awesome-1.1.5.tgz#09370221ad752a5396beb62bcb7bd11dab09a132"
-  integrity sha512-AcyPBje/cBkNjLAqxs301XjWSTLcXyktXjo0zhyrXDiEbTFi48HqBYbcPL0QBdtRHXrEdj+1rR5KublMQDwPwQ==
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/fork-awesome/-/fork-awesome-1.1.7.tgz#1427da1cac3d1713046ee88427e5fcecb9501d21"
+  integrity sha512-IHI7XCSXrKfUIWslse8c/PaaVDT1oBaYge+ju40ihL2ooiQeBpTr4wvIXhgTd2NuhntlvX+M5jYHAPTzNlmv0g==
 
 intercooler@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/intercooler/-/intercooler-1.2.1.tgz#50e9727ef2643ef7d5130c8e58f2af78098aa01f"
-  integrity sha512-2/UV4RTZltP8tlV16fqu94aum4zO3uTbDcv843qjGInd+Lf2Pfm2gs2gIlCx5fYo6yUSz9cEwqc3r/+SddugMg==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/intercooler/-/intercooler-1.2.2.tgz#f2d79dcc22fbba4de6dbe782039545df65dbe680"
+  integrity sha512-YpSnEWowbqunu06SCcVe7hC9zu8GkGM/ouk7B61T6CL33WgfH10wyVidFFX0rPtzLzMz1TG/vIzOeac5vrqRJA==
 
 jquery@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
-  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.0.tgz#8de513fa0fa4b2c7d2e48a530e26f0596936efdf"
+  integrity sha512-ggRCXln9zEqv6OqAGXFEcshF5dSBvCkzj6Gm2gzuR5fWawaX8t7cxKVkkygKODrDAzKdoYw3l/e3pm3vlT4IbQ==
 
 magnific-popup@^1.1.0:
   version "1.1.0"
@@ -38,6 +38,6 @@ magnific-popup@^1.1.0:
   integrity sha1-PnNixb0Y9nhf6Z5Z0BPiCvM9MEk=
 
 mousetrap@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.2.tgz#caadd9cf886db0986fb2fee59a82f6bd37527587"
-  integrity sha512-jDjhi7wlHwdO6q6DS7YRmSHcuI+RVxadBkLt3KHrhd3C2b+w5pKefg3oj5beTcHZyVFA9Aksf+yEE1y5jxUjVA==
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.3.tgz#80fee49665fd478bccf072c9d46bdf1bfed3558a"
+  integrity sha512-bd+nzwhhs9ifsUrC2tWaSgm24/oo2c83zaRyZQF06hYA6sANfsXHtnZ19AbbbDXCDzeH5nZBSQ4NvCjgD62tJA==
