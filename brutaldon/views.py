@@ -1,4 +1,5 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.db import IntegrityError
 from django.conf import settings as django_settings
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -412,16 +413,19 @@ def old_login(request):
                 request.session['active_username'] = user.username + '@' + request.session['active_instance_hostname']
                 account.username = request.session['active_username']
                 request.session['timezone'] = account.preferences.timezone;
-                account.save()
 
                 accounts_dict = request.session.get('accounts_dict')
                 if not accounts_dict:
                     accounts_dict = {}
                 accounts_dict[account.username] = { 'account_id': account.id, 'user': user }
                 request.session['accounts_dict'] = accounts_dict
+                account.save()
 
                 return redirect(home)
-
+            except IntegrityError:
+                account = Account.objects.get(username=account.username)
+                accounts_dict[account.username]['account_id'] = account.id
+                request.session['accounts_dict'] = accounts_dict
             except Exception as ex:
                 form.add_error('', ex)
                 return render(request, 'setup/login.html', {'form': form})
