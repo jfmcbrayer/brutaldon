@@ -213,12 +213,9 @@ def forget_account(request, account_name):
         return redirect("about")
     else:
         key = [*accounts_dict][0]
-        request.session['active_user'] = accounts_dict[key]['user']
-        try:
-            account = Account.objects.get(id=accounts_dict[key]['account_id'])
-            request.session['active_username'] = account.username
+        if switch_accounts(request, key):
             return redirect("accounts")
-        except:
+        else:
             request.session.flush()
             return redirect("about")
 
