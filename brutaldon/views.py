@@ -200,26 +200,27 @@ def switch_accounts(request, new_account):
     return True
 
 def forget_account(request, account_name):
-    """Forget that you were logged into an account. If it's the last one,
-    log out entirely. Sets up session variables. Returns boolean success
-    code"""
+    """Forget that you were logged into an account. If it's the last one, log out
+    entirely. Sets up session variables. Returns a redirect to the correct
+    view.
+    """
     accounts_dict = request.session.get("accounts_dict")
     if not accounts_dict or not account_name in accounts_dict.keys():
-        return False
+        return redirect("accounts")
     del accounts_dict[account_name]
     if len(accounts_dict) == 0:
         request.session.flush()
-        return True
+        return redirect("about")
     else:
-        set_trace()
         key = [*accounts_dict][0]
         request.session['active_user'] = accounts_dict[key]['user']
         try:
             account = Account.objects.get(id=accounts_dict[key]['account_id'])
             request.session['active_username'] = account.username
+            return redirect("accounts")
         except:
             request.session.flush()
-        return True
+            return redirect("about")
 
 
 ###
@@ -1181,8 +1182,8 @@ def accounts(request, id=None):
                 return redirect("accounts")
         elif request.POST.get('forget'):
             account = Account.objects.get(id=id).username
-            forget_account(request, account)
-            return redirect("accounts")
+            return forget_account(request, account)
+            redirect("accounts")
         else:
             accounts = [x for x in request.session.get('accounts_dict').values()]
             return render(request, 'accounts/list.html',
