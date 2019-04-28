@@ -211,13 +211,16 @@ def forget_account(request, account_name):
     if len(accounts_dict) == 0:
         request.session.flush()
         return redirect("about")
-    else:
+    elif account_name == request.session["active_username"]:
         key = [*accounts_dict][0]
         if switch_accounts(request, key):
             return redirect("accounts")
         else:
             request.session.flush()
             return redirect("about")
+    else:
+        request.session["accounts_dict"] = accounts_dict
+        return redirect("accounts")
 
 
 ###
@@ -1180,7 +1183,6 @@ def accounts(request, id=None):
         elif request.POST.get('forget'):
             account = Account.objects.get(id=id).username
             return forget_account(request, account)
-            redirect("accounts")
         else:
             accounts = [x for x in request.session.get('accounts_dict').values()]
             return render(request, 'accounts/list.html',
