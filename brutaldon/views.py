@@ -207,11 +207,12 @@ def forget_account(request, account_name):
     if not accounts_dict or not account_name in accounts_dict.keys():
         return False
     del accounts_dict[account_name]
-    if len(accounts) == 0:
+    if len(accounts_dict) == 0:
         request.session.flush()
         return True
     else:
-        key = accounts_dict.keys()[0]
+        set_trace()
+        key = [*accounts_dict][0]
         request.session['active_user'] = accounts_dict[key]['user']
         try:
             account = Account.objects.get(id=accounts_dict[key]['account_id'])
@@ -1177,11 +1178,11 @@ def accounts(request, id=None):
             if switch_accounts(request, to_account):
                 return redirect(home)
             else:
-                return redirect(accounts)
+                return redirect("accounts")
         elif request.POST.get('forget'):
             account = Account.objects.get(id=id).username
             forget_account(request, account)
-            return redirect(accounts)
+            return redirect("accounts")
         else:
             accounts = [x for x in request.session.get('accounts_dict').values()]
             return render(request, 'accounts/list.html',
