@@ -304,6 +304,8 @@ def login(request):
                 client_id = client.client_id,
                 client_secret = client.client_secret,
                 api_base_url = api_base_url)
+            client.version = mastodon.instance().get("version")
+            client.save()
             return redirect(mastodon.auth_request_url(redirect_uris=redirect_uris,
                                                       scopes=['read', 'write', 'follow']))
         else:
@@ -394,6 +396,8 @@ def old_login(request):
                 client_id = client.client_id,
                 client_secret = client.client_secret,
                 api_base_url = api_base_url)
+            client.version = mastodon.instance().get("version")
+            client.save()
 
             try:
                 account = Account.objects.get(email=email, client_id=client.id)
@@ -545,6 +549,9 @@ def user(request, username, prev=None, next=None):
 def settings(request):
     try:
         account, mastodon = get_usercontext(request)
+        account.client.version = mastodon.instance().get("version")
+        account.client.save()
+
     except NotLoggedInException:
         return redirect(about)
     if request.method == 'POST':

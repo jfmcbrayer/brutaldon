@@ -8,6 +8,7 @@ timezones = [(tz, tz) for tz in common_timezones]
 class Client(models.Model):
     name = models.CharField(default = "brutaldon", max_length=80)
     api_base_id = models.URLField(default="https://mastodon.social")
+    version = models.CharField(default="1.0", max_length=8)
     client_id = models.CharField(null=True, blank=True, max_length=2048)
     client_secret = models.CharField(null=True, blank=True, max_length=2048)
 
