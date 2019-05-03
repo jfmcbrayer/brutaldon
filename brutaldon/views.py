@@ -127,12 +127,12 @@ def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_
             prev = None
         else:
             prev['since_id'] = data[0].id
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, KeyError):
         prev = None
     try:
         next = data[-1]._pagination_next
         next['max_id'] = data[-1].id
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, KeyError):
         next = None
 
     notifications = _notes_count(account, mastodon)
@@ -470,11 +470,11 @@ def note(request, next=None, prev=None):
         prev = notes[0]._pagination_prev
         if len(mastodon.notifications(since_id=prev['since_id'])) == 0:
             prev = None
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, KeyError):
         prev = None
     try:
         next = notes[-1]._pagination_next
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, KeyError):
         next = None
     return render(request, 'main/notifications.html',
                   {'notes': notes,'timeline': 'Notifications',
@@ -528,11 +528,11 @@ def user(request, username, prev=None, next=None):
         if len(mastodon.account_statuses(user_dict.id,
                                          since_id=prev['since_id'])) == 0:
             prev = None
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, KeyError):
         prev = None
     try:
         next = data[-1]._pagination_next
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, KeyError):
         next = None
     return render(request, 'main/user.html',
                   {'toots': data,
@@ -892,7 +892,7 @@ def follow(request, id):
     try:
         user_dict = mastodon.account(id)
         relationship = mastodon.account_relationships(user_dict.id)[0]
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, KeyError):
         raise Http404("The user could not be found.")
     if request.method == 'POST':
         if not request.POST.get('cancel', None):
@@ -923,7 +923,7 @@ def block(request, id):
     try:
         user_dict = mastodon.account(id)
         relationship = mastodon.account_relationships(user_dict.id)[0]
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, KeyError):
         raise Http404("The user could not be found.")
     if request.method == 'POST':
         if not request.POST.get('cancel', None):
@@ -953,7 +953,7 @@ def mute(request, id):
     try:
         user_dict = mastodon.account(id)
         relationship = mastodon.account_relationships(user_dict.id)[0]
-    except (IndexError, AttributeError):
+    except (IndexError, AttributeError, KeyError):
         raise Http404("The user could not be found.")
     if request.method == 'POST':
         if not request.POST.get('cancel', None):
