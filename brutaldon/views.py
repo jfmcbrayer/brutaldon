@@ -117,16 +117,16 @@ def user_search_inner(request, query):
                   {'active_users': "\n".join([ user.acct for user in results.accounts ]),
                    'preferences': account.preferences })
 
-def timeline(request, timeline='home', timeline_name='Home', max_id=None, since_id=None, filter_context='home'):
+def timeline(request, timeline='home', timeline_name='Home', max_id=None, min_id=None, filter_context='home'):
     account, mastodon = get_usercontext(request)
-    data = mastodon.timeline(timeline, limit=40, max_id=max_id, since_id=since_id)
+    data = mastodon.timeline(timeline, limit=40, max_id=max_id, min_id=min_id)
     form = PostForm(initial={'visibility': request.session['active_user'].source.privacy})
     try:
         prev = data[0]._pagination_prev
-        if len(mastodon.timeline(since_id=prev['since_id'])) == 0:
+        if len(mastodon.timeline(min_id=prev['min_id'])) == 0:
             prev = None
         else:
-            prev['since_id'] = data[0].id
+            prev['min_id'] = data[0].id
     except (IndexError, AttributeError, KeyError):
         prev = None
     try:
@@ -236,15 +236,15 @@ def notes_count(request):
 
 @br_login_required
 def home(request, next=None, prev=None):
-    return timeline(request, 'home', 'Home', max_id=next, since_id=prev, filter_context='home')
+    return timeline(request, 'home', 'Home', max_id=next, min_id=prev, filter_context='home')
 
 @br_login_required
 def local(request, next=None, prev=None, filter_context='public'):
-    return timeline(request, 'local', 'Local', max_id=next, since_id=prev)
+    return timeline(request, 'local', 'Local', max_id=next, min_id=prev)
 
 @br_login_required
 def fed(request, next=None, prev=None, filter_context='public'):
-    return timeline(request, 'public', 'Federated', max_id=next, since_id=prev)
+    return timeline(request, 'public', 'Federated', max_id=next, min_id=prev)
 
 @br_login_required
 def tag(request, tag):
@@ -457,7 +457,7 @@ def note(request, next=None, prev=None):
     account.note_seen = last_seen.id
     account.save()
 
-    notes = mastodon.notifications(limit=40, max_id=next, since_id=prev)
+    notes = mastodon.notifications(limit=40, max_id=next, min_id=prev)
     filters = get_filters(mastodon, context='notifications')
 
     if account.preferences.filter_notifications:
@@ -468,7 +468,7 @@ def note(request, next=None, prev=None):
 
     try:
         prev = notes[0]._pagination_prev
-        if len(mastodon.notifications(since_id=prev['since_id'])) == 0:
+        if len(mastodon.notifications(min_id=prev['min_id'])) == 0:
             prev = None
     except (IndexError, AttributeError, KeyError):
         prev = None
@@ -520,13 +520,13 @@ def user(request, username, prev=None, next=None):
                           username.split('@')[1] == account.username.split('@')[1]))][0]
     except (IndexError, AttributeError):
         raise Http404(_("The user %s could not be found.") % username)
-    data = mastodon.account_statuses(user_dict.id, max_id=next, since_id=prev)
+    data = mastodon.account_statuses(user_dict.id, max_id=next, min_id=prev)
     relationship = mastodon.account_relationships(user_dict.id)[0]
     notifications = _notes_count(account, mastodon)
     try:
         prev = data[0]._pagination_prev
         if len(mastodon.account_statuses(user_dict.id,
-                                         since_id=prev['since_id'])) == 0:
+                                         min_id=prev['min_id'])) == 0:
             prev = None
     except (IndexError, AttributeError, KeyError):
         prev = None
