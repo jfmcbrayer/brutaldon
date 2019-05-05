@@ -98,7 +98,7 @@
                                 <span>Home</span>
                             </a>
                             <a class="navbar-item" href="{% url "note" %}">
-                                <span class="fa fa-bell-o"></span>
+                                <span class="fa fa-bell"></span>
                                 {% if preferences.notifications and not preferences.theme.is_brutalist %}
                                     <span ic-src="{% url 'notes_count' %}"
                                           ic-poll="{{ preferences.poll_frequency }}s"
