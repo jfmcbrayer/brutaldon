@@ -120,7 +120,7 @@ Brutaldon ({{ own_acct.username }}) - {{ user.acct }} timelime
     {% endfor %}
     <nav class="pagination is-centered" role="navigation" aria-label="pagination">
         {% if prev %}
-        <a class="pagination-next" href="{% url 'user_prev' user.acct prev.since_id %}">Newer</a>
+        <a class="pagination-next" href="{% url 'user_prev' user.acct prev.min_id %}">Newer</a>
         {% endif %}
         {% if next %}
         <a class="pagination-previous" href="{% url 'user_next' user.acct next.max_id %}">Older</a>
