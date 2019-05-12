@@ -75,7 +75,7 @@ mastodon.search("<query>")
         <h2 class="subtitle">Tags</h2>
         <ul>
             {% for tag in results.hashtags %}
-            <li><a href="{% url 'tag' tag %}">#{{ tag }}</a></li>
+            <li><a href="{% url 'tag' tag.name %}">#{{ tag.name }}</a></li>
             {% endfor %}
         </ul>
 
