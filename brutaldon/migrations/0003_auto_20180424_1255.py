@@ -6,19 +6,21 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0002_account'),
-    ]
+    dependencies = [("brutaldon", "0002_account")]
 
     operations = [
         migrations.AddField(
-            model_name='account',
-            name='client',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='brutaldon.Client'),
+            model_name="account",
+            name="client",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="brutaldon.Client",
+            ),
         ),
         migrations.AlterField(
-            model_name='client',
-            name='api_base_id',
-            field=models.URLField(default='https://mastodon.social'),
+            model_name="client",
+            name="api_base_id",
+            field=models.URLField(default="https://mastodon.social"),
         ),
     ]

@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0007_auto_20180618_2115'),
-    ]
+    dependencies = [("brutaldon", "0007_auto_20180618_2115")]
 
     operations = [
         migrations.AlterField(
-            model_name='theme',
-            name='name',
+            model_name="theme",
+            name="name",
             field=models.TextField(max_length=80, unique=True),
-        ),
+        )
     ]

@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0021_client_version'),
-    ]
+    dependencies = [("brutaldon", "0021_client_version")]
 
     operations = [
         migrations.AlterField(
-            model_name='client',
-            name='version',
-            field=models.CharField(default='1.0', max_length=80),
-        ),
+            model_name="client",
+            name="version",
+            field=models.CharField(default="1.0", max_length=80),
+        )
     ]

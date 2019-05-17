@@ -5,24 +5,22 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0014_account_note_seen'),
-    ]
+    dependencies = [("brutaldon", "0014_account_note_seen")]
 
     operations = [
         migrations.AddField(
-            model_name='preference',
-            name='click_to_load',
+            model_name="preference",
+            name="click_to_load",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='preference',
-            name='no_javascript',
+            model_name="preference",
+            name="no_javascript",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='preference',
-            name='notifications',
+            model_name="preference",
+            name="notifications",
             field=models.BooleanField(default=True),
         ),
     ]

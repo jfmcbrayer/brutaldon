@@ -5,14 +5,10 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0013_auto_20180826_1935'),
-    ]
+    dependencies = [("brutaldon", "0013_auto_20180826_1935")]
 
     operations = [
         migrations.AddField(
-            model_name='account',
-            name='note_seen',
-            field=models.IntegerField(null=True),
-        ),
+            model_name="account", name="note_seen", field=models.IntegerField(null=True)
+        )
     ]

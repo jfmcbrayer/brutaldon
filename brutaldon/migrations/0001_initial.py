@@ -7,18 +7,25 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Client',
+            name="Client",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.TextField(default='brutaldon')),
-                ('api_base_id', models.URLField(default='mastodon.social')),
-                ('client_id', models.TextField(blank=True, null=True)),
-                ('client_secret', models.TextField(blank=True, null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.TextField(default="brutaldon")),
+                ("api_base_id", models.URLField(default="mastodon.social")),
+                ("client_id", models.TextField(blank=True, null=True)),
+                ("client_secret", models.TextField(blank=True, null=True)),
             ],
-        ),
+        )
     ]

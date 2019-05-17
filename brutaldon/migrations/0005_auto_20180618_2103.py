@@ -6,37 +6,62 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0004_auto_20180424_1424'),
-    ]
+    dependencies = [("brutaldon", "0004_auto_20180424_1424")]
 
     operations = [
         migrations.CreateModel(
-            name='Preference',
+            name="Preference",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('data_saver', models.BooleanField(default=False)),
-                ('fix_emojos', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("data_saver", models.BooleanField(default=False)),
+                ("fix_emojos", models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
-            name='Theme',
+            name="Theme",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.TextField(max_length=80)),
-                ('main_css', models.TextField(max_length=1024)),
-                ('tweaks_css', models.TextField(blank=True, max_length=1024, null=True)),
-                ('is_brutalist', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.TextField(max_length=80)),
+                ("main_css", models.TextField(max_length=1024)),
+                (
+                    "tweaks_css",
+                    models.TextField(blank=True, max_length=1024, null=True),
+                ),
+                ("is_brutalist", models.BooleanField(default=False)),
             ],
         ),
         migrations.AddField(
-            model_name='preference',
-            name='theme',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='brutaldon.Theme'),
+            model_name="preference",
+            name="theme",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="brutaldon.Theme",
+            ),
         ),
         migrations.AddField(
-            model_name='account',
-            name='preferences',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='brutaldon.Preference'),
+            model_name="account",
+            name="preferences",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="brutaldon.Preference",
+            ),
         ),
     ]

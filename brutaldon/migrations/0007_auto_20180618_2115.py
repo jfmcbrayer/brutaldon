@@ -2,67 +2,80 @@
 
 from django.db import migrations
 
+
 def set_up_default_themes(apps, schema_editor):
-    Theme = apps.get_model('brutaldon', 'Theme')
-    default = Theme(name="default",
-                    main_css="css/bulma.min.css",
-                    tweaks_css="css/brutaldon.css",
-                    is_brutalist=False)
+    Theme = apps.get_model("brutaldon", "Theme")
+    default = Theme(
+        name="default",
+        main_css="css/bulma.min.css",
+        tweaks_css="css/brutaldon.css",
+        is_brutalist=False,
+    )
     default.save()
-    dark = Theme(name="default dark",
-                 main_css="css/bulmaswatch-darkly.min.css",
-                 tweaks_css="css/brutaldon-dark.css",
-                 is_brutalist=False)
+    dark = Theme(
+        name="default dark",
+        main_css="css/bulmaswatch-darkly.min.css",
+        tweaks_css="css/brutaldon-dark.css",
+        is_brutalist=False,
+    )
     dark.save()
-    lux = Theme(name="Lux",
-                    main_css="css/bulmaswatch-lux.min.css",
-                    tweaks_css="css/brutaldon.css",
-                    is_brutalist=False)
+    lux = Theme(
+        name="Lux",
+        main_css="css/bulmaswatch-lux.min.css",
+        tweaks_css="css/brutaldon.css",
+        is_brutalist=False,
+    )
     lux.save()
-    solar = Theme(name="Solar",
-                  main_css="css/bulmaswatch-solar.min.css",
-                  tweaks_css="css/brutaldon.css",
-                  is_brutalist=False)
+    solar = Theme(
+        name="Solar",
+        main_css="css/bulmaswatch-solar.min.css",
+        tweaks_css="css/brutaldon.css",
+        is_brutalist=False,
+    )
     solar.save()
-    brutalism = Theme(name="FULLBRUTALISM",
-                      main_css="css/fullbrutalism.css",
-                      is_brutalist=True)
+    brutalism = Theme(
+        name="FULLBRUTALISM", main_css="css/fullbrutalism.css", is_brutalist=True
+    )
     brutalism.save()
-    brutstrap = Theme(name="Brutstrap",
-                      main_css="css/brutstrap.css",
-                      is_brutalist=True,
-                      tweaks_css="css/brutstrap-tweaks.css")
+    brutstrap = Theme(
+        name="Brutstrap",
+        main_css="css/brutstrap.css",
+        is_brutalist=True,
+        tweaks_css="css/brutstrap-tweaks.css",
+    )
     brutstrap.save()
-    large = Theme(name="Minimalist Large", main_css="css/minimal-large.css",
-                  is_brutalist=True)
+    large = Theme(
+        name="Minimalist Large", main_css="css/minimal-large.css", is_brutalist=True
+    )
     large.save()
-    small = Theme(name="Minimalist Small", main_css="css/minimal-small.css",
-                  is_brutalist=True)
+    small = Theme(
+        name="Minimalist Small", main_css="css/minimal-small.css", is_brutalist=True
+    )
     small.save()
-    dark2 = Theme(name="Minimalist Dark", main_css="css/minimal-dark.css",
-                 is_brutalist=True)
+    dark2 = Theme(
+        name="Minimalist Dark", main_css="css/minimal-dark.css", is_brutalist=True
+    )
     dark2.save()
-    vt240 = Theme(name="vt240 amber", main_css="css/vt240don-amber.css",
-                  is_brutalist=True)
+    vt240 = Theme(
+        name="vt240 amber", main_css="css/vt240don-amber.css", is_brutalist=True
+    )
     vt240.save()
-    vt240_green = Theme(name="vt240 green", main_css="css/vt240don-green.css",
-                        is_brutalist=True)
+    vt240_green = Theme(
+        name="vt240 green", main_css="css/vt240don-green.css", is_brutalist=True
+    )
     vt240_green.save()
     minimal = Theme(name="No styling at all", main_css=None, is_brutalist=True)
     minimal.save()
 
+
 def delete_themes(apps, schema_editor):
-    Theme = apps.get_model('brutaldon' 'Theme')
+    Theme = apps.get_model("brutaldon" "Theme")
     for theme in Theme.objects.all():
         theme.delete()
 
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0006_auto_20180618_2112'),
-    ]
+    dependencies = [("brutaldon", "0006_auto_20180618_2112")]
 
-    operations = [
-        migrations.RunPython(set_up_default_themes, delete_themes)
-    ]
+    operations = [migrations.RunPython(set_up_default_themes, delete_themes)]

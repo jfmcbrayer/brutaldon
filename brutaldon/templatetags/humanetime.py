@@ -6,9 +6,10 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter(is_safe=True)
 def humane_time(arg):
-    '''Returns a time string that is humane but not relative (unlike Django's humanetime)
+    """Returns a time string that is humane but not relative (unlike Django's humanetime)
 
     For times less than 6 hours ago: display date and time to the minute.
     For times less than 12 hours ago: display date and time to the hour.
@@ -27,7 +28,7 @@ def humane_time(arg):
 
     FIXME: work out how best to make these strings translatable
 
-    '''
+    """
     now = django_now()
     arg = localtime(arg)
     diff = now - arg
@@ -42,12 +43,13 @@ def humane_time(arg):
         return arg.strftime("%a, %b %d, %Y around %I %p") + utc
     elif diff < timedelta(hours=36):
         return arg.strftime("%a, %b %d, %Y in the ") + time_of_day(arg.hour) + utc
-    elif diff < timedelta(days=6*28):
+    elif diff < timedelta(days=6 * 28):
         return arg.strftime("%b %d, %Y")
-    elif diff < timedelta(days=10*365):
+    elif diff < timedelta(days=10 * 365):
         return arg.strftime("%b, %Y")
     else:
         return arg.strftime("%Y")
+
 
 def time_of_day(hour):
     """Return a description of what time of day an hour is.

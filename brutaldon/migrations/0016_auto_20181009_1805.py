@@ -5,29 +5,37 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0015_auto_20181001_1812'),
-    ]
+    dependencies = [("brutaldon", "0015_auto_20181001_1812")]
 
     operations = [
         migrations.AddField(
-            model_name='preference',
-            name='lightbox',
-            field=models.BooleanField(default=False, help_text='Use a JavaScript lightbox to display media.'),
+            model_name="preference",
+            name="lightbox",
+            field=models.BooleanField(
+                default=False, help_text="Use a JavaScript lightbox to display media."
+            ),
         ),
         migrations.AlterField(
-            model_name='preference',
-            name='click_to_load',
-            field=models.BooleanField(default=False, help_text='Click to load more toots in the same page, rather than using pagination.'),
+            model_name="preference",
+            name="click_to_load",
+            field=models.BooleanField(
+                default=False,
+                help_text="Click to load more toots in the same page, rather than using pagination.",
+            ),
         ),
         migrations.AlterField(
-            model_name='preference',
-            name='no_javascript',
-            field=models.BooleanField(default=False, help_text='Disable all JavaScript. Overrides all other JavaScript options.'),
+            model_name="preference",
+            name="no_javascript",
+            field=models.BooleanField(
+                default=False,
+                help_text="Disable all JavaScript. Overrides all other JavaScript options.",
+            ),
         ),
         migrations.AlterField(
-            model_name='preference',
-            name='notifications',
-            field=models.BooleanField(default=True, help_text='Display live notifications in header.'),
+            model_name="preference",
+            name="notifications",
+            field=models.BooleanField(
+                default=True, help_text="Display live notifications in header."
+            ),
         ),
     ]

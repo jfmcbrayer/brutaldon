@@ -5,14 +5,15 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0017_preference_poll_frequency'),
-    ]
+    dependencies = [("brutaldon", "0017_preference_poll_frequency")]
 
     operations = [
         migrations.AddField(
-            model_name='preference',
-            name='filter_notifications',
-            field=models.BooleanField(default=False, help_text='Exclude boosts and favs from your notifications.'),
-        ),
+            model_name="preference",
+            name="filter_notifications",
+            field=models.BooleanField(
+                default=False,
+                help_text="Exclude boosts and favs from your notifications.",
+            ),
+        )
     ]

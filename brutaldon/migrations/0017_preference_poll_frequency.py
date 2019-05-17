@@ -5,14 +5,15 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0016_auto_20181009_1805'),
-    ]
+    dependencies = [("brutaldon", "0016_auto_20181009_1805")]
 
     operations = [
         migrations.AddField(
-            model_name='preference',
-            name='poll_frequency',
-            field=models.IntegerField(default=300, help_text='Number of seconds to wait between checking notifications. Default: 300'),
-        ),
+            model_name="preference",
+            name="poll_frequency",
+            field=models.IntegerField(
+                default=300,
+                help_text="Number of seconds to wait between checking notifications. Default: 300",
+            ),
+        )
     ]
