@@ -40,7 +40,7 @@
                     {% if next %}
                         <p class="column is-one-quarter"></p>
                         <p class="column">
-                            <a class="pagination-previous is-one-quarter"
+                            <a class="pagination-previous is-fullwidth button"
                                href="{% url 'home_next' next.max_id %}"
                                {% if preferences.click_to_load %}
                                ic-get-from="{% url 'home_next' next.max_id %}"
@@ -56,7 +56,7 @@
                         {% endif %}
                         {% if prev %}
                         <p class="column is-one-quarter">
-                            <a class="pagination-next iss-fullwidth button"
+                            <a class="pagination-next is-fullwidth button"
                                href="{% url 'home_prev' prev.min_id %}">
                                 Newer
                             </a>
