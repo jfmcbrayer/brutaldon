@@ -251,9 +251,11 @@ def switch_accounts(request, new_account):
             return False
     except Account.DoesNotExist:
         return False
-    request.session["active_user"] = accounts_dict[new_account]["user"]
+
     request.session["active_username"] = account.username
     request.session["active_instance"] = account.client.api_base_id
+    account, mastodon = get_usercontext(request)
+    request.session["active_user"] = mastodon.account_verify_credentials()
     return True
 
 
