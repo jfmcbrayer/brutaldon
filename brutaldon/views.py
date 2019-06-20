@@ -144,7 +144,7 @@ def user_search_inner(request, query):
         request,
         "intercooler/users.html",
         {
-            "active_users": "\n".join([user.acct for user in results.accounts]),
+            "users": "\n".join([user.acct for user in results.accounts]),
             "preferences": account.preferences,
         },
     )
