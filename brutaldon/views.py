@@ -256,6 +256,8 @@ def switch_accounts(request, new_account):
     request.session["active_instance"] = account.client.api_base_id
     account, mastodon = get_usercontext(request)
     request.session["active_user"] = mastodon.account_verify_credentials()
+    accounts_dict[new_account]["user"] = request.session["active_user"]
+    request.session["accounts_dict"] = accounts_dict
     return True
 
 
