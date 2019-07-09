@@ -38,8 +38,7 @@
             <div class="around-pagination">
                 <div class="columns">
                     {% if next %}
-                        <p class="column is-one-quarter"></p>
-                        <p class="column">
+                        <p class="column is-one-quarter">
                             <a class="pagination-previous is-fullwidth button"
                                href="{% url 'home_next' next.max_id %}"
                                {% if preferences.click_to_load %}
@@ -53,6 +52,7 @@
                                 Older
                             </a>
                         </p>
+                        <p class="column is-one-quarter"></p>
                         {% endif %}
                         {% if prev %}
                         <p class="column is-one-quarter">
