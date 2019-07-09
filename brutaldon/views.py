@@ -715,7 +715,8 @@ def settings(request):
             user_info = mastodon.account_verify_credentials()
             request.session["active_user"] = user_info
             accounts_dict = request.session["accounts_dict"]
-            accounts_dict[new_account]["user"] = request.session["active_user"]
+
+            accounts_dict[account.username]["user"] = user_info
             request.session["accounts_dict"] = accounts_dict
 
             return redirect(home)
