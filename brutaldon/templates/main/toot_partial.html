@@ -6,56 +6,68 @@
 
 
 {% if active %}
-<article id="toot-{{toot.id}}" class="media box active-context">
-    {% else %}
-    <article id="toot-{{toot.id}}" class="media box">
-        {% endif %}
+    <article id="toot-{{toot.id}}" class="media box active-context">
+{% else %}
+        <article id="toot-{{toot.id}}" class="media box">
+{% endif %}
 
-        <figure class="media-left">
-            <p class="image is-64x64 account-avatar">
-                <a href="{% url "user" toot.account.acct %}">
-                    <img src="{{ toot.account.avatar_static }}"
-                         alt="">
-                </a>
-            </p>
+<figure class="media-left">
+    <p class="image is-64x64 account-avatar">
+        <a href="{% url "user" toot.account.acct %}">
+            <img src="{{ toot.account.avatar_static }}"
+                 alt="">
+        </a>
+    </p>
+    {% if reblog %}
+        <p class="image is-32x32 reblog-icon" >
+            <a href="{% url "user" reblog_by %}">
+                <img src ="{{ reblog_icon }}" alt="">
+            </a>
+        </p>
+    {% endif %}
+</figure>
+<div class="media-content">
+    <div class="content">
+        <p>
+            <strong>{{ toot.account.display_name }}</strong>
+            <small><a href="{% url "user" toot.account.acct %}">
+                @{{ toot.account.acct }}</a></small>
+            <a href="{{ toot.url }}">
+                <small>{{ toot.created_at |humane_time  }}</small>
+            </a>
             {% if reblog %}
-            <p class="image is-32x32 reblog-icon" >
-                <a href="{% url "user" reblog_by %}">
-                    <img src ="{{ reblog_icon }}" alt="">
-                </a>
-            </p>
+                <br>
+                Boosted by @{{ reblog_by }}
             {% endif %}
-        </figure>
-        <div class="media-content">
-            <div class="content">
-                <p>
-                    <strong>{{ toot.account.display_name }}</strong>
-                    <small><a href="{% url "user" toot.account.acct %}">@{{ toot.account.acct }}</a></small>
-                    <a href="{{ toot.url }}">
-                        <small>{{ toot.created_at |humane_time  }}</small>
-                    </a>
-                    {% if reblog %}
-                    <br>
-                    Boosted by @{{ reblog_by }}
-                    {% endif %}
-                </p>
-                {% if toot.spoiler_text %}
-                <details class="toot">
-                    <summary><strong>{{ toot.spoiler_text }} </strong></summary>
-                    <div class="toot">
-                        {{ toot.content | relink_toot | fix_emojos:toot.emojis | strip_html | safe }}
-                    </div>
-                </details>
-                {% else %}
+        </p>
+        {% if toot.spoiler_text %}
+            <details class="toot">
+                <summary><strong>{{ toot.spoiler_text }} </strong></summary>
                 <div class="toot">
                     {{ toot.content | relink_toot | fix_emojos:toot.emojis | strip_html | safe }}
                 </div>
-                {% endif %}
+            </details>
+        {% else %}
+            <div class="toot">
+                {{ toot.content | relink_toot | fix_emojos:toot.emojis | strip_html | safe }}
+            </div>
+        {% endif %}
 
-                {% if toot.card %}
-                <div class="card">
-                    <div class="card-content columns">
-                        {% if toot.card.image %}
+        {% if toot.poll %}
+            <div class="poll">
+                {% if toot.poll.voted or toot.poll.expired %}
+                    {% include "polls/completed_partial.html" with toot=toot %}
+                {% else %}
+                    <!-- Poll form -->
+                {% endif %}
+            </div>
+        {% endif %}
+
+
+        {% if toot.card %}
+            <div class="card">
+                <div class="card-content columns">
+                    {% if toot.card.image %}
                         <div class="column is-one-third">
                             <a href="{{ toot.card.url }}">
                                 <img alt="{{ toot.card.title }}"
@@ -63,126 +75,126 @@
                                      class="is-max-128">
                             </a>
                         </div>
-                        {% endif %}
-                        <div class="column is-two-thirds">
-                            <p>
-                                <strong>
-                                    <a href="{{ toot.card.url }}">
-                                        {{ toot.card.title }}
-                                    </a>
-                                </strong>
+                    {% endif %}
+                    <div class="column is-two-thirds">
+                        <p>
+                            <strong>
+                                <a href="{{ toot.card.url }}">
+                                    {{ toot.card.title }}
+                                </a>
+                            </strong>
 
                             <p>{{ toot.card.description }}</p>
-                        </div>
                     </div>
                 </div>
-                {% endif %}
+            </div>
+        {% endif %}
 
-                {% if toot.media_attachments %}
-                <br>
-                <div class="columns is-multiline attachments is-gapless">
-                    {% for media in toot.media_attachments %}
+        {% if toot.media_attachments %}
+            <br>
+            <div class="columns is-multiline attachments is-gapless">
+                {% for media in toot.media_attachments %}
                     {% if media.type == "image" %}
-                    <figure class="column attachment-image">
-                        <a href="{{ media.url }}">
-                            {% if toot.sensitive %}
-                            <img src="{% static "images/sensitive.png" %}"
-                                 {% else %}
-                            <img src="{{ media.preview_url }}"
-                                 {% endif %}
-                                 alt="{% if media.description  %}
-                                      {{ media.description }}
-                                      {% elif media.text_url %}
-                                      {{ media.text_url }}
-                                      {% else %}
-                                      {{ media.url  }}
-                                      {% endif %}"
-                                 {% if media.description %}
-                                 title="{{ media.description }}"
-                                 {% endif %}
-                                 class="image is-max-256">
-                        </a>
-                    </figure>
-                    {% else %}
-                    <figure class="column">
-                        <video controls loop class="is-max-256"
-                               poster="{{ media.preview_url }}">
-                            <source src="{{ media.url }}" type="video/mp4">
+                        <figure class="column attachment-image">
                             <a href="{{ media.url }}">
                                 {% if toot.sensitive %}
-                                <img src="{% static "images/sensitive.png" %}"
-                                     {% else %}
-                                <img src="{{ media.preview_url }}"
-                                     {% endif %}
-                                     alt="{% if media.description  %}
-                                          {{ media.description }}
-                                          {% elif media.text_url %}
-                                          {{ media.text_url }}
-                                          {% else %}
-                                          {{ media.url  }}
-                                          {% endif %}"
-                                     {% if media.description %}
-                                     title="{{ media.description }}"
-                                     {% endif %}
-                                     class="image is-max-256">
+                                    <img src="{% static "images/sensitive.png" %}"
+                                {% else %}
+                                    <img src="{{ media.preview_url }}"
+                                {% endif %}
+                                         alt="{% if media.description  %}
+                                              {{ media.description }}
+                                         {% elif media.text_url %}
+                                              {{ media.text_url }}
+                                         {% else %}
+                                              {{ media.url  }}
+                                         {% endif %}"
+                                         {% if media.description %}
+                                         title="{{ media.description }}"
+                                         {% endif %}
+                                         class="image is-max-256">
                             </a>
-                        </video>
-                    </figure>
+                        </figure>
+                    {% else %}
+                        <figure class="column">
+                            <video controls loop class="is-max-256"
+                                   poster="{{ media.preview_url }}">
+                                <source src="{{ media.url }}" type="video/mp4">
+                                <a href="{{ media.url }}">
+                                    {% if toot.sensitive %}
+                                        <img src="{% static "images/sensitive.png" %}"
+                                    {% else %}
+                                        <img src="{{ media.preview_url }}"
+                                    {% endif %}
+                                             alt="{% if media.description  %}
+                                                  {{ media.description }}
+                                             {% elif media.text_url %}
+                                                  {{ media.text_url }}
+                                             {% else %}
+                                                  {{ media.url  }}
+                                             {% endif %}"
+                                             {% if media.description %}
+                                             title="{{ media.description }}"
+                                             {% endif %}
+                                             class="image is-max-256">
+                                </a>
+                            </video>
+                        </figure>
                     {% endif %}
 
-                    {% endfor %}
-                </div>
-                {% endif %}
-                <br>
-                <p class="is-hidden"></p>
-
+                {% endfor %}
             </div>
-            {% if not confirm_page %}
-            <nav class="level is-mobile">
-                <div class="level-left">
-                    <a href="{% url "reply" toot.id %}#toot-{{ toot.id }}" class="level-item">
-                        {% if toot.replies_count > 0 %}
+        {% endif %}
+        <br>
+        <p class="is-hidden"></p>
+
+    </div>
+    {% if not confirm_page %}
+        <nav class="level is-mobile">
+            <div class="level-left">
+                <a href="{% url "reply" toot.id %}#toot-{{ toot.id }}" class="level-item">
+                    {% if toot.replies_count > 0 %}
                         <span class="fa fa-reply-all">
                             <span class="is-hidden-mobile"><strong>Reply</strong></span>
                         </span>
-                        {% else %}
+                    {% else %}
                         <span class="fa fa-reply">
                             <span class="is-hidden-mobile">Reply</span>
                         </span>
-                        {% endif %}
-                    </a>
-                    {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
+                    {% endif %}
+                </a>
+                {% if toot.visibility != 'private' and toot.visibility != 'direct' %}
                     <a href="{% url "boost" toot.id %}" class="level-item"
                        ic-post-to="{% url "boost" toot.id %}"
                        ic-indicator="#toot-spinner-{{toot.id}}">
                         {% if toot.reblogged %}
-                        <span class="fa fa-retweet has-text-warning">
-                            <strong class="is-hidden-mobile" >Boosted</strong>
-                            {% else %}
-                            <span class="fa fa-retweet" >
-                                <span class="is-hidden-mobile" >Boost</span>
-                                {% endif %}
+                            <span class="fa fa-retweet has-text-warning">
+                                <strong class="is-hidden-mobile" >Boosted</strong>
+                        {% else %}
+                                <span class="fa fa-retweet" >
+                                    <span class="is-hidden-mobile" >Boost</span>
+                        {% endif %}
+                                </span>
                             </span>
-                        </span>
                     </a>
-                    {% endif %}
-                    <a href="{% url "fav" toot.id %}" class="level-item"
-                       ic-post-to="{% url "fav" toot.id %}"
-                       ic-indicator="#toot-spinner-{{toot.id}}">
-                        {% if toot.favourited %}
+                {% endif %}
+                <a href="{% url "fav" toot.id %}" class="level-item"
+                   ic-post-to="{% url "fav" toot.id %}"
+                   ic-indicator="#toot-spinner-{{toot.id}}">
+                    {% if toot.favourited %}
                         <span class="fa fa-heart has-text-warning">
                             <strong class="is-hidden-mobile" >Favorited</strong>
-                            {% else %}
+                    {% else %}
                             <span class="fa fa-heart">
                                 <span class="is-hidden-mobile" >Favorite</span>
-                                {% endif %}
+                    {% endif %}
                             </span>
                         </span>
-                    </a>
-                    <i id="toot-spinner-{{toot.id}}" class="fa fa-spinner fa-spin" style="display:none"></i>
-                </div>
-                <div class="level-right">
-                    {% if toot.account.acct == own_acct.acct %}
+                </a>
+                <i id="toot-spinner-{{toot.id}}" class="fa fa-spinner fa-spin" style="display:none"></i>
+            </div>
+            <div class="level-right">
+                {% if toot.account.acct == own_acct.acct %}
                     <a class="level-item" href="{% url "redraft" toot.id %}">
                         redraft
                     </a>
@@ -194,23 +206,23 @@
                        ic-action-target="#toot-{{ toot.id }}">
                         delete
                     </a>
-                    {% endif %}
-                    {{ toot.visibility }}
-                    &nbsp;&nbsp;
-                    {% if toot.in_reply_to_id or toot.replies_count > 0 %}
+                {% endif %}
+                {{ toot.visibility }}
+                &nbsp;&nbsp;
+                {% if toot.in_reply_to_id or toot.replies_count > 0 %}
                     <a class="level-item" href="{% url "thread" toot.id %}#toot-{{ toot.id }}">
                         <span class="fa fa-comments"></span>
                         <strong> thread</strong>
                     </a>
-                    {% else %}
+                {% else %}
                     <a class="level-item" href="{% url "thread" toot.id %}#toot-{{ toot.id }}">
                         thread
                     </a>
-                    {% endif %}
-                </div>
-            </nav>
-            {% endif %}
+                {% endif %}
+            </div>
+        </nav>
+    {% endif %}
 
-        </div>
-        <div class="media-right"></div>
-    </article>
+</div>
+<div class="media-right"></div>
+        </article>

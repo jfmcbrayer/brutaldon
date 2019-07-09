@@ -240,6 +240,12 @@ a.navbar-item span:nth-child(2):before
     content: " ";
 }
 
+div.poll {
+    margin-bottom: 1ex;
+    margin-top: 1em;
+    max-width: 90%;
+}
+
 /* Fix some rules that don't need to be there */
 .content figure:not(:last-child)
 {

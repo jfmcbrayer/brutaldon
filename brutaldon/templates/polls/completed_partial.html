@@ -1,0 +1,19 @@
+{% load sanitizer %}
+{% load taglinks %}
+{% load static %}
+<div class="columns is-multiline">
+    {% for option in toot.poll.options %}
+        <div class="column is-one-quarter">
+            <strong>{{ option.title }}</strong>
+            ({{ option.votes_count}} vote{{ option.votes_count|pluralize }})
+
+        </div>
+        <div class="column is-three-quarters">
+            <progress class="progress is-primary"
+                      value="{{ option.votes_count }}"
+                      max="{{ toot.poll.votes_count }}"
+                {{ option.votes_count }}
+            </progress>
+        </div>
+    {% endfor %}
+</div>
