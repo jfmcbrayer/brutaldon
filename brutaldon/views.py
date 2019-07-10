@@ -1635,4 +1635,10 @@ def vote(request, id):
             values = [x for x in request.POST.getlist('poll-multiple')]
             if values:
                 mastodon.poll_vote(poll.id, values)
-        return redirect("thread", id)
+
+        if request.POST.get("ic-request"):
+            return render(request,
+                          "main/toot_partial.html",
+                          {"toot": mastodon.status(id) })
+        else:
+            return redirect("thread", id)
