@@ -1,0 +1,23 @@
+{% load sanitizer %}
+{% load taglinks %}
+{% load static %}
+
+<form method="POST" action="/vote/{{ toot.poll.id  }}">
+    {% for option in toot.poll.options %}
+        <div class="field">
+
+            {% if toot.poll.multiple %}
+                <input type="checkbox" id="poll-{{ toot.poll.id }}-{{ forloop.counter0 }}"
+                       class="checkbox" >
+            {% else %}
+                <input type="radio"  id="poll-{{ toot.poll.id }}-{{ forloop.counter0 }}"
+                       name="poll-{{ toot.poll.id }}">
+            {% endif %}
+
+            <label for="poll-{{ toot.poll.id }}-{{ forloop.counter0 }}">
+                {{ option.title }}
+            </label>
+        </div>
+    {% endfor %}
+    <input type="submit"  class="button is-primary" name="Vote" value="Vote">
+</form>

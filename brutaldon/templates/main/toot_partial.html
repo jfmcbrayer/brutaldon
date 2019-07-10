@@ -59,6 +59,7 @@
                     {% include "polls/completed_partial.html" with toot=toot %}
                 {% else %}
                     <!-- Poll form -->
+                    {% include "polls/new_partial.html" with toot=toot %}
                 {% endif %}
             </div>
         {% endif %}
