@@ -1616,3 +1616,23 @@ def accounts(request, id=None):
                     "preferences": active_account.preferences,
                 },
             )
+
+@br_login_required
+def vote(request, id):
+    if request.method == "GET":
+        return redirect("thread", id)
+    if request.method == "POST":
+        account, mastodon = get_usercontext(request)
+        toot = mastodon.status(id)
+        poll = toot.poll
+        if not poll:
+            return redirect("thread", id)
+        # radio buttons
+        if "poll-single" in request.POST.keys():
+            mastodon.poll_vote(poll.id, request.POST['poll-single'])
+        # checkboxes
+        else:
+            values = [x for x in request.POST.getlist('poll-multiple')]
+            if values:
+                mastodon.poll_vote(poll.id, values)
+        return redirect("thread", id)

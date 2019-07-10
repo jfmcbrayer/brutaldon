@@ -2,21 +2,25 @@
 {% load taglinks %}
 {% load static %}
 
-<form method="POST" action="/vote/{{ toot.poll.id  }}">
+<form method="POST" action="{% url "vote" toot.id %}">
+    {% csrf_token %}
     {% for option in toot.poll.options %}
         <div class="field">
-
             {% if toot.poll.multiple %}
-                <input type="checkbox" id="poll-{{ toot.poll.id }}-{{ forloop.counter0 }}"
-                       class="checkbox" >
+                <label class="checkbox">
+                    <input type="checkbox"
+                           name="poll-multiple"
+                           value="{{ forloop.counter0 }}">
+                    {{ option.title }}
+                </label>
             {% else %}
-                <input type="radio"  id="poll-{{ toot.poll.id }}-{{ forloop.counter0 }}"
-                       name="poll-{{ toot.poll.id }}">
+                <label class="radio">
+                    <input type="radio"
+                           name="poll-single"
+                           value="{{ forloop.counter0 }}">
+                    {{ option.title  }}
+                </label>
             {% endif %}
-
-            <label for="poll-{{ toot.poll.id }}-{{ forloop.counter0 }}">
-                {{ option.title }}
-            </label>
         </div>
     {% endfor %}
     <input type="submit"  class="button is-primary" name="Vote" value="Vote">
