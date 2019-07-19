@@ -608,16 +608,19 @@ def note(request, next=None, prev=None):
 @br_login_required
 def thread(request, id):
     account, mastodon = get_usercontext(request)
+    toot = mastodon.status(id)
+    root = toot
     try:
         context = mastodon.status_context(id)
+        if context.ancestors and len(context.ancestors) > 0:
+            root = context.ancestors[0]
+            context = mastodon.status_context(context.ancestors[0])
     except MastodonNotFoundError:
         raise Http404(_("Thread not found; the message may have been deleted."))
-    toot = mastodon.status(id)
     notifications = _notes_count(account, mastodon)
     filters = get_filters(mastodon, context="thread")
 
     # Apply filters
-    ancestors = [x for x in context.ancestors if not toot_matches_filters(x, filters)]
     descendants = [
         x for x in context.descendants if not toot_matches_filters(x, filters)
     ]
@@ -628,7 +631,7 @@ def thread(request, id):
         {
             "context": context,
             "toot": toot,
-            "ancestors": ancestors,
+            "root": root,
             "descendants": descendants,
             "own_acct": request.session["active_user"],
             "notifications": notifications,
@@ -1617,6 +1620,7 @@ def accounts(request, id=None):
                 },
             )
 
+
 @br_login_required
 def vote(request, id):
     if request.method == "GET":
@@ -1629,16 +1633,16 @@ def vote(request, id):
             return redirect("thread", id)
         # radio buttons
         if "poll-single" in request.POST.keys():
-            mastodon.poll_vote(poll.id, request.POST['poll-single'])
+            mastodon.poll_vote(poll.id, request.POST["poll-single"])
         # checkboxes
         else:
-            values = [x for x in request.POST.getlist('poll-multiple')]
+            values = [x for x in request.POST.getlist("poll-multiple")]
             if values:
                 mastodon.poll_vote(poll.id, values)
 
         if request.POST.get("ic-request"):
-            return render(request,
-                          "main/toot_partial.html",
-                          {"toot": mastodon.status(id) })
+            return render(
+                request, "main/toot_partial.html", {"toot": mastodon.status(id)}
+            )
         else:
             return redirect("thread", id)
