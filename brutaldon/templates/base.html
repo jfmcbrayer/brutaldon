@@ -80,11 +80,11 @@
                 <div class="navbar-brand">
                     <a class="navbar-item" href="{% url "home" %}">
                         {% if own_acct %}
-                            <img src="{{ own_acct.avatar_static }}"
+                            <img loading="lazy" src="{{ own_acct.avatar_static }}"
                                  class="image is-32x32 avatar"
                                  alt="Brutaldon ('{{ own_acct.username }}')">
                         {% else %}
-                            <img src="{% static "images/brutaldon.png" %}"
+                            <img loading="lazy" src="{% static "images/brutaldon.png" %}"
                                  class="image is-32x32" alt="Brutaldon">
                         {% endif %}
                     </a>
@@ -185,9 +185,9 @@
                 </div>
                 <div class="level-right">
                     {% if preferences.theme.is_brutalist %}
-                        <img class="level-item" src="{% static '/images/lynx.gif' %}"
+                        <img loading="lazy" class="level-item" src="{% static '/images/lynx.gif' %}"
                              alt="Lynx Now!">
-                        <img class="level-item" src="{% static '/images/now9.gif' %}"
+                        <img loading="lazy" class="level-item" src="{% static '/images/now9.gif' %}"
                              alt="Netscape Now!">
                     {% endif %}
                     <a class="level-item is-size-7" href="{% url "privacy" %}">

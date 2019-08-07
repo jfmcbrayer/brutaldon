@@ -14,14 +14,14 @@
 <figure class="media-left">
     <p class="image is-64x64 account-avatar">
         <a href="{% url "user" toot.account.acct %}">
-            <img src="{{ toot.account.avatar_static }}"
+            <img loading="lazy" src="{{ toot.account.avatar_static }}"
                  alt="">
         </a>
     </p>
     {% if reblog %}
         <p class="image is-32x32 reblog-icon" >
             <a href="{% url "user" reblog_by %}">
-                <img src ="{{ reblog_icon }}" alt="">
+                <img loading="lazy" src ="{{ reblog_icon }}" alt="">
             </a>
         </p>
     {% endif %}
@@ -71,7 +71,7 @@
                     {% if toot.card.image %}
                         <div class="column is-one-third">
                             <a href="{{ toot.card.url }}">
-                                <img alt="{{ toot.card.title }}"
+                                <img loading="lazy" alt="{{ toot.card.title }}"
                                      src="{{ toot.card.image }}"
                                      class="is-max-128">
                             </a>
@@ -99,9 +99,9 @@
                         <figure class="column attachment-image">
                             <a href="{{ media.url }}">
                                 {% if toot.sensitive %}
-                                    <img src="{% static "images/sensitive.png" %}"
+                                    <img loading="lazy" src="{% static "images/sensitive.png" %}"
                                 {% else %}
-                                    <img src="{{ media.preview_url }}"
+                                    <img loading="lazy" src="{{ media.preview_url }}"
                                 {% endif %}
                                          alt="{% if media.description  %}
                                               {{ media.description }}
@@ -123,9 +123,9 @@
                                 <source src="{{ media.url }}" type="video/mp4">
                                 <a href="{{ media.url }}">
                                     {% if toot.sensitive %}
-                                        <img src="{% static "images/sensitive.png" %}"
+                                        <img loading="lazy" src="{% static "images/sensitive.png" %}"
                                     {% else %}
-                                        <img src="{{ media.preview_url }}"
+                                        <img loading="lazy" src="{{ media.preview_url }}"
                                     {% endif %}
                                              alt="{% if media.description  %}
                                                   {{ media.description }}
