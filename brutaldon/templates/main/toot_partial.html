@@ -14,14 +14,14 @@
 <figure class="media-left">
     <p class="image is-64x64 account-avatar">
         <a href="{% url "user" toot.account.acct %}">
-            <img loading="lazy" src="{{ toot.account.avatar_static }}"
+            <img loading="auto" src="{{ toot.account.avatar_static }}"
                  alt="">
         </a>
     </p>
     {% if reblog %}
         <p class="image is-32x32 reblog-icon" >
             <a href="{% url "user" reblog_by %}">
-                <img loading="lazy" src ="{{ reblog_icon }}" alt="">
+                <img loading="auto" src ="{{ reblog_icon }}" alt="">
             </a>
         </p>
     {% endif %}
@@ -71,9 +71,11 @@
                     {% if toot.card.image %}
                         <div class="column is-one-third">
                             <a href="{{ toot.card.url }}">
+                                <noscript class="loading-lazy">
                                 <img loading="lazy" alt="{{ toot.card.title }}"
                                      src="{{ toot.card.image }}"
                                      class="is-max-128">
+                                </noscript>
                             </a>
                         </div>
                     {% endif %}
@@ -98,6 +100,7 @@
                     {% if media.type == "image" %}
                         <figure class="column attachment-image">
                             <a href="{{ media.url }}">
+                                <noscript class="loading-lazy">
                                 {% if toot.sensitive %}
                                     <img loading="lazy" src="{% static "images/sensitive.png" %}"
                                 {% else %}
@@ -114,6 +117,7 @@
                                          title="{{ media.description }}"
                                          {% endif %}
                                          class="image is-max-256">
+                                    </noscript>
                             </a>
                         </figure>
                     {% else %}
@@ -122,6 +126,7 @@
                                    poster="{{ media.preview_url }}">
                                 <source src="{{ media.url }}" type="video/mp4">
                                 <a href="{{ media.url }}">
+                                    <noscript class="loading-lazy">
                                     {% if toot.sensitive %}
                                         <img loading="lazy" src="{% static "images/sensitive.png" %}"
                                     {% else %}
@@ -138,6 +143,7 @@
                                              title="{{ media.description }}"
                                              {% endif %}
                                              class="image is-max-256">
+                                    </noscript>
                                 </a>
                             </video>
                         </figure>

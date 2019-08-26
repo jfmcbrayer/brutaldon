@@ -6,6 +6,7 @@
     "fork-awesome": "^1.1.0",
     "intercooler": "^1.2.1",
     "jquery": "^3.3.1",
+    "loading-attribute-polyfill": "^1.1.0",
     "magnific-popup": "^1.1.0",
     "mousetrap": "^1.6.2"
   }
