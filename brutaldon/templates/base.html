@@ -81,16 +81,12 @@
                 <div class="navbar-brand">
                     <a class="navbar-item" href="{% url "home" %}">
                         {% if own_acct %}
-                        <noscript class=loading-lazy">
-                            <img loading="lazy" src="{{ own_acct.avatar_static }}"
-                                 class="image is-32x32 avatar"
-                                 alt="Brutaldon ('{{ own_acct.username }}')">
-                        </noscript>
+                        <img src="{{ own_acct.avatar_static }}"
+                             class="image is-32x32 avatar"
+                             alt="Brutaldon ('{{ own_acct.username }}')">
                         {% else %}
-                        <noscript class="loading-lazy">
-                            <img loading="lazy" src="{% static "images/brutaldon.png" %}"
-                                 class="image is-32x32" alt="Brutaldon">
-                        </noscript>
+                        <img loading="lazy" src="{% static "images/brutaldon.png" %}"
+                             class="image is-32x32" alt="Brutaldon">
                         {% endif %}
                     </a>
                 </div>
