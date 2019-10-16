@@ -33,12 +33,14 @@ import re
 class NotLoggedInException(Exception):
     pass
 
+
 global sessons_cache
 sessions_cache = {}
 
 ###
 ### Utility functions
 ###
+
 
 def get_session(domain):
     if domain in sessions_cache:
@@ -47,6 +49,7 @@ def get_session(domain):
         s = Session()
         sessions_cache[domain] = s
         return s
+
 
 def get_usercontext(request):
     if is_logged_in(request):
@@ -65,7 +68,7 @@ def get_usercontext(request):
             client_secret=client.client_secret,
             access_token=user.access_token,
             api_base_url=client.api_base_id,
-            session = get_session(client.api_base_id),
+            session=get_session(client.api_base_id),
             ratelimit_method="throw",
         )
         return user, mastodon
