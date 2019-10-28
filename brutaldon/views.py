@@ -37,6 +37,8 @@ class NotLoggedInException(Exception):
 global sessons_cache
 sessions_cache = {}
 
+VISIBILITIES = ["direct", "private", "unlisted", "public"]
+
 ###
 ### Utility functions
 ###
@@ -162,6 +164,12 @@ def user_search_inner(request, query):
             "preferences": account.preferences,
         },
     )
+
+
+def min_visibility(visibility1, visibility2):
+    return VISIBILITIES[
+        min(VISIBILITIES.index(visibility1), VISIBILITIES.index(visibility2))
+    ]
 
 
 def timeline(
@@ -1012,7 +1020,9 @@ def reply(request, id):
         form = PostForm(
             initial={
                 "status": initial_text,
-                "visibility": toot.visibility,
+                "visibility": min_visibility(
+                    toot.visibility, request.session["active_user"].source.privacy
+                ),
                 "spoiler_text": toot.spoiler_text,
             }
         )
