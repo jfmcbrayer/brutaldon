@@ -73,6 +73,10 @@ mastodon.notifications()[0]
     </div>
 </article>
 <hr class="is-hidden">
+{% elif note.type == 'poll' %}
+     <p>A poll you created or voted in has ended.</p>
+     {% include "main/toot_partial.html" with toot=note.status %}
+<hr class="is-hidden">
 {% endif %}
 {% endfor %}
 
