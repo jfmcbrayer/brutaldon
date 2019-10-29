@@ -29,7 +29,7 @@
 <div class="media-content">
     <div class="content">
         <p>
-            <strong>{{ toot.account.display_name }}</strong>
+            <strong>{{ toot.account.display_name | fix_emojos:toot.account.emojis | strip_html |safe}}</strong>
             <small><a href="{% url "user" toot.account.acct %}">
                 @{{ toot.account.acct }}</a></small>
             <a href="{{ toot.url }}">
