@@ -2,7 +2,7 @@ html, a, div, div.notification, body, body div, span, object, iframe, h1, h2, h3
   font-family: "DEC Terminal Modern", Terminus, Inconsolata, Consolas, "Droid Sans Mono", "DejaVu Sans Mono", "Monaco",  monospace;
   color: #ff7700;
   background-color: #000000;
-  font-size: medium;
+  font-size: 1.2rem;
 }
 
 
@@ -21,7 +21,6 @@ a, a.button, a.button.is-primary, input.button.is-primary, input, .input, .texta
   background-color: #000000;
   font-weight: bolder;
   text-decoration-line: none;
-  font-size: medium;
 }
 
 a:hover, a.button:hover, a.button.is-primary:hover, input.button.is-primary:hover {
@@ -204,6 +203,9 @@ img.emoji
 	  display: flex;
 }
 
+.navbar-item {
+    margin-right: 2em;
+}
 
 @media screen and (max-width: 768px) {
     .media {
