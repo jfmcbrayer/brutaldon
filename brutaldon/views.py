@@ -24,6 +24,7 @@ from mastodon import (
 )
 from urllib import parse
 from pdb import set_trace
+from itertools import groupby
 from inscriptis import get_text
 from time import sleep
 from requests import Session
@@ -32,7 +33,19 @@ import re
 
 class NotLoggedInException(Exception):
     pass
-
+class LabeledList(list):
+    """A subclass of list that can accept additional attributes"""
+    def __new__(self, *args, **kwargs):
+        return super(LabeledList, self).__new__(self, args, kwargs)
+    def __init(self, *args, **kwargs):
+        if len(args) == 1 and hasattr(args[0], '__iter__'):
+            list.__init__(self, args[0])
+        else:
+            list.__init__(self, args)
+        self.__dict__.update(kwargs)
+    def __call(self, **kwargs):
+        self.__dict__.update(kwargs)
+        return self
 
 global sessons_cache
 sessions_cache = {}
@@ -612,17 +625,34 @@ def note(request, next=None, prev=None):
         next = notes[-1]._pagination_next
     except (IndexError, AttributeError, KeyError):
         next = None
+
+    # Now group notes into lists based on type and status
+    groups = []
+    if account.preferences.bundle_notifications:
+        def bundle_key(note):
+            return str(note.status.id) + note.type
+        sorted_notes = sorted(notes, key=bundle_key, reverse=True)
+        for _, group in groupby(sorted_notes, bundle_key):
+            group = LabeledList(group)
+            group.accounts = [x.account for x in group]
+            groups.append(group)
+    else:
+        groups.append(notes)
+
     return render(
         request,
         "main/notifications.html",
         {
             "notes": notes,
+            "groups": groups,
             "timeline": "Notifications",
             "timeline_name": "Notifications",
             "own_acct": request.session["active_user"],
             "preferences": account.preferences,
             "prev": prev,
             "next": next,
+            "bundleable": ["favourite", "reblog"],
+            "bundle_notifications": account.preferences.bundle_notifications,
         },
     )
 
@@ -734,6 +764,9 @@ def settings(request):
             account.preferences.lightbox = form.cleaned_data["lightbox"]
             account.preferences.filter_notifications = form.cleaned_data[
                 "filter_notifications"
+            ]
+            account.preferences.bundle_notifications = form.cleaned_data[
+                "bundle_notifications"
             ]
             account.preferences.poll_frequency = form.cleaned_data["poll_frequency"]
             request.session["timezone"] = account.preferences.timezone

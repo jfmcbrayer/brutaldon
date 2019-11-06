@@ -127,6 +127,23 @@
             </div>
             <div class="columns">
                 <div class="column is-quarter">
+                    <label class="label checkbox" for="id_bundle_notifications">
+                        {% render_field form.bundle_notifications class+="checkbox" %}
+                        {{ form.bundle_notifications.label }}
+                    </label>
+                </div>
+                <div class="column is-quarter">
+                    <p class="notification is-info preferences-help">
+                        {{ form.bundle_notifications.help_text }}
+                    </p>
+                </div>
+                <div class="column is-half">
+
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column is-quarter">
                     <label class="label" for="id_poll_frequency">
                         {{ form.poll_frequency.label }}
                     </label>

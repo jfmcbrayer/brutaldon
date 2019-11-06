@@ -3,7 +3,7 @@
 {% load taglinks %}
 
 {% block title %}
-Brutaldon ({{ own_acct.username }}) - Notifications timelime
+    Brutaldon ({{ own_acct.username }}) - Notifications timelime
 {% endblock %}
 
 {% comment %}
@@ -21,73 +21,99 @@ mastodon.notifications()[0]
 
 
 {% block content %}
-<h1 class="title">Your notifications timeline</h1>
-{% for note in notes %}
-{% if note.type == 'mention' %}
-<p>
-    <strong>{{ note.account.display_name }}</strong>
-    (<a href="{{ note.account.url | localuser }}">{{ note.account.acct }}</a>)
-    mentioned you.
-</p>
-<br>
-{% include "main/toot_partial.html" with toot=note.status reblog=False %}
-<hr class="is-hidden">
-{% elif note.type == 'reblog' %}
-<p>
-    {{ note.account.display_name }}
-    (<a href="{{ note.account.url | localuser }}">{{ note.account.acct }}</a>)
-    boosted your toot.
-    (<span>
-    <small>{{ note.created_at |humane_time  }}</small>
-    </span>)
-</p>
-{% include "main/toot_partial.html" with toot=note.status reblog=True reblog_by=note.account.acct reblog_icon=note.account.avatar_static %}
-<hr class="is-hidden">
-{% elif note.type == 'favourite' %}
-<p>
-    {{ note.account.display_name }}
-    (<a href="{{ note.account.url | localuser}}">{{ note.account.acct }}</a>)
-    favorited your toot.
-    (<span>
-    <small>{{ note.created_at |humane_time  }}</small>
-    </span>)
-</p>
-{% include "main/toot_partial.html" with toot=note.status %}
-<hr class="is-hidden">
-{% elif note.type == 'follow' %}
-<article class="media">
-    <figure class="media-left">
-        <p class="image is-64x64">
-            <img src="{{ note.account.avatar_static }}" alt="">
-        </p>
-    </figure>
-    <div class="media-content" >
-        <div class="content">
-            <strong>{{ note.account.display_name }}</strong>
-            (<a href="{{ note.account.url |localuser }}">{{ note.account.acct }}</a>)
-            followed you.
-            (<a href="{{ note.url }}">
-                <small>{{ note.created_at |humane_time  }}</small>
-            </a>)
-        </div>
-    </div>
-</article>
-<hr class="is-hidden">
-{% elif note.type == 'poll' %}
-     <p>A poll you created or voted in has ended.</p>
-     {% include "main/toot_partial.html" with toot=note.status %}
-<hr class="is-hidden">
-{% endif %}
-{% endfor %}
+    <h1 class="title">Your notifications timeline</h1>
+    {% for group in groups %}
+        {% if bundle_notifications and group.0.type in bundleable  %}
+            {% if group.0.type == 'favourite' %}
+                <p>
+                    {% for account in group.accounts %}
+                        {% include "comma.html" %}{{ account.display_name }}
+                        (<a href="{{ account.url | localuser}}">{{ account.acct }}</a>)
+                    {% endfor %}
+                    favorited your toot.
+                </p>
+                {% include "main/toot_partial.html" with toot=group.0.status %}
+                <hr class="is-hidden">
+            {% elif group.0.type == 'reblog' %}
+                <p>
+                    {% for account in group.accounts %}
+                        {% include "comma.html" %}{{ account.display_name }}
+                        (<a href="{{ account.url | localuser }}">{{ account.acct }}</a>)
+                    {% endfor %}
+                    boosted your toot.
+                </p>
+                {% include "main/toot_partial.html" with toot=group.0.status reblog=True reblog_by=group.0.account.acct reblog_icon=group.0.account.avatar_static %}
+                <hr class="is-hidden">
+            {% endif %}
+        {% else %}
+            {% for note in group %}
+                {% if note.type == 'mention' %}
+                    <p>
+                        <strong>{{ note.account.display_name }}</strong>
+                        (<a href="{{ note.account.url | localuser }}">{{ note.account.acct }}</a>)
+                        mentioned you.
+                    </p>
+                    <br>
+                    {% include "main/toot_partial.html" with toot=note.status reblog=False %}
+                    <hr class="is-hidden">
+                {% elif note.type == 'reblog' %}
+                    <p>
+                        {{ note.account.display_name }}
+                        (<a href="{{ note.account.url | localuser }}">{{ note.account.acct }}</a>)
+                        boosted your toot.
+                        (<span>
+                        <small>{{ note.created_at |humane_time  }}</small>
+                        </span>)
+                    </p>
+                    {% include "main/toot_partial.html" with toot=note.status reblog=True reblog_by=note.account.acct reblog_icon=note.account.avatar_static %}
+                    <hr class="is-hidden">
+                {% elif note.type == 'favourite' %}
+                    <p>
+                        {{ note.account.display_name }}
+                        (<a href="{{ note.account.url | localuser}}">{{ note.account.acct }}</a>)
+                        favorited your toot.
+                        (<span>
+                        <small>{{ note.created_at |humane_time  }}</small>
+                        </span>)
+                    </p>
+                    {% include "main/toot_partial.html" with toot=note.status %}
+                    <hr class="is-hidden">
+                {% elif note.type == 'follow' %}
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                                <img src="{{ note.account.avatar_static }}" alt="">
+                            </p>
+                        </figure>
+                        <div class="media-content" >
+                            <div class="content">
+                                <strong>{{ note.account.display_name }}</strong>
+                                (<a href="{{ note.account.url |localuser }}">{{ note.account.acct }}</a>)
+                                followed you.
+                                (<a href="{{ note.url }}">
+                                    <small>{{ note.created_at |humane_time  }}</small>
+                                </a>)
+                            </div>
+                        </div>
+                    </article>
+                    <hr class="is-hidden">
+                {% elif note.type == 'poll' %}
+                    <p>A poll you created or voted in has ended.</p>
+                    {% include "main/toot_partial.html" with toot=note.status %}
+                    <hr class="is-hidden">
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
 
-<nav class="pagination is-centered" role="navigation" aria-label="pagination">
-    {% if prev %}
-    <a class="pagination-next" href="{% url 'note_prev' prev.min_id %}">Newer</a>
-    {% endif %}
-    {% if next %}
-    <a class="pagination-previous" href="{% url 'note_next' next.max_id %}">Older</a>
-    {% endif %}
-</nav>
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        {% if prev %}
+            <a class="pagination-next" href="{% url 'note_prev' prev.min_id %}">Newer</a>
+        {% endif %}
+        {% if next %}
+            <a class="pagination-previous" href="{% url 'note_next' next.max_id %}">Older</a>
+        {% endif %}
+    </nav>
 
 
 {% endblock %}
