@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load humanetime %}
 {% load taglinks %}
+{% load sanitizer %}
 
 {% block title %}
     Brutaldon ({{ own_acct.username }}) - Notifications timelime
@@ -27,7 +28,7 @@ mastodon.notifications()[0]
             {% if group.0.type == 'favourite' %}
                 <p>
                     {% for account in group.accounts %}
-                        {% include "comma.html" %}{{ account.display_name }}
+                        {% include "comma.html" %}{{ account.display_name | fix_emojos:account.emojis |strip_html |safe }}
                         (<a href="{{ account.url | localuser}}">{{ account.acct }}</a>)
                     {% endfor %}
                     favorited your toot.
@@ -37,7 +38,7 @@ mastodon.notifications()[0]
             {% elif group.0.type == 'reblog' %}
                 <p>
                     {% for account in group.accounts %}
-                        {% include "comma.html" %}{{ account.display_name }}
+                        {% include "comma.html" %}{{ account.display_name | fix_emojos:account.emojis |strip_html |safe }}
                         (<a href="{{ account.url | localuser }}">{{ account.acct }}</a>)
                     {% endfor %}
                     boosted your toot.
@@ -49,7 +50,7 @@ mastodon.notifications()[0]
             {% for note in group %}
                 {% if note.type == 'mention' %}
                     <p>
-                        <strong>{{ note.account.display_name }}</strong>
+                        <strong>{{ note.account.display_name | fix_emojos:note.account.emojis |strip_html |safe }}</strong>
                         (<a href="{{ note.account.url | localuser }}">{{ note.account.acct }}</a>)
                         mentioned you.
                     </p>
@@ -58,7 +59,7 @@ mastodon.notifications()[0]
                     <hr class="is-hidden">
                 {% elif note.type == 'reblog' %}
                     <p>
-                        {{ note.account.display_name }}
+                        {{ note.account.display_name | fix_emojos:note.account.emojis |strip_html |safe }}
                         (<a href="{{ note.account.url | localuser }}">{{ note.account.acct }}</a>)
                         boosted your toot.
                         (<span>
@@ -69,7 +70,7 @@ mastodon.notifications()[0]
                     <hr class="is-hidden">
                 {% elif note.type == 'favourite' %}
                     <p>
-                        {{ note.account.display_name }}
+                        {{ note.account.display_name | fix_emojos:note.account.emojis |strip_html |safe }}
                         (<a href="{{ note.account.url | localuser}}">{{ note.account.acct }}</a>)
                         favorited your toot.
                         (<span>
@@ -87,7 +88,7 @@ mastodon.notifications()[0]
                         </figure>
                         <div class="media-content" >
                             <div class="content">
-                                <strong>{{ note.account.display_name }}</strong>
+                                <strong>{{ note.account.display_name | fix_emojos:note.account.emojis |strip_html |safe }}</strong>
                                 (<a href="{{ note.account.url |localuser }}">{{ note.account.acct }}</a>)
                                 followed you.
                                 (<a href="{{ note.url }}">
