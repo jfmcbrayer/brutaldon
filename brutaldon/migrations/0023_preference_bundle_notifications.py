@@ -5,14 +5,15 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brutaldon', '0022_auto_20190506_0938'),
-    ]
+    dependencies = [("brutaldon", "0022_auto_20190506_0938")]
 
     operations = [
         migrations.AddField(
-            model_name='preference',
-            name='bundle_notifications',
-            field=models.BooleanField(default=False, help_text='Collapse together boosts or likes of the same toot in the notifications page.'),
-        ),
+            model_name="preference",
+            name="bundle_notifications",
+            field=models.BooleanField(
+                default=False,
+                help_text="Collapse together boosts or likes of the same toot in the notifications page.",
+            ),
+        )
     ]
