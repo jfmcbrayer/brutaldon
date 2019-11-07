@@ -33,19 +33,25 @@ import re
 
 class NotLoggedInException(Exception):
     pass
+
+
 class LabeledList(list):
     """A subclass of list that can accept additional attributes"""
+
     def __new__(self, *args, **kwargs):
         return super(LabeledList, self).__new__(self, args, kwargs)
+
     def __init(self, *args, **kwargs):
-        if len(args) == 1 and hasattr(args[0], '__iter__'):
+        if len(args) == 1 and hasattr(args[0], "__iter__"):
             list.__init__(self, args[0])
         else:
             list.__init__(self, args)
         self.__dict__.update(kwargs)
+
     def __call(self, **kwargs):
         self.__dict__.update(kwargs)
         return self
+
 
 global sessons_cache
 sessions_cache = {}
@@ -629,8 +635,10 @@ def note(request, next=None, prev=None):
     # Now group notes into lists based on type and status
     groups = []
     if account.preferences.bundle_notifications:
+
         def bundle_key(note):
             return str(note.status.id) + note.type
+
         sorted_notes = sorted(notes, key=bundle_key, reverse=True)
         for _, group in groupby(sorted_notes, bundle_key):
             group = LabeledList(group)
@@ -1152,6 +1160,37 @@ def reply(request, id):
             )
     else:
         return HttpResponseRedirect(reverse("reply", args=[id]) + "#toot-" + str(id))
+
+
+@br_login_required
+def share(request):
+    account, mastodon = get_usercontext(request)
+    if request.method == "GET":
+        params = request.GET
+    if request.method == "POST":
+        params = request.POST
+    title = params.get("title")
+    url = params.get("url")
+    if title:
+        initial_text = f"{title}\n\n{url}"
+    else:
+        initial_text = f"{url}"
+
+    form = PostForm(
+        initial={
+            "status": initial_text,
+            "visibility": request.session["active_user"].source.privacy,
+        }
+    )
+    return render(
+        request,
+        "main/post.html",
+        {
+            "form": form,
+            "own_acct": request.session["active_user"],
+            "preferences": account.preferences,
+        },
+    )
 
 
 @never_cache

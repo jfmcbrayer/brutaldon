@@ -69,5 +69,6 @@ urlpatterns = [
     path("accounts/", views.accounts, name="accounts"),
     path("accounts/<id>", views.accounts, name="accounts"),
     path("vote/<id>", views.vote, name="vote"),
+    path("share/", views.share, name="share"),
     path("", views.home, name=""),
 ]
