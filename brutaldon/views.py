@@ -640,12 +640,15 @@ def note(request, next=None, prev=None):
                 return str(note.status.id) + note.type
             except:
                 return str(note.id) + note.type
+        def group_sort_key(group):
+            return max([k.id for k in group])
 
         sorted_notes = sorted(notes, key=bundle_key, reverse=True)
         for _, group in groupby(sorted_notes, bundle_key):
             group = LabeledList(group)
             group.accounts = [x.account for x in group]
             groups.append(group)
+        groups.sort(key=group_sort_key, reverse=True)
     else:
         groups.append(notes)
 
