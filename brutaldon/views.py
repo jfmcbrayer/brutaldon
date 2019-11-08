@@ -642,7 +642,10 @@ def note(request, next=None, prev=None):
     if account.preferences.bundle_notifications:
 
         def bundle_key(note):
-            return str(note.status.id) + note.type
+            try:
+                return str(note.status.id) + note.type
+            except:
+                return str(note.id) + note.type
 
         sorted_notes = sorted(notes, key=bundle_key, reverse=True)
         for _, group in groupby(sorted_notes, bundle_key):
