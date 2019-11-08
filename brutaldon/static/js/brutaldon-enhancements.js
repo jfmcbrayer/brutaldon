@@ -72,7 +72,7 @@ function expandCWButtonPrepare()
 {
     var theButton = document.querySelector('#expandCWs');
     if (!theButton) {
-        theButton = document.createElement('p');
+        theButton = document.createElement('button');
         theButton.id = "expandCWs";
         theButton.textContent = "Expand CWs";
         theButton.classList.toggle('button');
