@@ -191,6 +191,11 @@ def min_visibility(visibility1, visibility2):
     ]
 
 
+def bookmarklet_url(request):
+    share_url = request.build_absolute_uri(reverse("share"))
+    return f"javascript:location.href='{share_url}?url='+encodeURIComponent(location.href)+';title='+encodeURIComponent(document.title)"
+
+
 def timeline(
     request,
     timeline="home",
@@ -792,7 +797,13 @@ def settings(request):
             return redirect(home)
         else:
             return render(
-                request, "setup/settings.html", {"form": form, "account": account}
+                request,
+                "setup/settings.html",
+                {
+                    "form": form,
+                    "account": account,
+                    "bookmarklet_url": bookmarklet_url(request),
+                },
             )
     else:
         request.session["timezone"] = account.preferences.timezone
@@ -800,7 +811,12 @@ def settings(request):
         return render(
             request,
             "setup/settings.html",
-            {"form": form, "account": account, "preferences": account.preferences},
+            {
+                "form": form,
+                "account": account,
+                "preferences": account.preferences,
+                "bookmarklet_url": bookmarklet_url(request),
+            },
         )
 
 
