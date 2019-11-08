@@ -4,7 +4,6 @@ from django.conf import settings as django_settings
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.cache import never_cache, cache_page
-from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from django.utils.translation import gettext as _
 from brutaldon.forms import (
@@ -189,11 +188,6 @@ def min_visibility(visibility1, visibility2):
     return VISIBILITIES[
         min(VISIBILITIES.index(visibility1), VISIBILITIES.index(visibility2))
     ]
-
-
-def bookmarklet_url(request):
-    share_url = request.build_absolute_uri(reverse("share"))
-    return f"javascript:location.href='{share_url}?url='+encodeURIComponent(location.href)+';title='+encodeURIComponent(document.title)"
 
 
 def timeline(
@@ -800,13 +794,7 @@ def settings(request):
             return redirect(home)
         else:
             return render(
-                request,
-                "setup/settings.html",
-                {
-                    "form": form,
-                    "account": account,
-                    "bookmarklet_url": bookmarklet_url(request),
-                },
+                request, "setup/settings.html", {"form": form, "account": account}
             )
     else:
         request.session["timezone"] = account.preferences.timezone
@@ -814,12 +802,7 @@ def settings(request):
         return render(
             request,
             "setup/settings.html",
-            {
-                "form": form,
-                "account": account,
-                "preferences": account.preferences,
-                "bookmarklet_url": bookmarklet_url(request),
-            },
+            {"form": form, "account": account, "preferences": account.preferences},
         )
 
 
