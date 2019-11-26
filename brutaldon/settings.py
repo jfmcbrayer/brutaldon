@@ -204,4 +204,4 @@ ANONYMOUS_HOME_URL = "about"
 GAB_RICKROLL_URL = "https://invidio.us/watch?v=dQw4w9WgXcQ"
 
 # Version number displayed on about page
-BRUTALDON_VERSION = "2.14.0"
+BRUTALDON_VERSION = "2.14.1"
