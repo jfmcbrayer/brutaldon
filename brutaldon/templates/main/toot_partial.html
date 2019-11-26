@@ -4,7 +4,7 @@
 {% load taglinks %}
 {% load static %}
 
-
+{% if toot %}
 {% if active %}
     <article id="toot-{{toot.id}}" class="media box active-context">
 {% else %}
@@ -233,3 +233,4 @@
 </div>
 <div class="media-right"></div>
         </article>
+{% endif %}
