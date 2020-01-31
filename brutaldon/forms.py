@@ -38,6 +38,7 @@ class PreferencesForm(forms.ModelForm):
             "click_to_load",
             "lightbox",
             "filter_notifications",
+            "bundle_notifications",
             "poll_frequency",
         ]
 

@@ -4,7 +4,6 @@ from django.conf import settings as django_settings
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.cache import never_cache, cache_page
-from django.urls import reverse
 from django.core.files.uploadhandler import TemporaryFileUploadHandler
 from django.utils.translation import gettext as _
 from brutaldon.forms import (
@@ -24,8 +23,10 @@ from mastodon import (
 )
 from urllib import parse
 from pdb import set_trace
+from itertools import groupby
 from inscriptis import get_text
 from time import sleep
+from requests import Session
 import re
 
 
@@ -33,9 +34,41 @@ class NotLoggedInException(Exception):
     pass
 
 
+class LabeledList(list):
+    """A subclass of list that can accept additional attributes"""
+
+    def __new__(self, *args, **kwargs):
+        return super(LabeledList, self).__new__(self, args, kwargs)
+
+    def __init(self, *args, **kwargs):
+        if len(args) == 1 and hasattr(args[0], "__iter__"):
+            list.__init__(self, args[0])
+        else:
+            list.__init__(self, args)
+        self.__dict__.update(kwargs)
+
+    def __call(self, **kwargs):
+        self.__dict__.update(kwargs)
+        return self
+
+
+global sessons_cache
+sessions_cache = {}
+
+VISIBILITIES = ["direct", "private", "unlisted", "public"]
+
 ###
 ### Utility functions
 ###
+
+
+def get_session(domain):
+    if domain in sessions_cache:
+        return sessions_cache[domain]
+    else:
+        s = Session()
+        sessions_cache[domain] = s
+        return s
 
 
 def get_usercontext(request):
@@ -55,6 +88,7 @@ def get_usercontext(request):
             client_secret=client.client_secret,
             access_token=user.access_token,
             api_base_url=client.api_base_id,
+            session=get_session(client.api_base_id),
             ratelimit_method="throw",
         )
         return user, mastodon
@@ -148,6 +182,12 @@ def user_search_inner(request, query):
             "preferences": account.preferences,
         },
     )
+
+
+def min_visibility(visibility1, visibility2):
+    return VISIBILITIES[
+        min(VISIBILITIES.index(visibility1), VISIBILITIES.index(visibility2))
+    ]
 
 
 def timeline(
@@ -590,17 +630,42 @@ def note(request, next=None, prev=None):
         next = notes[-1]._pagination_next
     except (IndexError, AttributeError, KeyError):
         next = None
+
+    # Now group notes into lists based on type and status
+    groups = []
+    if account.preferences.bundle_notifications:
+
+        def bundle_key(note):
+            try:
+                return str(note.status.id) + note.type
+            except:
+                return str(note.id) + note.type
+        def group_sort_key(group):
+            return max([k.id for k in group])
+
+        sorted_notes = sorted(notes, key=bundle_key, reverse=True)
+        for _, group in groupby(sorted_notes, bundle_key):
+            group = LabeledList(group)
+            group.accounts = [x.account for x in group]
+            groups.append(group)
+        groups.sort(key=group_sort_key, reverse=True)
+    else:
+        groups.append(notes)
+
     return render(
         request,
         "main/notifications.html",
         {
             "notes": notes,
+            "groups": groups,
             "timeline": "Notifications",
             "timeline_name": "Notifications",
             "own_acct": request.session["active_user"],
             "preferences": account.preferences,
             "prev": prev,
             "next": next,
+            "bundleable": ["favourite", "reblog"],
+            "bundle_notifications": account.preferences.bundle_notifications,
         },
     )
 
@@ -712,6 +777,9 @@ def settings(request):
             account.preferences.lightbox = form.cleaned_data["lightbox"]
             account.preferences.filter_notifications = form.cleaned_data[
                 "filter_notifications"
+            ]
+            account.preferences.bundle_notifications = form.cleaned_data[
+                "bundle_notifications"
             ]
             account.preferences.poll_frequency = form.cleaned_data["poll_frequency"]
             request.session["timezone"] = account.preferences.timezone
@@ -998,7 +1066,9 @@ def reply(request, id):
         form = PostForm(
             initial={
                 "status": initial_text,
-                "visibility": toot.visibility,
+                "visibility": min_visibility(
+                    toot.visibility, request.session["active_user"].source.privacy
+                ),
                 "spoiler_text": toot.spoiler_text,
             }
         )
@@ -1095,6 +1165,37 @@ def reply(request, id):
             )
     else:
         return HttpResponseRedirect(reverse("reply", args=[id]) + "#toot-" + str(id))
+
+
+@br_login_required
+def share(request):
+    account, mastodon = get_usercontext(request)
+    if request.method == "GET":
+        params = request.GET
+    if request.method == "POST":
+        params = request.POST
+    title = params.get("title")
+    url = params.get("url")
+    if title:
+        initial_text = f"{title}\n\n{url}"
+    else:
+        initial_text = f"{url}"
+
+    form = PostForm(
+        initial={
+            "status": initial_text,
+            "visibility": request.session["active_user"].source.privacy,
+        }
+    )
+    return render(
+        request,
+        "main/post.html",
+        {
+            "form": form,
+            "own_acct": request.session["active_user"],
+            "preferences": account.preferences,
+        },
+    )
 
 
 @never_cache

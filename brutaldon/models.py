@@ -65,6 +65,12 @@ class Preference(models.Model):
         default=False,
         help_text=_("""Exclude boosts and favs from your notifications."""),
     )
+    bundle_notifications = models.BooleanField(
+        default=False,
+        help_text=_(
+            """Collapse together boosts or likes of the same toot in the notifications page."""
+        ),
+    )
 
 
 class Account(models.Model):

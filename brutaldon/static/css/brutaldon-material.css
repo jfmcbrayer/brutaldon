@@ -1,0 +1,237 @@
+body > section > div.container {
+    max-width: 100%;
+}
+
+.reblog-icon {
+    position: relative;
+    top: -24px;
+    left: 40px;
+}
+
+img.fav-avatar {
+    display: inline;
+
+}
+
+
+.media-content {
+    padding: 1.25ex;
+}
+
+.is-max-128 img, .is-max-192 img, .is-max-256 img
+{
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right:0;
+    top: 0;
+}
+
+.is-max-128 {
+    max-height: 128px;
+    max-width: 128px;
+}
+
+.is-max-256 {
+    max-height: 256px;
+    max-width: 256px;
+}
+
+.is-max-192 {
+    max-height: 192px;
+    max-width: 192px;
+}
+
+
+figure.media-left p.image a img
+{
+    border-radius: 5px;
+}
+
+img.avatar
+{
+    border-radius: 5px;
+}
+
+.active-context {
+    background-color: #FFF8DC;
+}
+
+h2.subtitle
+{
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+article.media.user-info .content img
+{
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+}
+
+span.account-locked
+{
+    margin-top: 48px;
+    margin-left: -16px;
+}
+
+.errorlist
+{
+    color: #FF0000;
+}
+
+.emoji-box
+{
+    padding: .75rem;
+    background-color: #FCFCFC;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+}
+
+img.emoji
+{
+    display: inline;
+    max-height: 1.5em;
+    max-width: 1.5em;
+    vertical-align: text-bottom;
+}
+
+emoji-link
+{
+    font-size: 2em;
+}
+
+.content figure.attachment-image
+{
+    text-align:left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .media {
+        display: block;
+    }
+}
+
+#page-load-indicator
+{
+    width: 100%;
+    opacity: 0.8;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 666;
+    transition: all 500ms;
+    height: 2px;
+    overflow: hidden;
+    background-color: #ddd;
+    display: none;
+}
+
+#page-load-indicator:before{
+    display: block;
+    position: absolute;
+    content: "";
+    left: -200px;
+    width: 200px;
+    height: 4px;
+    background-color: #888;
+    animation: page-loading 1.5s linear infinite;
+}
+
+@keyframes page-loading {
+    from {left: -200px; width: 30%;}
+    50% {width: 30%;}
+    70% {width: 70%;}
+    80% { left: 50%;}
+    95% {left: 120%;}
+    to {left: 100%;}
+}
+
+#status_count
+{
+    margin-left: 90%;
+    margin-top: 1rem;
+    background-color: #888;
+    color: #FFF;
+    float: right;
+    padding: 0.5ex;
+    border-radius: 5px;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
+    font-size: 0.8em;
+    text-align: right;
+}
+
+#before-main
+{
+    width: 100%;
+    height: 2em;
+    background-color: #DEDEDE;
+    color: white;
+    margin-top: 0;
+    padding: 0;
+}
+
+#before-main span
+{
+    margin-left: 50%;
+}
+
+input#id_poll_frequency
+{
+    max-width: 10em;
+}
+
+body.has-navbar-fixed-top, html.has-navbar-fixed-top {
+	  padding-top: 5rem;
+}
+
+.card
+{
+    margin-top: 1em;
+    margin: 0, auto;
+    max-width: 90%;
+}
+
+
+#username_autocomplete
+{
+    height: 0;
+}
+
+.media-content .content a:not(.mention)
+{
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+}
+
+.media-content a.level-item
+{
+    text-decoration: none;
+}
+
+
+a.navbar-item span:nth-child(2):before
+{
+    content: " ";
+}
+
+
+div.poll {
+    margin-bottom: 1ex;
+    margin-top: 1em;
+    max-width: 90%;
+}
+
+
+/* Fix some rules that don't need to be there */
+.content figure:not(:last-child)
+{
+    margin-bottom: 0;
+}
+.content figure:not(:first-child)
+{
+    margin-top: 0;
+}

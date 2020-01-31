@@ -46,6 +46,7 @@
                     <script type="text/javascript" src="{% static 'js/intercooler.js' %}"></script>
                     <script type="application/javascript" src="{% static 'js/mousetrap.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+                    <script type="text/javascript" src="{% static 'js/loading-attribute-polyfill.min.js' %}"></script>
                     <script type="text/javascript" src="{% static 'js/brutaldon-enhancements.js' %}"></script>
                     {% block page_scripts %}
                     {% endblock %}
@@ -80,12 +81,12 @@
                 <div class="navbar-brand">
                     <a class="navbar-item" href="{% url "home" %}">
                         {% if own_acct %}
-                            <img src="{{ own_acct.avatar_static }}"
-                                 class="image is-32x32 avatar"
-                                 alt="Brutaldon ('{{ own_acct.username }}')">
+                        <img src="{{ own_acct.avatar_static }}"
+                             class="image is-32x32 avatar"
+                             alt="Brutaldon ('{{ own_acct.username }}')">
                         {% else %}
-                            <img src="{% static "images/brutaldon.png" %}"
-                                 class="image is-32x32" alt="Brutaldon">
+                        <img loading="lazy" src="{% static "images/brutaldon.png" %}"
+                             class="image is-32x32" alt="Brutaldon">
                         {% endif %}
                     </a>
                 </div>
@@ -182,13 +183,16 @@
                     <a class="level-item is-size-7" href="https://github.com/jfmcbrayer/brutaldon">
                         Source
                     </a>
+                    <span class="level-item is-size-7" >Bookmarklet: <a href="{{ bookmarklet_url }}">Share via brutaldon</a></span>
                 </div>
                 <div class="level-right">
                     {% if preferences.theme.is_brutalist %}
-                        <img class="level-item" src="{% static '/images/lynx.gif' %}"
+                        <noscript class="loading-lazy">
+                        <img loading="lazy" class="level-item" src="{% static '/images/lynx.gif' %}"
                              alt="Lynx Now!">
-                        <img class="level-item" src="{% static '/images/now9.gif' %}"
+                        <img loading="lazy" class="level-item" src="{% static '/images/now9.gif' %}"
                              alt="Netscape Now!">
+                        </noscript>
                     {% endif %}
                     <a class="level-item is-size-7" href="{% url "privacy" %}">
                         Privacy

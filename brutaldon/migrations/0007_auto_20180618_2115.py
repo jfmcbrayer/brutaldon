@@ -33,6 +33,13 @@ def set_up_default_themes(apps, schema_editor):
         is_brutalist=False,
     )
     solar.save()
+    material = Theme(
+        name="Material",
+        main_css="css/bulmaswatch-materia.min.css",
+        tweaks_css="css/brutaldon-material.css",
+        is_brutalist=False,
+    )
+    material.save()
     brutalism = Theme(
         name="FULLBRUTALISM", main_css="css/fullbrutalism.css", is_brutalist=True
     )

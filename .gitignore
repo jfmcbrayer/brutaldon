@@ -112,3 +112,4 @@ pip-selfcheck.json
 node_modules
 /TAGS
 .vscode
+package-lock.json

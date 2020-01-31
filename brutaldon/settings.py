@@ -67,6 +67,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "brutaldon.context_processors.bookmarklet_url",
             ]
         },
     }
@@ -203,4 +204,4 @@ ANONYMOUS_HOME_URL = "about"
 GAB_RICKROLL_URL = "https://invidio.us/watch?v=dQw4w9WgXcQ"
 
 # Version number displayed on about page
-BRUTALDON_VERSION = "2.12.1"
+BRUTALDON_VERSION = "2.14.1"
