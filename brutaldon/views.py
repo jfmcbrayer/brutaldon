@@ -673,9 +673,9 @@ def note(request, next=None, prev=None):
 @br_login_required
 def thread(request, id):
     account, mastodon = get_usercontext(request)
-    toot = mastodon.status(id)
-    root = toot
     try:
+        toot = mastodon.status(id)
+        root = toot
         context = mastodon.status_context(id)
         if context.ancestors and len(context.ancestors) > 0:
             root = context.ancestors[0]
@@ -1049,8 +1049,11 @@ def safe_get_attachment(toot, index):
 def reply(request, id):
     if request.method == "GET":
         account, mastodon = get_usercontext(request)
-        toot = mastodon.status(id)
-        context = mastodon.status_context(id)
+        try:
+            toot = mastodon.status(id)
+            context = mastodon.status_context(id)
+        except MastodonNotFoundError:
+            raise Http404(_("Thread not found; the message may have been deleted."))
         notifications = _notes_count(account, mastodon)
         if toot.account.acct != request.session["active_user"].acct:
             initial_text = "@" + toot.account.acct + " "
