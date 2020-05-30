@@ -200,8 +200,16 @@ SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
 # URL to redirect users to when not logged in
 ANONYMOUS_HOME_URL = "about"
 
-# URL to redirect gab users to
-GAB_RICKROLL_URL = "https://invidio.us/watch?v=dQw4w9WgXcQ"
+# URL to redirect galaxy brain users to
+RICKROLL_URL = "https://invidio.us/watch?v=dQw4w9WgXcQ"
+
+# Function to check if trying to add an account should trigger a special response
+def CHECK_INSTANCE_URL(url, redirect):
+    if "gab.com" in url:
+        return redirect(RICKROLL_URL)
+    elif "shitposter.club" in url:
+        return redirect(RICKROLL_URL)
+
 
 # Version number displayed on about page
 BRUTALDON_VERSION = "2.14.1"
