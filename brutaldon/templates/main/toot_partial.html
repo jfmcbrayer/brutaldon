@@ -101,7 +101,7 @@
                         <figure class="column attachment-image">
                             <a href="{{ media.url }}">
                                 <noscript class="loading-lazy">
-                                {% if toot.sensitive %}
+                                {% if toot.sensitive and not preferences.preview_sensitive %}
                                     <img loading="lazy" src="{% static "images/sensitive.png" %}"
                                 {% else %}
                                     <img loading="lazy" src="{{ media.preview_url }}"
@@ -127,7 +127,7 @@
                                 <source src="{{ media.url }}" type="video/mp4">
                                 <a href="{{ media.url }}">
                                     <noscript class="loading-lazy">
-                                    {% if toot.sensitive %}
+                                    {% if toot.sensitive and not preferences.preview_sensitive %}
                                         <img loading="lazy" src="{% static "images/sensitive.png" %}"
                                     {% else %}
                                         <img loading="lazy" src="{{ media.preview_url }}"
