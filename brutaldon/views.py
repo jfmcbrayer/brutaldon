@@ -606,9 +606,12 @@ def note(request, next=None, prev=None):
         account, mastodon = get_usercontext(request)
     except NotLoggedInException:
         return redirect(about)
-    last_seen = mastodon.notifications(limit=1)[0]
-    account.note_seen = last_seen.id
-    account.save()
+    try:
+        last_seen = mastodon.notifications(limit=1)[0]
+    except IndexError: pass
+    else:
+        account.note_seen = last_seen.id
+        account.save()
 
     notes = mastodon.notifications(limit=40, max_id=next, min_id=prev)
     filters = get_filters(mastodon, context="notifications")
