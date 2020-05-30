@@ -30,6 +30,17 @@ class Theme(models.Model):
         return self.name
 
 
+def set_fields(klass):
+    fields = {}
+    for n in dir(klass):
+        assert n != "_fields"
+        v = getattr(klass, n)
+        if isinstance(v, models.Field):
+            fields.add(n)
+    setattr(klass, '_fields', fields)
+    return klass
+
+@set_fields
 class Preference(models.Model):
     theme = models.ForeignKey(Theme, models.CASCADE, null=False, default=1)
     filter_replies = models.BooleanField(default=False)
