@@ -45,8 +45,13 @@ urlpatterns = [
     path("tags/<tag>", views.tag, name="tag"),
     path("user/", views.home, name="user_bad"),
     path("user/<username>", views.user, name="user"),
-    path("user/<username>/next/<int:next>", views.user, name="user_next"),
-    path("user/<username>/prev/<int:prev>", views.user, name="user_prev"),
+	# next/prev are integers, but pleroma uses 128 bit integers
+	# ...encoded in Base62.
+	# aka a "flake_id"
+	# from baseconv import base62, but we don't need to decode it
+	# just pass it along back to pleroma but it is NOT an <int:>
+    path("user/<username>/next/<next>", views.user, name="user_next"),
+    path("user/<username>/prev/<prev>", views.user, name="user_prev"),
     path("toot/<mention>", views.toot, name="toot"),
     path("toot", views.toot, name="toot"),
     path("reply/<id>", views.reply, name="reply"),
