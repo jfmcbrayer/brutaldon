@@ -205,3 +205,37 @@ GAB_RICKROLL_URL = "https://invidio.us/watch?v=dQw4w9WgXcQ"
 
 # Version number displayed on about page
 BRUTALDON_VERSION = "2.14.1"
+
+# Load custom settings outside repository tracked files, so private settings
+# don't get added to the repository
+import sys
+def paths():
+    sys.path.append('???')
+    try:
+        from xdg import XDG_CONFIG_HOME, XDG_CONFIG_DIRS
+    except ImportError:
+        try:
+            from pathlib import Path
+        except ImportError:
+            home = os.environ['home']
+        else:
+            home = Path.home()
+        sys.path[-1] = os.path.join(home, ".config")
+        yield
+        sys.path[-1] = home
+        yield
+    else:
+        sys.path[-1] = XDG_CONFIG_HOME
+        yield
+        for directory in XDG_CONFIG_DIRS:
+            sys.path[-1] = directory
+            yield
+    finally:
+        sys.path.pop(-1)
+
+for _ in paths():
+    try:
+        from brutaldon_settings import *
+    except ImportError: pass
+    else:
+        break
