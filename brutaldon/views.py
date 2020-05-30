@@ -29,7 +29,6 @@ from time import sleep
 from requests import Session
 import re
 
-
 class NotLoggedInException(Exception):
     pass
 
@@ -143,7 +142,10 @@ def br_login_required(function=None, home_url=None, redirect_field_name=None):
                     url = "/"
                 return HttpResponseRedirect(url)
             else:
-                return view_func(request, *args, **kwargs)
+                try:
+                    return view_func(request, *args, **kwargs)
+                except:
+                    print(view_func, function)
 
         _view.__name__ = view_func.__name__
         _view.__dict__ = view_func.__dict__
@@ -738,6 +740,8 @@ def user(request, username, prev=None, next=None):
         next = data[-1]._pagination_next
     except (IndexError, AttributeError, KeyError):
         next = None
+    help(render)
+    raise SystemExit(23)
     return render(
         request,
         "main/user.html",
