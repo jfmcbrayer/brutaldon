@@ -29,7 +29,7 @@ class Theme(models.Model):
     def __str__(self):
         return self.name
 
-
+from django.db.models.fields.related_descriptors import ForeignKeyDeferredAttribute
 def set_fields(klass):
     fields = []
     for n in dir(klass):
@@ -37,6 +37,7 @@ def set_fields(klass):
         v = getattr(klass, n)
         if not hasattr(v, 'field'): continue
         if not isinstance(v.field, models.Field): continue
+        if isinstance(v, ForeignKeyDeferredAttribute): continue
         fields.append(n)
     setattr(klass, '_fields', fields)
     return klass
@@ -88,8 +89,6 @@ class Preference(models.Model):
         ),
     )
 
-
-print("FIELDS", Preference._fields)
 
 class Account(models.Model):
     username = models.EmailField(unique=True)
