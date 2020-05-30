@@ -71,7 +71,7 @@ def get_session(domain):
         return s
 
 
-def get_usercontext(request):
+def get_usercontext(request, feature_set="mainline"):
     if is_logged_in(request):
         try:
             client = Client.objects.get(api_base_id=request.session["active_instance"])
@@ -83,13 +83,14 @@ def get_usercontext(request):
             Account.MultipleObjectsReturned,
         ):
             raise NotLoggedInException()
-        mastodon = Mastodon(
+        mastodon = get_mastodon()Mastodon(
             client_id=client.client_id,
             client_secret=client.client_secret,
             access_token=user.access_token,
             api_base_url=client.api_base_id,
             session=get_session(client.api_base_id),
             ratelimit_method="throw",
+			feature_set=feature_set
         )
         return user, mastodon
     else:
@@ -808,7 +809,23 @@ def settings(request):
             {"form": form, "account": account, "preferences": account.preferences},
         )
 
+def status_post(account, request, mastodon, **kw):
+    try:
+		mastodon.status_post(**kw)
+    except MastodonIllegalArgumentError as e:
+		if not 'is only available with feature set' in e.args[0]:
+			raise
+		feature_set = e.args[0].rsplit(" ",1)[-1]
 
+		account, mastodon = get_usercontext(request,
+											feature_set=feature_set)
+    	
+		return status_post(account, request, mastodon, **kw)
+	except TypeError:
+		kw.pop("content_type")
+		return status_post(account, request, mastodon, **kw)
+    return account, mastodon
+	
 @never_cache
 @br_login_required
 def toot(request, mention=None):
@@ -864,26 +881,19 @@ def toot(request, mention=None):
                             ),
                         )
                     )
+					
             if form.cleaned_data["visibility"] == "":
                 form.cleaned_data["visibility"] = request.session[
                     "active_user"
                 ].source.privacy
             try:
-                try:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        content_type="text/markdown",
-                    )
-                except TypeError:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                    )
+				status_post(
+					account, mastodon,
+					status=form.cleaned_data["status"],
+                    visibility=form.cleaned_data["visibility"],
+                    spoiler_text=form.cleaned_data["spoiler_text"],
+                    media_ids=media_objects,
+                    content_type="text/markdown")
             except MastodonAPIError as error:
                 form.add_error(
                     "",
@@ -903,6 +913,8 @@ def toot(request, mention=None):
                         "preferences": account.preferences,
                     },
                 )
+			else:
+				return result
             return redirect(home)
         else:
             return render(
