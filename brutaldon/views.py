@@ -90,6 +90,7 @@ def get_usercontext(request):
             api_base_url=client.api_base_id,
             session=get_session(client.api_base_id),
             ratelimit_method="throw",
+            feature_set="pleroma"
         )
         return user, mastodon
     else:
@@ -726,10 +727,6 @@ def user(request, username, prev=None, next=None):
     except (IndexError, AttributeError):
         raise Http404(_("The user %s could not be found.") % username)
     data = mastodon.account_statuses(user_dict.id, max_id=next, min_id=prev)
-    import pprint
-    for item in data[-1].items():
-        pprint.pprint(item)
-    raise SystemExit(23)
     relationship = mastodon.account_relationships(user_dict.id)[0]
     notifications = _notes_count(account, mastodon)
     try:
@@ -772,21 +769,10 @@ def settings(request):
     if request.method == "POST":
         form = PreferencesForm(request.POST)
         if form.is_valid():
-            account.preferences.theme = form.cleaned_data["theme"]
-            account.preferences.filter_replies = form.cleaned_data["filter_replies"]
-            account.preferences.filter_boosts = form.cleaned_data["filter_boosts"]
-            account.preferences.timezone = form.cleaned_data["timezone"]
-            account.preferences.no_javascript = form.cleaned_data["no_javascript"]
-            account.preferences.notifications = form.cleaned_data["notifications"]
-            account.preferences.click_to_load = form.cleaned_data["click_to_load"]
-            account.preferences.lightbox = form.cleaned_data["lightbox"]
-            account.preferences.filter_notifications = form.cleaned_data[
-                "filter_notifications"
-            ]
-            account.preferences.bundle_notifications = form.cleaned_data[
-                "bundle_notifications"
-            ]
-            account.preferences.poll_frequency = form.cleaned_data["poll_frequency"]
+			for field in account.preferences._fields:
+				if field in form.cleaned_data:
+					setattr(account.preferences, field,
+							form.cleaned_data[field])
             request.session["timezone"] = account.preferences.timezone
             account.preferences.save()
             account.save()

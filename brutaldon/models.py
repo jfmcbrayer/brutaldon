@@ -30,10 +30,25 @@ class Theme(models.Model):
         return self.name
 
 
+def set_fields(klass):
+	fields = {}
+	for n in dir(klass):
+		assert n != "_fields"
+		v = getattr(klass, n)
+		if isinstance(v, models.Field):
+			fields.add(n)
+	setattr(klass, '_fields', fields)
+	return klass
+
+@set_fields
 class Preference(models.Model):
     theme = models.ForeignKey(Theme, models.CASCADE, null=False, default=1)
     filter_replies = models.BooleanField(default=False)
     filter_boosts = models.BooleanField(default=False)
+    preview_sensitive = models.BooleanField(
+        default=False,
+        help_text=_(
+            'Show preview for media marked as "sensitive"'))
     timezone = models.CharField(
         max_length=80, blank=True, null=True, choices=timezones, default="UTC"
     )
