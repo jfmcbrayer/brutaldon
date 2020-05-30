@@ -30,7 +30,6 @@ class PreferencesForm(forms.ModelForm):
         model = Preference
         fields = Preference._fields
 
-
 class PostForm(forms.Form):
     """def status_post(self, status, in_reply_to_id=None, media_ids=None,
                        sensitive=False, visibility=None, spoiler_text=None):"""

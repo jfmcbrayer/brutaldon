@@ -31,14 +31,15 @@ class Theme(models.Model):
 
 
 def set_fields(klass):
-	fields = {}
-	for n in dir(klass):
-		assert n != "_fields"
-		v = getattr(klass, n)
-		if isinstance(v, models.Field):
-			fields.add(n)
-	setattr(klass, '_fields', fields)
-	return klass
+    fields = []
+    for n in dir(klass):
+        assert n != "_fields"
+        v = getattr(klass, n)
+        if not hasattr(v, 'field'): continue
+        if not isinstance(v.field, models.Field): continue
+        fields.append(n)
+    setattr(klass, '_fields', fields)
+    return klass
 
 @set_fields
 class Preference(models.Model):
@@ -87,6 +88,8 @@ class Preference(models.Model):
         ),
     )
 
+
+print("FIELDS", Preference._fields)
 
 class Account(models.Model):
     username = models.EmailField(unique=True)
