@@ -30,6 +30,33 @@
                 </div>
             </div>
 
+            <h2 class="subtitle">Options</h2>
+            <div class="columns">
+                <div class="column is-quarter">
+                    <label class="label checkbox" for="id_preview_sensitive">
+                        {% render_field form.preview_sensitive class+="checkbox" %}
+                        {{ form.preview_sensitive.label }}
+                    </label>
+                </div>
+                <div class="column is-quarter">
+                    <p class="notification is-info preferences-help">
+                        {{ form.preview_sensitive.help_text }}
+                    </p>
+                </div>
+			</div>
+            <div class="columns">
+                <div class="column is-quarter">
+                    <label class="label checkbox" for="id_open_details">
+                        {% render_field form.open_detail class+="checkbox" %}
+                        {{ form.open_detail.label }}
+                    </label>
+                </div>
+                <div class="column is-quarter">
+                    <p class="notification is-info preferences-help">
+                        {{ form.open_detail.help_text }}
+                    </p>
+                </div>
+			</div>
             <h2 class="subtitle">Timeline Options</h2>
             <div class="field">
                 <label class="label checkbox">
