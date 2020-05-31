@@ -16,7 +16,7 @@ from brutaldon.forms import (
 from brutaldon.models import Client, Account, Preference, Theme
 from mastodon import (
     Mastodon,
-	MastodonIllegalArgumentError,
+    MastodonIllegalArgumentError,
     AttribAccessDict,
     MastodonError,
     MastodonAPIError,
@@ -995,23 +995,15 @@ def redraft(request, id):
                     "active_user"
                 ].source.privacy
             try:
-                try:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        in_reply_to_id=toot.in_reply_to_id,
-                        content_type="text/markdown",
-                    )
-                except TypeError:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        in_reply_to_id=toot.in_reply_to_id,
-                    )
+                status_post(
+                    account, request, mastodon,
+                    status=form.cleaned_data["status"],
+                    visibility=form.cleaned_data["visibility"],
+                    spoiler_text=form.cleaned_data["spoiler_text"],
+                    media_ids=media_objects,
+                    in_reply_to_id=toot.in_reply_to_id,
+                    content_type="text/markdown",
+                )
                 mastodon.status_delete(id)
             except MastodonAPIError as error:
                 form.add_error(
@@ -1125,23 +1117,15 @@ def reply(request, id):
                         )
                     )
             try:
-                try:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        in_reply_to_id=id,
-                        content_type="text/markdown",
-                    )
-                except TypeError:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        in_reply_to_id=id,
-                    )
+                status_post(
+                    account, request, mastodon,
+                    status=form.cleaned_data["status"],
+                    visibility=form.cleaned_data["visibility"],
+                    spoiler_text=form.cleaned_data["spoiler_text"],
+                    media_ids=media_objects,
+                    in_reply_to_id=id,
+                    content_type="text/markdown",
+                )
             except MastodonAPIError as error:
                 form.add_error(
                     "",
