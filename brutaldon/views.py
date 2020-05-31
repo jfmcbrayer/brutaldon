@@ -919,8 +919,6 @@ def toot(request, mention=None):
                         "preferences": account.preferences,
                     },
                 )
-            else:
-                return result
             return redirect(home)
         else:
             return render(
