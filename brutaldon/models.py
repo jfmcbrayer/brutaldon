@@ -54,7 +54,10 @@ class Preference(models.Model):
         default=False,
         help_text=_(
             'Show preview for media marked as "sensitive"'))
-
+    open_detail = models.BooleanField(
+        default=False,
+        help_text=_(
+            'Open details (posts with subjects) by default'))
     no_javascript = models.BooleanField(
         default=False,
         help_text=_(
