@@ -58,6 +58,10 @@ class Preference(models.Model):
         default=False,
         help_text=_(
             'Open details (posts with subjects) by default'))
+    tree_threads = models.BooleanField(
+        default=True,
+        help_text=_(
+            'Display threads as a tree, or as a flat list if disabled.'))
     no_javascript = models.BooleanField(
         default=False,
         help_text=_(
