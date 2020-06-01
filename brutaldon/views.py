@@ -84,7 +84,6 @@ def get_usercontext(request):
         ):
             raise NotLoggedInException()
         mastodon = Mastodon(
-            debug_requests=True,
             client_id=client.client_id,
             client_secret=client.client_secret,
             access_token=user.access_token,
