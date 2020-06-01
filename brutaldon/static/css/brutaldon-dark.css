@@ -262,3 +262,14 @@ li {
 ul {
      padding-left: 2vw;
 }
+
+.input,
+.textarea {
+    color: inherit;
+    background-color: inherit;
+}
+
+input[type="text"] {
+    color: inherit;
+    background-color: inherit;
+}
