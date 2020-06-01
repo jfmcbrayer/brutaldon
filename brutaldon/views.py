@@ -692,7 +692,7 @@ def thread(request, id):
     # descendants = [
     #     x for x in context.descendants if not toot_matches_filters(x, filters)
     # ]
-    posts = tuple(threadtree.build(descendants))
+    posts = tuple(threadtree.build(context.descendants))
     from pprint import pprint
     pprint(posts)
     raise SystemExit(0)

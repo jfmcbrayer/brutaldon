@@ -13,6 +13,7 @@ def maketree(descendants):
             reps.add(descendant.id)
             print("REPLY", descendant.id,
                   descendant.in_reply_to_id,
+                  descendant.in_reply_to_account_id,
                   descendant.in_reply_to_id in lookup)
         else:
             reps = set()
