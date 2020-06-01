@@ -16,6 +16,7 @@ from brutaldon.forms import (
 from brutaldon.models import Client, Account, Preference, Theme
 from mastodon import (
     Mastodon,
+    MastodonIllegalArgumentError,
     AttribAccessDict,
     MastodonError,
     MastodonAPIError,
@@ -71,7 +72,7 @@ def get_session(domain):
         return s
 
 
-def get_usercontext(request):
+def get_usercontext(request, feature_set="mainline"):
     if is_logged_in(request):
         try:
             client = Client.objects.get(api_base_id=request.session["active_instance"])
@@ -90,6 +91,7 @@ def get_usercontext(request):
             api_base_url=client.api_base_id,
             session=get_session(client.api_base_id),
             ratelimit_method="throw",
+            feature_set=feature_set
         )
         return user, mastodon
     else:
@@ -669,6 +671,7 @@ def note(request, next=None, prev=None):
         },
     )
 
+from . import threadtree
 
 @br_login_required
 def thread(request, id):
@@ -685,22 +688,23 @@ def thread(request, id):
     notifications = _notes_count(account, mastodon)
     filters = get_filters(mastodon, context="thread")
 
-    # Apply filters
-    descendants = [
-        x for x in context.descendants if not toot_matches_filters(x, filters)
-    ]
-
+    # # Apply filters
+    # descendants = [
+    #     x for x in context.descendants if not toot_matches_filters(x, filters)
+    # ]
+    toots = tuple(threadtree.build(mastodon, root, context.descendants))
     return render(
         request,
         "main/thread.html",
         {
             "context": context,
             "toot": toot,
-            "root": root,
-            "descendants": descendants,
+            "toots": toots,
             "own_acct": request.session["active_user"],
             "notifications": notifications,
             "preferences": account.preferences,
+            "IN": threadtree.IN,
+            "OUT": threadtree.OUT,
         },
     )
 
@@ -808,6 +812,27 @@ def settings(request):
             {"form": form, "account": account, "preferences": account.preferences},
         )
 
+def status_post(account, request, mastodon, **kw):
+    while True:
+        try:
+            mastodon.status_post(**kw)
+        except MastodonIllegalArgumentError as e:
+            if not 'is only available with feature set' in e.args[0]:
+                raise
+            feature_set = e.args[0].rsplit(" ",1)[-1]
+
+            account, mastodon = get_usercontext(request,
+                                                feature_set=feature_set)
+
+            continue
+        except TypeError:
+            # not sure why, but the old code retried status_post without a
+            # content_type keyword, if there was a TypeError
+            kw.pop("content_type")
+            continue
+        else:
+            break
+    return account, mastodon
 
 @never_cache
 @br_login_required
@@ -864,26 +889,19 @@ def toot(request, mention=None):
                             ),
                         )
                     )
+
             if form.cleaned_data["visibility"] == "":
                 form.cleaned_data["visibility"] = request.session[
                     "active_user"
                 ].source.privacy
             try:
-                try:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        content_type="text/markdown",
-                    )
-                except TypeError:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                    )
+                status_post(
+                    account, request, mastodon,
+                    status=form.cleaned_data["status"],
+                    visibility=form.cleaned_data["visibility"],
+                    spoiler_text=form.cleaned_data["spoiler_text"],
+                    media_ids=media_objects,
+                    content_type="text/markdown")
             except MastodonAPIError as error:
                 form.add_error(
                     "",
@@ -977,23 +995,15 @@ def redraft(request, id):
                     "active_user"
                 ].source.privacy
             try:
-                try:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        in_reply_to_id=toot.in_reply_to_id,
-                        content_type="text/markdown",
-                    )
-                except TypeError:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        in_reply_to_id=toot.in_reply_to_id,
-                    )
+                status_post(
+                    account, request, mastodon,
+                    status=form.cleaned_data["status"],
+                    visibility=form.cleaned_data["visibility"],
+                    spoiler_text=form.cleaned_data["spoiler_text"],
+                    media_ids=media_objects,
+                    in_reply_to_id=toot.in_reply_to_id,
+                    content_type="text/markdown",
+                )
                 mastodon.status_delete(id)
             except MastodonAPIError as error:
                 form.add_error(
@@ -1107,23 +1117,15 @@ def reply(request, id):
                         )
                     )
             try:
-                try:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        in_reply_to_id=id,
-                        content_type="text/markdown",
-                    )
-                except TypeError:
-                    mastodon.status_post(
-                        status=form.cleaned_data["status"],
-                        visibility=form.cleaned_data["visibility"],
-                        spoiler_text=form.cleaned_data["spoiler_text"],
-                        media_ids=media_objects,
-                        in_reply_to_id=id,
-                    )
+                status_post(
+                    account, request, mastodon,
+                    status=form.cleaned_data["status"],
+                    visibility=form.cleaned_data["visibility"],
+                    spoiler_text=form.cleaned_data["spoiler_text"],
+                    media_ids=media_objects,
+                    in_reply_to_id=id,
+                    content_type="text/markdown",
+                )
             except MastodonAPIError as error:
                 form.add_error(
                     "",
