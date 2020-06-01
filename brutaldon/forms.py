@@ -28,19 +28,7 @@ class OAuthLoginForm(forms.Form):
 class PreferencesForm(forms.ModelForm):
     class Meta:
         model = Preference
-        fields = [
-            "theme",
-            "filter_replies",
-            "filter_boosts",
-            "timezone",
-            "no_javascript",
-            "notifications",
-            "click_to_load",
-            "lightbox",
-            "filter_notifications",
-            "bundle_notifications",
-            "poll_frequency",
-        ]
+        fields = Preference._fields
 
 
 class PostForm(forms.Form):
