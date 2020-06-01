@@ -1,9 +1,13 @@
 from pprint import pprint
 
-def maketree(descendants):
+def maketree(mastodon, descendants):
     lookup = dict((descendant.id, descendant) for descendant in descendants)
     replies = {}
     roots = set()
+    def lookup_or_fetch(id):
+        if not id in lookup:
+            lookup[id] = mastodon.status(id)
+        return lookup[id]
     def getreps(id):
         if id in replies:
             reps = replies[id]
@@ -30,12 +34,12 @@ def maketree(descendants):
             seen.add(rep)
             subreps = replies.get(rep)
             if subreps:
-                yield lookup[rep], onelevel(subreps)
+                yield lookup_or_fetch(rep), onelevel(subreps)
             else:
-                yield lookup[rep], ()
+                yield lookup_or_fetch(rep), ()
     def leftovers():
         for leftover in set(lookup.keys()) - seen:
-            yield lookup[leftover]
+            yield lookup_or_fetch(leftover)
     return onelevel(roots), leftovers
 
 # returns (status, gen[(status, gen[(status, ...), (status, ())]), ...])
@@ -60,15 +64,13 @@ def unmaketree(tree):
             yield from unmaketree(children)
             yield OUT
 
-def build(descendants):
-    herp, derp = maketree(descendants)
+def build(mastodon, descendants):
+    tree, leftover = maketree(mastodon, descendants)
     yield IN
-    yield from unmaketree(herp)
+    yield from unmaketree(tree)
     yield OUT
     yield IN
-    derp = tuple(derp())
-    pprint(("derp", derp))
-    for post in derp:
-        pprint(("derp?", post))
+    leftover = tuple(leftover())
+    for post in leftover:
         yield POST(post)
     yield OUT
