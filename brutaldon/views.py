@@ -699,7 +699,6 @@ def thread(request, id):
         {
             "context": context,
             "toot": toot,
-            "root": root,
             "toots": toots,
             "own_acct": request.session["active_user"],
             "notifications": notifications,
