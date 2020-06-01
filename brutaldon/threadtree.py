@@ -29,6 +29,7 @@ def maketree(mastodon, root, descendants):
                   descendant.in_reply_to_id,
                   descendant.in_reply_to_account_id)
     seen = set()
+    seen.add(root.id)
     def onelevel(reps):
         for rep in sorted(reps):
             if rep in seen: continue
