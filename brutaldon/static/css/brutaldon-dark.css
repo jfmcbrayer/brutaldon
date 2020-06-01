@@ -255,3 +255,10 @@ div.poll {
 {
     margin-top: 0;
 }
+
+li {
+     margin-top: 0.1vh;
+}
+ul {
+     padding-left: 2vw;
+}
