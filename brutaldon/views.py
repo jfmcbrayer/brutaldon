@@ -688,20 +688,23 @@ def thread(request, id):
     notifications = _notes_count(account, mastodon)
     filters = get_filters(mastodon, context="thread")
 
-    # # Apply filters
-    # descendants = [
-    #     x for x in context.descendants if not toot_matches_filters(x, filters)
-    # ]
     if account.preferences.tree_threads:
-        toots = tuple(threadtree.build(mastodon, root, context.descendants))
+        def oktoot(toot):
+            return not toot_matches_filters(toot, filters)
+        toots = tuple(threadtree.build(mastodon, oktoot,
+                                       root, context.descendants))
         def vars(defaults):
             defaults['toots'] = toots
             defaults['IN'] = threadtree.IN
             defaults['OUT'] = threadtree.OUT
             return defaults
     else:
+        # Apply filters
+        descendants = [
+            x for x in context.descendants if not toot_matches_filters(x, filters)
+        ]
         def vars(defaults):
-            defaults['descendants'] = context.descendants
+            defaults['descendants'] = descendants
             defaults['root'] = toot
             return defaults
     return render(

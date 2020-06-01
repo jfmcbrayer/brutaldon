@@ -1,13 +1,38 @@
 from pprint import pprint
 
-def maketree(mastodon, root, descendants):
+class filtered_toot:
+    class account:
+        acct = "(filtered)"
+        display_name = "(filtered)"
+        emojis = ()
+    avatar_static = 'about:blank'
+    created_at = None
+    spoiler_text = None
+    content = ""
+    poll = None
+    card = None
+    media_attachments = None
+    sensitive = False
+    id = None
+    replies_count = -1
+    visibility = 'filtered'
+    favourited = False
+    in_reply_to_id = None
+
+
+def maketree(mastodon, oktoot, root, descendants):
+    # Apply filters later...
+    # descendants = [toot for toot in descendants if oktoot(toot)]
     lookup = dict((descendant.id, descendant) for descendant in descendants)
     lookup[root.id] = root
     replies = {}
     roots = set([root.id])
     def lookup_or_fetch(id):
         if not id in lookup:
-            lookup[id] = mastodon.status(id)
+            toot = mastodon.status(id)
+            if not oktoot(toot):
+                # just a placeholder so it doesn't mess up the UI
+                return filtered_toot
         return lookup[id]
     def getreps(id):
         if id in replies:
@@ -65,8 +90,8 @@ def unmaketree(tree):
             yield from unmaketree(children)
             yield OUT
 
-def build(mastodon, root, descendants):
-    tree, leftover = maketree(mastodon, root, descendants)
+def build(mastodon, oktoot, root, descendants):
+    tree, leftover = maketree(mastodon, oktoot, root, descendants)
     yield IN
     yield from unmaketree(tree)
     yield OUT
