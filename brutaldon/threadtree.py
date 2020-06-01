@@ -33,8 +33,10 @@ def maketree(descendants):
                 yield lookup[rep], onelevel(subreps)
             else:
                 yield lookup[rep], ()
-    leftovers = set(lookup.keys()) - seen
-    return onelevel(roots), (lookup[leftover] for leftover in leftovers)
+    def leftovers():
+        for leftover in set(lookup.keys()) - seen:
+            yield lookup[leftover]
+    return onelevel(roots), leftovers
 
 # returns (status, gen[(status, gen[(status, ...), (status, ())]), ...])
 
@@ -60,12 +62,13 @@ def unmaketree(tree):
 
 def build(descendants):
     herp, derp = maketree(descendants)
-    derp = tuple(derp)
-    pprint(("derp?", derp))
     yield IN
     yield from unmaketree(herp)
     yield OUT
     yield IN
+    derp = tuple(derp())
+    pprint("derp", derp)
     for post in derp:
-        yield POST(derp)
+        pprint(("derp?", post))
+        yield POST(post)
     yield OUT
