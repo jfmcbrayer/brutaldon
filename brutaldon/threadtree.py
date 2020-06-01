@@ -1,5 +1,10 @@
 def maketree(descendants):
-    lookup = {(descendant.id, descendant) for descendant in descendants}
+    try:
+        lookup = {(descendant.id, descendant) for descendant in descendants}
+    except:
+        from pprint import pprint
+        pprint(lookup)
+        raise
     replies = {}
     roots = set()
     for descendant in descendants:

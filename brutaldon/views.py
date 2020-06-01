@@ -671,7 +671,7 @@ def note(request, next=None, prev=None):
         },
     )
 
-import threadtree
+from . import threadtree
 
 @br_login_required
 def thread(request, id):
@@ -700,7 +700,7 @@ def thread(request, id):
             "context": context,
             "toot": toot,
             "root": root,
-            "posts": threadtree.build(descendants)),
+            "posts": threadtree.build(descendants),
             "own_acct": request.session["active_user"],
             "notifications": notifications,
             "preferences": account.preferences,
