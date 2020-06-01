@@ -1,9 +1,10 @@
 from pprint import pprint
 
-def maketree(mastodon, descendants):
+def maketree(mastodon, root, descendants):
     lookup = dict((descendant.id, descendant) for descendant in descendants)
+    lookup[root.id] = root
     replies = {}
-    roots = set()
+    roots = set([root.id])
     def lookup_or_fetch(id):
         if not id in lookup:
             lookup[id] = mastodon.status(id)
@@ -64,8 +65,8 @@ def unmaketree(tree):
             yield from unmaketree(children)
             yield OUT
 
-def build(mastodon, descendants):
-    tree, leftover = maketree(mastodon, descendants)
+def build(mastodon, root, descendants):
+    tree, leftover = maketree(mastodon, root, descendants)
     yield IN
     yield from unmaketree(tree)
     yield OUT
