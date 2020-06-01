@@ -50,6 +50,11 @@ class Preference(models.Model):
     timezone = models.CharField(
         max_length=80, blank=True, null=True, choices=timezones, default="UTC"
     )
+    preview_sensitive = models.BooleanField(
+        default=False,
+        help_text=_(
+            'Show preview for media marked as "sensitive"'))
+
     no_javascript = models.BooleanField(
         default=False,
         help_text=_(
