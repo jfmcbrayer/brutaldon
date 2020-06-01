@@ -688,10 +688,10 @@ def thread(request, id):
     notifications = _notes_count(account, mastodon)
     filters = get_filters(mastodon, context="thread")
 
-    # Apply filters
-    descendants = [
-        x for x in context.descendants if not toot_matches_filters(x, filters)
-    ]
+    # # Apply filters
+    # descendants = [
+    #     x for x in context.descendants if not toot_matches_filters(x, filters)
+    # ]
     posts = tuple(threadtree.build(descendants))
     from pprint import pprint
     pprint(posts)

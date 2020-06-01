@@ -7,14 +7,18 @@ def maketree(descendants):
     for descendant in descendants:
         if not descendant.in_reply_to_id:
             roots.add(descendant.id)
-            print("ROOT", descendant.id, descendant.account.acct)
+            print("ROOT", descendant.id, descendant.account.id, descendant.account.acct)
         elif descendant.in_reply_to_id in replies:
             reps = replies[descendant.in_reply_to_id]
             reps.add(descendant.id)
-            print("REPLY", descendant.id, descendant.in_reply_to_id)
+            print("REPLY", descendant.id,
+                  descendant.in_reply_to_id,
+                  descendant.in_reply_to_id in lookup)
         else:
             reps = set()
-            print("NEWREPLY", descendant.id, descendant.in_reply_to_id)
+            print("NEWREPLY", descendant.id,
+                  descendant.in_reply_to_id,
+                  descendant.in_reply_to_id in lookup)
             replies[descendant.in_reply_to_id] = set([descendant.id])
     seen = set()
     def onelevel(reps):
