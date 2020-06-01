@@ -671,6 +671,7 @@ def note(request, next=None, prev=None):
         },
     )
 
+import threadtree
 
 @br_login_required
 def thread(request, id):
@@ -687,10 +688,6 @@ def thread(request, id):
     notifications = _notes_count(account, mastodon)
     filters = get_filters(mastodon, context="thread")
 
-    import pprint
-    pprint.pprint(context)
-    raise SystemExit(23)
-
     # Apply filters
     descendants = [
         x for x in context.descendants if not toot_matches_filters(x, filters)
@@ -703,10 +700,12 @@ def thread(request, id):
             "context": context,
             "toot": toot,
             "root": root,
-            "descendants": unmaketree(maketree(descendants)),
+            "posts": threadtree.build(descendants)),
             "own_acct": request.session["active_user"],
             "notifications": notifications,
             "preferences": account.preferences,
+            "IN": threadtree.IN,
+            "OUT": threadtree.OUT,
         },
     )
 

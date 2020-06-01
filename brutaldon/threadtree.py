@@ -50,5 +50,5 @@ def unmaketree(tree):
             yield from unmaketree(children)
             yield OUT
 
-def threadtree(descendants):
+def build(descendants):
     return unmaketree(maketree(descendants))
