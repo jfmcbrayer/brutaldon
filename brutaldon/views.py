@@ -133,7 +133,7 @@ def br_login_required(function=None, home_url=None, redirect_field_name=None):
 
     def _dec(view_func):
         def _view(request, *args, **kwargs):
-            if not is_logged_in(request):
+            def not_logged_in():
                 url = None
                 if redirect_field_name and redirect_field_name in request.REQUEST:
                     url = request.REQUEST[redirect_field_name]
@@ -142,8 +142,14 @@ def br_login_required(function=None, home_url=None, redirect_field_name=None):
                 if not url:
                     url = "/"
                 return HttpResponseRedirect(url)
+            if not is_logged_in(request):
+                return not_logged_in()
             else:
-                return view_func(request, *args, **kwargs)
+                try:
+                    return view_func(request, *args, **kwargs)
+                except MastodonAPIError:
+                    # mastodon must have expired our session
+                    return not_logged_in()
 
         _view.__name__ = view_func.__name__
         _view.__dict__ = view_func.__dict__
