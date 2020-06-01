@@ -700,7 +700,7 @@ def thread(request, id):
             "context": context,
             "toot": toot,
             "root": root,
-            "posts": threadtree.build(descendants),
+            "posts": tuple(threadtree.build(descendants)),
             "own_acct": request.session["active_user"],
             "notifications": notifications,
             "preferences": account.preferences,

@@ -5,7 +5,6 @@ def maketree(descendants):
     replies = {}
     roots = set()
     for descendant in descendants:
-        pprint(descendant)
         if not descendant.in_reply_to_id:
             roots.add(descendant.id)
         if descendant.in_reply_to_id in replies:
@@ -54,4 +53,6 @@ def unmaketree(tree):
             yield OUT
 
 def build(descendants):
-    return unmaketree(maketree(descendants))
+    yield IN
+    yield from unmaketree(maketree(descendants))
+    yield OUT
