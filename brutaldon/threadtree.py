@@ -1,13 +1,17 @@
+from pprint import pprint
+
 def maketree(descendants):
     try:
-        lookup = {(descendant.id, descendant) for descendant in descendants}
+        lookup = [(descendant.id, descendant) for descendant in descendants]
+        print(descendants[0][0])
+        lookup = dict(descendants)
     except:
-        from pprint import pprint
         pprint(lookup)
         raise
     replies = {}
     roots = set()
     for descendant in descendants:
+        pprint(descendant)
         if not descendant.in_reply_to_id:
             roots.add(descendant.id)
         if descendant.in_reply_to_id in replies:
