@@ -41,7 +41,11 @@
             {% endif %}
         </p>
         {% if toot.spoiler_text %}
-            <details class="toot">
+            <details class="toot"
+            {% if preferences.open_detail %}
+            open=""
+            {% endif %}
+            >
                 <summary><strong>{{ toot.spoiler_text }} </strong></summary>
                 <div class="toot">
                     {{ toot.content | relink_toot | fix_emojos:toot.emojis | strip_html | safe }}
