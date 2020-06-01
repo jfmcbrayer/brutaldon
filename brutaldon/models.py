@@ -29,7 +29,20 @@ class Theme(models.Model):
     def __str__(self):
         return self.name
 
+from django.db.models.fields.related_descriptors import ForeignKeyDeferredAttribute
+def set_fields(klass):
+    fields = []
+    for n in dir(klass):
+        assert n != "_fields"
+        v = getattr(klass, n)
+        if not hasattr(v, 'field'): continue
+        if not isinstance(v.field, models.Field): continue
+        if isinstance(v, ForeignKeyDeferredAttribute): continue
+        fields.append(n)
+    setattr(klass, '_fields', fields)
+    return klass
 
+@set_fields
 class Preference(models.Model):
     theme = models.ForeignKey(Theme, models.CASCADE, null=False, default=1)
     filter_replies = models.BooleanField(default=False)
@@ -37,6 +50,11 @@ class Preference(models.Model):
     timezone = models.CharField(
         max_length=80, blank=True, null=True, choices=timezones, default="UTC"
     )
+    preview_sensitive = models.BooleanField(
+        default=False,
+        help_text=_(
+            'Show preview for media marked as "sensitive"'))
+
     no_javascript = models.BooleanField(
         default=False,
         help_text=_(
