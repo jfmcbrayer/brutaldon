@@ -53,6 +53,8 @@ def unmaketree(tree):
             yield OUT
 
 def build(descendants):
+    derp = tuple(maketree(descendants))
+    pprint(("derp?", derp))
     yield IN
-    yield from unmaketree(maketree(descendants))
+    yield from unmaketree(derp)
     yield OUT
