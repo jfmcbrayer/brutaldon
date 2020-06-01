@@ -256,8 +256,12 @@ div.poll {
     margin-top: 0;
 }
 
+html { 
+   overflow-x: inherit;
+}
 li {
      margin-top: 0.1vh;
+     min-width: 40em;
 }
 ul {
      padding-left: 2vw;
