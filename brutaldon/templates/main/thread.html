@@ -18,14 +18,20 @@ mastodon.status_context(<numerical id>)
     <h1 id="title" class="title">
         Thread
     </h1>
-    {% include "main/toot_partial.html" with toot=root %}
-    {% for descendant in descendants %}
-        {% if descendant == toot %}
-            {% include "main/toot_partial.html" with toot=toot active=True %}
-        {% else %}
-            {% include "main/toot_partial.html" with toot=descendant %}
-        {% endif %}
-        <hr class="is-hidden">
+    {% for op in toots %}
+       {% if op == IN %}
+       <ul>
+       {% elif op == OUT %}
+       </ul>
+       {% else %}
+       <li>
+       {% if op.toot == toot %}
+            {% include "main/toot_partial.html" with toot=op.toot active=True %}
+       {% else %}
+            {% include "main/toot_partial.html" with toot=op.toot %}
+       {% endif %}
+       </li>
+       {% endif %}
     {% endfor %}
 
     {% if not preferences.no_javascript %}
