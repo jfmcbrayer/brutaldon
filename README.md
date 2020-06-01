@@ -1,6 +1,6 @@
-Note: this github repo is a mirror that may not be up-to-date. Please go to https://git.carcosa.net/jmcbray/brutaldon for the latest code.
-
 # Brutaldon
+
+Note: If you are seeing this on Github, this repo is a mirror that may not be up-to-date. Please go to https://git.carcosa.net/jmcbray/brutaldon for the latest code.
 
 Brutaldon is a [brutalist][0], [Web 1.0][0.5] web interface for [Mastodon][1] and [Pleroma][p]. It is not a Mastodon-compatible social networking server; rather, it is just a client, like the Android or iOS client for Mastodon you may already be using, but it runs in a web server, and is accessed through a web browser. It works great in text-mode browsers such as [Lynx][2], [w3m][3], or [elinks][4], and also in more heavy-weight graphical browsers, such as Firefox. It works completely without JavaScript, but if JavaScript is available and enabled, it will be used to unobtrusively enhance the user experience.
 
