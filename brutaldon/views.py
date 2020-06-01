@@ -692,7 +692,10 @@ def thread(request, id):
     descendants = [
         x for x in context.descendants if not toot_matches_filters(x, filters)
     ]
-
+    posts = tuple(threadtree.build(descendants))
+    from pprint import pprint
+    pprint(posts)
+    raise SystemExit(0)
     return render(
         request,
         "main/thread.html",
@@ -700,7 +703,7 @@ def thread(request, id):
             "context": context,
             "toot": toot,
             "root": root,
-            "posts": tuple(threadtree.build(descendants)),
+            "posts": posts,
             "own_acct": request.session["active_user"],
             "notifications": notifications,
             "preferences": account.preferences,
