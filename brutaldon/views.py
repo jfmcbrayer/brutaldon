@@ -704,6 +704,12 @@ def thread(request, id):
         },
     )
 
+def same_username(account, acct, username):
+    if acct == username: return True
+    user, host = username.split("@", 1)
+    myhost = account.username.split("@",1)[1]
+    if acct == user and host == myhost: return True
+    return False
 
 @br_login_required
 def user(request, username, prev=None, next=None):
@@ -711,20 +717,24 @@ def user(request, username, prev=None, next=None):
         account, mastodon = get_usercontext(request)
     except NotLoggedInException:
         return redirect(about)
+    user_dict = []
+    for dict in mastodon.account_search(username):
+        if same_username(account, dict.acct ,username): continue
+
     try:
         user_dict = [
             dict
-            for dict in mastodon.account_search(username)
+
             if (
                 (dict.acct == username)
                 or (
                     dict.acct == username.split("@")[0]
-                    and username.split("@")[1] == account.username.split("@")[1]
+                    and
                 )
             )
         ][0]
-    except (IndexError, AttributeError):
-        raise Http404(_("The user %s could not be found.") % username)
+    except (IndexError, AttributeError) as e:
+        raise Http404(_("The user %s could not be found. %s") % (username, e))
     data = mastodon.account_statuses(user_dict.id, max_id=next, min_id=prev)
     relationship = mastodon.account_relationships(user_dict.id)[0]
     notifications = _notes_count(account, mastodon)
