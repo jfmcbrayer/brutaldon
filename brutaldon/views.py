@@ -687,6 +687,10 @@ def thread(request, id):
     notifications = _notes_count(account, mastodon)
     filters = get_filters(mastodon, context="thread")
 
+    import pprint
+    pprint.pprint(context)
+    raise SystemExit(23)
+
     # Apply filters
     descendants = [
         x for x in context.descendants if not toot_matches_filters(x, filters)
@@ -699,7 +703,7 @@ def thread(request, id):
             "context": context,
             "toot": toot,
             "root": root,
-            "descendants": descendants,
+            "descendants": unmaketree(maketree(descendants)),
             "own_acct": request.session["active_user"],
             "notifications": notifications,
             "preferences": account.preferences,
