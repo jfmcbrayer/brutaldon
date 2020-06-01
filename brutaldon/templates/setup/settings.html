@@ -2,189 +2,189 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="title">Settings</h1>
-        <form method="post" action="{% url "settings" %}" >
-            {% csrf_token %}
+<div class="container">
+    <h1 class="title">Settings</h1>
+    <form method="post" action="{% url "settings" %}" >
+        {% csrf_token %}
 
-            <h2 class="subtitle">General Options</h2>
-            <div class="field">
-                <label class="label" for="id_theme">{{ form.theme.label }}</label>
-                <div class="control has-icons-left">
-                    <div class="select">
-                        {% render_field form.theme class+="select" %}
-                        <span class="icon is-small is-left">
-                            <span class="fa fa-paint-brush"></span>
-                    </div>
+        <h2 class="subtitle">General Options</h2>
+        <div class="field">
+            <label class="label" for="id_theme">{{ form.theme.label }}</label>
+            <div class="control has-icons-left">
+                <div class="select">
+                    {% render_field form.theme class+="select" %}
+                    <span class="icon is-small is-left">
+                        <span class="fa fa-paint-brush"></span>
                 </div>
             </div>
+        </div>
 
-            <div class="field">
-                <label class="label" for="id_timezone">{{ form.timezone.label }}</label>
-                <div class="control has-icons-left">
-                    <div class="select">
-                        {% render_field form.timezone class+="select" %}
-                        <span class="icon is-small is-left">
-                            <span class="fa fa-clock-o"></span>
-                    </div>
+        <div class="field">
+            <label class="label" for="id_timezone">{{ form.timezone.label }}</label>
+            <div class="control has-icons-left">
+                <div class="select">
+                    {% render_field form.timezone class+="select" %}
+                    <span class="icon is-small is-left">
+                        <span class="fa fa-clock-o"></span>
                 </div>
             </div>
+        </div>
 
-            <h2 class="subtitle">Content Options</h2>
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label checkbox" for="id_preview_sensitive">
-                        {% render_field form.preview_sensitive class+="checkbox" %}
-                        {{ form.preview_sensitive.label }}
-                    </label>
-                </div>
-			      </div>
-
-            <h2 class="subtitle">Timeline Options</h2>
-            <div class="field">
-                <label class="label checkbox">
-                    {% render_field form.filter_replies %}
-                    {{ form.filter_replies.label  }}
+        <h2 class="subtitle">Content Options</h2>
+        <div class="columns">
+            <div class="column is-quarter">
+                <label class="label checkbox" for="id_preview_sensitive">
+                    {% render_field form.preview_sensitive class+="checkbox" %}
+                    {{ form.preview_sensitive.label }}
                 </label>
             </div>
-            <div class="field">
-                <label class="label checkbox"">
-                    {% render_field form.filter_boosts %}
-                    {{ form.filter_boosts.label  }}
+        </div>
+
+        <h2 class="subtitle">Timeline Options</h2>
+        <div class="field">
+            <label class="label checkbox">
+                {% render_field form.filter_replies %}
+                {{ form.filter_replies.label  }}
+            </label>
+        </div>
+        <div class="field">
+            <label class="label checkbox"">
+                {% render_field form.filter_boosts %}
+                {{ form.filter_boosts.label  }}
+            </label>
+        </div>
+        <div class="columns">
+            <div class="column is-quarter">
+                <label class="label checkbox" for="id_filter_notifications">
+                    {% render_field form.filter_notifications class+="checkbox" %}
+                    {{ form.filter_notifications.label }}
                 </label>
             </div>
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label checkbox" for="id_filter_notifications">
-                        {% render_field form.filter_notifications class+="checkbox" %}
-                        {{ form.filter_notifications.label }}
-                    </label>
-                </div>
-                <div class="column is-quarter">
-                    <p class="notification is-info preferences-help">
-                        {{ form.filter_notifications.help_text }}
-                    </p>
-                </div>
-                <div class="column is-half">
+            <div class="column is-quarter">
+                <p class="notification is-info preferences-help">
+                    {{ form.filter_notifications.help_text }}
+                </p>
+            </div>
+            <div class="column is-half">
 
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-quarter">
+                <label class="label checkbox" for="id_bundle_notifications">
+                    {% render_field form.bundle_notifications class+="checkbox" %}
+                    {{ form.bundle_notifications.label }}
+                </label>
+            </div>
+            <div class="column is-quarter">
+                <p class="notification is-info preferences-help">
+                    {{ form.bundle_notifications.help_text }}
+                </p>
+            </div>
+            <div class="column is-half">
+
+            </div>
+        </div>
+
+        <h2 class="subtitle">JavaScript Options</h2>
+        <div class="columns">
+            <div class="column is-quarter">
+                <label class="label checkbox" for="id_no_javascript">
+                    {% render_field form.no_javascript class+="checkbox" %}
+                    {{ form.no_javascript.label }}
+                </label>
+            </div>
+            <div class="column is-quarter">
+                <p class="notification is-info preferences-help">
+                    {{ form.no_javascript.help_text }}
+                </p>
+            </div>
+            <div class="column is-half">
+
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-quarter">
+                <label class="label checkbox" for="id_notifications">
+                    {% render_field form.notifications class+="checkbox" %}
+                    {{ form.notifications.label }}
+                </label>
+            </div>
+            <div class="column is-quarter">
+                <p class="notification is-info preferences-help">
+                    {{ form.notifications.help_text }}
+                </p>
+            </div>
+            <div class="column is-half">
+
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-quarter">
+                <label class="label checkbox" for="id_click_to_load">
+                    {% render_field form.click_to_load class+="checkbox" %}
+                    {{ form.click_to_load.label }}
+                </label>
+            </div>
+            <div class="column is-quarter">
+                <p class="notification is-info preferences-help">
+                    {{ form.click_to_load.help_text }}
+                </p>
+            </div>
+            <div class="column is-half">
+
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-quarter">
+                <label class="label checkbox" for="id_lightbox">
+                    {% render_field form.lightbox class+="checkbox" %}
+                    {{ form.lightbox.label }}
+                </label>
+            </div>
+            <div class="column is-quarter">
+                <p class="notification is-info preferences-help">
+                    {{ form.lightbox.help_text }}
+                </p>
+            </div>
+            <div class="column is-half">
+
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-quarter">
+                <label class="label" for="id_poll_frequency">
+                    {{ form.poll_frequency.label }}
+                </label>
+                <div class="control">
+                    {% render_field form.poll_frequency class+="input" %}
                 </div>
             </div>
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label checkbox" for="id_bundle_notifications">
-                        {% render_field form.bundle_notifications class+="checkbox" %}
-                        {{ form.bundle_notifications.label }}
-                    </label>
-                </div>
-                <div class="column is-quarter">
-                    <p class="notification is-info preferences-help">
-                        {{ form.bundle_notifications.help_text }}
-                    </p>
-                </div>
-                <div class="column is-half">
-
-                </div>
+            <div class="column is-quarter">
+                <p class="notification is-info preferences-help">
+                    {{ form.poll_frequency.help_text }}
+                </p>
             </div>
+            <div class="column is-half">
 
-            <h2 class="subtitle">JavaScript Options</h2>
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label checkbox" for="id_no_javascript">
-                        {% render_field form.no_javascript class+="checkbox" %}
-                        {{ form.no_javascript.label }}
-                    </label>
-                </div>
-                <div class="column is-quarter">
-                    <p class="notification is-info preferences-help">
-                        {{ form.no_javascript.help_text }}
-                    </p>
-                </div>
-                <div class="column is-half">
-
-                </div>
             </div>
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label checkbox" for="id_notifications">
-                        {% render_field form.notifications class+="checkbox" %}
-                        {{ form.notifications.label }}
-                    </label>
-                </div>
-                <div class="column is-quarter">
-                    <p class="notification is-info preferences-help">
-                        {{ form.notifications.help_text }}
-                    </p>
-                </div>
-                <div class="column is-half">
+        </div>
 
-                </div>
-            </div>
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label checkbox" for="id_click_to_load">
-                        {% render_field form.click_to_load class+="checkbox" %}
-                        {{ form.click_to_load.label }}
-                    </label>
-                </div>
-                <div class="column is-quarter">
-                    <p class="notification is-info preferences-help">
-                        {{ form.click_to_load.help_text }}
-                    </p>
-                </div>
-                <div class="column is-half">
+        <div class="field">
+            <input type="submit" name="submit"
+                   value="Save" class="button is-primary" >
+        </div>
+    </form>
 
-                </div>
-            </div>
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label checkbox" for="id_lightbox">
-                        {% render_field form.lightbox class+="checkbox" %}
-                        {{ form.lightbox.label }}
-                    </label>
-                </div>
-                <div class="column is-quarter">
-                    <p class="notification is-info preferences-help">
-                        {{ form.lightbox.help_text }}
-                    </p>
-                </div>
-                <div class="column is-half">
+    <h2 class="subtitle">Bookmarklet</h2>
+    <p>
+        <a href="{{ bookmarklet_url }}">Share via brutaldon</a>
+    </p>
 
-                </div>
-            </div>
+    <h2 class="subtitle">Filters and More</h2>
+    <p><a href="{% url "list_filters" %}">List filters</a></p>
+    <p><a href="{% url "follow_requests" %}">Follow requests</a></p>
 
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label" for="id_poll_frequency">
-                        {{ form.poll_frequency.label }}
-                    </label>
-                    <div class="control">
-                        {% render_field form.poll_frequency class+="input" %}
-                    </div>
-                </div>
-                <div class="column is-quarter">
-                    <p class="notification is-info preferences-help">
-                        {{ form.poll_frequency.help_text }}
-                    </p>
-                </div>
-                <div class="column is-half">
-
-                </div>
-            </div>
-
-            <div class="field">
-                <input type="submit" name="submit"
-                       value="Save" class="button is-primary" >
-            </div>
-        </form>
-
-        <h2 class="subtitle">Bookmarklet</h2>
-        <p>
-            <a href="{{ bookmarklet_url }}">Share via brutaldon</a>
-        </p>
-
-        <h2 class="subtitle">Filters and More</h2>
-        <p><a href="{% url "list_filters" %}">List filters</a></p>
-        <p><a href="{% url "follow_requests" %}">Follow requests</a></p>
-
-    </div>
+</div>
 {% endblock %}
