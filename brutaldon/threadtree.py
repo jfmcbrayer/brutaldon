@@ -33,6 +33,8 @@ def maketree(mastodon, oktoot, root, descendants):
             if not oktoot(toot):
                 # just a placeholder so it doesn't mess up the UI
                 return filtered_toot
+            lookup[id] = toot
+            return toot
         return lookup[id]
     def getreps(id):
         if id in replies:
