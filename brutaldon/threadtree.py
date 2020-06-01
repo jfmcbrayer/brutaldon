@@ -33,13 +33,8 @@ def maketree(descendants):
                 yield lookup[rep], onelevel(subreps)
             else:
                 yield lookup[rep], ()
-    for root in sorted(roots):
-        seen.add(root)
-        reps = replies.get(root)
-        if reps:
-            yield lookup[root], onelevel(reps)
-        else:
-            yield lookup[root], ()
+    return onelevel(roots)
+
 # returns (status, gen[(status, gen[(status, ...), (status, ())]), ...])
 
 # django can't do recursion well so we'll turn the tree

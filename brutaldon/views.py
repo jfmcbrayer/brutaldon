@@ -693,9 +693,6 @@ def thread(request, id):
     #     x for x in context.descendants if not toot_matches_filters(x, filters)
     # ]
     posts = tuple(threadtree.build(context.descendants))
-    from pprint import pprint
-    pprint(posts)
-    raise SystemExit(0)
     return render(
         request,
         "main/thread.html",
