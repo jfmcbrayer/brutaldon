@@ -44,10 +44,10 @@ def maketree(descendants):
 # ((A, (B, C)))
 # into
 # (in, in, A, in, B, C, out, out, out)
-class OPERATION: pass
-IN = OPERATION()
-OUT = OPERATION()
-class POST(OPERATION):
+
+IN = 0
+OUT = 1
+class POST:
     post = None
     def __init__(self, post):
         self.post = post
@@ -67,7 +67,7 @@ def build(descendants):
     yield OUT
     yield IN
     derp = tuple(derp())
-    pprint("derp", derp)
+    pprint(("derp", derp))
     for post in derp:
         pprint(("derp?", post))
         yield POST(post)
