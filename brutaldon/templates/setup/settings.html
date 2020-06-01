@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <h2 class="subtitle">Options</h2>
+            <h2 class="subtitle">Content Options</h2>
             <div class="columns">
                 <div class="column is-quarter">
                     <label class="label checkbox" for="id_preview_sensitive">
@@ -38,7 +38,8 @@
                         {{ form.preview_sensitive.label }}
                     </label>
                 </div>
-			</div>
+			      </div>
+
             <h2 class="subtitle">Timeline Options</h2>
             <div class="field">
                 <label class="label checkbox">
@@ -51,6 +52,38 @@
                     {% render_field form.filter_boosts %}
                     {{ form.filter_boosts.label  }}
                 </label>
+            </div>
+            <div class="columns">
+                <div class="column is-quarter">
+                    <label class="label checkbox" for="id_filter_notifications">
+                        {% render_field form.filter_notifications class+="checkbox" %}
+                        {{ form.filter_notifications.label }}
+                    </label>
+                </div>
+                <div class="column is-quarter">
+                    <p class="notification is-info preferences-help">
+                        {{ form.filter_notifications.help_text }}
+                    </p>
+                </div>
+                <div class="column is-half">
+
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-quarter">
+                    <label class="label checkbox" for="id_bundle_notifications">
+                        {% render_field form.bundle_notifications class+="checkbox" %}
+                        {{ form.bundle_notifications.label }}
+                    </label>
+                </div>
+                <div class="column is-quarter">
+                    <p class="notification is-info preferences-help">
+                        {{ form.bundle_notifications.help_text }}
+                    </p>
+                </div>
+                <div class="column is-half">
+
+                </div>
             </div>
 
             <h2 class="subtitle">JavaScript Options</h2>
@@ -112,38 +145,6 @@
                 <div class="column is-quarter">
                     <p class="notification is-info preferences-help">
                         {{ form.lightbox.help_text }}
-                    </p>
-                </div>
-                <div class="column is-half">
-
-                </div>
-            </div>
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label checkbox" for="id_filter_notifications">
-                        {% render_field form.filter_notifications class+="checkbox" %}
-                        {{ form.filter_notifications.label }}
-                    </label>
-                </div>
-                <div class="column is-quarter">
-                    <p class="notification is-info preferences-help">
-                        {{ form.filter_notifications.help_text }}
-                    </p>
-                </div>
-                <div class="column is-half">
-
-                </div>
-            </div>
-            <div class="columns">
-                <div class="column is-quarter">
-                    <label class="label checkbox" for="id_bundle_notifications">
-                        {% render_field form.bundle_notifications class+="checkbox" %}
-                        {{ form.bundle_notifications.label }}
-                    </label>
-                </div>
-                <div class="column is-quarter">
-                    <p class="notification is-info preferences-help">
-                        {{ form.bundle_notifications.help_text }}
                     </p>
                 </div>
                 <div class="column is-half">
