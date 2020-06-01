@@ -692,7 +692,7 @@ def thread(request, id):
     # descendants = [
     #     x for x in context.descendants if not toot_matches_filters(x, filters)
     # ]
-    toots = tuple(threadtree.build(mastodon, context.descendants))
+    toots = tuple(threadtree.build(mastodon, root, context.descendants))
     return render(
         request,
         "main/thread.html",
