@@ -84,6 +84,7 @@ def get_usercontext(request):
         ):
             raise NotLoggedInException()
         mastodon = Mastodon(
+            debug_requests=True,
             client_id=client.client_id,
             client_secret=client.client_secret,
             access_token=user.access_token,
@@ -720,18 +721,16 @@ def user(request, username, prev=None, next=None):
     user_dict = None
     # pleroma currently flops if the user's not already locally known
     # this is a BUG that they MUST FIX
-    # but until then, we might have to "prime the engine"
-    # by doing a regular search, if the account search fails
-    # to return results.
+    # but until then, we might have to fallback to a regular search,
+    # if the account search fails to return results.
     for dict in mastodon.account_search(username):
-        print("check", dict.acct)
         if not same_username(account, dict.acct, username): continue
         user_dict = dict
         break
     else:
         for dict in mastodon.search(username,
-                                    result_type="accounts",
-                                    account_id=username):
+                                    result_type="accounts").accounts:
+            if not same_username(account, dict.acct, username): continue
             user_dict = dict
             break
         else:
