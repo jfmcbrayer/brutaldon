@@ -29,7 +29,6 @@
                     </div>
                 </div>
             </div>
-
             <h2 class="subtitle">Options</h2>
             <div class="columns">
                 <div class="column is-quarter">
@@ -43,7 +42,7 @@
                         {{ form.preview_sensitive.help_text }}
                     </p>
                 </div>
-			</div>
+            </div>
             <div class="columns">
                 <div class="column is-quarter">
                     <label class="label checkbox" for="id_open_details">
@@ -56,7 +55,22 @@
                         {{ form.open_detail.help_text }}
                     </p>
                 </div>
-			</div>
+            </div>
+            <div class="columns">
+                <div class="column is-quarter">
+                    <label class="label checkbox" for="id_tree_threads">
+                        {% render_field form.tree_threads class+="checkbox" %}
+                        {{ form.tree_threads.label }}
+                    </label>
+                </div>
+                <div class="column is-quarter">
+                    <p class="notification is-info preferences-help">
+                        {{ form.tree_threads.help_text }}
+                    </p>
+                </div>
+                <div class="column is-half">
+                </div>
+            </div>
             <h2 class="subtitle">Timeline Options</h2>
             <div class="field">
                 <label class="label checkbox">

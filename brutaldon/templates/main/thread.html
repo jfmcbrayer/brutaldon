@@ -18,22 +18,32 @@ mastodon.status_context(<numerical id>)
     <h1 id="title" class="title">
         Thread
     </h1>
-    {% for op in toots %}
-       {% if op == IN %}
-       <ul>
-       {% elif op == OUT %}
-       </ul>
-       {% else %}
-       <li>
-       {% if op.toot == toot %}
-            {% include "main/toot_partial.html" with toot=op.toot active=True %}
-       {% else %}
-            {% include "main/toot_partial.html" with toot=op.toot %}
-       {% endif %}
-       </li>
-       {% endif %}
-    {% endfor %}
-
+    {% if preferences.tree_threads %}
+        {% for op in toots %}
+           {% if op == IN %}
+           <ul>
+           {% elif op == OUT %}
+           </ul>
+           {% else %}
+           <li>
+           {% if op.toot == activetoot %}
+                {% include "main/toot_partial.html" with toot=op.toot active=True %}
+           {% else %}
+                {% include "main/toot_partial.html" with toot=op.toot %}
+           {% endif %}
+           </li>
+           {% endif %}
+        {% endfor %}
+    {% else %}
+        {% include "main/toot_partial.html" with toot=root %}
+        {% for cur in descendants %}
+           {% if cur == activetoot %}
+                   {% include "main/toot_partial.html" with toot=cur active=True %}
+           {% else %}
+                {% include "main/toot_partial.html" with toot=cur %}
+           {% endif %}
+        {% endfor %}
+    {% endif %}
     {% if not preferences.no_javascript %}
         <script type="application/javascript">
          Intercooler.ready(expandCWButtonPrepare);

@@ -692,20 +692,28 @@ def thread(request, id):
     # descendants = [
     #     x for x in context.descendants if not toot_matches_filters(x, filters)
     # ]
-    toots = tuple(threadtree.build(mastodon, root, context.descendants))
+    if account.preferences.tree_threads:
+        toots = tuple(threadtree.build(mastodon, root, context.descendants))
+        def vars(defaults):
+            defaults['toots'] = toots
+            defaults['IN'] = threadtree.IN
+            defaults['OUT'] = threadtree.OUT
+            return defaults
+    else:
+        def vars(defaults):
+            defaults['descendants'] = context.descendants
+            defaults['root'] = toot
+            return defaults
     return render(
         request,
         "main/thread.html",
-        {
+        vars({
             "context": context,
-            "toot": toot,
-            "toots": toots,
+            "activetoot": toot,
             "own_acct": request.session["active_user"],
             "notifications": notifications,
             "preferences": account.preferences,
-            "IN": threadtree.IN,
-            "OUT": threadtree.OUT,
-        },
+        }),
     )
 
 
