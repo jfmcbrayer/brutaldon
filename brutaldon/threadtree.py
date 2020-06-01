@@ -51,14 +51,14 @@ def maketree(mastodon, descendants):
 
 IN = 0
 OUT = 1
-class POST:
-    post = None
-    def __init__(self, post):
-        self.post = post
+class TOOT:
+    toot = None
+    def __init__(self, toot):
+        self.toot = toot
 
 def unmaketree(tree):
-    for post, children in tree:
-        yield POST(post)
+    for toot, children in tree:
+        yield TOOT(toot)
         if children:
             yield IN
             yield from unmaketree(children)
@@ -71,6 +71,6 @@ def build(mastodon, descendants):
     yield OUT
     yield IN
     leftover = tuple(leftover())
-    for post in leftover:
-        yield POST(post)
+    for toot in leftover:
+        yield TOOT(toot)
     yield OUT
