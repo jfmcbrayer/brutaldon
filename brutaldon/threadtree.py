@@ -1,5 +1,3 @@
-from pprint import pprint
-
 class filtered_toot:
     class account:
         acct = "(filtered)"
@@ -46,15 +44,11 @@ def maketree(mastodon, oktoot, root, descendants):
     for descendant in descendants:
         if not descendant.in_reply_to_id:
             roots.add(descendant.id)
-            print("ROOT", descendant.id, descendant.account.id, descendant.account.acct)
         else:
             reps = getreps(descendant.in_reply_to_id)
             reps.add(descendant.id)
             reps = getreps(descendant.in_reply_to_account_id)
             reps.add(descendant.id)
-            print("REPLY", descendant.id,
-                  descendant.in_reply_to_id,
-                  descendant.in_reply_to_account_id)
     seen = set()
     def onelevel(reps):
         for rep in sorted(reps):
