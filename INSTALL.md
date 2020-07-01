@@ -25,7 +25,7 @@ This will depend on your server setup, and you should consult [Deploying Django]
 
 One common step would be to install dependencies like this: `PIPENV_VENV_IN_PROJECT=1 pipenv install`. This will install dependencies within the project folder. 
 
-Then edit brutaldon/settings.py. You definitely need to change the values of SECRET_KEY and ALLOWED_HOSTS. Also edit the database parameters to match the database you chose. Then run `pipenv run python ./manage.py migrate` to populate the database.
+Then create the file ~/.config/brutaldon_settings.py which overrides anything in brutaldon/settings.py. You definitely need to override SECRET_KEY and ALLOWED_HOSTS. Also edit the database parameters to match the database you chose. Then run `pipenv run python ./manage.py migrate` to populate the database.
 
 I installed brutaldon with Apache and mod_wsgi. If you installed brutaldon in /usr/local/share/, you'd add config lines something like this to the virtual host brutaldon is installed in.
 
