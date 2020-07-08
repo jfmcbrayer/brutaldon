@@ -714,6 +714,12 @@ def thread(request, id):
         },
     )
 
+def same_username(account, acct, username):
+    if acct == username: return True
+    user, host = username.split("@", 1)
+    myhost = account.username.split("@",1)[1]
+    if acct == user and host == myhost: return True
+    return False
 
 @br_login_required
 def user(request, username, prev=None, next=None):
@@ -721,20 +727,23 @@ def user(request, username, prev=None, next=None):
         account, mastodon = get_usercontext(request)
     except NotLoggedInException:
         return redirect(about)
-    try:
-        user_dict = [
-            dict
-            for dict in mastodon.account_search(username)
-            if (
-                (dict.acct == username)
-                or (
-                    dict.acct == username.split("@")[0]
-                    and username.split("@")[1] == account.username.split("@")[1]
-                )
-            )
-        ][0]
-    except (IndexError, AttributeError):
-        raise Http404(_("The user %s could not be found.") % username)
+    user_dict = None
+    # pleroma currently flops if the user's not already locally known
+    # this is a BUG that they MUST FIX
+    # but until then, we might have to fallback to a regular search,
+    # if the account search fails to return results.
+    for dict in mastodon.account_search(username):
+        if not same_username(account, dict.acct, username): continue
+        user_dict = dict
+        break
+    else:
+        for dict in mastodon.search(username,
+                                    result_type="accounts").accounts:
+            if not same_username(account, dict.acct, username): continue
+            user_dict = dict
+            break
+        else:
+            raise Http404(_("The user %s could not be found.") % username)
     data = mastodon.account_statuses(user_dict.id, max_id=next, min_id=prev)
     relationship = mastodon.account_relationships(user_dict.id)[0]
     notifications = _notes_count(account, mastodon)
@@ -1459,6 +1468,7 @@ def search_results(request):
     else:
         query = ""
     account, mastodon = get_usercontext(request)
+
     results = mastodon.search(query)
     notifications = _notes_count(account, mastodon)
     return render(
