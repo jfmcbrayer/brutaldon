@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('brutaldon', '0024_auto_20200601_0945'),
+        ("brutaldon", "0024_auto_20200601_0945"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='preference',
-            name='preview_sensitive',
-            field=models.BooleanField(default=False, help_text='Show preview for media marked as "sensitive"'),
+            model_name="preference",
+            name="preview_sensitive",
+            field=models.BooleanField(
+                default=False, help_text='Show preview for media marked as "sensitive"'
+            ),
         ),
     ]

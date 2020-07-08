@@ -91,7 +91,7 @@ def get_usercontext(request, feature_set="mainline"):
             api_base_url=client.api_base_id,
             session=get_session(client.api_base_id),
             ratelimit_method="throw",
-            feature_set=feature_set
+            feature_set=feature_set,
         )
         return user, mastodon
     else:
@@ -144,6 +144,7 @@ def br_login_required(function=None, home_url=None, redirect_field_name=None):
                 if not url:
                     url = "/"
                 return HttpResponseRedirect(url)
+
             if not is_logged_in(request):
                 return not_logged_in()
             else:
@@ -616,7 +617,8 @@ def note(request, next=None, prev=None):
         return redirect(about)
     try:
         last_seen = mastodon.notifications(limit=1)[0]
-    except IndexError: pass
+    except IndexError:
+        pass
     else:
         account.note_seen = last_seen.id
         account.save()
@@ -652,6 +654,7 @@ def note(request, next=None, prev=None):
                 return str(note.status.id) + note.type
             except:
                 return str(note.id) + note.type
+
         def group_sort_key(group):
             return max([k.id for k in group])
 
@@ -716,12 +719,19 @@ def thread(request, id):
         },
     )
 
+
 def same_username(account, acct, username):
-    if acct == username: return True
-    user, host = username.split("@", 1)
-    myhost = account.username.split("@",1)[1]
-    if acct == user and host == myhost: return True
+    if acct == username:
+        return True
+    try:
+        user, host = username.split("@", 1)
+    except ValueError:
+        user, host = username, ""
+    myhost = account.username.split("@", 1)[1]
+    if acct == user and host == myhost:
+        return True
     return False
+
 
 @br_login_required
 def user(request, username, prev=None, next=None):
@@ -735,13 +745,14 @@ def user(request, username, prev=None, next=None):
     # but until then, we might have to fallback to a regular search,
     # if the account search fails to return results.
     for dict in mastodon.account_search(username):
-        if not same_username(account, dict.acct, username): continue
+        if not same_username(account, dict.acct, username):
+            continue
         user_dict = dict
         break
     else:
-        for dict in mastodon.search(username,
-                                    result_type="accounts").accounts:
-            if not same_username(account, dict.acct, username): continue
+        for dict in mastodon.search(username, result_type="accounts").accounts:
+            if not same_username(account, dict.acct, username):
+                continue
             user_dict = dict
             break
         else:
@@ -790,8 +801,7 @@ def settings(request):
         if form.is_valid():
             for field in account.preferences._fields:
                 if field in form.cleaned_data:
-                    setattr(account.preferences, field,
-                            form.cleaned_data[field])
+                    setattr(account.preferences, field, form.cleaned_data[field])
             request.session["timezone"] = account.preferences.timezone
             account.preferences.save()
             account.save()
@@ -818,17 +828,17 @@ def settings(request):
             {"form": form, "account": account, "preferences": account.preferences},
         )
 
+
 def status_post(account, request, mastodon, **kw):
     while True:
         try:
             mastodon.status_post(**kw)
         except MastodonIllegalArgumentError as e:
-            if not 'is only available with feature set' in e.args[0]:
+            if not "is only available with feature set" in e.args[0]:
                 raise
-            feature_set = e.args[0].rsplit(" ",1)[-1]
+            feature_set = e.args[0].rsplit(" ", 1)[-1]
 
-            account, mastodon = get_usercontext(request,
-                                                feature_set=feature_set)
+            account, mastodon = get_usercontext(request, feature_set=feature_set)
 
             continue
         except TypeError:
@@ -839,6 +849,7 @@ def status_post(account, request, mastodon, **kw):
         else:
             break
     return account, mastodon
+
 
 @never_cache
 @br_login_required
@@ -902,12 +913,15 @@ def toot(request, mention=None):
                 ].source.privacy
             try:
                 status_post(
-                    account, request, mastodon,
+                    account,
+                    request,
+                    mastodon,
                     status=form.cleaned_data["status"],
                     visibility=form.cleaned_data["visibility"],
                     spoiler_text=form.cleaned_data["spoiler_text"],
                     media_ids=media_objects,
-                    content_type="text/markdown")
+                    content_type="text/markdown",
+                )
             except MastodonAPIError as error:
                 form.add_error(
                     "",
@@ -1002,7 +1016,9 @@ def redraft(request, id):
                 ].source.privacy
             try:
                 status_post(
-                    account, request, mastodon,
+                    account,
+                    request,
+                    mastodon,
                     status=form.cleaned_data["status"],
                     visibility=form.cleaned_data["visibility"],
                     spoiler_text=form.cleaned_data["spoiler_text"],
@@ -1127,7 +1143,9 @@ def reply(request, id):
                     )
             try:
                 status_post(
-                    account, request, mastodon,
+                    account,
+                    request,
+                    mastodon,
                     status=form.cleaned_data["status"],
                     visibility=form.cleaned_data["visibility"],
                     spoiler_text=form.cleaned_data["spoiler_text"],

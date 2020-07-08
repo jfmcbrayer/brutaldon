@@ -29,18 +29,25 @@ class Theme(models.Model):
     def __str__(self):
         return self.name
 
+
 from django.db.models.fields.related_descriptors import ForeignKeyDeferredAttribute
+
+
 def set_fields(klass):
     fields = []
     for n in dir(klass):
         assert n != "_fields"
         v = getattr(klass, n)
-        if not hasattr(v, 'field'): continue
-        if not isinstance(v.field, models.Field): continue
-        if isinstance(v, ForeignKeyDeferredAttribute): continue
+        if not hasattr(v, "field"):
+            continue
+        if not isinstance(v.field, models.Field):
+            continue
+        if isinstance(v, ForeignKeyDeferredAttribute):
+            continue
         fields.append(n)
-    setattr(klass, '_fields', fields)
+    setattr(klass, "_fields", fields)
     return klass
+
 
 @set_fields
 class Preference(models.Model):
@@ -51,9 +58,8 @@ class Preference(models.Model):
         max_length=80, blank=True, null=True, choices=timezones, default="UTC"
     )
     preview_sensitive = models.BooleanField(
-        default=False,
-        help_text=_(
-            'Show preview for media marked as "sensitive"'))
+        default=False, help_text=_('Show preview for media marked as "sensitive"')
+    )
 
     no_javascript = models.BooleanField(
         default=False,
