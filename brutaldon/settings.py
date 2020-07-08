@@ -212,4 +212,4 @@ def CHECK_INSTANCE_URL(url, redirect):
 
 
 # Version number displayed on about page
-BRUTALDON_VERSION = "2.14.1"
+BRUTALDON_VERSION = "2.15.0"
